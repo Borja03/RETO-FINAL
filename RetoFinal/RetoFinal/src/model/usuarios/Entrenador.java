@@ -1,11 +1,10 @@
-package Usuarios;
+package model.usuarios;
 
 import java.io.File;
 import java.io.Serializable;
-
-import Equipo.Equipo;
-
 import java.util.ArrayList;
+
+import model.equipos.Equipo;
 
 public class Entrenador extends Usuarios implements Serializable {
 
