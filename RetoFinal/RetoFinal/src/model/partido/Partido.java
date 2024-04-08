@@ -1,4 +1,4 @@
-package Partido;
+package model.partido;
 
 import java.time.LocalDateTime;
 
