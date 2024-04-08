@@ -1,8 +1,7 @@
-package Equipo;
+package model.equipos;
 
 import java.io.Serializable;
 import java.util.ArrayList;
-import Partido.Partido;
 
 public class Equipo implements Serializable {
 
