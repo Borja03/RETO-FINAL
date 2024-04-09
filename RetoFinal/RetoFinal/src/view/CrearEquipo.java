@@ -51,7 +51,10 @@ public class CrearEquipo extends JFrame implements ActionListener {
         lblTitulos.setBounds(30, 110, 150, 20);
         contentPane.add(lblTitulos);
 
-        Integer[] numerosTitulos = { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 };
+        Integer[] numerosTitulos = new Integer[51]; // Array de tamaño 51 para valores del 0 al 50
+        for (int i = 0; i <= 50; i++) {
+            numerosTitulos[i] = i;
+        }
         titulosComboBox = new JComboBox<Integer>(numerosTitulos);
         titulosComboBox.setBounds(200, 110, 100, 20);
         contentPane.add(titulosComboBox);
