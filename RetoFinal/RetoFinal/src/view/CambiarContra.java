@@ -5,6 +5,7 @@ package view;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
@@ -16,6 +17,7 @@ public class CambiarContra extends JFrame implements ActionListener{
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
 	private Controller l;
+	private JButton cerrarSesion;
 
 	public CambiarContra(Controller controlador) {
 		this.l = controlador;
@@ -25,12 +27,23 @@ public class CambiarContra extends JFrame implements ActionListener{
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 
 		setContentPane(contentPane);
+		contentPane.setLayout(null);
+		
+		cerrarSesion = new JButton("Cerrar sesión");
+		cerrarSesion.setBounds(341, 242, 95, 21);
+		contentPane.add(cerrarSesion);
+		
+		cerrarSesion.addActionListener(this);
 	}
 
-	@Override
+
 	public void actionPerformed(ActionEvent e) {
-		// TODO Auto-generated method stub
-		
+		Object o = e.getSource();
+		if (o == cerrarSesion) {
+        	Login frame = new Login ();
+    		frame.setVisible(true);
+    		dispose();
+        }
 	}
 
 }

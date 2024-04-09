@@ -22,6 +22,7 @@ public class MenuAdmin extends JFrame implements ActionListener {
 	private JButton crearPartido;
 	private JButton cambiarContra;
 	private JButton gestionarEntre;
+	private JButton cerrarSesion;
 
 	public MenuAdmin(Controller controlador) {
 		this.l = controlador;
@@ -55,10 +56,15 @@ public class MenuAdmin extends JFrame implements ActionListener {
 		titulo.setBounds(154, 34, 114, 19);
 		contentPane.add(titulo);
 		
+		cerrarSesion = new JButton("Cerrar sesión");
+		cerrarSesion.setBounds(296, 242, 140, 21);
+		contentPane.add(cerrarSesion);
+		
 		crearEquipo.addActionListener(this);
 		gestionarEntre.addActionListener(this);
 		cambiarContra.addActionListener(this);
 		crearPartido.addActionListener(this);
+		cerrarSesion.addActionListener(this);
 	}
 
 
@@ -78,6 +84,11 @@ public class MenuAdmin extends JFrame implements ActionListener {
     		dispose();
         }else if (o == crearPartido) {
         	CrearPartido frame = new CrearPartido (l);
+    		frame.setVisible(true);
+    		dispose();
+        }
+        else if (o == cerrarSesion) {
+        	Login frame = new Login ();
     		frame.setVisible(true);
     		dispose();
         }
