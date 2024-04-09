@@ -88,7 +88,7 @@ public class MenuJugador extends JFrame implements ActionListener {
 		btnAddJugado.setBounds(57, 396, 200, 49);
 		panelLeft.add(btnAddJugado);
 
-		lblWelcome = new JLabel("Welcome Entrenador");
+		lblWelcome = new JLabel("Welcome Jugador");
 		lblWelcome.setForeground(new Color(255, 255, 0));
 		lblWelcome.setFont(new Font("Tahoma", Font.BOLD, 14));
 		lblWelcome.setBounds(64, 180, 217, 34);
@@ -98,6 +98,11 @@ public class MenuJugador extends JFrame implements ActionListener {
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
-
+		if(e.getSource()==btnLogOut) {
+			controller.closeConnection();
+			Login login = new Login();
+			login.setVisible(true);
+			this.setVisible(false);
+		}
 	}
 }

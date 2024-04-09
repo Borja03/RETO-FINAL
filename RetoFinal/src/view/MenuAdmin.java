@@ -101,6 +101,11 @@ public class MenuAdmin extends JFrame implements ActionListener {
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
-
+		if(e.getSource()==btnLogOut) {
+			controller.closeConnection();
+			Login login = new Login();
+			login.setVisible(true);
+			this.setVisible(false);
+		}
 	}
 }
