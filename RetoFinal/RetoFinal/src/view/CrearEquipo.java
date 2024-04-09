@@ -51,7 +51,7 @@ public class CrearEquipo extends JFrame implements ActionListener {
         lblTitulos.setBounds(30, 110, 150, 20);
         contentPane.add(lblTitulos);
 
-        Integer[] numerosTitulos = new Integer[51]; // Array de tamaño 51 para valores del 0 al 50
+        Integer[] numerosTitulos = new Integer[51];
         for (int i = 0; i <= 50; i++) {
             numerosTitulos[i] = i;
         }
