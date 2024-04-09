@@ -60,9 +60,9 @@ public class CrearPartido extends JFrame implements ActionListener {
         lblNewLabel_3.setBounds(29, 157, 100, 14);
         contentPane.add(lblNewLabel_3);
 
-        datePicker = new JCalendar();
-        datePicker.setBounds(139, 154, 200, 150);
-        contentPane.add(datePicker);
+       // datePicker = new JCalendar();
+       // datePicker.setBounds(139, 154, 200, 150);
+       // contentPane.add(datePicker);
 
         okButton = new JButton("OK");
         okButton.setBounds(166, 209, 89, 23);
@@ -75,7 +75,7 @@ public class CrearPartido extends JFrame implements ActionListener {
             String equipoLocal = equipoLocalField.getText();
             String equipoVisitante = equipoVisitanteField.getText();
             String estadio = estadioField.getText();
-            String fecha = datePicker.getDate().toString();
+          //  String fecha = datePicker.getDate().toString();
 
             // Aquí puedes llamar al método del controlador pasando los valores
             //controller.crearPartido(equipoLocal, equipoVisitante, estadio, fecha);
