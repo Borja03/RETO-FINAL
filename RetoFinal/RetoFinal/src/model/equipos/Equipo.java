@@ -3,6 +3,8 @@ package model.equipos;
 import java.io.Serializable;
 import java.util.ArrayList;
 
+import model.partido.Partido;
+
 public class Equipo implements Serializable {
 
 	private static final long serialVersionUID = 1L;
