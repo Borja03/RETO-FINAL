@@ -21,7 +21,7 @@ public class MenuEntrenador extends JFrame implements ActionListener {
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
 	private JButton btnLogOut;
-	private JButton btnAddEq;
+	private JButton btnConsultarEquipo;
 	private JButton btngJugadores;
 	private Controller controller;
 	private JLabel lblWelcome;
@@ -45,17 +45,17 @@ public class MenuEntrenador extends JFrame implements ActionListener {
 		contentPane.add(panelLeft);
 		panelLeft.setLayout(null);
 
-		btnAddEq = new JButton("Consultar Equipo");
-		btnAddEq.addActionListener(this);
-		btnAddEq.setHorizontalAlignment(SwingConstants.LEFT);
-		btnAddEq.setFont(new Font("Tahoma", Font.BOLD, 14));
-		btnAddEq.setFocusable(false);
-		btnAddEq.setBorder(null);
-		btnAddEq.setBackground(new Color(128, 128, 0));
-		btnAddEq.setBounds(57, 466, 200, 49);
-		panelLeft.add(btnAddEq);
+		btnConsultarEquipo = new JButton("Consultar Equipo");
+		btnConsultarEquipo.addActionListener(this);
+		btnConsultarEquipo.setHorizontalAlignment(SwingConstants.LEFT);
+		btnConsultarEquipo.setFont(new Font("Tahoma", Font.BOLD, 14));
+		btnConsultarEquipo.setFocusable(false);
+		btnConsultarEquipo.setBorder(null);
+		btnConsultarEquipo.setBackground(new Color(128, 128, 0));
+		btnConsultarEquipo.setBounds(57, 466, 200, 49);
+		panelLeft.add(btnConsultarEquipo);
 
-		btngJugadores = new JButton("Gerstionar  jugadores");
+		btngJugadores = new JButton("Gestionar  jugadores");
 		btngJugadores.addActionListener(this);
 		btngJugadores.setHorizontalAlignment(SwingConstants.LEFT);
 		btngJugadores.setFont(new Font("Tahoma", Font.BOLD, 14));
@@ -118,11 +118,21 @@ public class MenuEntrenador extends JFrame implements ActionListener {
 			Login login = new Login();
 			login.setVisible(true);
 			this.setVisible(false);
+
 		} else if (o == btngJugadores) {
 			GestionarJugadores g1 = new GestionarJugadores(controller);
 			g1.setVisible(true);
 			this.dispose();
-		}
+		}else if(o == btnConsultarEquipo) {
+			ConsultarEquipo ce1 = new ConsultarEquipo(controller);
+			ce1.setVisible(true);
+			this.dispose();
+			
+		}else if(o == btnConsultarPartidos) {
+			ConsultarPartidos cp1 = new ConsultarPartidos(controller);
+			cp1.setVisible(true);
+			this.dispose();
 
+	}
 	}
 }
