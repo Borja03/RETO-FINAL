@@ -74,4 +74,5 @@ public class CrearEquipo extends JFrame implements ActionListener {
             dispose();
         }
     }
+
 }

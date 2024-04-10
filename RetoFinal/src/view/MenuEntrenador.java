@@ -22,11 +22,11 @@ public class MenuEntrenador extends JFrame implements ActionListener {
 	private JPanel contentPane;
 	private JButton btnLogOut;
 	private JButton btnAddEq;
-	private JButton btnCambiarDorsal;
-	private JButton btnAddJugado;
+	private JButton btngJugadores;
 	private Controller controller;
 	private JLabel lblWelcome;
 	private String userName;
+	private JButton btnConsultarPartidos;
 
 	public MenuEntrenador(Controller cont, String userC) {
 		this.controller = cont;
@@ -45,7 +45,45 @@ public class MenuEntrenador extends JFrame implements ActionListener {
 		contentPane.add(panelLeft);
 		panelLeft.setLayout(null);
 
+		btnAddEq = new JButton("Consultar Equipo");
+		btnAddEq.addActionListener(this);
+		btnAddEq.setHorizontalAlignment(SwingConstants.LEFT);
+		btnAddEq.setFont(new Font("Tahoma", Font.BOLD, 14));
+		btnAddEq.setFocusable(false);
+		btnAddEq.setBorder(null);
+		btnAddEq.setBackground(new Color(128, 128, 0));
+		btnAddEq.setBounds(57, 466, 200, 49);
+		panelLeft.add(btnAddEq);
+
+		btngJugadores = new JButton("Gestionar  jugadores");
+		btngJugadores.addActionListener(this);
+		btngJugadores.setHorizontalAlignment(SwingConstants.LEFT);
+		btngJugadores.setFont(new Font("Tahoma", Font.BOLD, 14));
+		btngJugadores.setFocusable(false);
+		btngJugadores.setBorder(null);
+		btngJugadores.setBackground(new Color(128, 128, 0));
+		btngJugadores.setBounds(57, 406, 200, 49);
+		panelLeft.add(btngJugadores);
+
+		lblWelcome = new JLabel("Welcome Entrenador");
+		lblWelcome.setForeground(new Color(255, 255, 0));
+		lblWelcome.setFont(new Font("Tahoma", Font.BOLD, 14));
+		lblWelcome.setBounds(64, 180, 217, 34);
+		panelLeft.add(lblWelcome);
+
+		btnConsultarPartidos = new JButton("Consultar Partidos");
+		btnConsultarPartidos.addActionListener(this);
+		btnConsultarPartidos.setHorizontalAlignment(SwingConstants.LEFT);
+		btnConsultarPartidos.setFont(new Font("Tahoma", Font.BOLD, 14));
+		btnConsultarPartidos.setFocusable(false);
+		btnConsultarPartidos.setBorder(null);
+		btnConsultarPartidos.setBackground(new Color(128, 128, 0));
+		btnConsultarPartidos.setBounds(57, 526, 200, 49);
+		panelLeft.add(btnConsultarPartidos);
+
 		btnLogOut = new JButton("Log Out");
+		btnLogOut.setBounds(57, 586, 200, 49);
+		panelLeft.add(btnLogOut);
 		btnLogOut.setHorizontalAlignment(SwingConstants.LEFT);
 		btnLogOut.addMouseListener(new MouseAdapter() {
 			@Override
@@ -64,62 +102,27 @@ public class MenuEntrenador extends JFrame implements ActionListener {
 			}
 		});
 		btnLogOut.setBackground(new Color(128, 128, 0));
-		btnLogOut.setBounds(57, 536, 200, 49);
 		btnLogOut.setFocusable(false);
 		btnLogOut.setBorder(null);
-		panelLeft.add(btnLogOut);
 		btnLogOut.addActionListener(this);
 		btnLogOut.setFont(new Font("Tahoma", Font.BOLD, 14));
-
-		btnAddEq = new JButton("Añadir equipo");
-		btnAddEq.addActionListener(this);
-		btnAddEq.setHorizontalAlignment(SwingConstants.LEFT);
-		btnAddEq.setFont(new Font("Tahoma", Font.BOLD, 14));
-		btnAddEq.setFocusable(false);
-		btnAddEq.setBorder(null);
-		btnAddEq.setBackground(new Color(128, 128, 0));
-		btnAddEq.setBounds(57, 466, 200, 49);
-		panelLeft.add(btnAddEq);
-
-		btnCambiarDorsal = new JButton("Cambiar Dorsal");
-		btnCambiarDorsal.addActionListener(this);
-		btnCambiarDorsal.setHorizontalAlignment(SwingConstants.LEFT);
-		btnCambiarDorsal.setFont(new Font("Tahoma", Font.BOLD, 14));
-		btnCambiarDorsal.setFocusable(false);
-		btnCambiarDorsal.setBorder(null);
-		btnCambiarDorsal.setBackground(new Color(128, 128, 0));
-		btnCambiarDorsal.setBounds(57, 396, 200, 49);
-		panelLeft.add(btnCambiarDorsal);
-
-		lblWelcome = new JLabel("Welcome Entrenador");
-		lblWelcome.setForeground(new Color(255, 255, 0));
-		lblWelcome.setFont(new Font("Tahoma", Font.BOLD, 14));
-		lblWelcome.setBounds(64, 180, 217, 34);
-		panelLeft.add(lblWelcome);
-
-		btnAddJugado = new JButton("Añadir jugador");
-		btnAddJugado.setHorizontalAlignment(SwingConstants.LEFT);
-		btnAddJugado.setFont(new Font("Tahoma", Font.BOLD, 14));
-		btnAddJugado.setFocusable(false);
-		btnAddJugado.setBorder(null);
-		btnAddJugado.setBackground(new Color(128, 128, 0));
-		btnAddJugado.setBounds(57, 326, 200, 49);
-		panelLeft.add(btnAddJugado);
 
 	}
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
+
 		Object o = e.getSource();
 		if (o == btnLogOut) {
 			controller.closeConnection();
 			Login login = new Login();
 			login.setVisible(true);
 			this.setVisible(false);
-		} else if (o == btnCambiarDorsal) {
-			CambiarDorsal ventana = new CambiarDorsal(controller, userName);
-			ventana.setVisible(true);
-			this.setVisible(false);
+
+		} else if (o == btngJugadores) {
+			GestionarJugadores g1 = new GestionarJugadores(controller);
+			g1.setVisible(true);
+			this.dispose();
 		}
 
 	}

@@ -39,6 +39,7 @@ public class Login extends JFrame implements ActionListener {
 				}
 			}
 		});
+
 	}
 
 	public Login() {
@@ -143,4 +144,5 @@ public class Login extends JFrame implements ActionListener {
 			}
 		}
 	}
+
 }
