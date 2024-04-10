@@ -67,4 +67,3 @@ public class Equipo implements Serializable {
 		System.out.println("Titulos : " + this.titulos);
 
 	}
-}

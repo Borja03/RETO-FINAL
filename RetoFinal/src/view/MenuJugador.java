@@ -11,6 +11,7 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.SwingConstants;
+import javax.swing.SwingUtilities;
 import javax.swing.border.EmptyBorder;
 
 import controller.Controller;
@@ -93,9 +94,21 @@ public class MenuJugador extends JFrame implements ActionListener {
 		lblWelcome.setFont(new Font("Tahoma", Font.BOLD, 14));
 		lblWelcome.setBounds(64, 180, 217, 34);
 		panelLeft.add(lblWelcome);
-
 	}
-
+	
+	public class Main {
+	    public static void main(String[] args) {
+	        // Creamos una instancia del controlador
+	        Controller controller = new Controller();
+	        
+	        // Creamos una instancia de la ventana del menú del jugador
+	        MenuJugador menuJugador = new MenuJugador(controller);
+	        
+	        // Mostramos la ventana
+	        menuJugador.setVisible(true);
+	    }
+	}
+	
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		if(e.getSource()==btnLogOut) {

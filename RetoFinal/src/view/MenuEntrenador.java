@@ -55,7 +55,7 @@ public class MenuEntrenador extends JFrame implements ActionListener {
 		btnAddEq.setBounds(57, 466, 200, 49);
 		panelLeft.add(btnAddEq);
 
-		btngJugadores = new JButton("Gerstionar  jugadores");
+		btngJugadores = new JButton("Gestionar  jugadores");
 		btngJugadores.addActionListener(this);
 		btngJugadores.setHorizontalAlignment(SwingConstants.LEFT);
 		btngJugadores.setFont(new Font("Tahoma", Font.BOLD, 14));
@@ -118,6 +118,7 @@ public class MenuEntrenador extends JFrame implements ActionListener {
 			Login login = new Login();
 			login.setVisible(true);
 			this.setVisible(false);
+
 		} else if (o == btngJugadores) {
 			GestionarJugadores g1 = new GestionarJugadores(controller);
 			g1.setVisible(true);

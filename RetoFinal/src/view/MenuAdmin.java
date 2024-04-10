@@ -1,4 +1,3 @@
-
 package view;
 
 import java.awt.Color;
@@ -40,10 +39,9 @@ public class MenuAdmin extends JFrame implements ActionListener {
 	private JButton gestionarEntre;
 	private JButton cerrarSesion;
 	private Container panelLeft = null;
-
+  
 	public MenuAdmin(Controller controlador) {
 		this.l = controlador;
-
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 450, 300);
 		contentPane = new JPanel();
@@ -52,17 +50,10 @@ public class MenuAdmin extends JFrame implements ActionListener {
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 
-		crearEquipo = new JButton("Crear equipo");
-		crearEquipo.setBounds(34, 94, 163, 45);
-		contentPane.add(crearEquipo);
 
 		gestionarEntre = new JButton("Gestionar entrenador");
 		gestionarEntre.setBounds(220, 94, 163, 45);
 		contentPane.add(gestionarEntre);
-
-		cambiarContra = new JButton("Cambiar contraseña");
-		cambiarContra.setBounds(220, 163, 163, 45);
-		contentPane.add(cambiarContra);
 
 		crearPartido = new JButton("Crear partido");
 		crearPartido.setBounds(34, 163, 163, 45);
@@ -93,7 +84,7 @@ public class MenuAdmin extends JFrame implements ActionListener {
 		btnLogOut.addActionListener(this);
 		btnLogOut.setFont(new Font("Tahoma", Font.BOLD, 14));
 
-		btnAddEq = new JButton("Añadir equipo");
+		btnAddEq = new JButton("Gestionar equipo");
 		btnAddEq.addActionListener(this);
 		btnAddEq.setHorizontalAlignment(SwingConstants.LEFT);
 		btnAddEq.setFont(new Font("Tahoma", Font.BOLD, 14));
@@ -102,16 +93,6 @@ public class MenuAdmin extends JFrame implements ActionListener {
 		btnAddEq.setBackground(new Color(128, 128, 0));
 		btnAddEq.setBounds(57, 466, 200, 49);
 		panelLeft.add(btnAddEq);
-
-		btnAddJugado = new JButton("Añadir jugador");
-		btnAddJugado.addActionListener(this);
-		btnAddJugado.setHorizontalAlignment(SwingConstants.LEFT);
-		btnAddJugado.setFont(new Font("Tahoma", Font.BOLD, 14));
-		btnAddJugado.setFocusable(false);
-		btnAddJugado.setBorder(null);
-		btnAddJugado.setBackground(new Color(128, 128, 0));
-		btnAddJugado.setBounds(57, 396, 200, 49);
-		panelLeft.add(btnAddJugado);
 
 		lblWelcome = new JLabel("Welcome Admin");
 		lblWelcome.setForeground(new Color(255, 255, 0));
@@ -123,7 +104,6 @@ public class MenuAdmin extends JFrame implements ActionListener {
 
 	public void actionPerformed(ActionEvent e) {
 		Object o = e.getSource();
-
 		if (o == crearEquipo) {
 			CrearEquipo frame = new CrearEquipo(l);
 			frame.setVisible(true);

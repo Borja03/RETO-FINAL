@@ -1,35 +1,20 @@
-
 package view;
 
-import java.awt.BorderLayout;
-import java.awt.EventQueue;
-import javax.swing.JFrame;
-import javax.swing.JPanel;
-import javax.swing.border.EmptyBorder;
-import controller.Controller;
 import java.awt.Color;
-import javax.swing.JTextField;
-import javax.swing.UIManager;
-import javax.swing.UnsupportedLookAndFeelException;
-import javax.swing.JLabel;
+import java.awt.EventQueue;
 import java.awt.Font;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
 import javax.swing.JPasswordField;
-import javax.swing.JMenuItem;
-import javax.swing.JOptionPane;
-import javax.swing.JMenuBar;
-import javax.swing.JMenu;
-import java.awt.event.ActionListener;
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.awt.event.ActionEvent;
-import javax.swing.JToggleButton;
+import javax.swing.JTextField;
 import javax.swing.SwingConstants;
-import javax.swing.SwingUtilities;
+import javax.swing.border.EmptyBorder;
+import controller.Controller;
 
 public class Login extends JFrame implements ActionListener {
 
@@ -48,7 +33,6 @@ public class Login extends JFrame implements ActionListener {
 			public void run() {
 				try {
 					Login frame = new Login();
-					frame = new Login();
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -59,7 +43,6 @@ public class Login extends JFrame implements ActionListener {
 	}
 
 	public Login() {
-
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 1008, 717);
 		contentPane = new JPanel();
@@ -79,7 +62,7 @@ public class Login extends JFrame implements ActionListener {
 		contentPane.add(txtUserName);
 		txtUserName.setColumns(10);
 
-		JLabel lblUserName = new JLabel("Usre Name");
+		JLabel lblUserName = new JLabel("User Name");
 		lblUserName.setFont(new Font("Tahoma", Font.BOLD, 14));
 		lblUserName.setBounds(383, 235, 151, 53);
 		contentPane.add(lblUserName);
@@ -131,21 +114,17 @@ public class Login extends JFrame implements ActionListener {
 		lblMsg.setFont(new Font("Tahoma", Font.BOLD, 12));
 		lblMsg.setBounds(588, 513, 239, 21);
 		contentPane.add(lblMsg);
-
 	}
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
-
 		if (e.getSource() == btnLogIn) {
-
 			String username = txtUserName.getText();
 			String password = new String(txtPass.getPassword());
 			String userType = (String) cBxRole.getSelectedItem();
-			System.out.println("userType : " + userType);
 
 			if (txtUserName.getText().isEmpty() || txtPass.getPassword().length == 0) {
-				lblMsg.setText("ERROR all fields are required");
+				lblMsg.setText("ERROR: All fields are required");
 			} else if (controller.checkUserExist(username, password, userType)) {
 				if ("Admin".equals(userType)) {
 					MenuAdmin menuAdmin = new MenuAdmin(controller);
@@ -161,11 +140,9 @@ public class Login extends JFrame implements ActionListener {
 					this.setVisible(false);
 				}
 			} else {
-				// JOptionPane.showMessageDialog(LoginWindow.this, "Invalid username or
+				lblMsg.setText("Invalid username or password");
 			}
-
 		}
-
 	}
 
 }
