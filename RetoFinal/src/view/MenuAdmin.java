@@ -1,3 +1,4 @@
+
 package view;
 
 import java.awt.Color;
@@ -63,6 +64,46 @@ public class MenuAdmin extends JFrame implements ActionListener {
 				btnLogOut.setBackground(new Color(50, 70, 90));
 			}
 		});
+    		this.l = controlador;
+		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setBounds(100, 100, 450, 300);
+		contentPane = new JPanel();
+		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
+
+		setContentPane(contentPane);
+		contentPane.setLayout(null);
+		
+		crearEquipo = new JButton("Crear equipo");
+		crearEquipo.setBounds(34, 94, 163, 45);
+		contentPane.add(crearEquipo);
+		
+		gestionarEntre = new JButton("Gestionar entrenador");
+		gestionarEntre.setBounds(220, 94, 163, 45);
+		contentPane.add(gestionarEntre);
+		
+		cambiarContra = new JButton("Cambiar contraseña");
+		cambiarContra.setBounds(220, 163, 163, 45);
+		contentPane.add(cambiarContra);
+		
+		crearPartido = new JButton("Crear partido");
+		crearPartido.setBounds(34, 163, 163, 45);
+		contentPane.add(crearPartido);
+		
+		JTextPane titulo = new JTextPane();
+		titulo.setText("DISPLAY ADMIN");
+		titulo.setEditable(false);
+		titulo.setBounds(154, 34, 114, 19);
+		contentPane.add(titulo);
+		
+		cerrarSesion = new JButton("Cerrar sesión");
+		cerrarSesion.setBounds(296, 242, 140, 21);
+		contentPane.add(cerrarSesion);
+		
+		crearEquipo.addActionListener(this);
+		gestionarEntre.addActionListener(this);
+		cambiarContra.addActionListener(this);
+		crearPartido.addActionListener(this);
+		cerrarSesion.addActionListener(this);
 		btnLogOut.setBackground(new Color(128, 128, 0));
 		btnLogOut.setBounds(57, 536, 200, 49);
 		btnLogOut.setFocusable(false);
@@ -101,6 +142,31 @@ public class MenuAdmin extends JFrame implements ActionListener {
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
+    
+    		Object o = e.getSource();
+		if (o == crearEquipo) {
+			CrearEquipo frame = new CrearEquipo (l);
+    		frame.setVisible(true);
+    		dispose();
+        }else if (o == gestionarEntre) {
+        	GestionarEntre frame = new GestionarEntre (l);
+    		frame.setVisible(true);
+    		dispose();
+        }else if (o == cambiarContra) {
+        	CambiarContra frame = new CambiarContra (l);
+    		frame.setVisible(true);
+    		dispose();
+        }else if (o == crearPartido) {
+        	CrearPartido frame = new CrearPartido (l);
+    		frame.setVisible(true);
+    		dispose();
+        }
+        else if (o == cerrarSesion) {
+        	Login frame = new Login ();
+    		frame.setVisible(true);
+    		dispose();
+        }
+	}
 		if(e.getSource()==btnLogOut) {
 			controller.closeConnection();
 			Login login = new Login();
