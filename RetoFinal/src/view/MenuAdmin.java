@@ -25,9 +25,13 @@ import javax.swing.JTextPane;
 
 public class MenuAdmin extends JFrame implements ActionListener {
 
+<<<<<<< HEAD
 
 	private static final long serialVersionUID = 1L;
 		private JPanel contentPane;
+=======
+    	private JPanel contentPane;
+>>>>>>> 801d1fb5d644a398e5b4794c7ec3979d6fc0081b
 	    private JButton btnLogOut;
 	    private JButton btnAddEq;
 	    private JButton btnAddJugado;

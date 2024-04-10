@@ -219,7 +219,11 @@ public class Controller implements IController {
 
 	@Override
 	public void consultarEquipo() {
+<<<<<<< HEAD
 		 
+=======
+		// TODO Auto-generated method stub
+>>>>>>> 801d1fb5d644a398e5b4794c7ec3979d6fc0081b
 		
 	}
 

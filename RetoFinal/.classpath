@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 
 <?xml version="1.0" encoding="UTF-8"?>
 <classpath>
@@ -10,3 +11,17 @@
 	<classpathentry kind="output" path="bin"/>
 </classpath>
 
+=======
+
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-17">
+		<attributes>
+			<attribute name="module" value="true"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="src" path="src"/>
+	<classpathentry kind="output" path="bin"/>
+</classpath>
+
+>>>>>>> 801d1fb5d644a398e5b4794c7ec3979d6fc0081b
