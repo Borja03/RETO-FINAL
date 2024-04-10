@@ -1,3 +1,4 @@
+
 package view;
 
 import java.awt.Color;
@@ -6,10 +7,12 @@ import java.awt.EventQueue;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
+import javax.swing.JTextPane;
 import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
 
 import controller.Controller;
+
 import javax.swing.JLabel;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
@@ -24,6 +27,7 @@ public class MenuAdmin extends JFrame implements ActionListener {
 	private JButton btnLogOut;
 	private JButton btnAddEq;
 	private JButton btnAddJugado;
+	private JButton crearEquipo,gestionarEntre,cambiarContra,crearPartido,cerrarSesion;
 	private Controller controller;
 	private JLabel lblWelcome;
 	private String userName;
@@ -62,48 +66,34 @@ public class MenuAdmin extends JFrame implements ActionListener {
 				btnLogOut.setBackground(new Color(50, 70, 90));
 			}
 		});
-    		this.l = controlador;
-	private Controller l;
-	private JButton crearEquipo;
-	private JButton crearPartido;
-	private JButton cambiarContra;
-	private JButton gestionarEntre;
-	private JButton cerrarSesion;
+    		
+	
 
-	public MenuAdmin(Controller controlador) {
-		this.l = controlador;
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 450, 300);
-		contentPane = new JPanel();
-		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
-
-		setContentPane(contentPane);
-		contentPane.setLayout(null);
 		
 		crearEquipo = new JButton("Crear equipo");
-		crearEquipo.setBounds(34, 94, 163, 45);
+		crearEquipo.setBounds(548, 201, 163, 45);
 		contentPane.add(crearEquipo);
 		
 		gestionarEntre = new JButton("Gestionar entrenador");
-		gestionarEntre.setBounds(220, 94, 163, 45);
+		gestionarEntre.setBounds(734, 201, 163, 45);
 		contentPane.add(gestionarEntre);
 		
 		cambiarContra = new JButton("Cambiar contraseña");
-		cambiarContra.setBounds(220, 163, 163, 45);
+		cambiarContra.setBounds(734, 270, 163, 45);
 		contentPane.add(cambiarContra);
 		
 		crearPartido = new JButton("Crear partido");
-		crearPartido.setBounds(34, 163, 163, 45);
+		crearPartido.setBounds(548, 270, 163, 45);
 		contentPane.add(crearPartido);
 		
 		JTextPane titulo = new JTextPane();
 		titulo.setText("DISPLAY ADMIN");
 		titulo.setEditable(false);
-		titulo.setBounds(154, 34, 114, 19);
+		titulo.setBounds(668, 141, 114, 19);
 		contentPane.add(titulo);
 		
 		cerrarSesion = new JButton("Cerrar sesión");
-		cerrarSesion.setBounds(296, 242, 140, 21);
+		cerrarSesion.setBounds(810, 349, 140, 21);
 		contentPane.add(cerrarSesion);
 		
 		crearEquipo.addActionListener(this);
@@ -151,26 +141,20 @@ public class MenuAdmin extends JFrame implements ActionListener {
 	public void actionPerformed(ActionEvent e) {
     
     		Object o = e.getSource();
-
-	}
-
-
-	public void actionPerformed(ActionEvent e) {
-		Object o = e.getSource();
 		if (o == crearEquipo) {
-			CrearEquipo frame = new CrearEquipo (l);
+			CrearEquipo frame = new CrearEquipo (controller);
     		frame.setVisible(true);
     		dispose();
         }else if (o == gestionarEntre) {
-        	GestionarEntre frame = new GestionarEntre (l);
+        	GestionarEntre frame = new GestionarEntre (controller);
     		frame.setVisible(true);
     		dispose();
         }else if (o == cambiarContra) {
-        	CambiarContra frame = new CambiarContra (l);
+        	CambiarContra frame = new CambiarContra (controller);
     		frame.setVisible(true);
     		dispose();
         }else if (o == crearPartido) {
-        	CrearPartido frame = new CrearPartido (l);
+        	CrearPartido frame = new CrearPartido (controller);
     		frame.setVisible(true);
     		dispose();
         }
@@ -179,7 +163,7 @@ public class MenuAdmin extends JFrame implements ActionListener {
     		frame.setVisible(true);
     		dispose();
         }
-	}
+	
 		if(e.getSource()==btnLogOut) {
 			controller.closeConnection();
 			Login login = new Login();
