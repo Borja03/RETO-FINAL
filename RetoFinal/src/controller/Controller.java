@@ -1,5 +1,3 @@
-package controller;
-
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -264,3 +262,4 @@ public class Controller implements IController {
 	}
 	
 }
+
