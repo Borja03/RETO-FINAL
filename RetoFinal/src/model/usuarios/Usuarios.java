@@ -50,4 +50,3 @@ public class Usuarios implements Serializable {
 		return "Usuarios{" + "nombre='" + tipo + '\'' + '}';
 	}
 }
-

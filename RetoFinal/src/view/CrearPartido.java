@@ -75,6 +75,7 @@ public class CrearPartido extends JFrame implements ActionListener {
             String equipoLocal = equipoLocalField.getText();
             String equipoVisitante = equipoVisitanteField.getText();
             String estadio = estadioField.getText();
+
             String fecha = datePicker.getDate().toString();
 
             // Aquí puedes llamar al método del controlador pasando los valores

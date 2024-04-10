@@ -1,8 +1,8 @@
 
-
 package view;
 
 import java.awt.BorderLayout;
+
 import java.awt.EventQueue;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -60,7 +60,9 @@ public class Login extends JFrame {
 			public void run() {
 				try {
 					Login frame = new Login();
+
 					frame = new Login();
+
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -180,5 +182,3 @@ public class Login extends JFrame {
 		}
 
 	}
-
-}
