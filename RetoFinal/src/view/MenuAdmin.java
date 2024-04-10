@@ -1,4 +1,3 @@
-
 package view;
 
 import java.awt.Color;
@@ -11,7 +10,6 @@ import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
 
 import controller.Controller;
-
 import javax.swing.JLabel;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
@@ -65,6 +63,15 @@ public class MenuAdmin extends JFrame implements ActionListener {
 			}
 		});
     		this.l = controlador;
+	private Controller l;
+	private JButton crearEquipo;
+	private JButton crearPartido;
+	private JButton cambiarContra;
+	private JButton gestionarEntre;
+	private JButton cerrarSesion;
+
+	public MenuAdmin(Controller controlador) {
+		this.l = controlador;
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 450, 300);
 		contentPane = new JPanel();
@@ -144,6 +151,12 @@ public class MenuAdmin extends JFrame implements ActionListener {
 	public void actionPerformed(ActionEvent e) {
     
     		Object o = e.getSource();
+
+	}
+
+
+	public void actionPerformed(ActionEvent e) {
+		Object o = e.getSource();
 		if (o == crearEquipo) {
 			CrearEquipo frame = new CrearEquipo (l);
     		frame.setVisible(true);

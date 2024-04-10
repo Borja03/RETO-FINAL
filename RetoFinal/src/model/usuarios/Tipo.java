@@ -1,4 +1,3 @@
-
 package model.usuarios;
 
 public enum Tipo {

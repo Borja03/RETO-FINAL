@@ -1,6 +1,5 @@
 package controller;
 
-
 package controller;
 
 import java.sql.Connection;
@@ -110,26 +109,3 @@ public class Controller implements IController {
 			e.printStackTrace();
 		}
 	}
-
-
-
-
-
-
-
-
-	
-
-
-
-
-
-
-
-
-
-
-
-
-
-}
