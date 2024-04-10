@@ -3,13 +3,13 @@ package view;
 import javax.swing.*;
 
 import controller.Controller;
-
 import java.awt.*;
 import java.awt.event.*;
 
 public class CambiarDorsal extends JFrame implements ActionListener {
 
 	private static final long serialVersionUID = 1L;
+
 	private Controller controller;
 	private String userName;
 
@@ -38,8 +38,10 @@ public class CambiarDorsal extends JFrame implements ActionListener {
 	}
 
 	public void actionPerformed(ActionEvent e) {
+
 		Object o = e.getSource();
 		JButton clickedButton = (JButton) o;
+
 		String buttonText = clickedButton.getText();
 		int dialogResult = JOptionPane.showConfirmDialog(null, "¿Estás seguro que deseas cambiar el dorsal?",
 				"Confirmar", JOptionPane.YES_NO_OPTION);
@@ -51,5 +53,6 @@ public class CambiarDorsal extends JFrame implements ActionListener {
 		MenuEntrenador ventana = new MenuEntrenador(controller, userName);
 		ventana.setVisible(true);
 		this.setVisible(false);
+
 	}
 }
