@@ -22,11 +22,13 @@ foreign key (nombreEquipoVisitante) references equipo(nombreEquipo)on delete cas
 foreign key (fechaInicio) references partidos(fechaInicio)on delete cascade
 );
 
+
 create table usuario(
 user varchar(20) primary key,
 password varchar(20),
 tipo varchar(10)
 );
+
 
 create table jugador(
 user varchar(20) primary key,
