@@ -1,8 +1,5 @@
 package view;
 
-
-
-
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.JButton;
@@ -12,7 +9,7 @@ import javax.swing.border.EmptyBorder;
 
 import controller.Controller;
 
-public class GestionarEntre extends JFrame implements ActionListener{
+public class GestionarEntre extends JFrame implements ActionListener {
 
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
@@ -29,21 +26,21 @@ public class GestionarEntre extends JFrame implements ActionListener{
 		setContentPane(contentPane);
 
 		contentPane.setLayout(null);
-		
+
 		cerrarSesion = new JButton("Cerrar sesión");
 		cerrarSesion.setBounds(341, 242, 95, 21);
 		contentPane.add(cerrarSesion);
-		
+
 		cerrarSesion.addActionListener(this);
 	}
 
-	
 	public void actionPerformed(ActionEvent e) {
 		Object o = e.getSource();
 		if (o == cerrarSesion) {
-        	Login frame = new Login ();
-    		frame.setVisible(true);
-    		dispose();
-        }
+			Login frame = new Login();
+			frame.setVisible(true);
+			dispose();
+		}
 
+	}
 }

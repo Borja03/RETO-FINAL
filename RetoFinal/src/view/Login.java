@@ -1,5 +1,4 @@
 
-
 package view;
 
 import java.awt.BorderLayout;
@@ -43,19 +42,8 @@ public class Login extends JFrame implements ActionListener {
 	private static Controller controller;
 	private JLabel lblMsg;
 
-
 	public static void main(String[] args) {
 		controller = new Controller();
-
-public class Login extends JFrame {
-
-	private static final long serialVersionUID = 1L;
-	private JPanel contentPane;
-
-	/**
-	 * Launch the application.
-	 */
-	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
@@ -67,7 +55,7 @@ public class Login extends JFrame {
 				}
 			}
 		});
-		
+
 	}
 
 	public Login() {
@@ -175,7 +163,6 @@ public class Login extends JFrame {
 			} else {
 				// JOptionPane.showMessageDialog(LoginWindow.this, "Invalid username or
 			}
-
 
 		}
 
