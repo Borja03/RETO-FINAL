@@ -80,4 +80,5 @@ public class CambiarContra extends JFrame implements ActionListener {
 
         JOptionPane.showMessageDialog(this, "Contraseña cambiada exitosamente.", "Éxito", JOptionPane.INFORMATION_MESSAGE);
     }
+
 }

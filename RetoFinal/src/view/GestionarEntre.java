@@ -5,7 +5,6 @@ package view;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -28,6 +27,7 @@ public class GestionarEntre extends JFrame implements ActionListener{
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 
 		setContentPane(contentPane);
+
 		contentPane.setLayout(null);
 		
 		cerrarSesion = new JButton("Cerrar sesión");
@@ -45,6 +45,5 @@ public class GestionarEntre extends JFrame implements ActionListener{
     		frame.setVisible(true);
     		dispose();
         }
-	}
 
 }

@@ -1,5 +1,3 @@
-package controller;
-
 
 package controller;
 
@@ -110,26 +108,3 @@ public class Controller implements IController {
 			e.printStackTrace();
 		}
 	}
-
-
-
-
-
-
-
-
-	
-
-
-
-
-
-
-
-
-
-
-
-
-
-}

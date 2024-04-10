@@ -1,4 +1,5 @@
 
+
 package view;
 
 import java.awt.Color;
@@ -8,9 +9,19 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.SwingConstants;
+
+package view;
+
+
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
+import javax.swing.JFrame;
+import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
 import controller.Controller;
+
 
 import javax.swing.JLabel;
 import java.awt.Font;
@@ -19,10 +30,15 @@ import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
+import javax.swing.JButton;
+import javax.swing.JTextPane;
+
+
 public class MenuAdmin extends JFrame implements ActionListener {
 
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
+
 	private JButton btnLogOut;
 	private JButton btnAddEq;
 	private JButton btnAddJugado;
@@ -65,6 +81,16 @@ public class MenuAdmin extends JFrame implements ActionListener {
 			}
 		});
     		this.l = controlador;
+
+	private Controller l;
+	private JButton crearEquipo;
+	private JButton crearPartido;
+	private JButton cambiarContra;
+	private JButton gestionarEntre;
+
+	public MenuAdmin(Controller controlador) {
+		this.l = controlador;
+
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 450, 300);
 		contentPane = new JPanel();
@@ -95,14 +121,17 @@ public class MenuAdmin extends JFrame implements ActionListener {
 		titulo.setBounds(154, 34, 114, 19);
 		contentPane.add(titulo);
 		
+
 		cerrarSesion = new JButton("Cerrar sesión");
 		cerrarSesion.setBounds(296, 242, 140, 21);
 		contentPane.add(cerrarSesion);
 		
+
 		crearEquipo.addActionListener(this);
 		gestionarEntre.addActionListener(this);
 		cambiarContra.addActionListener(this);
 		crearPartido.addActionListener(this);
+
 		cerrarSesion.addActionListener(this);
 		btnLogOut.setBackground(new Color(128, 128, 0));
 		btnLogOut.setBounds(57, 536, 200, 49);
@@ -144,6 +173,13 @@ public class MenuAdmin extends JFrame implements ActionListener {
 	public void actionPerformed(ActionEvent e) {
     
     		Object o = e.getSource();
+
+	}
+
+
+	public void actionPerformed(ActionEvent e) {
+		Object o = e.getSource();
+
 		if (o == crearEquipo) {
 			CrearEquipo frame = new CrearEquipo (l);
     		frame.setVisible(true);
@@ -161,6 +197,7 @@ public class MenuAdmin extends JFrame implements ActionListener {
     		frame.setVisible(true);
     		dispose();
         }
+
         else if (o == cerrarSesion) {
         	Login frame = new Login ();
     		frame.setVisible(true);
@@ -173,5 +210,6 @@ public class MenuAdmin extends JFrame implements ActionListener {
 			login.setVisible(true);
 			this.setVisible(false);
 		}
+
 	}
 }

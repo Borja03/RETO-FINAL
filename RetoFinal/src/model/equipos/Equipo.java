@@ -68,5 +68,3 @@ public class Equipo implements Serializable {
 
 	}
 }
-
-

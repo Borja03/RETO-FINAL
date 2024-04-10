@@ -95,4 +95,5 @@ public class CrearPartido extends JFrame implements ActionListener {
         // Hacer visible la ventana
         ventanaCrearPartido.setVisible(true);
     }
+
 }
