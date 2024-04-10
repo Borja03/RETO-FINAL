@@ -143,7 +143,7 @@ public class Login extends JFrame implements ActionListener {
 					menuEntrenador.setVisible(true);
 					this.setVisible(false);
 				} else if ("Jugador".equals(userType)) {
-					MenuJugador menuJugador = new MenuJugador(controller);
+					MenuJugador menuJugador = new MenuJugador(controller, username);
 					menuJugador.setVisible(true);
 					this.setVisible(false);
 				}
@@ -153,6 +153,3 @@ public class Login extends JFrame implements ActionListener {
 		}
 	}
 }
-
-
-
