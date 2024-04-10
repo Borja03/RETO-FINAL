@@ -5,6 +5,9 @@ import java.awt.EventQueue;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
+
+import controller.Controller;
+
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
@@ -16,24 +19,10 @@ public class GestionarJugadores extends JFrame implements ActionListener {
 	private JButton btnCrear;
 	private JButton btnDelete;
 	private JButton btnModificar;
+	private Controller controller;
 
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					GestionarJugadores frame = new GestionarJugadores();
-					frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
-
-	/**
-	 * Create the frame.
-	 */
-	public GestionarJugadores() {
+	public GestionarJugadores(Controller cont) {
+		this.controller = cont;
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 450, 300);
 		contentPane = new JPanel();
@@ -64,15 +53,15 @@ public class GestionarJugadores extends JFrame implements ActionListener {
 		Object o = e.getSource();
 
 		if (o == btnCrear) {
-			AnadirJugadores a1 = new AnadirJugadores();
+			AnadirJugadores a1 = new AnadirJugadores(controller);
 			a1.setVisible(true);
 			this.dispose();
 		} else if (o == btnDelete) {
-			EliminarJugadores e1 = new EliminarJugadores();
+			EliminarJugadores e1 = new EliminarJugadores(controller);
 			e1.setVisible(true);
 			this.dispose();
 		} else if (o == btnModificar) {
-			ModificarJugadores m1 = new ModificarJugadores();
+			ModificarJugadores m1 = new ModificarJugadores(controller);
 			m1.setVisible(true);
 			this.dispose();
 		}

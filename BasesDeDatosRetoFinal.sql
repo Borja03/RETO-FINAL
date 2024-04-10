@@ -23,27 +23,22 @@ foreign key (fechaInicio) references partidos(fechaInicio)on delete cascade
 );
 
 
-create table usuario(
-user varchar(20) primary key,
-password varchar(20),
-tipo varchar(10)
-);
-
-
 create table jugador(
 user varchar(20) primary key,
+password varchar(20),
+tipo varchar(10),
 dorsal integer(2),
 numeroGoles integer(3),
 numeroAsistencias integer(3),
 nombreEquipo varchar(30),
-foreign key (nombreEquipo) references equipo(nombreEquipo) on delete cascade,
-foreign key (user) references usuario(user) on delete cascade
+foreign key (nombreEquipo) references equipo(nombreEquipo) on delete cascade
 );
 
 create table entrenador(
 user varchar(20) primary key,
+password varchar(20),
+tipo varchar(10),
 tipoEntrenador enum('PrimerEntrenador', 'SegundoEntrenador'),
 nombreEquipo varchar(30),
-foreign key (nombreEquipo) references equipo(nombreEquipo) on delete cascade,
-foreign key (user) references usuario(user) on delete cascade
+foreign key (nombreEquipo) references equipo(nombreEquipo) on delete cascade
 );

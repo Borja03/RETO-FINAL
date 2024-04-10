@@ -1,4 +1,6 @@
 
+package controller;
+
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -16,7 +18,6 @@ public class Controller implements IController {
 	private ResultSet resultSet;
 	private boolean isConnected = false;
 
-
 	final String INNSERTjugador = "INSERT INTO jugador (user,password,dorsal,nombreEquipo) VALUES (?,?,?,?)";
 
 	final String ConnectUser = "SELECT * FROM  laliga WHERE user_name =? AND password=?";
@@ -30,7 +31,7 @@ public class Controller implements IController {
 		String query = "";
 		String userDb;
 		String passDb;
-		
+
 		if ("Admin".equals(userType)) {
 			System.out.println("checking Admin...");
 			user = "admin";
@@ -39,7 +40,7 @@ public class Controller implements IController {
 			if (username.equals("admin") && password.equals("admin")) {
 				return true;
 			}
-		
+
 		} else if ("Entrenador".equals(userType)) {
 			System.out.println("checking Entrenador...");
 			user = "entrenador";
@@ -76,16 +77,10 @@ public class Controller implements IController {
 		return false;
 	}
 
-
-
-
-
-
 	@Override
 	public boolean logOut() {
 		return false;
 	}
-
 
 	public void openConnection(String user, String password) {
 		try {

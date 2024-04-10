@@ -7,6 +7,9 @@ import java.awt.event.ActionListener;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
+
+import controller.Controller;
+
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
@@ -19,8 +22,10 @@ public class EliminarJugadores extends JFrame implements ActionListener {
 	private JTextField textFieldEJugador;
 	private JLabel lblEJugador;
 	private JButton btnOK;
+	private Controller controller;
 
-	public EliminarJugadores() {
+	public EliminarJugadores(Controller cont) {
+		this.controller = cont;
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 450, 300);
 		contentPane = new JPanel();
@@ -55,7 +60,7 @@ public class EliminarJugadores extends JFrame implements ActionListener {
 
 			if (opcion == JOptionPane.NO_OPTION) {
 				this.dispose();
-				GestionarJugadores g1 = new GestionarJugadores();
+				GestionarJugadores g1 = new GestionarJugadores(controller);
 				g1.setVisible(true);
 			}
 		}

@@ -12,6 +12,8 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
 
+import controller.Controller;
+
 public class ModificarJugadores extends JFrame implements ActionListener {
 
 	private static final long serialVersionUID = 1L;
@@ -19,8 +21,10 @@ public class ModificarJugadores extends JFrame implements ActionListener {
 	private JTextField textFieldEJugador;
 	private JLabel lblEJugador;
 	private JButton btnOK;
+	private Controller controller;
 
-	public ModificarJugadores() {
+	public ModificarJugadores(Controller cont) {
+		this.controller = cont;
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 450, 300);
 		contentPane = new JPanel();
@@ -49,7 +53,7 @@ public class ModificarJugadores extends JFrame implements ActionListener {
 		Object o = e.getSource();
 
 		if (o == btnOK) {
-			ModificarJugadores2 m1 = new ModificarJugadores2();
+			ModificarJugadores2 m1 = new ModificarJugadores2(controller);
 			m1.setVisible(true);
 			this.dispose();
 		}

@@ -22,8 +22,4 @@ GRANT SELECT ON laLiga.partidos TO jugador_role;
 GRANT SELECT ON laLiga.juegan TO jugador_role;
 GRANT SELECT ON laLiga.entrenador TO jugador_role;
 
-GRANT SELECT ON laLiga.entrenador TO logIn;
-GRANT SELECT ON laLiga.jugador TO logIn;
-
-CREATE USER 'iniciosesion' IDENTIFIED by '123' default role 'logIn';
 CREATE USER 'admin' IDENTIFIED by 'admin' default role 'admin_role';
