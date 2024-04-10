@@ -22,6 +22,7 @@ public class MenuEntrenador extends JFrame implements ActionListener {
 	private JPanel contentPane;
 	private JButton btnLogOut;
 	private JButton btnAddEq;
+	private JButton btnCambiarDorsal;
 	private JButton btnAddJugado;
 	private Controller controller;
 	private JLabel lblWelcome;
@@ -80,15 +81,15 @@ public class MenuEntrenador extends JFrame implements ActionListener {
 		btnAddEq.setBounds(57, 466, 200, 49);
 		panelLeft.add(btnAddEq);
 
-		btnAddJugado = new JButton("Añadir jugador");
-		btnAddJugado.addActionListener(this);
-		btnAddJugado.setHorizontalAlignment(SwingConstants.LEFT);
-		btnAddJugado.setFont(new Font("Tahoma", Font.BOLD, 14));
-		btnAddJugado.setFocusable(false);
-		btnAddJugado.setBorder(null);
-		btnAddJugado.setBackground(new Color(128, 128, 0));
-		btnAddJugado.setBounds(57, 396, 200, 49);
-		panelLeft.add(btnAddJugado);
+		btnCambiarDorsal = new JButton("Cambiar Dorsal");
+		btnCambiarDorsal.addActionListener(this);
+		btnCambiarDorsal.setHorizontalAlignment(SwingConstants.LEFT);
+		btnCambiarDorsal.setFont(new Font("Tahoma", Font.BOLD, 14));
+		btnCambiarDorsal.setFocusable(false);
+		btnCambiarDorsal.setBorder(null);
+		btnCambiarDorsal.setBackground(new Color(128, 128, 0));
+		btnCambiarDorsal.setBounds(57, 396, 200, 49);
+		panelLeft.add(btnCambiarDorsal);
 
 		lblWelcome = new JLabel("Welcome Entrenador");
 		lblWelcome.setForeground(new Color(255, 255, 0));
@@ -96,14 +97,28 @@ public class MenuEntrenador extends JFrame implements ActionListener {
 		lblWelcome.setBounds(64, 180, 217, 34);
 		panelLeft.add(lblWelcome);
 
+		btnAddJugado = new JButton("Añadir jugador");
+		btnAddJugado.setHorizontalAlignment(SwingConstants.LEFT);
+		btnAddJugado.setFont(new Font("Tahoma", Font.BOLD, 14));
+		btnAddJugado.setFocusable(false);
+		btnAddJugado.setBorder(null);
+		btnAddJugado.setBackground(new Color(128, 128, 0));
+		btnAddJugado.setBounds(57, 326, 200, 49);
+		panelLeft.add(btnAddJugado);
+
 	}
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		if(e.getSource()==btnLogOut) {
+		Object o = e.getSource();
+		if (o == btnLogOut) {
 			controller.closeConnection();
 			Login login = new Login();
 			login.setVisible(true);
+			this.setVisible(false);
+		} else if (o == btnCambiarDorsal) {
+			CambiarDorsal ventana = new CambiarDorsal(controller, userName);
+			ventana.setVisible(true);
 			this.setVisible(false);
 		}
 
