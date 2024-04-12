@@ -32,6 +32,8 @@ public class AnadirJugadores extends JFrame implements ActionListener {
 	private JButton btnOK;
 	private Controller controller;
 	private JTextField txtEquiponame;
+	private String user;
+	private String myTeam;
 
 	public AnadirJugadores(Controller cont,String user,String team) {
 		this.controller = cont;
@@ -107,19 +109,34 @@ public class AnadirJugadores extends JFrame implements ActionListener {
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
+		String user=textFieldUSer.getText();
+		String password=textFieldContrasena.getText();
+		String myTeam= txtEquiponame.getText();
+		int dorsal=Integer.valueOf(textFieldDorsal.getText());
+		int numGoles=Integer.valueOf(textFieldGoles.getText());
+		int numAsist=Integer.valueOf(textFieldAsist.getText());
+		
 		Object o = e.getSource();
+		if(controller.crearJugador(user, password, dorsal, numGoles, numAsist, myTeam)) {
+			if (o == btnOK) {
+				int opcion = JOptionPane.showConfirmDialog(this, (String) "",
+						"El jugador ha sido introducido correctamente\n¿Desea añadir otro jugador?",
+						JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE, null);
+				textFieldUSer.setText("");
+				textFieldContrasena.setText("");
+				textFieldDorsal.setText("");
+				textFieldGoles.setText("");
+				textFieldAsist.setText("");
 
-		if (o == btnOK) {
-			int opcion = JOptionPane.showConfirmDialog(this, (String) "",
-					"El jugador ha sido introducido correctamente\n¿Desea añadir otro jugador?",
-					JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE, null);
-
-			if (opcion == JOptionPane.NO_OPTION) {
-				this.dispose();
-				GestionarJugadores g1 = new GestionarJugadores(controller);
-				g1.setVisible(true);
+				if (opcion == JOptionPane.NO_OPTION) {
+					this.dispose();
+					GestionarJugadores g1 = new GestionarJugadores(controller,user,myTeam);
+					g1.setVisible(true);
+				}
 			}
 		}
+
+		
 
 	}
 }

@@ -123,13 +123,17 @@ public class MenuEntrenador extends JFrame implements ActionListener {
 
 		Object o = e.getSource();
 		if (o == btnLogOut) {
-			controller.closeConnection();
-			Login login = new Login();
-			login.setVisible(true);
-			this.setVisible(false);
+			//controller.closeConnection();
+			//Login login = new Login(controller);
+			//login.setVisible(true);
+			//this.setVisible(false);
+			this.dispose();
+			controller.logOut();
+
 
 		} else if (o == btnGestJugadores) {
-			GestionarJugadores g1 = new GestionarJugadores(controller,userName);
+			String myTeam="";
+			GestionarJugadores g1 = new GestionarJugadores(controller,userName,myTeam);
 			g1.setVisible(true);
 			this.dispose();
 		}

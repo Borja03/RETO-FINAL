@@ -154,16 +154,19 @@ public class MenuAdmin extends JFrame implements ActionListener {
     		dispose();
         }
         else if (o == cerrarSesion) {
-        	Login frame = new Login ();
+        	Login frame = new Login (controller);
     		frame.setVisible(true);
     		dispose();
         }
 		
 		if(o==btnLogOut) {
-			controller.closeConnection();
-			Login login = new Login();
-			login.setVisible(true);
-			this.setVisible(false);
+			//controller.closeConnection();
+			//Login login = new Login(controller);
+			//login.setVisible(true);
+			//this.setVisible(false);
+			this.dispose();
+			controller.logOut();
+
 		}
 	}
 }

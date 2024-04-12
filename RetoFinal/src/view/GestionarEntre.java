@@ -49,7 +49,7 @@ public class GestionarEntre extends JFrame implements ActionListener {
 	public void actionPerformed(ActionEvent e) {
 		Object o = e.getSource();
 		if (o == cerrarSesion) {
-			Login frame = new Login();
+			Login frame = new Login(controller);
 			frame.setVisible(true);
 			dispose();
 		}
