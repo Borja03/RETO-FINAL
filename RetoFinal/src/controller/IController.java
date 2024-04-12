@@ -2,6 +2,8 @@ package controller;
 
 import java.util.ArrayList;
 
+import model.equipos.Equipo;
+
 public interface IController {
 	public boolean checkUserExist(String username, String pass, String userType);
   
@@ -34,4 +36,6 @@ public interface IController {
 	public void cambiarPassword();
 
 	public void consultarPartido();
+	
+	public ArrayList<Equipo> listarEquiposCP ();
 }
