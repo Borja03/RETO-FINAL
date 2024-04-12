@@ -25,7 +25,6 @@ public class Controller implements IController {
 
 	final String INNSERTentrenador = "INSERT INTO entrenador (user,password,tipoEntrenador,nombreEquipo) VALUES (?,?,?,?)";
 
-	
 	final String INNSERTjugador = "INSERT INTO jugador (user,password,dorsal,numeroGoles,numeroAsistencias,nombreEquipo) VALUES (?,?,?,?,?,?)";
 	final String GETjugador = "SELECT * FROM jugador WHERE USER = ?";
 	final String DELETEjugador = "DELETE FROM jugador WHERE user =?";
@@ -37,17 +36,17 @@ public class Controller implements IController {
 	final String ENTRENADORequipo = "SELECT nombreEquipo FROM  entrenador where user=?";
 
 	public boolean checkUserExist(String user) {
-		boolean exist= false;
+		boolean exist = false;
 		this.openConnection("entrenador", "entrenador");
 		try {
 			statement = connection.prepareStatement(GETjugador);
 
 			statement.setString(1, user);
-			resultSet=statement.executeQuery();
-			if (resultSet.next()){
-				exist=true;
+			resultSet = statement.executeQuery();
+			if (resultSet.next()) {
+				exist = true;
 			}
-			
+
 		} catch (SQLException e) {
 			System.out.println("Error de SQL");
 			e.printStackTrace();
@@ -142,7 +141,7 @@ public class Controller implements IController {
 	@Override
 	public boolean crearEntrenador(String nombreEquipo, String user, String password, String tipoEntrenador) {
 		boolean added = false;
-		this.openConnection("admin","admin");
+		this.openConnection("admin", "admin");
 		try {
 			statement = connection.prepareStatement(INNSERTentrenador);
 
@@ -241,12 +240,12 @@ public class Controller implements IController {
 		this.openConnection("entrenador", "entrenador");
 		try {
 			statement = connection.prepareStatement(MODIFICARjugador);
-			//statement.setString(1, user);
+			// statement.setString(1, user);
 			statement.setString(1, password);
 			statement.setInt(2, dorsal);
 			statement.setInt(3, numGoles);
 			statement.setInt(4, numAsist);
-			
+
 			statement.setString(5, user);
 			if (statement.executeUpdate() > 0) {
 				modified = true;
@@ -342,16 +341,16 @@ public class Controller implements IController {
 			statement.setString(1, user);
 
 			resultSet = statement.executeQuery();
-			
+
 			String userN = resultSet.getString("user");
 			String password = resultSet.getString("password");
 			String nombreEquipo = resultSet.getString("nombreEquipo");
 			int dorsal = resultSet.getInt("dorsal");
 			int numGoles = resultSet.getInt("numeroGoles");
 			int numAsistencias = resultSet.getInt("numeroAsistencias");
-			
-			usuario= new Jugador(userN,password,nombreEquipo,dorsal,numGoles,numAsistencias);
-		
+
+			usuario = new Jugador(userN, password, nombreEquipo, dorsal, numGoles, numAsistencias);
+
 		} catch (SQLException e) {
 			System.out.println("Error de SQL");
 			e.printStackTrace();
@@ -362,49 +361,30 @@ public class Controller implements IController {
 
 	}
 
+	@Override
+	public ArrayList<Equipo> listarEquiposCP() {
+		ArrayList<Equipo> equipos = new ArrayList<>();
 
+		try {
+			openConnection("admin", "admin");
+			String query = "SELECT * FROM equipo";
+			statement = connection.prepareStatement(query);
+			resultSet = statement.executeQuery();
 
-	 @Override
-	    public ArrayList<Equipo> listarEquiposCP() {
-	        ArrayList<Equipo> equipos = new ArrayList<>();
+			while (resultSet.next()) {
+				String nombreEquipo = resultSet.getString("nombreEquipo");
+				String nombreEstadio = resultSet.getString("nombreEstadio");
+				int titulos = resultSet.getInt("titulos");
+				Equipo eq = new Equipo(nombreEquipo, nombreEstadio, titulos);
+				equipos.add(eq);
+			}
+		} catch (SQLException ex) {
+			ex.printStackTrace();
+		} finally {
+			closeConnection();
+		}
 
-	        try {
-	            openConnection("admin","admin"); 
-	            String query = "SELECT * FROM equipo";
-	            statement = connection.prepareStatement(query);
-	            resultSet = statement.executeQuery();
-
-	            while (resultSet.next()) {
-	                String nombreEquipo = resultSet.getString("nombreEquipo");
-	                String nombreEstadio = resultSet.getString("nombreEstadio");
-	                int titulos = resultSet.getInt("titulos");
-	                Equipo eq = new Equipo (nombreEquipo,nombreEstadio,titulos);
-	                equipos.add(eq);
-	            }
-	        } catch (SQLException ex) {
-	            ex.printStackTrace();
-	        } finally {
-	            closeConnection();
-	        }
-
-	        return equipos;
-	    }
-
-
-	  
-	 
-
-
-
-
-
-
-
-
-
-	
-	
-}
-
+		return equipos;
+	}
 
 }
