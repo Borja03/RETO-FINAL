@@ -9,9 +9,11 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 
 import model.equipos.Equipo;
+
 import model.usuarios.Jugador;
 import model.usuarios.Usuarios;
 import view.Login;
+
 
 public class Controller implements IController {
 
@@ -334,6 +336,7 @@ public class Controller implements IController {
 		return myTeam;
 	}
 
+
 	public Usuarios getUsuario(String user) {
 		Usuarios usuario = null;
 		try {
@@ -350,7 +353,11 @@ public class Controller implements IController {
 			int numAsistencias = resultSet.getInt("numeroAsistencias");
 
 			usuario = new Jugador(userN, password, nombreEquipo, dorsal, numGoles, numAsistencias);
+			
 
+		// TODO Auto-generated method stub
+
+		
 		} catch (SQLException e) {
 			System.out.println("Error de SQL");
 			e.printStackTrace();
@@ -361,30 +368,41 @@ public class Controller implements IController {
 
 	}
 
-	@Override
-	public ArrayList<Equipo> listarEquiposCP() {
-		ArrayList<Equipo> equipos = new ArrayList<>();
+	
+	
 
-		try {
-			openConnection("admin", "admin");
-			String query = "SELECT * FROM equipo";
-			statement = connection.prepareStatement(query);
-			resultSet = statement.executeQuery();
+	 @Override
+	    public ArrayList<Equipo> listarEquiposCP() {
+	        ArrayList<Equipo> equipos = new ArrayList<>();
 
-			while (resultSet.next()) {
-				String nombreEquipo = resultSet.getString("nombreEquipo");
-				String nombreEstadio = resultSet.getString("nombreEstadio");
-				int titulos = resultSet.getInt("titulos");
-				Equipo eq = new Equipo(nombreEquipo, nombreEstadio, titulos);
-				equipos.add(eq);
-			}
-		} catch (SQLException ex) {
-			ex.printStackTrace();
-		} finally {
-			closeConnection();
-		}
+	        try {
+	            openConnection("admin","admin"); 
+	            String query = "SELECT * FROM equipo";
+	            statement = connection.prepareStatement(query);
+	            resultSet = statement.executeQuery();
 
-		return equipos;
-	}
+	            while (resultSet.next()) {
+	                String nombreEquipo = resultSet.getString("nombreEquipo");
+	                String nombreEstadio = resultSet.getString("nombreEstadio");
+	                int titulos = resultSet.getInt("titulos");
+	                Equipo eq = new Equipo (nombreEquipo,nombreEstadio,titulos);
+	                equipos.add(eq);
+	            }
+	        } catch (SQLException ex) {
+	            ex.printStackTrace();
+	        } finally {
+	            closeConnection();
+	        }
+
+	        return equipos;
+	    }
+
+
+	  
+	 
+
+
+
+
 
 }
