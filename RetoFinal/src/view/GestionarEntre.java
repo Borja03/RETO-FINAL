@@ -13,39 +13,49 @@ public class GestionarEntre extends JFrame implements ActionListener {
 
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
-	private Controller l;
+	private JButton btnCrear;
+	private JButton btnDelete;
+	private JButton btnModificar;
+	private Controller controller;
 	private JButton cerrarSesion;
 
 	public GestionarEntre(Controller controlador) {
-		this.l = controlador;
+		this.controller = controlador;
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 450, 300);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 
 		setContentPane(contentPane);
-
 		contentPane.setLayout(null);
 
-		cerrarSesion = new JButton("Cerrar sesión");
-		cerrarSesion.setBounds(341, 242, 95, 21);
-		contentPane.add(cerrarSesion);
+		btnCrear = new JButton("Añadir Entrenador");
+		btnCrear.addActionListener(this);
 
-		cerrarSesion.addActionListener(this);
+		btnCrear.setBounds(137, 62, 176, 23);
+		contentPane.add(btnCrear);
+
+		btnDelete = new JButton("Eliminar Entrenador");
+		btnDelete.addActionListener(this);
+		btnDelete.setBounds(137, 122, 176, 23);
+		contentPane.add(btnDelete);
+
+		btnModificar = new JButton("Modificar Entrenador");
+		btnModificar.setBounds(137, 178, 176, 23);
+		contentPane.add(btnModificar);
+		btnModificar.addActionListener(this);
 	}
 
 	public void actionPerformed(ActionEvent e) {
 		Object o = e.getSource();
 		if (o == cerrarSesion) {
-			Login frame = new Login();
+			Login frame = new Login(controller);
 			frame.setVisible(true);
 			dispose();
 		}
 
 	}
 }
-<<<<<<< HEAD
 
-=======
 }
->>>>>>> 801d1fb5d644a398e5b4794c7ec3979d6fc0081b
+

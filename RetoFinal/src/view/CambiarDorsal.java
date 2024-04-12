@@ -17,7 +17,7 @@ public class CambiarDorsal extends JFrame implements ActionListener {
 		this.controller = cont;
 		userName = userC;
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 450, 300);
+		setBounds(100, 100, 1008, 717);
 		setLayout(new BorderLayout());
 
 		JLabel titleLabel = new JLabel("CAMBIAR DORSAL");
@@ -50,7 +50,7 @@ public class CambiarDorsal extends JFrame implements ActionListener {
 		} else {
 			JOptionPane.showMessageDialog(null, "No has confirmado cambiar el dorsal " + buttonText);
 		}
-		MenuEntrenador ventana = new MenuEntrenador(controller, userName);
+		MenuJugador ventana = new MenuJugador(controller, userName);
 		ventana.setVisible(true);
 		this.setVisible(false);
 

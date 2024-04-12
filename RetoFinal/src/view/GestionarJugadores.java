@@ -20,9 +20,14 @@ public class GestionarJugadores extends JFrame implements ActionListener {
 	private JButton btnDelete;
 	private JButton btnModificar;
 	private Controller controller;
+	private String userName;
+	private String myTeam;
 
-	public GestionarJugadores(Controller cont) {
-		this.controller = cont;
+	public GestionarJugadores(Controller controller,String user,String team) {
+		this.controller = controller;
+		this.userName=user;
+		this.myTeam=team;
+		
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 450, 300);
 		contentPane = new JPanel();
@@ -53,15 +58,16 @@ public class GestionarJugadores extends JFrame implements ActionListener {
 		Object o = e.getSource();
 
 		if (o == btnCrear) {
-			AnadirJugadores a1 = new AnadirJugadores(controller);
+			String myTeam = controller.getMyTeam(userName);
+			AnadirJugadores a1 = new AnadirJugadores(controller,userName,myTeam);
 			a1.setVisible(true);
 			this.dispose();
 		} else if (o == btnDelete) {
-			EliminarJugadores e1 = new EliminarJugadores(controller);
+			EliminarJugadores e1 = new EliminarJugadores(controller,userName);
 			e1.setVisible(true);
 			this.dispose();
 		} else if (o == btnModificar) {
-			ModificarJugadores m1 = new ModificarJugadores(controller);
+			ModificarJugadores m1 = new ModificarJugadores(controller,userName);
 			m1.setVisible(true);
 			this.dispose();
 		}

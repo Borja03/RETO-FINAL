@@ -35,22 +35,10 @@ public class Login extends JFrame implements ActionListener {
 	private static Controller controller;
 	private JLabel lblMsg;
 
-	public static void main(String[] args) {
-		controller = new Controller();
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					Login frame = new Login();
-					frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
 
-	}
 
-	public Login() {
+	public Login(Controller cont) {
+		this.controller = cont;
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 1008, 717);
 		contentPane = new JPanel();
@@ -133,7 +121,7 @@ public class Login extends JFrame implements ActionListener {
 
 			if (txtUserName.getText().isEmpty() || txtPass.getPassword().length == 0) {
 				lblMsg.setText("ERROR: All fields are required");
-			} else if (controller.checkUserExist(username, password, userType)) {
+			} else if (controller.logIn(username, password, userType)) {
 				if ("Admin".equals(userType)) {
 					MenuAdmin menuAdmin = new MenuAdmin(controller);
 					menuAdmin.setVisible(true);
@@ -143,7 +131,7 @@ public class Login extends JFrame implements ActionListener {
 					menuEntrenador.setVisible(true);
 					this.setVisible(false);
 				} else if ("Jugador".equals(userType)) {
-					MenuJugador menuJugador = new MenuJugador(controller);
+					MenuJugador menuJugador = new MenuJugador(controller, username);
 					menuJugador.setVisible(true);
 					this.setVisible(false);
 				}
@@ -153,6 +141,3 @@ public class Login extends JFrame implements ActionListener {
 		}
 	}
 }
-
-
-

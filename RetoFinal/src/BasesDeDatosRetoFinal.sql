@@ -1,4 +1,4 @@
-create database laLiga ;
+create database laLiga;
 use laLiga;
 
 create table equipo(
@@ -40,13 +40,9 @@ password varchar(20),
 tipo varchar(10),
 tipoEntrenador enum('PrimerEntrenador', 'SegundoEntrenador'),
 nombreEquipo varchar(30),
-foreign key (nombreEquipo) references equipo(nombreEquipo) on delete cascade,
-foreign key (user) references usuario(user) on delete cascade
-);
-
-insert into equipo values ("Barcelona",3,"Camp Nou");
-insert into equipo values ("Madrid",5,"Santiago Bernabeu");
-
 foreign key (nombreEquipo) references equipo(nombreEquipo) on delete cascade
 );
 
+insert into equipo values('bilbao',100,'Bilbao');
+insert into entrenador values('entrenador','1234','1','PrimerEntrenador','bilbao');
+insert into jugador values('jugador','1234','1',9,99,500,'bilbao');
