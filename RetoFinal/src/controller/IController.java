@@ -1,10 +1,9 @@
 
-	
-
 package controller;
 
 import java.util.ArrayList;
 
+import model.equipos.Equipo;
 
 import model.usuarios.Usuarios;
 
@@ -12,9 +11,9 @@ import model.equipos.Equipo;
 
 public interface IController {
 	public boolean checkUserExist(String user);
-  
+
 	public void logOut();
-  
+
 	public boolean logIn(String username, String pass, String userType);
 
 	public void crearEquipo();
@@ -23,7 +22,8 @@ public interface IController {
 
 	public void crearPartido();
 
-	public boolean crearJugador(String user, String password, int dorsal,int numeroGoles,int numeroAsistencias, String nombreEquipo);
+	public boolean crearJugador(String user, String password, int dorsal, int numeroGoles, int numeroAsistencias,
+			String nombreEquipo);
 
 	public void borrarEntrenador();
 
@@ -31,7 +31,7 @@ public interface IController {
 
 	public void modificarEntrenador();
 
-	public boolean modificarJugador(String user,String password,int dorsal,int numGoles,int numAsist);
+	public boolean modificarJugador(String user, String password, int dorsal, int numGoles, int numAsist);
 
 	public void modificarPartido();
 
@@ -42,11 +42,13 @@ public interface IController {
 	public void cambiarPassword();
 
 	public void consultarPartido();
-	
+
 	public ArrayList<String> getEquipos();
 
 	public String getMyTeam(String entName);
+
 	public Usuarios getUsuario(String user);
-	public ArrayList<Equipo> listarEquiposCP ();
+
+	public ArrayList<Equipo> listarEquiposCP();
 
 }
