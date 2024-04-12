@@ -1,29 +1,31 @@
-
 package view;
 
 import java.awt.Color;
+import java.awt.Container;
 import java.awt.EventQueue;
-
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JTextPane;
 import javax.swing.SwingConstants;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import javax.swing.JFrame;
+import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
-
 import controller.Controller;
-
 import javax.swing.JLabel;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import javax.swing.JButton;
+import javax.swing.JTextPane;
 
 public class MenuAdmin extends JFrame implements ActionListener {
 
-	private static final long serialVersionUID = 1L;
-	 private JPanel contentPane;
+    	private JPanel contentPane;
 	    private JButton btnLogOut;
 	    private JButton btnAddEq;
 	    private JButton btnAddJugado;
@@ -80,25 +82,25 @@ public class MenuAdmin extends JFrame implements ActionListener {
 		gestionarEntre = new JButton("Gestionar entrenador");
 		gestionarEntre.setBounds(564, 124, 163, 45);
 		contentPane.add(gestionarEntre);
-		
+
 		cambiarContra = new JButton("Cambiar contraseña");
 		cambiarContra.setBounds(391, 179, 163, 45);
 		contentPane.add(cambiarContra);
-		
+	
 		crearPartido = new JButton("Crear partido");
 		crearPartido.setBounds(564, 179, 163, 45);
 		contentPane.add(crearPartido);
-		
+
 		JTextPane titulo = new JTextPane();
 		titulo.setBounds(509, 80, 114, 19);
 		titulo.setText("DISPLAY ADMIN");
 		titulo.setEditable(false);
 		contentPane.add(titulo);
-		
+
 		cerrarSesion = new JButton("Cerrar sesión");
 		cerrarSesion.setBounds(661, 257, 140, 21);
 		contentPane.add(cerrarSesion);
-		
+
 		crearEquipo.addActionListener(this);
 		gestionarEntre.addActionListener(this);
 		cambiarContra.addActionListener(this);
@@ -108,11 +110,12 @@ public class MenuAdmin extends JFrame implements ActionListener {
 		btnLogOut.setBounds(57, 536, 200, 49);
 		btnLogOut.setFocusable(false);
 		btnLogOut.setBorder(null);
+
 		panelLeft.add(btnLogOut);
 		btnLogOut.addActionListener(this);
 		btnLogOut.setFont(new Font("Tahoma", Font.BOLD, 14));
 
-		btnAddEq = new JButton("Añadir equipo");
+		btnAddEq = new JButton("Gestionar equipo");
 		btnAddEq.addActionListener(this);
 		btnAddEq.setHorizontalAlignment(SwingConstants.LEFT);
 		btnAddEq.setFont(new Font("Tahoma", Font.BOLD, 14));
@@ -122,16 +125,6 @@ public class MenuAdmin extends JFrame implements ActionListener {
 		btnAddEq.setBounds(57, 466, 200, 49);
 		panelLeft.add(btnAddEq);
 
-		btnAddJugado = new JButton("Añadir jugador");
-		btnAddJugado.addActionListener(this);
-		btnAddJugado.setHorizontalAlignment(SwingConstants.LEFT);
-		btnAddJugado.setFont(new Font("Tahoma", Font.BOLD, 14));
-		btnAddJugado.setFocusable(false);
-		btnAddJugado.setBorder(null);
-		btnAddJugado.setBackground(new Color(128, 128, 0));
-		btnAddJugado.setBounds(57, 396, 200, 49);
-		panelLeft.add(btnAddJugado);
-
 		lblWelcome = new JLabel("Welcome Admin");
 		lblWelcome.setForeground(new Color(255, 255, 0));
 		lblWelcome.setFont(new Font("Tahoma", Font.BOLD, 14));
@@ -139,7 +132,6 @@ public class MenuAdmin extends JFrame implements ActionListener {
 		panelLeft.add(lblWelcome);
 
 	}
-
 	@Override
 	public void actionPerformed(ActionEvent e) {
     
@@ -162,18 +154,19 @@ public class MenuAdmin extends JFrame implements ActionListener {
     		dispose();
         }
         else if (o == cerrarSesion) {
-        	Login frame = new Login ();
+        	Login frame = new Login (controller);
     		frame.setVisible(true);
     		dispose();
         }
 		
-		if(e.getSource()==btnLogOut) {
-			controller.closeConnection();
-			Login login = new Login();
-			login.setVisible(true);
-			this.setVisible(false);
+		if(o==btnLogOut) {
+			//controller.closeConnection();
+			//Login login = new Login(controller);
+			//login.setVisible(true);
+			//this.setVisible(false);
+			this.dispose();
+			controller.logOut();
+
 		}
 	}
-		
-	}
-
+}

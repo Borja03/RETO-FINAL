@@ -7,6 +7,9 @@ import java.awt.event.ActionListener;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
+
+import controller.Controller;
+
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
@@ -19,8 +22,12 @@ public class EliminarJugadores extends JFrame implements ActionListener {
 	private JTextField textFieldEJugador;
 	private JLabel lblEJugador;
 	private JButton btnOK;
+	private Controller controller;
+	private String user;
 
-	public EliminarJugadores() {
+	public EliminarJugadores(Controller cont, String user) {
+		this.controller = cont;
+		this.user=user;
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 450, 300);
 		contentPane = new JPanel();
@@ -47,17 +54,25 @@ public class EliminarJugadores extends JFrame implements ActionListener {
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		Object o = e.getSource();
+		String myTeam="";
+		int opcion ;
+		String jugador=textFieldEJugador.getText();
 
 		if (o == btnOK) {
-			int opcion = JOptionPane.showConfirmDialog(this,
-					(String) "El jugador ha sido eliminado correctamente\n¿Desea eliminar otro jugador?", "",
-					JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE, null);
-
-			if (opcion == JOptionPane.NO_OPTION) {
-				this.dispose();
-				GestionarJugadores g1 = new GestionarJugadores();
-				g1.setVisible(true);
+			if(controller.borrarJugador(jugador)) {
+				 opcion = JOptionPane.showConfirmDialog(this,
+						(String) "El jugador ha sido eliminado correctamente\n¿Desea eliminar otro jugador?", "",
+						JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE, null);
+				 textFieldEJugador.setText("");
+				 if (opcion == JOptionPane.NO_OPTION) {
+						this.dispose();
+						GestionarJugadores g1 = new GestionarJugadores(controller,user,myTeam);
+						g1.setVisible(true);
+					}
 			}
+			
+
+			
 		}
 
 	}

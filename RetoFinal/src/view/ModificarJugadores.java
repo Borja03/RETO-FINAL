@@ -12,6 +12,8 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
 
+import controller.Controller;
+
 public class ModificarJugadores extends JFrame implements ActionListener {
 
 	private static final long serialVersionUID = 1L;
@@ -19,8 +21,10 @@ public class ModificarJugadores extends JFrame implements ActionListener {
 	private JTextField textFieldEJugador;
 	private JLabel lblEJugador;
 	private JButton btnOK;
+	private Controller controller;
 
-	public ModificarJugadores() {
+	public ModificarJugadores(Controller cont,String entConnected) {
+		this.controller = cont;
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 450, 300);
 		contentPane = new JPanel();
@@ -47,12 +51,22 @@ public class ModificarJugadores extends JFrame implements ActionListener {
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		Object o = e.getSource();
-
-		if (o == btnOK) {
-			ModificarJugadores2 m1 = new ModificarJugadores2();
-			m1.setVisible(true);
-			this.dispose();
+		String usr=textFieldEJugador.getText();
+		if(controller.checkUserExist(usr)) {
+			if (o == btnOK) {
+				ModificarJugadores2 m1 = new ModificarJugadores2(controller,usr);
+				m1.setVisible(true);
+				this.dispose();
+			}
 		}
+		else {
+			int choice= JOptionPane.showConfirmDialog(null, 
+				    "User Does Not Exist","ERROR", JOptionPane.CLOSED_OPTION);
+			if (choice == JOptionPane.OK_OPTION) {
+				textFieldEJugador.setText("");
+				}
+		}
+		
 	}
 
 }
