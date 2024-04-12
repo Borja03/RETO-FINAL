@@ -1,3 +1,4 @@
+
 create database laLiga;
 use laLiga;
 
@@ -44,3 +45,9 @@ foreign key (nombreEquipo) references equipo(nombreEquipo) on delete cascade
 insert into equipo values('Athletic de Bilbao',100,'San Mames');
 insert into entrenador values('entrenador','1234','1','PrimerEntrenador','Athletic de Bilbao');
 insert into jugador values('jugador','1234','1',9,99,500,'Athletic de Bilbao');
+
+
+insert into equipo values('Athletic de Bilbao',100,'San Mames');
+insert into entrenador values('entrenador','1234','1','PrimerEntrenador','Athletic de Bilbao');
+insert into jugador values('jugador','1234','1',9,99,500,'Athletic de Bilbao');
+
