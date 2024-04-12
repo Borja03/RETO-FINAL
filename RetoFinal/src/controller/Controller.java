@@ -8,6 +8,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
+import model.equipos.Equipo;
+
 public class Controller implements IController {
 	private static final String DB_URL = "jdbc:mysql://localhost:3306/laliga?serverTimezone=Europe/Madrid&allowPublicKeyRetrieval=true&useSSL=false";
 	private String user;
@@ -262,6 +264,48 @@ public class Controller implements IController {
 		// TODO Auto-generated method stub
 		
 	}
+
+
+
+	 @Override
+	    public ArrayList<Equipo> listarEquiposCP() {
+	        ArrayList<Equipo> equipos = new ArrayList<>();
+
+	        try {
+	            openConnection("admin","admin"); 
+	            String query = "SELECT * FROM equipo";
+	            statement = connection.prepareStatement(query);
+	            resultSet = statement.executeQuery();
+
+	            while (resultSet.next()) {
+	                String nombreEquipo = resultSet.getString("nombreEquipo");
+	                String nombreEstadio = resultSet.getString("nombreEstadio");
+	                int titulos = resultSet.getInt("titulos");
+	                Equipo eq = new Equipo (nombreEquipo,nombreEstadio,titulos);
+	                equipos.add(eq);
+	            }
+	        } catch (SQLException ex) {
+	            ex.printStackTrace();
+	        } finally {
+	            closeConnection();
+	        }
+
+	        return equipos;
+	    }
+
+
+	  
+	 
+
+
+
+
+
+
+
+
+
+	
 	
 }
 

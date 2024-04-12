@@ -26,4 +26,4 @@ GRANT SELECT ON laLiga.entrenador TO logIn;
 GRANT SELECT ON laLiga.jugador TO logIn;
 
 CREATE USER 'iniciosesion' IDENTIFIED by '123' default role 'logIn';
-CREATE USER 'admin' IDENTIFIED by 'admin' default role 'admin_role';
+CREATE USER 'admin'@'localhost' IDENTIFIED by 'admin' default role 'admin_role';
