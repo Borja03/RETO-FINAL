@@ -8,6 +8,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
+import model.equipos.Equipo;
 import model.usuarios.Jugador;
 import model.usuarios.Usuarios;
 import view.Login;
@@ -360,5 +361,50 @@ public class Controller implements IController {
 		return usuario;
 
 	}
+
+
+
+	 @Override
+	    public ArrayList<Equipo> listarEquiposCP() {
+	        ArrayList<Equipo> equipos = new ArrayList<>();
+
+	        try {
+	            openConnection("admin","admin"); 
+	            String query = "SELECT * FROM equipo";
+	            statement = connection.prepareStatement(query);
+	            resultSet = statement.executeQuery();
+
+	            while (resultSet.next()) {
+	                String nombreEquipo = resultSet.getString("nombreEquipo");
+	                String nombreEstadio = resultSet.getString("nombreEstadio");
+	                int titulos = resultSet.getInt("titulos");
+	                Equipo eq = new Equipo (nombreEquipo,nombreEstadio,titulos);
+	                equipos.add(eq);
+	            }
+	        } catch (SQLException ex) {
+	            ex.printStackTrace();
+	        } finally {
+	            closeConnection();
+	        }
+
+	        return equipos;
+	    }
+
+
+	  
+	 
+
+
+
+
+
+
+
+
+
+	
+	
+}
+
 
 }

@@ -1,3 +1,6 @@
+
+	
+
 package controller;
 
 import java.util.ArrayList;
@@ -41,5 +44,6 @@ public interface IController {
 
 	public String getMyTeam(String entName);
 	public Usuarios getUsuario(String user);
+	public ArrayList<Equipo> listarEquiposCP ();
 
 }
