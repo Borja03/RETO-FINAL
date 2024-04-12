@@ -5,7 +5,10 @@ package controller;
 
 import java.util.ArrayList;
 
+
 import model.usuarios.Usuarios;
+
+import model.equipos.Equipo;
 
 public interface IController {
 	public boolean checkUserExist(String user);

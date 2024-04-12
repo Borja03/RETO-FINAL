@@ -49,3 +49,4 @@ insert into equipo values ("Madrid",5,"Santiago Bernabeu");
 
 foreign key (nombreEquipo) references equipo(nombreEquipo) on delete cascade
 );
+
