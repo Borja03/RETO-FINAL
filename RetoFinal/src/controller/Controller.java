@@ -141,7 +141,7 @@ public class Controller implements IController {
 	@Override
 	public boolean crearEntrenador(String nombreEquipo, String user, String password, String tipoEntrenador) {
 		boolean added = false;
-		this.openConnection("admin", "admin");
+		this.openConnection("admin","admin");
 		try {
 			statement = connection.prepareStatement(INNSERTentrenador);
 
