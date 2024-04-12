@@ -43,6 +43,3 @@ nombreEquipo varchar(30),
 foreign key (nombreEquipo) references equipo(nombreEquipo) on delete cascade
 );
 
-insert into equipo values('bilbao',100,'Bilbao');
-insert into entrenador values('entrenador','1234','1','PrimerEntrenador','bilbao');
-insert into jugador values('jugador','1234','1',9,99,500,'bilbao');
