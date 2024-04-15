@@ -8,6 +8,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Date;
 
 import model.equipos.Equipo;
 
@@ -165,10 +166,34 @@ public class Controller implements IController {
 	}
 
 	@Override
-	public void crearPartido() {
-		// TODO Auto-generated method stub
+		public boolean crearPartido(String equipoLocal, String equipoVisitante, Date fechaInicio) {
+		    boolean added = false;
+		    try {
+		        openConnection("admin", "admin");
+		        String query = "INSERT INTO juegan (nombreEquipoLocal, nombreEquipoVisitante, fechaInicio) VALUES (?, ?, ?)";
+		        PreparedStatement statement = connection.prepareStatement(query);
+		        statement.setString(1, equipoLocal);
+		        statement.setString(2, equipoVisitante);
+		        // Convertir el objeto Date a un objeto java.sql.Date
+		        java.sql.Date fechaSql = new java.sql.Date(fechaInicio.getTime());
+		        statement.setDate(3, fechaSql);
 
-	}
+		        if (statement.executeUpdate() > 0) {
+		            added = true;
+		            System.out.println("Partido creado!");
+		        } else {
+		            System.out.println("Fallo al crear el partido.");
+		        }
+		    } catch (SQLException e) {
+		        System.out.println("Error de SQL");
+		        e.printStackTrace();
+		    } finally {
+		        closeConnection();
+		    }
+		    return added;
+		}
+
+
 
 	@Override
 	public boolean crearJugador(String user, String password, int dorsal, int numeroGoles, int numeroAsistencias,

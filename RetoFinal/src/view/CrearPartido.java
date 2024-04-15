@@ -9,6 +9,7 @@ import javax.swing.border.EmptyBorder;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.sql.Date;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -22,6 +23,7 @@ public class CrearPartido extends JFrame implements ActionListener {
     private JCalendar datePicker;
     private Controller controller;
     private HashMap<String, String> estadiosEquipos = new HashMap<>();
+    private  JButton okButton;
 
     public CrearPartido(Controller controlador) {
         this.controller = controlador;
@@ -68,7 +70,7 @@ public class CrearPartido extends JFrame implements ActionListener {
         datePicker.setBounds(139, 154, 200, 150);
         contentPane.add(datePicker);
 
-        JButton okButton = new JButton("OK");
+        okButton = new JButton("OK");
         okButton.setBounds(360, 232, 66, 21);
         contentPane.add(okButton);
 
@@ -94,20 +96,26 @@ public class CrearPartido extends JFrame implements ActionListener {
         if (e.getSource() == equipoLocalComboBox) {
             String nombreEquipoLocal = (String) equipoLocalComboBox.getSelectedItem();
             String estadioEquipoLocal = estadiosEquipos.get(nombreEquipoLocal);
-   
             estadioField.setText(estadioEquipoLocal);
+        } else if (e.getSource() == okButton) {
+            String equipoLocal = (String) equipoLocalComboBox.getSelectedItem();
+            String equipoVisitante = (String) equipoVisitanteComboBox.getSelectedItem();
+            Date fechaInicio = datePicker.getDate();
+            
+            if (equipoLocal != null && equipoVisitante != null && fechaInicio != null) {
+                boolean partidoCreado = controller.crearPartido(equipoLocal, equipoVisitante, fechaInicio);
+                if (partidoCreado) {
+                    JOptionPane.showMessageDialog(this, "Partido creado exitosamente.");
+                } else {
+                    JOptionPane.showMessageDialog(this, "Error al crear el partido.");
+                }
+            } else {
+                JOptionPane.showMessageDialog(this, "Por favor, complete todos los campos.");
+            }
         }
     }
 
 
-    public static void main(String[] args) {
-        // Crear una instancia del controlador
-        Controller controlador = new Controller();
 
-        // Crear una instancia de la ventana CrearPartido y pasarle el controlador
-        CrearPartido ventanaCrearPartido = new CrearPartido(controlador);
-
-        // Hacer visible la ventana
-        ventanaCrearPartido.setVisible(true);
-    }
+ 
 }
