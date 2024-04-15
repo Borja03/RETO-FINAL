@@ -1,4 +1,4 @@
-GitRepositoriesView.GitDirectories=C\:\\Users\\Alder\\git\\RETO-FINAL\\.git;
-GitRepositoriesView.GitDirectories.relative=C\:\\Users\\Alder\\git\\RETO-FINAL\\.git;
-RepositorySearchDialogSearchPath=C\:\\Users\\Alder\\git
+GitRepositoriesView.GitDirectories=C\:\\Users\\Alder\\git\\RETO-FINAL\\.git;C\:\\Users\\Alder\\Desktop\\RETO-FINAL\\.git;
+GitRepositoriesView.GitDirectories.relative=C\:\\Users\\Alder\\git\\RETO-FINAL\\.git;.git;
+RepositorySearchDialogSearchPath=C\:\\Users\\Alder\\Desktop\\RETO-FINAL
 eclipse.preferences.version=1
