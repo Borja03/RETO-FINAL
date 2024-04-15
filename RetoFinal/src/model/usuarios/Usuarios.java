@@ -1,8 +1,7 @@
 package model.usuarios;
 
-import java.io.Serializable;
 
-public class Usuarios implements Serializable {
+public class Usuarios {
 
 	private static final long serialVersionUID = 1L;
 	protected String tipo;
@@ -17,6 +16,11 @@ public class Usuarios implements Serializable {
 
 	public Usuarios(String nombre, String user, String contraseña) {
 		this.tipo = nombre;
+		this.user = user;
+		this.contrasena = contraseña;
+	}
+
+	public Usuarios(String user, String contraseña) {
 		this.user = user;
 		this.contrasena = contraseña;
 	}

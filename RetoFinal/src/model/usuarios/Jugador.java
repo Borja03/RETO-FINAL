@@ -1,12 +1,11 @@
 package model.usuarios;
 
-import java.io.Serializable;
 
-public class Jugador extends Usuarios implements Serializable, Comparable<Jugador> {
+public class Jugador extends Usuarios {
 	/**
 	 * 
 	 */
-	private static final long serialVersionUID = 1L;
+	//private static final long serialVersionUID = 1L;
 	private String nombreEquipo;
 	private int dorsal;
 	private int goles;
@@ -27,6 +26,15 @@ public class Jugador extends Usuarios implements Serializable, Comparable<Jugado
 		this.dorsal = 0;
 		this.goles = 0;
 		this.asistencias = 0;
+	}
+	
+	public Jugador(String user, String contraseña, String nombreEquipo, int dorsal, int goles,
+			int asistencias) {
+		super(user, contraseña);
+		this.nombreEquipo = nombreEquipo;
+		this.dorsal = dorsal;
+		this.goles = goles;
+		this.asistencias = asistencias;
 	}
 
 	public String getNombreEquipo() {
@@ -61,8 +69,8 @@ public class Jugador extends Usuarios implements Serializable, Comparable<Jugado
 		this.asistencias = asistencias;
 	}
 
-	@Override
-	public int compareTo(Jugador o) {
-		return this.getDorsal() - o.getDorsal();
-	}
+//	@Override
+//	public int compareTo(Jugador o) {
+//		return this.getDorsal() - o.getDorsal();
+//	}
 }

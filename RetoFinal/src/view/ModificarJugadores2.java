@@ -13,6 +13,8 @@ import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
 
 import controller.Controller;
+import model.usuarios.Jugador;
+import model.usuarios.Usuarios;
 
 public class ModificarJugadores2 extends JFrame implements ActionListener {
 
@@ -30,9 +32,10 @@ public class ModificarJugadores2 extends JFrame implements ActionListener {
 	private JTextField textFieldAsist;
 	private JButton btnOK;
 	private Controller controller;
-
-	public ModificarJugadores2(Controller cont) {
+	private String user;
+	public ModificarJugadores2(Controller cont ,String userC) {
 		this.controller = cont;
+		this.user=userC;
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 690, 486);
 		contentPane = new JPanel();
@@ -90,25 +93,52 @@ public class ModificarJugadores2 extends JFrame implements ActionListener {
 		btnOK.setBounds(492, 366, 89, 23);
 		contentPane.add(btnOK);
 		btnOK.addActionListener(this);
+		
+		
+		jugadorOldInfo();
+	}
+	public void jugadorOldInfo() {
+
+		Jugador usr =(Jugador) controller.getUsuario(user);
+		textFieldUSer.setText(usr.getUser());
+		textFieldContrasena.setText(usr.getContraseña());
+		textFieldDorsal.setText(usr.getDorsal()+"");
+		textFieldGoles.setText(usr.getGoles()+"");
+		textFieldAsist.setText(usr.getAsistencias()+"");
 	}
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		Object o = e.getSource();
+		
+		int opcion = 0;
+		
+		//String user=textFieldUSer.getText();
+		String password=textFieldContrasena.getText();
+		//String myTeam= txtEquiponame.getText();
+		int dorsal=Integer.valueOf(textFieldDorsal.getText());
+		int numGoles=Integer.valueOf(textFieldGoles.getText());
+		int numAsist=Integer.valueOf(textFieldAsist.getText());
+		
 
 		if (o == btnOK) {
-			int opcion = JOptionPane.showConfirmDialog(this,
-					(String) "El jugador ha sido modificado correctamente\n¿Desea modificar otro jugador?", "",
-					JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE, null);
+
+			
+			if(controller.modificarJugador(user, password, dorsal, numGoles, numAsist)) {
+				 opcion = JOptionPane.showConfirmDialog(this,
+						(String) "El jugador ha sido modificado correctamente\n¿Desea modificar otro jugador?", "",
+						JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE, null);
+			}
+			
 
 			if (opcion == JOptionPane.NO_OPTION) {
 				this.dispose();
-				GestionarJugadores g1 = new GestionarJugadores(controller);
-				g1.setVisible(true);
+				//GestionarJugadores g1 = new GestionarJugadores(controller);
+				//g1.setVisible(true);
 				this.dispose();
 			} else {
-				ModificarJugadores m1 = new ModificarJugadores(controller);
-				m1.setVisible(true);
+				//ModificarJugadores m1 = new ModificarJugadores(controller);
+				//m1.setVisible(true);
 				this.dispose();
 			}
 		}

@@ -1,3 +1,4 @@
+
 package view;
 
 import java.awt.Color;
@@ -21,16 +22,16 @@ public class MenuEntrenador extends JFrame implements ActionListener {
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
 	private JButton btnLogOut;
-	private JButton btnAddEq;
-	private JButton btngJugadores;
+	private JButton btnConsultarEquipo;
+	private JButton btnGestJugadores;
 	private Controller controller;
 	private JLabel lblWelcome;
 	private String userName;
 	private JButton btnConsultarPartidos;
 
-	public MenuEntrenador(Controller cont, String userC) {
+	public MenuEntrenador(Controller cont, String entrConnected) {
 		this.controller = cont;
-		userName = userC;
+		userName = entrConnected;
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 1008, 717);
 		contentPane = new JPanel();
@@ -45,25 +46,25 @@ public class MenuEntrenador extends JFrame implements ActionListener {
 		contentPane.add(panelLeft);
 		panelLeft.setLayout(null);
 
-		btnAddEq = new JButton("Consultar Equipo");
-		btnAddEq.addActionListener(this);
-		btnAddEq.setHorizontalAlignment(SwingConstants.LEFT);
-		btnAddEq.setFont(new Font("Tahoma", Font.BOLD, 14));
-		btnAddEq.setFocusable(false);
-		btnAddEq.setBorder(null);
-		btnAddEq.setBackground(new Color(128, 128, 0));
-		btnAddEq.setBounds(57, 466, 200, 49);
-		panelLeft.add(btnAddEq);
+		btnConsultarEquipo = new JButton("Consultar Equipo");
+		btnConsultarEquipo.addActionListener(this);
+		btnConsultarEquipo.setHorizontalAlignment(SwingConstants.LEFT);
+		btnConsultarEquipo.setFont(new Font("Tahoma", Font.BOLD, 14));
+		btnConsultarEquipo.setFocusable(false);
+		btnConsultarEquipo.setBorder(null);
+		btnConsultarEquipo.setBackground(new Color(128, 128, 0));
+		btnConsultarEquipo.setBounds(57, 394, 200, 49);
+		panelLeft.add(btnConsultarEquipo);
 
-		btngJugadores = new JButton("Gestionar  jugadores");
-		btngJugadores.addActionListener(this);
-		btngJugadores.setHorizontalAlignment(SwingConstants.LEFT);
-		btngJugadores.setFont(new Font("Tahoma", Font.BOLD, 14));
-		btngJugadores.setFocusable(false);
-		btngJugadores.setBorder(null);
-		btngJugadores.setBackground(new Color(128, 128, 0));
-		btngJugadores.setBounds(57, 406, 200, 49);
-		panelLeft.add(btngJugadores);
+		btnGestJugadores = new JButton("Gestionar  jugadores");
+		btnGestJugadores.addActionListener(this);
+		btnGestJugadores.setHorizontalAlignment(SwingConstants.LEFT);
+		btnGestJugadores.setFont(new Font("Tahoma", Font.BOLD, 14));
+		btnGestJugadores.setFocusable(false);
+		btnGestJugadores.setBorder(null);
+		btnGestJugadores.setBackground(new Color(128, 128, 0));
+		btnGestJugadores.setBounds(57, 334, 200, 49);
+		panelLeft.add(btnGestJugadores);
 
 		lblWelcome = new JLabel("Welcome Entrenador");
 		lblWelcome.setForeground(new Color(255, 255, 0));
@@ -78,7 +79,7 @@ public class MenuEntrenador extends JFrame implements ActionListener {
 		btnConsultarPartidos.setFocusable(false);
 		btnConsultarPartidos.setBorder(null);
 		btnConsultarPartidos.setBackground(new Color(128, 128, 0));
-		btnConsultarPartidos.setBounds(57, 526, 200, 49);
+		btnConsultarPartidos.setBounds(57, 454, 200, 49);
 		panelLeft.add(btnConsultarPartidos);
 
 		btnLogOut = new JButton("Log Out");
@@ -106,6 +107,15 @@ public class MenuEntrenador extends JFrame implements ActionListener {
 		btnLogOut.setBorder(null);
 		btnLogOut.addActionListener(this);
 		btnLogOut.setFont(new Font("Tahoma", Font.BOLD, 14));
+		
+		JButton btnCambiarContrasena = new JButton("Cambiar contraseña");
+		btnCambiarContrasena.setBounds(57, 513, 200, 49);
+		panelLeft.add(btnCambiarContrasena);
+		btnCambiarContrasena.setHorizontalAlignment(SwingConstants.LEFT);
+		btnCambiarContrasena.setFont(new Font("Tahoma", Font.BOLD, 14));
+		btnCambiarContrasena.setFocusable(false);
+		btnCambiarContrasena.setBorder(null);
+		btnCambiarContrasena.setBackground(new Color(128, 128, 0));
 
 	}
 
@@ -114,13 +124,17 @@ public class MenuEntrenador extends JFrame implements ActionListener {
 
 		Object o = e.getSource();
 		if (o == btnLogOut) {
-			controller.closeConnection();
-			Login login = new Login();
-			login.setVisible(true);
-			this.setVisible(false);
+			//controller.closeConnection();
+			//Login login = new Login(controller);
+			//login.setVisible(true);
+			//this.setVisible(false);
+			this.dispose();
+			controller.logOut();
 
-		} else if (o == btngJugadores) {
-			GestionarJugadores g1 = new GestionarJugadores(controller);
+
+		} else if (o == btnGestJugadores) {
+			String myTeam="";
+			GestionarJugadores g1 = new GestionarJugadores(controller,userName,myTeam);
 			g1.setVisible(true);
 			this.dispose();
 		}
