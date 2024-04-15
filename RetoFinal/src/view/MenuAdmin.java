@@ -25,7 +25,11 @@ import javax.swing.JTextPane;
 
 public class MenuAdmin extends JFrame implements ActionListener {
 
-    	private JPanel contentPane;
+<<<<<<< HEAD
+
+
+	private static final long serialVersionUID = 1L;
+		private JPanel contentPane;
 	    private JButton btnLogOut;
 	    private JButton btnAddEq;
 	    private JButton btnAddJugado;
@@ -37,6 +41,21 @@ public class MenuAdmin extends JFrame implements ActionListener {
 	    private JLabel lblWelcome;
 	    private Controller controller;
 	    private String userName;
+=======
+	private static final long serialVersionUID = 1L;
+	private JPanel contentPane;
+	private JButton btnLogOut;
+	private JButton btnAddEq;
+	private JButton btnAddJugado;
+	private JButton crearEquipo;
+	private JButton gestionarEntre;
+	private JButton cambiarContra;
+	private JButton crearPartido;
+	private JButton cerrarSesion;
+	private JLabel lblWelcome;
+	private Controller controller;
+	private String userName;
+>>>>>>> e78f18d24c18207d1b16d15e90d5b906c568bf1a
 
 	public MenuAdmin(Controller cont) {
 		this.controller = cont;
@@ -72,13 +91,11 @@ public class MenuAdmin extends JFrame implements ActionListener {
 				btnLogOut.setBackground(new Color(50, 70, 90));
 			}
 		});
-    		
-	
-		
+
 		crearEquipo = new JButton("Crear equipo");
 		crearEquipo.setBounds(391, 124, 163, 45);
 		contentPane.add(crearEquipo);
-		
+
 		gestionarEntre = new JButton("Gestionar entrenador");
 		gestionarEntre.setBounds(564, 124, 163, 45);
 		contentPane.add(gestionarEntre);
@@ -86,7 +103,7 @@ public class MenuAdmin extends JFrame implements ActionListener {
 		cambiarContra = new JButton("Cambiar contraseña");
 		cambiarContra.setBounds(391, 179, 163, 45);
 		contentPane.add(cambiarContra);
-	
+
 		crearPartido = new JButton("Crear partido");
 		crearPartido.setBounds(564, 179, 163, 45);
 		contentPane.add(crearPartido);
@@ -132,38 +149,40 @@ public class MenuAdmin extends JFrame implements ActionListener {
 		panelLeft.add(lblWelcome);
 
 	}
+
 	@Override
 	public void actionPerformed(ActionEvent e) {
-    
-    		Object o = e.getSource();
+		Object o = e.getSource();
 		if (o == crearEquipo) {
-			CrearEquipo frame = new CrearEquipo (controller);
-    		frame.setVisible(true);
-    		dispose();
-        }else if (o == gestionarEntre) {
-        	GestionarEntre frame = new GestionarEntre (controller);
-    		frame.setVisible(true);
-    		dispose();
-        }else if (o == cambiarContra) {
-        	CambiarContra frame = new CambiarContra (controller);
-    		frame.setVisible(true);
-    		dispose();
-        }else if (o == crearPartido) {
-        	CrearPartido frame = new CrearPartido (controller);
-    		frame.setVisible(true);
-    		dispose();
-        }
-        else if (o == cerrarSesion) {
-        	Login frame = new Login ();
-    		frame.setVisible(true);
-    		dispose();
-        }
-		
-		if(o==btnLogOut) {
-			controller.closeConnection();
-			Login login = new Login();
-			login.setVisible(true);
-			this.setVisible(false);
+			CrearEquipo frame = new CrearEquipo(controller);
+			frame.setVisible(true);
+			dispose();
+		} else if (o == gestionarEntre) {
+			GestionarEntre frame = new GestionarEntre(controller);
+			frame.setVisible(true);
+			dispose();
+		} else if (o == cambiarContra) {
+			CambiarContra frame = new CambiarContra(controller);
+			frame.setVisible(true);
+			dispose();
+		} else if (o == crearPartido) {
+			CrearPartido frame = new CrearPartido(controller);
+			frame.setVisible(true);
+			dispose();
+		} else if (o == cerrarSesion) {
+			Login frame = new Login(controller);
+			frame.setVisible(true);
+			dispose();
+		}
+
+		if (o == btnLogOut) {
+			// controller.closeConnection();
+			// Login login = new Login(controller);
+			// login.setVisible(true);
+			// this.setVisible(false);
+			this.dispose();
+			controller.logOut();
+
 		}
 	}
 }

@@ -11,13 +11,13 @@ public class CambiarContra extends JFrame implements ActionListener {
 
     private static final long serialVersionUID = 1L;
     private JPanel contentPane;
-    private Controller l;
+    private Controller controller;
     private JButton cerrarSesion;
     private JPasswordField passwordField;
     private JPasswordField confirmPasswordField;
 
     public CambiarContra(Controller controlador) {
-        this.l = controlador;
+        this.controller = controlador;
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setBounds(100, 100, 450, 300);
         contentPane = new JPanel();
@@ -61,7 +61,7 @@ public class CambiarContra extends JFrame implements ActionListener {
     public void actionPerformed(ActionEvent e) {
         Object o = e.getSource();
         if (o == cerrarSesion) {
-            Login frame = new Login();
+            Login frame = new Login(controller);
             frame.setVisible(true);
             dispose();
         }

@@ -1,6 +1,0 @@
-INDEX VERSION 1.134+C:\Users\Alder\Desktop\RETO-FINAL\.metadata\.plugins\org.eclipse.jdt.core
-674597522.index
-146317805.index
-2394817783.index
-1069641029.index
-1865797976.index
