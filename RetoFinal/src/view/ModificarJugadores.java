@@ -23,7 +23,7 @@ public class ModificarJugadores extends JFrame implements ActionListener {
 	private JButton btnOK;
 	private Controller controller;
 
-	public ModificarJugadores(Controller cont,String entConnected) {
+	public ModificarJugadores(Controller cont) {
 		this.controller = cont;
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 450, 300);
@@ -51,22 +51,21 @@ public class ModificarJugadores extends JFrame implements ActionListener {
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		Object o = e.getSource();
-		String usr=textFieldEJugador.getText();
-		if(controller.checkUserExist(usr)) {
-			if (o == btnOK) {
-				ModificarJugadores2 m1 = new ModificarJugadores2(controller,usr);
+		String usr = textFieldEJugador.getText();
+		if (o == btnOK) {
+			if (controller.checkUserExist(usr)) {
+				ModificarJugadores2 m1 = new ModificarJugadores2(controller, usr);
 				m1.setVisible(true);
-				this.dispose();
+			    dispose();
+			} else {
+				int choice = JOptionPane.showConfirmDialog(null, "User Does Not Exist", "ERROR",
+						JOptionPane.CLOSED_OPTION);
+				if (choice == JOptionPane.OK_OPTION) {
+					textFieldEJugador.setText("");
+				}
 			}
 		}
-		else {
-			int choice= JOptionPane.showConfirmDialog(null, 
-				    "User Does Not Exist","ERROR", JOptionPane.CLOSED_OPTION);
-			if (choice == JOptionPane.OK_OPTION) {
-				textFieldEJugador.setText("");
-				}
-		}
-		
+
 	}
 
 }

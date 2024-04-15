@@ -29,7 +29,7 @@ public class Controller implements IController {
 	final String INNSERTentrenador = "INSERT INTO entrenador (user,password,tipoEntrenador,nombreEquipo) VALUES (?,?,?,?)";
 
 	final String INNSERTjugador = "INSERT INTO jugador (user,password,dorsal,numeroGoles,numeroAsistencias,nombreEquipo) VALUES (?,?,?,?,?,?)";
-	final String GETjugador = "SELECT * FROM jugador WHERE USER = ?";
+	final String GETjugador = "SELECT * FROM jugador WHERE USER =?";
 	final String DELETEjugador = "DELETE FROM jugador WHERE user =?";
 	final String MODIFICARjugador = "UPDATE jugador SET password=?, dorsal=?,numeroGoles=?, numeroAsistencias=? WHERE user=?";
 
@@ -248,7 +248,6 @@ public class Controller implements IController {
 			statement.setInt(2, dorsal);
 			statement.setInt(3, numGoles);
 			statement.setInt(4, numAsist);
-
 			statement.setString(5, user);
 			if (statement.executeUpdate() > 0) {
 				modified = true;
@@ -340,20 +339,26 @@ public class Controller implements IController {
 
 	public Usuarios getUsuario(String user) {
 		Usuarios usuario = null;
+		this.openConnection("entrenador", "entrenador");
 		try {
 			statement = connection.prepareStatement(GETjugador);
 			statement.setString(1, user);
 
 			resultSet = statement.executeQuery();
+			while (resultSet.next()) {
+				String userN = resultSet.getString("user");
+				String password = resultSet.getString("password");
+				String nombreEquipo = resultSet.getString("nombreEquipo");
+				int dorsal = resultSet.getInt("dorsal");
+				int numGoles = resultSet.getInt("numeroGoles");
+				int numAsistencias = resultSet.getInt("numeroAsistencias");
+				usuario = new Jugador(userN, password, nombreEquipo, dorsal, numGoles, numAsistencias);
 
-			String userN = resultSet.getString("user");
-			String password = resultSet.getString("password");
-			String nombreEquipo = resultSet.getString("nombreEquipo");
-			int dorsal = resultSet.getInt("dorsal");
-			int numGoles = resultSet.getInt("numeroGoles");
-			int numAsistencias = resultSet.getInt("numeroAsistencias");
+			}
 
-			usuario = new Jugador(userN, password, nombreEquipo, dorsal, numGoles, numAsistencias);
+			
+
+			//usuario = new Jugador(userN, password, nombreEquipo, dorsal, numGoles, numAsistencias);
 			
 
 		// TODO Auto-generated method stub

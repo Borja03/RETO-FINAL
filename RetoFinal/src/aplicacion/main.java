@@ -8,8 +8,10 @@ public class main {
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
 		Controller controller = new Controller();
-		Login login = new Login(controller);
-		login.setVisible(true);
+		Splash splash = new Splash(controller);
+		splash.setVisible(true);
+		//Login login = new Login(controller);
+		//login.setVisible(true);
 	}
 
 }
