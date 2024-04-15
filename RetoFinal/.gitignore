@@ -1,3 +1,6 @@
+<<<<<<< HEAD
+/bin/
+=======
 # User-specific stuff
 .idea/**/workspace.xml
 .idea/**/tasks.xml
@@ -138,3 +141,4 @@ local.properties
 # Uncomment this line if you wish to ignore the project description file.
 # Typically, this file would be tracked if it contains build/dependency configurations:
 #.project
+>>>>>>> e78f18d24c18207d1b16d15e90d5b906c568bf1a
