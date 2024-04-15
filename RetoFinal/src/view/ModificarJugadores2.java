@@ -93,37 +93,43 @@ public class ModificarJugadores2 extends JFrame implements ActionListener {
 		btnOK.setBounds(492, 366, 89, 23);
 		contentPane.add(btnOK);
 		btnOK.addActionListener(this);
+		
+		
+		jugadorOldInfo();
+	}
+	public void jugadorOldInfo() {
+
+		Jugador usr =(Jugador) controller.getUsuario(user);
+		textFieldUSer.setText(usr.getUser());
+		textFieldContrasena.setText(usr.getContraseña());
+		textFieldDorsal.setText(usr.getDorsal()+"");
+		textFieldGoles.setText(usr.getGoles()+"");
+		textFieldAsist.setText(usr.getAsistencias()+"");
 	}
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		Object o = e.getSource();
 		
-		Jugador usr = (Jugador)controller.getUsuario(user);
-		textFieldUSer.setText(usr.getUser());
-		textFieldContrasena.setText(usr.getContraseña());
-		textFieldDorsal.setText(usr.getDorsal()+" 1");
-		textFieldGoles.setText(usr.getGoles()+" 2 ");
-		textFieldAsist.setText(usr.getAsistencias()+" 3 ");
+		int opcion = 0;
 		
-		String user=textFieldUSer.getText();
+		//String user=textFieldUSer.getText();
 		String password=textFieldContrasena.getText();
 		//String myTeam= txtEquiponame.getText();
 		int dorsal=Integer.valueOf(textFieldDorsal.getText());
 		int numGoles=Integer.valueOf(textFieldGoles.getText());
 		int numAsist=Integer.valueOf(textFieldAsist.getText());
 		
-		if(controller.modificarJugador(user, password, dorsal, numGoles, numAsist)) {
-			
-		}
 
 		if (o == btnOK) {
+
 			
+			if(controller.modificarJugador(user, password, dorsal, numGoles, numAsist)) {
+				 opcion = JOptionPane.showConfirmDialog(this,
+						(String) "El jugador ha sido modificado correctamente\n¿Desea modificar otro jugador?", "",
+						JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE, null);
+			}
 			
-			
-			int opcion = JOptionPane.showConfirmDialog(this,
-					(String) "El jugador ha sido modificado correctamente\n¿Desea modificar otro jugador?", "",
-					JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE, null);
 
 			if (opcion == JOptionPane.NO_OPTION) {
 				this.dispose();

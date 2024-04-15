@@ -57,5 +57,5 @@ public class GestionarEntre extends JFrame implements ActionListener {
 	}
 }
 
-}
+
 
