@@ -67,7 +67,7 @@ public class GestionarJugadores extends JFrame implements ActionListener {
 			e1.setVisible(true);
 			this.dispose();
 		} else if (o == btnModificar) {
-			ModificarJugadores m1 = new ModificarJugadores(controller);
+			ModificarJugadores m1 = new ModificarJugadores(controller,userName);
 			m1.setVisible(true);
 			this.dispose();
 		}

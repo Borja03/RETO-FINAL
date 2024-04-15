@@ -93,8 +93,9 @@ public class CrearPartido extends JFrame implements ActionListener {
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == equipoLocalComboBox) {
             String nombreEquipoLocal = (String) equipoLocalComboBox.getSelectedItem();
+            
             String estadioEquipoLocal = estadiosEquipos.get(nombreEquipoLocal);
-   
+         
             estadioField.setText(estadioEquipoLocal);
         }
     }

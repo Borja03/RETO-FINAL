@@ -13,8 +13,6 @@ import java.awt.EventQueue;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-
-import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
@@ -25,7 +23,6 @@ import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
 import controller.Controller;
-import javax.swing.JCheckBox;
 
 public class Login extends JFrame implements ActionListener {
 
@@ -37,7 +34,6 @@ public class Login extends JFrame implements ActionListener {
 	private JButton btnLogIn;
 	private static Controller controller;
 	private JLabel lblMsg;
-	private JCheckBox chckbxShowPassword;
 
 
 
@@ -55,13 +51,7 @@ public class Login extends JFrame implements ActionListener {
 		panelLeft.setBackground(new Color(128, 128, 0));
 		panelLeft.setBounds(0, 0, 345, 680);
 		contentPane.add(panelLeft);
-		JLabel imgTitle = new JLabel();
-		
-		ImageIcon imgIcon = new ImageIcon(getClass().getResource("/images/copa.png"));
-		imgTitle.setIcon(imgIcon);
-		imgTitle.setBounds(0, 0, 345, 680);
-		contentPane.add(imgTitle);
-		
+
 		txtUserName = new JTextField();
 		txtUserName.setFont(new Font("Tahoma", Font.BOLD, 14));
 		txtUserName.setBounds(514, 235, 407, 53);
@@ -72,6 +62,11 @@ public class Login extends JFrame implements ActionListener {
 		lblUserName.setFont(new Font("Tahoma", Font.BOLD, 14));
 		lblUserName.setBounds(383, 235, 151, 53);
 		contentPane.add(lblUserName);
+
+		JPanel panelLogo = new JPanel();
+		panelLogo.setBackground(new Color(128, 128, 0));
+		panelLogo.setBounds(489, 25, 328, 154);
+		contentPane.add(panelLogo);
 
 		JLabel lblPass = new JLabel("Password");
 		lblPass.setFont(new Font("Tahoma", Font.BOLD, 14));
@@ -115,16 +110,6 @@ public class Login extends JFrame implements ActionListener {
 		lblMsg.setFont(new Font("Tahoma", Font.BOLD, 12));
 		lblMsg.setBounds(588, 513, 239, 21);
 		contentPane.add(lblMsg);
-		
-		 chckbxShowPassword = new JCheckBox("");
-		chckbxShowPassword.setBounds(899, 390, 22, 21);
-		contentPane.add(chckbxShowPassword);
-		chckbxShowPassword.addActionListener(this);
-
-		
-		JLabel lblNewLabel_1 = new JLabel("Show password");
-		lblNewLabel_1.setBounds(809, 394, 112, 13);
-		contentPane.add(lblNewLabel_1);
 	}
 
 	@Override
@@ -153,14 +138,6 @@ public class Login extends JFrame implements ActionListener {
 			} else {
 				lblMsg.setText("Invalid username or password");
 			}
-		} else if (e.getSource() == chckbxShowPassword) {
-		    if (chckbxShowPassword.isSelected()) {
-		        // Set password field type to text to show characters
-		        txtPass.setEchoChar((char) 0);
-		      } else {
-		        // Set password field type back to password to hide characters with asterisks (*)
-		        txtPass.setEchoChar('*');
-		      }
-		    }
+		}
 	}
 }

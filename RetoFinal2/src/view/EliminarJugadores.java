@@ -4,17 +4,18 @@ import java.awt.EventQueue;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-import javax.swing.JButton;
 import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JOptionPane;
 import javax.swing.JPanel;
-import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
 
 import controller.Controller;
 
-public class ModificarJugadores extends JFrame implements ActionListener {
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+import javax.swing.JTextField;
+import javax.swing.JButton;
+
+public class EliminarJugadores extends JFrame implements ActionListener {
 
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
@@ -22,9 +23,11 @@ public class ModificarJugadores extends JFrame implements ActionListener {
 	private JLabel lblEJugador;
 	private JButton btnOK;
 	private Controller controller;
+	private String user;
 
-	public ModificarJugadores(Controller cont) {
+	public EliminarJugadores(Controller cont, String user) {
 		this.controller = cont;
+		this.user=user;
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 450, 300);
 		contentPane = new JPanel();
@@ -33,7 +36,7 @@ public class ModificarJugadores extends JFrame implements ActionListener {
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 
-		lblEJugador = new JLabel("Introduce el nombre de usuario del jugador que deseas modificar:");
+		lblEJugador = new JLabel("Introduce el nombre de usuario del jugador que deseas eliminar:");
 		lblEJugador.setBounds(48, 74, 340, 14);
 		contentPane.add(lblEJugador);
 
@@ -51,19 +54,25 @@ public class ModificarJugadores extends JFrame implements ActionListener {
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		Object o = e.getSource();
-		String usr = textFieldEJugador.getText();
+		String myTeam="";
+		int opcion ;
+		String jugador=textFieldEJugador.getText();
+
 		if (o == btnOK) {
-			if (controller.checkUserExist(usr)) {
-				ModificarJugadores2 m1 = new ModificarJugadores2(controller, usr);
-				m1.setVisible(true);
-			    dispose();
-			} else {
-				int choice = JOptionPane.showConfirmDialog(null, "User Does Not Exist", "ERROR",
-						JOptionPane.CLOSED_OPTION);
-				if (choice == JOptionPane.OK_OPTION) {
-					textFieldEJugador.setText("");
-				}
+			if(controller.borrarJugador(jugador)) {
+				 opcion = JOptionPane.showConfirmDialog(this,
+						(String) "El jugador ha sido eliminado correctamente\n¿Desea eliminar otro jugador?", "",
+						JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE, null);
+				 textFieldEJugador.setText("");
+				 if (opcion == JOptionPane.NO_OPTION) {
+						this.dispose();
+						GestionarJugadores g1 = new GestionarJugadores(controller,user,myTeam);
+						g1.setVisible(true);
+					}
 			}
+			
+
+			
 		}
 
 	}
