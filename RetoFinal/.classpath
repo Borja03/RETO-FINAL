@@ -5,5 +5,16 @@
 			<attribute name="module" value="true"/>
 		</attributes>
 	</classpathentry>
+<<<<<<< HEAD
+=======
+	<classpathentry kind="src" path="src"/>
+
+	<classpathentry kind="lib" path="src/jcalendar-1.4.jar"/>
+	<classpathentry kind="lib" path="src/jgoodies-common-1.2.0.jar"/>
+	<classpathentry kind="lib" path="src/jgoodies-looks-2.4.1.jar"/>
+	<classpathentry kind="lib" path="src/junit-4.6.jar"/>
+	<classpathentry kind="lib" path="src/mysql-connector-java-8.0.15.jar"/>
+	<classpathentry kind="lib" path="src/libraries/mysql-connector-java-8.0.15.jar"/>
+>>>>>>> bd255b299371b9b53b83a42b6239b1a4d746a129
 	<classpathentry kind="output" path="bin"/>
 </classpath>
