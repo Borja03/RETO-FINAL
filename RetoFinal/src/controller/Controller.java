@@ -1,5 +1,4 @@
 
-
 package controller;
 
 import java.sql.Connection;
@@ -14,7 +13,6 @@ import model.equipos.Equipo;
 import model.usuarios.Jugador;
 import model.usuarios.Usuarios;
 import view.Login;
-
 
 public class Controller implements IController {
 
@@ -136,9 +134,19 @@ public class Controller implements IController {
 	}
 
 	@Override
-	public void crearEquipo() {
-		// TODO Auto-generated method stub
-
+	public void crearEquipo(String nombreEquipo, int titulos, String nombreEstadio) {
+		try (Connection conn = DriverManager.getConnection(DB_URL, user, password)) {
+			String query = "INSERT INTO equipo (nombreEquipo, titulos, nombreEstadio) VALUES (?, ?, ?)";
+			try (PreparedStatement pstmt = conn.prepareStatement(query)) {
+				pstmt.setString(1, nombreEquipo);
+				pstmt.setInt(2, titulos);
+				pstmt.setString(3, nombreEstadio);
+				pstmt.executeUpdate();
+				System.out.println("Equipo creado exitosamente.");
+			}
+		} catch (SQLException e) {
+			System.err.println("Error al crear el equipo: " + e.getMessage());
+		}
 	}
 
 	@Override
@@ -336,7 +344,6 @@ public class Controller implements IController {
 		return myTeam;
 	}
 
-
 	public Usuarios getUsuario(String user) {
 		Usuarios usuario = null;
 		this.openConnection("entrenador", "entrenador");
@@ -356,14 +363,11 @@ public class Controller implements IController {
 
 			}
 
-			
+			// usuario = new Jugador(userN, password, nombreEquipo, dorsal, numGoles,
+			// numAsistencias);
 
-			//usuario = new Jugador(userN, password, nombreEquipo, dorsal, numGoles, numAsistencias);
-			
+			// TODO Auto-generated method stub
 
-		// TODO Auto-generated method stub
-
-		
 		} catch (SQLException e) {
 			System.out.println("Error de SQL");
 			e.printStackTrace();
@@ -374,41 +378,30 @@ public class Controller implements IController {
 
 	}
 
-	
-	
+	@Override
+	public ArrayList<Equipo> listarEquiposCP() {
+		ArrayList<Equipo> equipos = new ArrayList<>();
 
-	 @Override
-	    public ArrayList<Equipo> listarEquiposCP() {
-	        ArrayList<Equipo> equipos = new ArrayList<>();
+		try {
+			openConnection("admin", "admin");
+			String query = "SELECT * FROM equipo";
+			statement = connection.prepareStatement(query);
+			resultSet = statement.executeQuery();
 
-	        try {
-	            openConnection("admin","admin"); 
-	            String query = "SELECT * FROM equipo";
-	            statement = connection.prepareStatement(query);
-	            resultSet = statement.executeQuery();
+			while (resultSet.next()) {
+				String nombreEquipo = resultSet.getString("nombreEquipo");
+				String nombreEstadio = resultSet.getString("nombreEstadio");
+				int titulos = resultSet.getInt("titulos");
+				Equipo eq = new Equipo(nombreEquipo, nombreEstadio, titulos);
+				equipos.add(eq);
+			}
+		} catch (SQLException ex) {
+			ex.printStackTrace();
+		} finally {
+			closeConnection();
+		}
 
-	            while (resultSet.next()) {
-	                String nombreEquipo = resultSet.getString("nombreEquipo");
-	                String nombreEstadio = resultSet.getString("nombreEstadio");
-	                int titulos = resultSet.getInt("titulos");
-	                Equipo eq = new Equipo (nombreEquipo,nombreEstadio,titulos);
-	                equipos.add(eq);
-	            }
-	        } catch (SQLException ex) {
-	            ex.printStackTrace();
-	        } finally {
-	            closeConnection();
-	        }
-
-	        return equipos;
-	    }
-
-
-	  
-	 
-
-
-
-
+		return equipos;
+	}
 
 }

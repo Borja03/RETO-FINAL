@@ -25,23 +25,6 @@ import javax.swing.JTextPane;
 
 public class MenuAdmin extends JFrame implements ActionListener {
 
-<<<<<<< HEAD
-
-
-	private static final long serialVersionUID = 1L;
-		private JPanel contentPane;
-	    private JButton btnLogOut;
-	    private JButton btnAddEq;
-	    private JButton btnAddJugado;
-	    private JButton crearEquipo;
-	    private JButton gestionarEntre;
-	    private JButton cambiarContra;
-	    private JButton crearPartido;
-	    private JButton cerrarSesion;
-	    private JLabel lblWelcome;
-	    private Controller controller;
-	    private String userName;
-=======
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
 	private JButton btnLogOut;
@@ -55,7 +38,6 @@ public class MenuAdmin extends JFrame implements ActionListener {
 	private JLabel lblWelcome;
 	private Controller controller;
 	private String userName;
->>>>>>> e78f18d24c18207d1b16d15e90d5b906c568bf1a
 
 	public MenuAdmin(Controller cont) {
 		this.controller = cont;

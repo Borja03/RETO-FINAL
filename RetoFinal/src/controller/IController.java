@@ -16,7 +16,7 @@ public interface IController {
 
 	public boolean logIn(String username, String pass, String userType);
 
-	public void crearEquipo();
+	public void crearEquipo(String nombreEquipo, int titulos, String nombreEstadio);
 
 	public boolean crearEntrenador(String nombreEquipo, String user, String password, String tipoEntrenador);
 

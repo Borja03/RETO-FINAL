@@ -1,23 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <classpath>
 	<classpathentry kind="src" path="src"/>
-	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-17">
+	<classpathentry excluding="src/" kind="src" path=""/>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER">
 		<attributes>
 			<attribute name="module" value="true"/>
 		</attributes>
 	</classpathentry>
-<<<<<<< HEAD
-	<classpathentry kind="src" path="src"/>
-=======
->>>>>>> e78f18d24c18207d1b16d15e90d5b906c568bf1a
-	<classpathentry kind="lib" path="src/jcalendar-1.4.jar"/>
-	<classpathentry kind="lib" path="src/jgoodies-common-1.2.0.jar"/>
-	<classpathentry kind="lib" path="src/jgoodies-looks-2.4.1.jar"/>
-	<classpathentry kind="lib" path="src/junit-4.6.jar"/>
-<<<<<<< HEAD
-	<classpathentry kind="lib" path="src/mysql-connector-java-8.0.15.jar"/>
-=======
+	<classpathentry kind="lib" path="src/libraries/jcalendar-1.4.jar"/>
+	<classpathentry kind="lib" path="src/libraries/jgoodies-common-1.2.0.jar"/>
+	<classpathentry kind="lib" path="src/libraries/jgoodies-looks-2.4.1.jar"/>
 	<classpathentry kind="lib" path="src/libraries/mysql-connector-java-8.0.15.jar"/>
->>>>>>> e78f18d24c18207d1b16d15e90d5b906c568bf1a
 	<classpathentry kind="output" path="bin"/>
 </classpath>
