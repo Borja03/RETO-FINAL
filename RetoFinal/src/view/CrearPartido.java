@@ -9,7 +9,9 @@ import javax.swing.border.EmptyBorder;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.sql.Date;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -21,19 +23,28 @@ public class CrearPartido extends JFrame implements ActionListener {
     private JComboBox<String> equipoVisitanteComboBox;
     private JTextField estadioField;
     private JCalendar datePicker;
+    private JSpinner timeSpinner;
     private Controller controller;
     private HashMap<String, String> estadiosEquipos = new HashMap<>();
-    private  JButton okButton;
+    private ArrayList<String> equiposDisponibles = new ArrayList<>();
+    private JButton okButton;
 
     public CrearPartido(Controller controlador) {
         this.controller = controlador;
 
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setBounds(100, 100, 450, 300);
+        setBounds(100, 100, 450, 350);
         contentPane = new JPanel();
         contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
         setContentPane(contentPane);
         contentPane.setLayout(null);
+
+
+        timeSpinner = new JSpinner(new SpinnerDateModel());
+        JSpinner.DateEditor timeEditor = new JSpinner.DateEditor(timeSpinner, "HH:mm:ss");
+        timeSpinner.setEditor(timeEditor);
+        timeSpinner.setBounds(42, 199, 80, 20);
+        contentPane.add(timeSpinner);
 
         JLabel lblNewLabel = new JLabel("Equipo Local:");
         lblNewLabel.setBounds(29, 31, 100, 14);
@@ -74,21 +85,18 @@ public class CrearPartido extends JFrame implements ActionListener {
         okButton.setBounds(360, 232, 66, 21);
         contentPane.add(okButton);
 
-       
         llenarComboBoxEquipos();
+
+        okButton.addActionListener(this);
     }
-
-
-  
 
     private void llenarComboBoxEquipos() {
         ArrayList<Equipo> equipos = controller.listarEquiposCP();
         for (Equipo equipo : equipos) {
-       
             equipoLocalComboBox.addItem(equipo.getNombreEquipo());
             equipoVisitanteComboBox.addItem(equipo.getNombreEquipo());
-            
             estadiosEquipos.put(equipo.getNombreEquipo(), equipo.getEstadio());
+            equiposDisponibles.add(equipo.getNombreEquipo());
         }
     }
 
@@ -97,13 +105,25 @@ public class CrearPartido extends JFrame implements ActionListener {
             String nombreEquipoLocal = (String) equipoLocalComboBox.getSelectedItem();
             String estadioEquipoLocal = estadiosEquipos.get(nombreEquipoLocal);
             estadioField.setText(estadioEquipoLocal);
+
+
+            equipoVisitanteComboBox.removeAllItems();
+            for (String equipo : equiposDisponibles) {
+                if (!equipo.equals(nombreEquipoLocal)) {
+                    equipoVisitanteComboBox.addItem(equipo);
+                }
+            }
         } else if (e.getSource() == okButton) {
             String equipoLocal = (String) equipoLocalComboBox.getSelectedItem();
             String equipoVisitante = (String) equipoVisitanteComboBox.getSelectedItem();
-            Date fechaInicio = datePicker.getDate();
-            
-            if (equipoLocal != null && equipoVisitante != null && fechaInicio != null) {
-                boolean partidoCreado = controller.crearPartido(equipoLocal, equipoVisitante, fechaInicio);
+            Timestamp fechaInicio = new Timestamp(datePicker.getDate().getTime());
+            Timestamp horaInicio = new Timestamp(((java.util.Date) timeSpinner.getValue()).getTime());
+
+            if (equipoLocal != null && equipoVisitante != null && fechaInicio != null && horaInicio != null) {
+
+                long fechaHoraInicio = fechaInicio.getTime() + horaInicio.getTime();
+                Timestamp fechaHoraInicioCompleta = new Timestamp(fechaHoraInicio);
+                boolean partidoCreado = controller.crearPartido(equipoLocal, equipoVisitante, fechaHoraInicioCompleta);
                 if (partidoCreado) {
                     JOptionPane.showMessageDialog(this, "Partido creado exitosamente.");
                 } else {
@@ -114,8 +134,4 @@ public class CrearPartido extends JFrame implements ActionListener {
             }
         }
     }
-
-
-
- 
 }

@@ -43,3 +43,7 @@ nombreEquipo varchar(30),
 foreign key (nombreEquipo) references equipo(nombreEquipo) on delete cascade
 );
 
+INSERT INTO equipo 
+VALUES
+("Barcelona",3,"Camp Nou"),
+("MAdrid",5,"Santiago Bernabeu");

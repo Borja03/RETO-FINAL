@@ -2,6 +2,7 @@
 
 package controller;
 
+import java.security.Timestamp;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -166,32 +167,45 @@ public class Controller implements IController {
 	}
 
 	@Override
-		public boolean crearPartido(String equipoLocal, String equipoVisitante, Date fechaInicio) {
-		    boolean added = false;
-		    try {
-		        openConnection("admin", "admin");
-		        String query = "INSERT INTO juegan (nombreEquipoLocal, nombreEquipoVisitante, fechaInicio) VALUES (?, ?, ?)";
-		        PreparedStatement statement = connection.prepareStatement(query);
-		        statement.setString(1, equipoLocal);
-		        statement.setString(2, equipoVisitante);
-		        // Convertir el objeto Date a un objeto java.sql.Date
-		        java.sql.Date fechaSql = new java.sql.Date(fechaInicio.getTime());
-		        statement.setDate(3, fechaSql);
+	public boolean crearPartido(String equipoLocal, String equipoVisitante, java.sql.Timestamp fechaInicio) {
+	    boolean added = false;
+	    try {
+	        openConnection("admin", "admin");
 
-		        if (statement.executeUpdate() > 0) {
-		            added = true;
-		            System.out.println("Partido creado!");
-		        } else {
-		            System.out.println("Fallo al crear el partido.");
-		        }
-		    } catch (SQLException e) {
-		        System.out.println("Error de SQL");
-		        e.printStackTrace();
-		    } finally {
-		        closeConnection();
-		    }
-		    return added;
-		}
+	        // Insertar el partido en la tabla partidos con resultado inicial 0-0
+	        String insertPartidoQuery = "INSERT INTO partidos (fechaInicio, resultado) VALUES (?, ?)";
+	        PreparedStatement insertPartidoStatement = connection.prepareStatement(insertPartidoQuery);
+	        insertPartidoStatement.setTimestamp(1, fechaInicio);
+	        insertPartidoStatement.setString(2, "0-0");
+	        int insertedPartidoRows = insertPartidoStatement.executeUpdate();
+
+	        // Si se insertó correctamente en la tabla partidos, insertar en la tabla juegan
+	        if (insertedPartidoRows > 0) {
+	            String insertJueganQuery = "INSERT INTO juegan (nombreEquipoLocal, nombreEquipoVisitante, fechaInicio) VALUES (?, ?, ?)";
+	            PreparedStatement insertJueganStatement = connection.prepareStatement(insertJueganQuery);
+	            insertJueganStatement.setString(1, equipoLocal);
+	            insertJueganStatement.setString(2, equipoVisitante);
+	            insertJueganStatement.setTimestamp(3, fechaInicio);
+
+	            if (insertJueganStatement.executeUpdate() > 0) {
+	                added = true;
+	                System.out.println("Partido creado!");
+	            } else {
+	                System.out.println("Fallo al crear el partido en la tabla juegan.");
+	            }
+	        } else {
+	            System.out.println("Fallo al crear el partido en la tabla partidos.");
+	        }
+	    } catch (SQLException e) {
+	        System.out.println("Error de SQL");
+	        e.printStackTrace();
+	    } finally {
+	        closeConnection();
+	    }
+	    return added;
+	}
+
+
 
 
 

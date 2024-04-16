@@ -1,6 +1,7 @@
 
 package controller;
 
+import java.security.Timestamp;
 import java.util.ArrayList;
 import java.util.Date;
 
@@ -50,6 +51,6 @@ public interface IController {
 
 	public ArrayList<Equipo> listarEquiposCP();
 
-	boolean crearPartido(String equipoLocal, String equipoVisitante, Date fechaInicio);
+	boolean crearPartido(String equipoLocal, String equipoVisitante, java.sql.Timestamp fechaInicio);
 
 }
