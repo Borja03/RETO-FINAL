@@ -117,7 +117,6 @@ public class CrearPartido extends JFrame implements ActionListener {
             String estadioEquipoLocal = estadiosEquipos.get(nombreEquipoLocal);
             estadioField.setText(estadioEquipoLocal);
 
-
             equipoVisitanteComboBox.removeAllItems();
             for (String equipo : equiposDisponibles) {
                 if (!equipo.equals(nombreEquipoLocal)) {
@@ -128,13 +127,16 @@ public class CrearPartido extends JFrame implements ActionListener {
             String equipoLocal = (String) equipoLocalComboBox.getSelectedItem();
             String equipoVisitante = (String) equipoVisitanteComboBox.getSelectedItem();
             Timestamp fechaInicio = new Timestamp(datePicker.getDate().getTime());
-            Timestamp horaInicio = new Timestamp(((java.util.Date) timeSpinner.getValue()).getTime());
+            java.util.Date horaSeleccionada = (java.util.Date) timeSpinner.getValue();
+            Timestamp horaInicio = new Timestamp(horaSeleccionada.getTime());
 
             if (equipoLocal != null && equipoVisitante != null && fechaInicio != null && horaInicio != null) {
+             
+                fechaInicio.setHours(horaInicio.getHours());
+                fechaInicio.setMinutes(horaInicio.getMinutes());
+                fechaInicio.setSeconds(horaInicio.getSeconds());
 
-                long fechaHoraInicio = fechaInicio.getTime() + horaInicio.getTime();
-                Timestamp fechaHoraInicioCompleta = new Timestamp(fechaHoraInicio);
-                boolean partidoCreado = controller.crearPartido(equipoLocal, equipoVisitante, fechaHoraInicioCompleta);
+                boolean partidoCreado = controller.crearPartido(equipoLocal, equipoVisitante, fechaInicio);
                 if (partidoCreado) {
                     JOptionPane.showMessageDialog(this, "Partido creado exitosamente.");
                 } else {
@@ -145,4 +147,5 @@ public class CrearPartido extends JFrame implements ActionListener {
             }
         }
     }
+
 }
