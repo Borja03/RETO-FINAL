@@ -6,6 +6,7 @@ import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
@@ -20,9 +21,12 @@ public class CrearEquipo extends JFrame implements ActionListener {
     private JTextField nombreEquipoField;
     private JTextField nombreEstadioField;
     private JComboBox<Integer> titulosComboBox;
+    private JButton btnOK;
+
 
     public CrearEquipo(Controller controlador) {
         this.controller = controlador;
+       
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setBounds(100, 100, 450, 300);
         contentPane = new JPanel();
@@ -62,17 +66,36 @@ public class CrearEquipo extends JFrame implements ActionListener {
         cerrarSesion = new JButton("Cerrar sesión");
         cerrarSesion.setBounds(341, 242, 95, 21);
         contentPane.add(cerrarSesion);
+        
+        btnOK = new JButton("OK");
+        btnOK.setBounds(146, 190, 89, 23);
+        contentPane.add(btnOK);
+        btnOK.addActionListener(this);
 
         cerrarSesion.addActionListener(this);
     }
 
     public void actionPerformed(ActionEvent e) {
         Object o = e.getSource();
+  
+        int titulosSeleccionados = (int) titulosComboBox.getSelectedItem();
+
+       
         if (o == cerrarSesion) {
             Login frame = new Login(controller);
             frame.setVisible(true);
             dispose();
+        }else if(o == btnOK) {
+        	controller.crearEquipo(nombreEquipoField.getText(), titulosSeleccionados, nombreEstadioField.getText());
+        	 int opcion = JOptionPane.showConfirmDialog(this,
+						(String) "El equipo ha sido introducido correctamente\n¿Desea añadir otro equipo?", "",
+						JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE, null);
+        	 if(opcion == JOptionPane.NO_OPTION) {
+        		 this.dispose();
+        		 MenuAdmin ma = new MenuAdmin(controller);
+        		 ma.setVisible(true);
+        	 }
+        	 
         }
     }
-
 }

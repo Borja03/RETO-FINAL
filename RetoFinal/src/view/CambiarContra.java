@@ -45,7 +45,7 @@ public class CambiarContra extends JFrame implements ActionListener {
         JButton btnOk = new JButton("OK");
         btnOk.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                cambiarContraseña();
+                cambiarContrasenia();
             }
         });
         btnOk.setBounds(335, 240, 89, 23);
@@ -67,7 +67,7 @@ public class CambiarContra extends JFrame implements ActionListener {
         }
     }
 
-    private void cambiarContraseña() {
+    private void cambiarContrasenia() {
         String newPassword = new String(passwordField.getPassword());
         String confirmPassword = new String(confirmPasswordField.getPassword());
 

@@ -15,6 +15,7 @@ import javax.swing.border.EmptyBorder;
 import controller.Controller;
 
 public class MenuAdmin extends JFrame implements ActionListener {
+
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
 	private JButton btnLogOut;
@@ -26,18 +27,19 @@ public class MenuAdmin extends JFrame implements ActionListener {
 	private JPanel panelRight;
 	private JPanel panelRight2;
 
-	// Botones relacionados con la gestión de equipos
+	// Botones relacionados con la gestiï¿½n de equipos
 	private JButton btnCrearEquipo;
 	private JButton btnBorrarEquipo;
 	private JButton btnModificarEquipo;
 
-	// Botones relacionados con la gestión de entrenadores
+	// Botones relacionados con la gestiï¿½n de entrenadores
 	private JButton btnCrearEntrenador;
 	private JButton btnBorrarEntrenador;
 	private JButton btnModificarEntrenador;
 
 	public MenuAdmin(Controller cont) {
 		this.controller = cont;
+
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 1008, 717);
 		contentPane = new JPanel();
@@ -108,17 +110,17 @@ public class MenuAdmin extends JFrame implements ActionListener {
 		contentPane.add(panelRight2);
 		panelRight2.setLayout(new GridLayout(0, 1, 0, 10));
 
-		// Inicializar los botones relacionados con la gestión de equipos
+		// Inicializar los botones relacionados con la gestiï¿½n de equipos
 		btnCrearEquipo = new JButton("Crear equipo");
 		btnBorrarEquipo = new JButton("Borrar equipo");
 		btnModificarEquipo = new JButton("Modificar equipo");
 
-		// Inicializar los botones relacionados con la gestión de entrenadores
+		// Inicializar los botones relacionados con la gestiï¿½n de entrenadores
 		btnCrearEntrenador = new JButton("Crear entrenador");
 		btnBorrarEntrenador = new JButton("Borrar entrenador");
 		btnModificarEntrenador = new JButton("Modificar entrenador");
 
-		// Ocultar los botones de gestión de equipos inicialmente
+		// Ocultar los botones de gestiï¿½n de equipos inicialmente
 		ocultarBotonesEquipos();
 		ocultarBotonesEntrenadores();
 
@@ -129,23 +131,26 @@ public class MenuAdmin extends JFrame implements ActionListener {
 		panelRight2.add(btnBorrarEquipo);
 		panelRight2.add(btnModificarEquipo);
 
-		// Agregar acción a los botones de gestión de equipos
+		// Agregar acciï¿½n a los botones de gestiï¿½n de equipos
 		btnCrearEquipo.addActionListener(this);
 		btnBorrarEquipo.addActionListener(this);
 		btnModificarEquipo.addActionListener(this);
+		btnCrearPartido.addActionListener(this);
 
-		// Agregar acción a los botones de gestión de entrenadores
+		// Agregar acciï¿½n a los botones de gestiï¿½n de entrenadores
 		btnCrearEntrenador.addActionListener(this);
 		btnBorrarEntrenador.addActionListener(this);
 		btnModificarEntrenador.addActionListener(this);
+		btnCrearPartido.addActionListener(this);
 
-		// Agregar acción al botón de gestionar entrenador
+		// Agregar acciï¿½n al botï¿½n de gestionar entrenador
 		btnGestionarEntrenador.addActionListener(this);
 	}
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		Object o = e.getSource();
+
 		if (o == btnAddEq) {
 			mostrarBotonesEquipos();
 			ocultarBotonesEntrenadores();
@@ -156,12 +161,28 @@ public class MenuAdmin extends JFrame implements ActionListener {
 			CrearPartido frame = new CrearPartido(controller);
 			frame.setVisible(true);
 			dispose();
-		} else if (o == btnLogOut) {
-			Login frame = new Login(controller);
-			frame.setVisible(true);
-			dispose();
 		}
-	}
+			
+		else if (o == btnCrearEquipo) {
+				CrearEquipo frame = new CrearEquipo(controller);
+				frame.setVisible(true);
+				dispose();
+			} else if (o == btnGestionarEntrenador) {
+				GestionarEntre frame = new GestionarEntre(controller);
+				frame.setVisible(true);
+				dispose();
+			} else if (o == btnCrearEquipo) {
+
+				CrearPartido frame = new CrearPartido(controller);
+				frame.setVisible(true);
+				dispose();
+			} else if (o == btnLogOut) {
+				Login frame = new Login(controller);
+				frame.setVisible(true);
+				dispose();
+			}
+		}
+	
 
 	private void mostrarBotonesEquipos() {
 		panelRight2.setVisible(true);

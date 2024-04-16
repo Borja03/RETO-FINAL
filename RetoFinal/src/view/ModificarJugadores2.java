@@ -101,7 +101,7 @@ public class ModificarJugadores2 extends JFrame implements ActionListener {
 
 		Jugador usr =(Jugador) controller.getUsuario(user);
 		textFieldUSer.setText(usr.getUser());
-		textFieldContrasena.setText(usr.getContraseña());
+		textFieldContrasena.setText(usr.getContrasenia());
 		textFieldDorsal.setText(usr.getDorsal()+"");
 		textFieldGoles.setText(usr.getGoles()+"");
 		textFieldAsist.setText(usr.getAsistencias()+"");
