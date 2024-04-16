@@ -21,6 +21,7 @@ public class GestionarEntre extends JFrame implements ActionListener {
 
 	public GestionarEntre(Controller controlador) {
 		this.controller = controlador;
+		
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 450, 300);
 		contentPane = new JPanel();
@@ -52,6 +53,18 @@ public class GestionarEntre extends JFrame implements ActionListener {
 			Login frame = new Login(controller);
 			frame.setVisible(true);
 			dispose();
+		}else if(o == btnCrear) {
+			this.dispose();
+			AnadirEntrenador av = new AnadirEntrenador(controller);
+			av.setVisible(true);
+		}else if(o == btnDelete) {
+			this.dispose();
+			EliminarEntrenador av = new EliminarEntrenador(controller);
+			av.setVisible(true);
+		}else {
+			this.dispose();
+			ModificarEntrenador av = new ModificarEntrenador(controller);
+			av.setVisible(true);
 		}
 
 	}
