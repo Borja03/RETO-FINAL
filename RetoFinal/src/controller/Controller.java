@@ -286,13 +286,11 @@ public class Controller implements IController {
 	public boolean modificarJugadorConDorsal(String user, int dorsal) {
 
 		boolean modified = false;
-		this.openConnection("jugador", "jugador");
 		try {
 
 			Usuarios usuario = this.getUsuario(user);
-
 			Jugador jugador = (Jugador) usuario;
-
+			this.openConnection("jugador", "jugador");
 			statement = connection.prepareStatement(MODIFICARjugador);
 			statement.setString(1, ((Usuarios) jugador).getContraseña());
 			statement.setInt(2, dorsal);
