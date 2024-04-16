@@ -38,9 +38,12 @@ public class MenuAdmin extends JFrame implements ActionListener {
 	private JLabel lblWelcome;
 	private Controller controller;
 	private String userName;
+	private String myTeam;
 
-	public MenuAdmin(Controller cont) {
+	public MenuAdmin(Controller cont, String user, String team) {
 		this.controller = cont;
+		this.userName = user;
+		this.myTeam = team;
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 1008, 717);
 		contentPane = new JPanel();
@@ -136,7 +139,7 @@ public class MenuAdmin extends JFrame implements ActionListener {
 	public void actionPerformed(ActionEvent e) {
 		Object o = e.getSource();
 		if (o == crearEquipo) {
-			CrearEquipo frame = new CrearEquipo(controller);
+			CrearEquipo frame = new CrearEquipo(controller, userName, myTeam);
 			frame.setVisible(true);
 			dispose();
 		} else if (o == gestionarEntre) {

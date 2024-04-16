@@ -101,13 +101,13 @@ public class CrearPartido extends JFrame implements ActionListener {
 
 
     public static void main(String[] args) {
-        // Crear una instancia del controlador
+    
         Controller controlador = new Controller();
 
-        // Crear una instancia de la ventana CrearPartido y pasarle el controlador
+      
         CrearPartido ventanaCrearPartido = new CrearPartido(controlador);
 
-        // Hacer visible la ventana
+       
         ventanaCrearPartido.setVisible(true);
     }
 }
