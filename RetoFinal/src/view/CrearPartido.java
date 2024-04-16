@@ -92,13 +92,24 @@ public class CrearPartido extends JFrame implements ActionListener {
 
     private void llenarComboBoxEquipos() {
         ArrayList<Equipo> equipos = controller.listarEquiposCP();
+        
+        // Agregar una opción inicial en blanco para el equipo visitante
+        equipoVisitanteComboBox.addItem("");
+        
         for (Equipo equipo : equipos) {
             equipoLocalComboBox.addItem(equipo.getNombreEquipo());
             equipoVisitanteComboBox.addItem(equipo.getNombreEquipo());
             estadiosEquipos.put(equipo.getNombreEquipo(), equipo.getEstadio());
             equiposDisponibles.add(equipo.getNombreEquipo());
         }
+        
+        // Eliminar la primera opción en blanco si hay más de una opción
+        if (equipoVisitanteComboBox.getItemCount() > 1) {
+            equipoVisitanteComboBox.removeItemAt(0);
+        }
     }
+
+
 
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == equipoLocalComboBox) {

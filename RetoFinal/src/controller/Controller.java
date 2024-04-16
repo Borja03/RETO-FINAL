@@ -171,29 +171,18 @@ public class Controller implements IController {
 	    try {
 	        openConnection("admin", "admin");
 
-	        // Insertar el partido en la tabla partidos con resultado inicial 0-0
-	        String insertPartidoQuery = "INSERT INTO partidos (fechaInicio, resultado) VALUES (?, ?)";
-	        PreparedStatement insertPartidoStatement = connection.prepareStatement(insertPartidoQuery);
-	        insertPartidoStatement.setTimestamp(1, fechaInicio);
-	        insertPartidoStatement.setString(2, "0-0");
-	        int insertedPartidoRows = insertPartidoStatement.executeUpdate();
+	        String insertJueganQuery = "INSERT INTO juegan (nombreEquipoLocal, nombreEquipoVisitante, fechaInicio, resultado) VALUES (?, ?, ?, ?)";
+	        PreparedStatement insertJueganStatement = connection.prepareStatement(insertJueganQuery);
+	        insertJueganStatement.setString(1, equipoLocal);
+	        insertJueganStatement.setString(2, equipoVisitante);
+	        insertJueganStatement.setTimestamp(3, fechaInicio);
+	        insertJueganStatement.setString(4, "0-0");
 
-	        // Si se insertó correctamente en la tabla partidos, insertar en la tabla juegan
-	        if (insertedPartidoRows > 0) {
-	            String insertJueganQuery = "INSERT INTO juegan (nombreEquipoLocal, nombreEquipoVisitante, fechaInicio) VALUES (?, ?, ?)";
-	            PreparedStatement insertJueganStatement = connection.prepareStatement(insertJueganQuery);
-	            insertJueganStatement.setString(1, equipoLocal);
-	            insertJueganStatement.setString(2, equipoVisitante);
-	            insertJueganStatement.setTimestamp(3, fechaInicio);
-
-	            if (insertJueganStatement.executeUpdate() > 0) {
-	                added = true;
-	                System.out.println("Partido creado!");
-	            } else {
-	                System.out.println("Fallo al crear el partido en la tabla juegan.");
-	            }
+	        if (insertJueganStatement.executeUpdate() > 0) {
+	            added = true;
+	            System.out.println("Partido creado!");
 	        } else {
-	            System.out.println("Fallo al crear el partido en la tabla partidos.");
+	            System.out.println("Fallo al crear el partido en la tabla juegan.");
 	        }
 	    } catch (SQLException e) {
 	        System.out.println("Error de SQL");
