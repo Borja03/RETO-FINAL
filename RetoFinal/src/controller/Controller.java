@@ -33,11 +33,12 @@ public class Controller implements IController {
 
 	final String INNSERTjugador = "INSERT INTO jugador (user,password,dorsal,numeroGoles,numeroAsistencias,nombreEquipo) VALUES (?,?,?,?,?,?)";
 	final String GETjugador = "SELECT * FROM jugador WHERE user = ?";
+	final String GETjugadorEquipo = "SELECT * FROM jugador WHERE user = ? AND nombreEquipo= ?";
 	final String DELETEjugador = "DELETE FROM jugador WHERE user =?";
 	final String MODIFICARjugador = "UPDATE jugador SET password=?, dorsal=?,numeroGoles=?, numeroAsistencias=? WHERE user=?";
 
 	final String ConnectUser = "SELECT * FROM  laliga WHERE user_name =? AND password=?";
-
+	final String nombreEquipo = "Select nombreEquipo FROM laliga WHERE user=?";
 	final String ALLequipos = "SELECT nombreEquipo FROM  equipo";
 	final String ENTRENADORequipo = "SELECT nombreEquipo FROM  entrenador where user=?";
 
@@ -346,29 +347,25 @@ public class Controller implements IController {
 	public boolean modificarJugadorConDorsal(String user, int dorsal) {
 
 		boolean modified = false;
-		this.openConnection("jugador", "jugador");
 		try {
 
 			Usuarios usuario = this.getUsuario(user);
-			if (usuario != null && usuario instanceof Jugador) {
-				Jugador jugador = (Jugador) usuario;
 
-				statement = connection.prepareStatement(MODIFICARjugador);
-				statement.setString(1, ((Usuarios) jugador).getContrasenia());
-				statement.setInt(2, dorsal);
-				statement.setInt(3, jugador.getGoles());
-				statement.setInt(4, jugador.getAsistencias());
-				statement.setString(5, user);
-				if (statement.executeUpdate() > 0) {
-					modified = true;
-					System.out.println("Dorsal modificado con �xito!");
-				} else {
-					System.out.println("Error al modificar el dorsal");
-				}
-
+			Jugador jugador = (Jugador) usuario;
+			this.openConnection("jugador", "jugador");
+			statement = connection.prepareStatement(MODIFICARjugador);
+			statement.setString(1, ((Usuarios) jugador).getContrase�a());
+			statement.setInt(2, dorsal);
+			statement.setInt(3, jugador.getGoles());
+			statement.setInt(4, jugador.getAsistencias());
+			statement.setString(5, user);
+			if (statement.executeUpdate() > 0) {
+				modified = true;
+				System.out.println("Dorsal modificado con �xito!");
 			} else {
-				System.out.println("El usuario no es un jugador o no existe");
+				System.out.println("Error al modificar el dorsal");
 			}
+
 		} catch (SQLException e) {
 			System.out.println("Error de SQL");
 			e.printStackTrace();
@@ -378,22 +375,31 @@ public class Controller implements IController {
 		return modified;
 	}
 
-	public boolean existeDorsal(int dorsal) {
-		boolean exists = false;
+	public boolean existeDorsal(int dorsal, String user) {
 		this.openConnection("jugador", "jugador");
+		boolean exists = false;
 		try {
 			statement = connection.prepareStatement(GETjugador);
-			statement.setInt(1, dorsal);
+			statement.setString(1, user);
 			resultSet = statement.executeQuery();
+			String nombreEquipo = "";
+			if (resultSet.next()) {
+				nombreEquipo = resultSet.getString("nombreEquipo");
+			}
+
+			statement = connection.prepareStatement("SELECT * FROM jugador WHERE dorsal = ? AND nombreEquipo = ?");
+			statement.setInt(1, dorsal);
+			statement.setString(2, nombreEquipo);
+			resultSet = statement.executeQuery();
+
 			if (resultSet.next()) {
 				exists = true;
 			}
 		} catch (SQLException e) {
 			System.out.println("Error de SQL");
 			e.printStackTrace();
-		} finally {
-			this.closeConnection();
 		}
+		this.closeConnection();
 		return exists;
 	}
 
