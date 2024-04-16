@@ -29,11 +29,12 @@ public class CambiarDorsal extends JFrame implements ActionListener {
 			JButton button = new JButton(Integer.toString(i));
 			button.setEnabled(true);
 			button.addActionListener(this);
-			button.setBackground(Color.WHITE);
-			if (cont.existeDorsal(i)) {
+			if (cont.existeDorsal(i, userC)) {
 				button.setEnabled(false);
+				button.setBackground(Color.GRAY);
 			} else {
 				button.setEnabled(true);
+				button.setBackground(Color.WHITE);
 			}
 			buttonsPanel.add(button);
 		}
