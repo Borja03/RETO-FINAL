@@ -36,7 +36,9 @@ tipoEntrenador enum('PrimerEntrenador', 'SegundoEntrenador'),
 nombreEquipo varchar(30),
 foreign key (nombreEquipo) references equipo(nombreEquipo) on delete cascade
 );
-
+insert into equipo values('Athletic de Bilbao',100,'San Mames');
+insert into entrenador values('entrenador','1234','1','PrimerEntrenador','Athletic de Bilbao');
+insert into jugador values('jugador','1234','1',9,99,500,'Athletic de Bilbao');
 INSERT INTO equipo (nombreEquipo, titulos, nombreEstadio) VALUES ('Barsa', 0, 'Camp Nou');
 
 INSERT INTO jugador (user, password, tipo, dorsal, numeroGoles, numeroAsistencias, nombreEquipo)
