@@ -7,19 +7,13 @@ titulos integer,
 nombreEstadio varchar(30)
 );
 
-create table partidos(
-fechaInicio datetime primary key,
-resultado varchar(3)
-);
-
 create table juegan(
 nombreEquipoLocal varchar(30),
 nombreEquipoVisitante varchar(30),
-fechaInicio datetime,
-primary key(nombreEquipoLocal, nombreEquipoVisitante, fechaInicio),
+fechaInicio datetime primary key,
+resultado varchar(3),
 foreign key (nombreEquipoLocal) references equipo(nombreEquipo) on delete cascade,
-foreign key (nombreEquipoVisitante) references equipo(nombreEquipo)on delete cascade,
-foreign key (fechaInicio) references partidos(fechaInicio)on delete cascade
+foreign key (nombreEquipoVisitante) references equipo(nombreEquipo)on delete cascade
 );
 
 
@@ -42,3 +36,6 @@ tipoEntrenador enum('PrimerEntrenador', 'SegundoEntrenador'),
 nombreEquipo varchar(30),
 foreign key (nombreEquipo) references equipo(nombreEquipo) on delete cascade
 );
+
+select * from laliga.jugador;
+select * from laliga.jugador where dorsal = 10 AND nombreEquipo = 'Barsa';
