@@ -79,7 +79,7 @@ public class ModificarEntrenador2 extends JFrame implements ActionListener {
 
 		Entrenador usr = (Entrenador) controller.getUsuario(user);
 		textFieldUSer.setText(usr.getUser());
-		textFieldContrasena.setText(usr.getContraseña());
+		textFieldContrasena.setText(usr.getContrasenia());
 	}
 
 	@Override
