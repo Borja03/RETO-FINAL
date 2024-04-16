@@ -32,10 +32,13 @@ create table entrenador(
 user varchar(20) primary key,
 password varchar(20),
 tipo varchar(10),
-tipoEntrenador enum('PrimerEntrenador', 'SegundoEntrenador'),
+tipoEntrenador enum('Primer_Entrenador', 'Segundo_Entrenador'),
 nombreEquipo varchar(30),
 foreign key (nombreEquipo) references equipo(nombreEquipo) on delete cascade
 );
+select * from equipo;
+select * from entrenador;
+
 
 INSERT INTO equipo (nombreEquipo, titulos, nombreEstadio) VALUES ('Barsa', 0, 'Camp Nou'),
 ('Athletic', 3, 'San Mames'),
