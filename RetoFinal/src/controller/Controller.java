@@ -1,18 +1,21 @@
 
 package controller;
 
+import java.security.Timestamp;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Date;
 
 import model.equipos.Equipo;
 import model.usuarios.CargoEntrenador;
 import model.usuarios.Jugador;
 import model.usuarios.Tipo;
 import model.usuarios.Usuarios;
+import view.CambiarDorsal;
 import view.Login;
 
 public class Controller implements IController {
@@ -29,7 +32,7 @@ public class Controller implements IController {
 	final String DELETEentrenador = "DELETE FROM entrenador WHERE user =?";
 
 	final String INNSERTjugador = "INSERT INTO jugador (user,password,dorsal,numeroGoles,numeroAsistencias,nombreEquipo) VALUES (?,?,?,?,?,?)";
-	final String GETjugador = "SELECT * FROM jugador WHERE USER =?";
+	final String GETjugador = "SELECT * FROM jugador WHERE user = ?";
 	final String DELETEjugador = "DELETE FROM jugador WHERE user =?";
 	final String MODIFICARjugador = "UPDATE jugador SET password=?, dorsal=?,numeroGoles=?, numeroAsistencias=? WHERE user=?";
 
@@ -176,10 +179,36 @@ public class Controller implements IController {
 	}
 
 	@Override
-	public void crearPartido() {
-		// TODO Auto-generated method stub
+	public boolean crearPartido(String equipoLocal, String equipoVisitante, java.sql.Timestamp fechaInicio) {
+	    boolean added = false;
+	    try {
+	        openConnection("admin", "admin");
 
+	        String insertJueganQuery = "INSERT INTO juegan (nombreEquipoLocal, nombreEquipoVisitante, fechaInicio, resultado) VALUES (?, ?, ?, ?)";
+	        PreparedStatement insertJueganStatement = connection.prepareStatement(insertJueganQuery);
+	        insertJueganStatement.setString(1, equipoLocal);
+	        insertJueganStatement.setString(2, equipoVisitante);
+	        insertJueganStatement.setTimestamp(3, fechaInicio);
+	        insertJueganStatement.setString(4, "0-0");
+
+	        if (insertJueganStatement.executeUpdate() > 0) {
+	            added = true;
+	            System.out.println("Partido creado!");
+	        } else {
+	            System.out.println("Fallo al crear el partido en la tabla juegan.");
+	        }
+	    } catch (SQLException e) {
+	        System.out.println("Error de SQL");
+	        e.printStackTrace();
+	    } finally {
+	        closeConnection();
+	    }
+	    return added;
 	}
+
+
+
+
 
 	@Override
 	public boolean crearJugador(String user, String password, int dorsal, int numeroGoles, int numeroAsistencias,
@@ -310,8 +339,62 @@ public class Controller implements IController {
 
 	@Override
 	public void modificarDorsal() {
-		// TODO Auto-generated method stub
+		CambiarDorsal ventanaDorsal = new CambiarDorsal(this, "usuario");
+		ventanaDorsal.setVisible(true);
+	}
 
+	public boolean modificarJugadorConDorsal(String user, int dorsal) {
+
+		boolean modified = false;
+		this.openConnection("jugador", "jugador");
+		try {
+
+			Usuarios usuario = this.getUsuario(user);
+			if (usuario != null && usuario instanceof Jugador) {
+				Jugador jugador = (Jugador) usuario;
+
+				statement = connection.prepareStatement(MODIFICARjugador);
+				statement.setString(1, ((Usuarios) jugador).getContrasenia());
+				statement.setInt(2, dorsal);
+				statement.setInt(3, jugador.getGoles());
+				statement.setInt(4, jugador.getAsistencias());
+				statement.setString(5, user);
+				if (statement.executeUpdate() > 0) {
+					modified = true;
+					System.out.println("Dorsal modificado con �xito!");
+				} else {
+					System.out.println("Error al modificar el dorsal");
+				}
+
+			} else {
+				System.out.println("El usuario no es un jugador o no existe");
+			}
+		} catch (SQLException e) {
+			System.out.println("Error de SQL");
+			e.printStackTrace();
+		} finally {
+			this.closeConnection();
+		}
+		return modified;
+	}
+
+	public boolean existeDorsal(int dorsal) {
+		boolean exists = false;
+		this.openConnection("jugador", "jugador");
+		try {
+			statement = connection.prepareStatement(GETjugador);
+			statement.setInt(1, dorsal);
+			resultSet = statement.executeQuery();
+			if (resultSet.next()) {
+				exists = true;
+			}
+		} catch (SQLException e) {
+			System.out.println("Error de SQL");
+			e.printStackTrace();
+		} finally {
+			this.closeConnection();
+		}
+		return exists;
 	}
 
 	@Override

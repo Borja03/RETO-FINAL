@@ -1,7 +1,9 @@
 
 package controller;
 
+import java.security.Timestamp;
 import java.util.ArrayList;
+import java.util.Date;
 
 import model.equipos.Equipo;
 import model.usuarios.CargoEntrenador;
@@ -20,8 +22,6 @@ public interface IController {
 	public void crearEquipo(String nombreEquipo, int titulos, String nombreEstadio);
 
 	public boolean crearEntrenador(String nombreEquipo, String user, String password, CargoEntrenador tipoEntrenador);
-
-	public void crearPartido();
 
 	public boolean crearJugador(String user, String password, int dorsal, int numeroGoles, int numeroAsistencias,
 			String nombreEquipo);
@@ -51,5 +51,7 @@ public interface IController {
 	public Usuarios getUsuario(String user);
 
 	public ArrayList<Equipo> listarEquiposCP();
+
+	boolean crearPartido(String equipoLocal, String equipoVisitante, java.sql.Timestamp fechaInicio);
 
 }

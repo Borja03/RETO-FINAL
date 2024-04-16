@@ -49,7 +49,7 @@ public class Splash extends JFrame {
 		label.setBounds(413, 596, 250, 41);
 		contentPane.add(label);
 
-		Timer timer = new Timer(5000, new ActionListener() {
+		Timer timer = new Timer(1000, new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				Login login = new Login(controller);
