@@ -1,5 +1,4 @@
 
-
 package controller;
 
 import java.sql.Connection;
@@ -13,8 +12,8 @@ import model.equipos.Equipo;
 
 import model.usuarios.Jugador;
 import model.usuarios.Usuarios;
+import view.CambiarDorsal;
 import view.Login;
-
 
 public class Controller implements IController {
 
@@ -29,12 +28,13 @@ public class Controller implements IController {
 	final String INNSERTentrenador = "INSERT INTO entrenador (user,password,tipoEntrenador,nombreEquipo) VALUES (?,?,?,?)";
 
 	final String INNSERTjugador = "INSERT INTO jugador (user,password,dorsal,numeroGoles,numeroAsistencias,nombreEquipo) VALUES (?,?,?,?,?,?)";
-	final String GETjugador = "SELECT * FROM jugador WHERE USER =?";
+	final String GETjugador = "SELECT * FROM jugador WHERE user = ?";
+	final String GETjugadorEquipo = "SELECT * FROM jugador WHERE user = ? AND nombreEquipo= ?";
 	final String DELETEjugador = "DELETE FROM jugador WHERE user =?";
 	final String MODIFICARjugador = "UPDATE jugador SET password=?, dorsal=?,numeroGoles=?, numeroAsistencias=? WHERE user=?";
 
 	final String ConnectUser = "SELECT * FROM  laliga WHERE user_name =? AND password=?";
-
+	final String nombreEquipo = "Select nombreEquipo FROM laliga WHERE user=?";
 	final String ALLequipos = "SELECT nombreEquipo FROM  equipo";
 	final String ENTRENADORequipo = "SELECT nombreEquipo FROM  entrenador where user=?";
 
@@ -279,8 +279,66 @@ public class Controller implements IController {
 
 	@Override
 	public void modificarDorsal() {
-		// TODO Auto-generated method stub
+		CambiarDorsal ventanaDorsal = new CambiarDorsal(this, "usuario");
+		ventanaDorsal.setVisible(true);
+	}
 
+	public boolean modificarJugadorConDorsal(String user, int dorsal) {
+
+		boolean modified = false;
+		try {
+
+			Usuarios usuario = this.getUsuario(user);
+			Jugador jugador = (Jugador) usuario;
+			this.openConnection("jugador", "jugador");
+			statement = connection.prepareStatement(MODIFICARjugador);
+			statement.setString(1, ((Usuarios) jugador).getContraseña());
+			statement.setInt(2, dorsal);
+			statement.setInt(3, jugador.getGoles());
+			statement.setInt(4, jugador.getAsistencias());
+			statement.setString(5, user);
+			if (statement.executeUpdate() > 0) {
+				modified = true;
+				System.out.println("Dorsal modificado con éxito!");
+			} else {
+				System.out.println("Error al modificar el dorsal");
+			}
+
+		} catch (SQLException e) {
+			System.out.println("Error de SQL");
+			e.printStackTrace();
+		} finally {
+			this.closeConnection();
+		}
+		return modified;
+	}
+
+	public boolean existeDorsal(int dorsal, String user) {
+		this.openConnection("jugador", "jugador");
+		boolean exists = false;
+		try {
+			statement = connection.prepareStatement(GETjugador);
+			statement.setString(1, user);
+			resultSet = statement.executeQuery();
+			String nombreEquipo = "";
+			if (resultSet.next()) {
+				nombreEquipo = resultSet.getString("nombreEquipo");
+			}
+
+			statement = connection.prepareStatement("SELECT * FROM jugador WHERE dorsal = ? AND nombreEquipo = ?");
+			statement.setInt(1, dorsal);
+			statement.setString(2, nombreEquipo);
+			resultSet = statement.executeQuery();
+
+			if (resultSet.next()) {
+				exists = true;
+			}
+		} catch (SQLException e) {
+			System.out.println("Error de SQL");
+			e.printStackTrace();
+		}
+		this.closeConnection();
+		return exists;
 	}
 
 	@Override
@@ -336,7 +394,6 @@ public class Controller implements IController {
 		return myTeam;
 	}
 
-
 	public Usuarios getUsuario(String user) {
 		Usuarios usuario = null;
 		this.openConnection("entrenador", "entrenador");
@@ -356,14 +413,11 @@ public class Controller implements IController {
 
 			}
 
-			
+			// usuario = new Jugador(userN, password, nombreEquipo, dorsal, numGoles,
+			// numAsistencias);
 
-			//usuario = new Jugador(userN, password, nombreEquipo, dorsal, numGoles, numAsistencias);
-			
+			// TODO Auto-generated method stub
 
-		// TODO Auto-generated method stub
-
-		
 		} catch (SQLException e) {
 			System.out.println("Error de SQL");
 			e.printStackTrace();
@@ -374,41 +428,30 @@ public class Controller implements IController {
 
 	}
 
-	
-	
+	@Override
+	public ArrayList<Equipo> listarEquiposCP() {
+		ArrayList<Equipo> equipos = new ArrayList<>();
 
-	 @Override
-	    public ArrayList<Equipo> listarEquiposCP() {
-	        ArrayList<Equipo> equipos = new ArrayList<>();
+		try {
+			openConnection("admin", "admin");
+			String query = "SELECT * FROM equipo";
+			statement = connection.prepareStatement(query);
+			resultSet = statement.executeQuery();
 
-	        try {
-	            openConnection("admin","admin"); 
-	            String query = "SELECT * FROM equipo";
-	            statement = connection.prepareStatement(query);
-	            resultSet = statement.executeQuery();
+			while (resultSet.next()) {
+				String nombreEquipo = resultSet.getString("nombreEquipo");
+				String nombreEstadio = resultSet.getString("nombreEstadio");
+				int titulos = resultSet.getInt("titulos");
+				Equipo eq = new Equipo(nombreEquipo, nombreEstadio, titulos);
+				equipos.add(eq);
+			}
+		} catch (SQLException ex) {
+			ex.printStackTrace();
+		} finally {
+			closeConnection();
+		}
 
-	            while (resultSet.next()) {
-	                String nombreEquipo = resultSet.getString("nombreEquipo");
-	                String nombreEstadio = resultSet.getString("nombreEstadio");
-	                int titulos = resultSet.getInt("titulos");
-	                Equipo eq = new Equipo (nombreEquipo,nombreEstadio,titulos);
-	                equipos.add(eq);
-	            }
-	        } catch (SQLException ex) {
-	            ex.printStackTrace();
-	        } finally {
-	            closeConnection();
-	        }
-
-	        return equipos;
-	    }
-
-
-	  
-	 
-
-
-
-
+		return equipos;
+	}
 
 }
