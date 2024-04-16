@@ -354,14 +354,17 @@ public class Controller implements IController {
 			Jugador jugador = (Jugador) usuario;
 			this.openConnection("jugador", "jugador");
 			statement = connection.prepareStatement(MODIFICARjugador);
-			statement.setString(1, ((Usuarios) jugador).getContrase�a());
+			statement.setString(1, ((Usuarios) jugador).getContraseña());
 			statement.setInt(2, dorsal);
 			statement.setInt(3, jugador.getGoles());
 			statement.setInt(4, jugador.getAsistencias());
 			statement.setString(5, user);
 			if (statement.executeUpdate() > 0) {
 				modified = true;
+
 				System.out.println("Dorsal modificado con �xito!");
+				System.out.println("Dorsal modificado con éxito!");
+
 			} else {
 				System.out.println("Error al modificar el dorsal");
 			}
