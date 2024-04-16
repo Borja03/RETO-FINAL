@@ -131,7 +131,6 @@ public class CrearPartido extends JFrame implements ActionListener {
             Timestamp horaInicio = new Timestamp(horaSeleccionada.getTime());
 
             if (equipoLocal != null && equipoVisitante != null && fechaInicio != null && horaInicio != null) {
-             
                 fechaInicio.setHours(horaInicio.getHours());
                 fechaInicio.setMinutes(horaInicio.getMinutes());
                 fechaInicio.setSeconds(horaInicio.getSeconds());
@@ -139,13 +138,23 @@ public class CrearPartido extends JFrame implements ActionListener {
                 boolean partidoCreado = controller.crearPartido(equipoLocal, equipoVisitante, fechaInicio);
                 if (partidoCreado) {
                     JOptionPane.showMessageDialog(this, "Partido creado exitosamente.");
+                    // Volver al menú admin
+                    MenuAdmin menuAdmin = new MenuAdmin(controller);
+                    menuAdmin.setVisible(true);
+                    dispose(); // Cerrar la ventana actual
                 } else {
                     JOptionPane.showMessageDialog(this, "Error al crear el partido.");
                 }
             } else {
-                JOptionPane.showMessageDialog(this, "Por favor, complete todos los campos.");
+                // Comprobar si el campo del estadio está vacío
+                if (estadioField.getText().isEmpty()) {
+                    JOptionPane.showMessageDialog(this, "Por favor, complete el campo del estadio.");
+                } else {
+                    JOptionPane.showMessageDialog(this, "Por favor, complete todos los campos.");
+                }
             }
         }
     }
+
 
 }
