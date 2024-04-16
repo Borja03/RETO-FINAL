@@ -42,4 +42,3 @@ tipoEntrenador enum('PrimerEntrenador', 'SegundoEntrenador'),
 nombreEquipo varchar(30),
 foreign key (nombreEquipo) references equipo(nombreEquipo) on delete cascade
 );
-
