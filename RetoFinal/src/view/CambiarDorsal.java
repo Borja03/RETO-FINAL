@@ -29,11 +29,12 @@ public class CambiarDorsal extends JFrame implements ActionListener {
 			JButton button = new JButton(Integer.toString(i));
 			button.setEnabled(true);
 			button.addActionListener(this);
-			button.setBackground(Color.WHITE);
-			if (cont.existeDorsal(i)) {
+			if (cont.existeDorsal(i, userC)) {
 				button.setEnabled(false);
+				button.setBackground(Color.GRAY);
 			} else {
 				button.setEnabled(true);
+				button.setBackground(Color.WHITE);
 			}
 			buttonsPanel.add(button);
 		}
@@ -52,6 +53,7 @@ public class CambiarDorsal extends JFrame implements ActionListener {
 		int dialogResult = JOptionPane.showConfirmDialog(null, "¿Estás seguro que deseas cambiar el dorsal?",
 				"Confirmar", JOptionPane.YES_NO_OPTION);
 		if (dialogResult == JOptionPane.YES_OPTION) {
+			dorsal = Integer.parseInt(buttonText);
 			boolean success = controller.modificarJugadorConDorsal(userName, dorsal);
 			if (success) {
 				JOptionPane.showMessageDialog(null, "El dorsal se ha cambiado con éxito a " + buttonText);
