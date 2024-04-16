@@ -36,14 +36,10 @@ public class MenuAdmin extends JFrame implements ActionListener {
 	private JButton btnCrearEntrenador;
 	private JButton btnBorrarEntrenador;
 	private JButton btnModificarEntrenador;
-	private String userName;
-	private String myTeam;
 
-
-	public MenuAdmin(Controller cont, String user, String team) {
+	public MenuAdmin(Controller cont) {
 		this.controller = cont;
-		this.userName = user;
-		this.myTeam = team;
+
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 1008, 717);
 		contentPane = new JPanel();
@@ -162,27 +158,28 @@ public class MenuAdmin extends JFrame implements ActionListener {
 			ocultarBotonesEquipos();
 		} else if (o == btnCrearPartido) {
 
-		if (o == crearEquipo) {
-			CrearEquipo frame = new CrearEquipo(controller, userName, myTeam);
-			frame.setVisible(true);
-			dispose();
-		} else if (o == gestionarEntre) {
-			GestionarEntre frame = new GestionarEntre(controller);
-			frame.setVisible(true);
-			dispose();
-		} else if (o == cambiarContra) {
-			CambiarContra frame = new CambiarContra(controller);
-			frame.setVisible(true);
-			dispose();
-		} else if (o == crearPartido) {
+			if (o == btnCrearEquipo) {
+				CrearEquipo frame = new CrearEquipo(controller);
+				frame.setVisible(true);
+				dispose();
+			} else if (o == btnGestionarEntrenador) {
+				GestionarEntre frame = new GestionarEntre(controller);
+				frame.setVisible(true);
+				dispose();
+			} else if (o == cambiarContra) {
+				CambiarContra frame = new CambiarContra(controller);
+				frame.setVisible(true);
+				dispose();
+			} else if (o == btnCrearEquipo) {
 
-			CrearPartido frame = new CrearPartido(controller);
-			frame.setVisible(true);
-			dispose();
-		} else if (o == btnLogOut) {
-			Login frame = new Login(controller);
-			frame.setVisible(true);
-			dispose();
+				CrearPartido frame = new CrearPartido(controller);
+				frame.setVisible(true);
+				dispose();
+			} else if (o == btnLogOut) {
+				Login frame = new Login(controller);
+				frame.setVisible(true);
+				dispose();
+			}
 		}
 	}
 
