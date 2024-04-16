@@ -316,31 +316,32 @@ public class Controller implements IController {
 	}
 
 	public boolean existeDorsal(int dorsal, String user) {
-	    boolean exists = false;
-	    try {
-	        statement = connection.prepareStatement(GETjugador);
-	        statement.setString(1, user);
-	        resultSet = statement.executeQuery();
-	        String nombreEquipo = "";
-	        if (resultSet.next()) {
-	            nombreEquipo = resultSet.getString("nombreEquipo");
-	        }
+		this.openConnection("jugador", "jugador");
+		boolean exists = false;
+		try {
+			statement = connection.prepareStatement(GETjugador);
+			statement.setString(1, user);
+			resultSet = statement.executeQuery();
+			String nombreEquipo = "";
+			if (resultSet.next()) {
+				nombreEquipo = resultSet.getString("nombreEquipo");
+			}
 
-	        statement = connection.prepareStatement("SELECT * FROM jugador WHERE dorsal = ? AND nombreEquipo = ?");
-	        statement.setInt(1, dorsal);
-	        statement.setString(2, nombreEquipo);
-	        resultSet = statement.executeQuery();
+			statement = connection.prepareStatement("SELECT * FROM jugador WHERE dorsal = ? AND nombreEquipo = ?");
+			statement.setInt(1, dorsal);
+			statement.setString(2, nombreEquipo);
+			resultSet = statement.executeQuery();
 
-	        if (resultSet.next()) {
-	            exists = true;
-	        }
-	    } catch (SQLException e) {
-	        System.out.println("Error de SQL");
-	        e.printStackTrace();
-	    }
-	    return exists;
+			if (resultSet.next()) {
+				exists = true;
+			}
+		} catch (SQLException e) {
+			System.out.println("Error de SQL");
+			e.printStackTrace();
+		}
+		this.closeConnection();
+		return exists;
 	}
-
 
 	@Override
 	public void cambiarPassword() {

@@ -53,6 +53,7 @@ public class CambiarDorsal extends JFrame implements ActionListener {
 		int dialogResult = JOptionPane.showConfirmDialog(null, "¿Estás seguro que deseas cambiar el dorsal?",
 				"Confirmar", JOptionPane.YES_NO_OPTION);
 		if (dialogResult == JOptionPane.YES_OPTION) {
+			dorsal = Integer.parseInt(buttonText);
 			boolean success = controller.modificarJugadorConDorsal(userName, dorsal);
 			if (success) {
 				JOptionPane.showMessageDialog(null, "El dorsal se ha cambiado con éxito a " + buttonText);
