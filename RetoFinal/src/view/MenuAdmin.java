@@ -15,16 +15,12 @@ import javax.swing.border.EmptyBorder;
 import controller.Controller;
 
 public class MenuAdmin extends JFrame implements ActionListener {
-
-
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
 	private JButton btnLogOut;
 	private JButton btnAddEq;
 	private JLabel lblWelcome;
 	private Controller controller;
-
-	private String userName;
 	private JButton btnGestionarEntrenador;
 	private JButton btnCrearPartido;
 	private JPanel panelRight;
@@ -39,7 +35,6 @@ public class MenuAdmin extends JFrame implements ActionListener {
 	private JButton btnCrearEntrenador;
 	private JButton btnBorrarEntrenador;
 	private JButton btnModificarEntrenador;
-
 
 	public MenuAdmin(Controller cont) {
 		this.controller = cont;
@@ -138,6 +133,7 @@ public class MenuAdmin extends JFrame implements ActionListener {
 		btnCrearEquipo.addActionListener(this);
 		btnBorrarEquipo.addActionListener(this);
 		btnModificarEquipo.addActionListener(this);
+		btnCrearPartido.addActionListener(this);
 
 		// Agregar acci�n a los botones de gesti�n de entrenadores
 		btnCrearEntrenador.addActionListener(this);
