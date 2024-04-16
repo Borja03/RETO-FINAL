@@ -10,8 +10,8 @@ public class Entrenador extends Usuarios {
 	private String nombreEquipo;
 	private CargoEntrenador cargo;
 
-	public Entrenador(String nombre, String user, String contraseÃ±a, String nombreEquipo, CargoEntrenador cargo) {
-		super(nombre, user, contraseÃ±a);
+	public Entrenador(String nombre, String user, String contraseña, String nombreEquipo, CargoEntrenador cargo) {
+		super(nombre, user, contraseña);
 		this.nombreEquipo = nombreEquipo;
 		this.cargo = cargo;
 	}

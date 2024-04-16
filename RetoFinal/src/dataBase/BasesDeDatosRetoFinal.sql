@@ -47,3 +47,5 @@ INSERT INTO equipo
 VALUES
 ("Barcelona",3,"Camp Nou"),
 ("MAdrid",5,"Santiago Bernabeu");
+
+
