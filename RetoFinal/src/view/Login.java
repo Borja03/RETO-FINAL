@@ -35,11 +35,9 @@ public class Login extends JFrame implements ActionListener {
 	private JPasswordField txtPass;
 	private JComboBox<String> cBxRole;
 	private JButton btnLogIn;
-	private static Controller controller;
+	private Controller controller;
 	private JLabel lblMsg;
 	private JCheckBox chckbxShowPassword;
-
-
 
 	public Login(Controller cont) {
 		this.controller = cont;
@@ -56,12 +54,12 @@ public class Login extends JFrame implements ActionListener {
 		panelLeft.setBounds(0, 0, 345, 680);
 		contentPane.add(panelLeft);
 		JLabel imgTitle = new JLabel();
-		
+
 		ImageIcon imgIcon = new ImageIcon(getClass().getResource("/images/copa.png"));
 		imgTitle.setIcon(imgIcon);
 		imgTitle.setBounds(0, 0, 345, 680);
 		contentPane.add(imgTitle);
-		
+
 		txtUserName = new JTextField();
 		txtUserName.setFont(new Font("Tahoma", Font.BOLD, 14));
 		txtUserName.setBounds(514, 235, 407, 53);
@@ -115,13 +113,12 @@ public class Login extends JFrame implements ActionListener {
 		lblMsg.setFont(new Font("Tahoma", Font.BOLD, 12));
 		lblMsg.setBounds(588, 513, 239, 21);
 		contentPane.add(lblMsg);
-		
-		 chckbxShowPassword = new JCheckBox("");
+
+		chckbxShowPassword = new JCheckBox("");
 		chckbxShowPassword.setBounds(899, 390, 22, 21);
 		contentPane.add(chckbxShowPassword);
 		chckbxShowPassword.addActionListener(this);
 
-		
 		JLabel lblNewLabel_1 = new JLabel("Show password");
 		lblNewLabel_1.setBounds(809, 394, 112, 13);
 		contentPane.add(lblNewLabel_1);
@@ -133,7 +130,7 @@ public class Login extends JFrame implements ActionListener {
 			String username = txtUserName.getText();
 			String password = new String(txtPass.getPassword());
 			String userType = (String) cBxRole.getSelectedItem();
-			String myTeam = controller.getMyTeam(username);
+			// String myTeam = controller.getMyTeam(username);
 
 			if (txtUserName.getText().isEmpty() || txtPass.getPassword().length == 0) {
 				lblMsg.setText("ERROR: All fields are required");
@@ -155,13 +152,14 @@ public class Login extends JFrame implements ActionListener {
 				lblMsg.setText("Invalid username or password");
 			}
 		} else if (e.getSource() == chckbxShowPassword) {
-		    if (chckbxShowPassword.isSelected()) {
-		        // Set password field type to text to show characters
-		        txtPass.setEchoChar((char) 0);
-		      } else {
-		        // Set password field type back to password to hide characters with asterisks (*)
-		        txtPass.setEchoChar('*');
-		      }
-		    }
+			if (chckbxShowPassword.isSelected()) {
+				// Set password field type to text to show characters
+				txtPass.setEchoChar((char) 0);
+			} else {
+				// Set password field type back to password to hide characters with asterisks
+				// (*)
+				txtPass.setEchoChar('*');
+			}
+		}
 	}
 }
