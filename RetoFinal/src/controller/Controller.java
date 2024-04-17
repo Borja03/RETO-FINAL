@@ -10,6 +10,8 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Date;
 
+import com.mysql.cj.protocol.Resultset;
+
 import model.equipos.Equipo;
 import model.usuarios.CargoEntrenador;
 import model.usuarios.Jugador;
@@ -41,6 +43,7 @@ public class Controller implements IController {
 	final String nombreEquipo = "Select nombreEquipo FROM laliga WHERE user=?";
 	final String ALLequipos = "SELECT nombreEquipo FROM  equipo";
 	final String ENTRENADORequipo = "SELECT nombreEquipo FROM  entrenador where user=?";
+	final String Partidos = "SELECT nombreEquipoLocal, nombreEquipoVisitante, fechaInicio FROM juegan";
 
 	public boolean checkUserExist(String user) {
 		boolean exist = false;
@@ -180,38 +183,6 @@ public class Controller implements IController {
 	}
 
 	@Override
-	public boolean crearPartido(String equipoLocal, String equipoVisitante, java.sql.Timestamp fechaInicio) {
-	    boolean added = false;
-	    try {
-	        openConnection("admin", "admin");
-
-	        String insertJueganQuery = "INSERT INTO juegan (nombreEquipoLocal, nombreEquipoVisitante, fechaInicio, resultado) VALUES (?, ?, ?, ?)";
-	        PreparedStatement insertJueganStatement = connection.prepareStatement(insertJueganQuery);
-	        insertJueganStatement.setString(1, equipoLocal);
-	        insertJueganStatement.setString(2, equipoVisitante);
-	        insertJueganStatement.setTimestamp(3, fechaInicio);
-	        insertJueganStatement.setString(4, "0-0");
-
-	        if (insertJueganStatement.executeUpdate() > 0) {
-	            added = true;
-	            System.out.println("Partido creado!");
-	        } else {
-	            System.out.println("Fallo al crear el partido en la tabla juegan.");
-	        }
-	    } catch (SQLException e) {
-	        System.out.println("Error de SQL");
-	        e.printStackTrace();
-	    } finally {
-	        closeConnection();
-	    }
-	    return added;
-	}
-
-
-
-
-
-	@Override
 	public boolean crearJugador(String user, String password, int dorsal, int numeroGoles, int numeroAsistencias,
 			String nombreEquipo) {
 		boolean added = false;
@@ -245,7 +216,7 @@ public class Controller implements IController {
 	@Override
 	public boolean borrarEntrenador(String user) {
 		boolean deleted = false;
-		this.openConnection("entrenador", "entrenador");
+		this.openConnection("admin", "admin");
 		try {
 			statement = connection.prepareStatement(DELETEentrenador);
 
@@ -325,11 +296,31 @@ public class Controller implements IController {
 		}
 		return modified;
 	}
+	public ArrayList<String> listaPartidos() {
+	    this.openConnection("admin", "admin");
+	    ArrayList<String> partidosProgramados = new ArrayList<>();
+	    try {
+	        statement = connection.prepareStatement(Partidos);
+	        resultSet = statement.executeQuery();
+
+	        while (resultSet.next()) {
+	            String local = resultSet.getString("nombreEquipoLocal");
+	            String visitante = resultSet.getString("nombreEquipoVisitante");
+	            Date fecha = resultSet.getTimestamp("fechaInicio");
+	            String partido = local + " VS " + visitante + " fecha: " + fecha.toString();
+	            partidosProgramados.add(partido);
+	        }
+	    } catch (SQLException e) {
+	        e.printStackTrace();
+	    } finally {
+	        this.closeConnection();
+	    }
+	    return partidosProgramados;
+	}
 
 	@Override
 	public void modificarPartido() {
-		// TODO Auto-generated method stub
-
+		
 	}
 
 	@Override
@@ -440,7 +431,7 @@ public class Controller implements IController {
 
 	@Override
 	public void consultarPartido() {
-		// TODO Auto-generated method stub
+		
 
 	}
 
@@ -543,6 +534,12 @@ public class Controller implements IController {
 		}
 
 		return equipos;
+	}
+
+	@Override
+	public boolean crearPartido(String equipoLocal, String equipoVisitante, java.sql.Timestamp fechaInicio) {
+		// TODO Auto-generated method stub
+		return false;
 	}
 
 }
