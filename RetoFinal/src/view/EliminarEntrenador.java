@@ -63,7 +63,7 @@ public class EliminarEntrenador extends JFrame implements ActionListener{
 				 textFieldEJugador.setText("");
 				 if (opcion == JOptionPane.NO_OPTION) {
 						this.dispose();
-						GestionarEntre g1 = new GestionarEntre(controller);
+						MenuAdmin g1 = new MenuAdmin(controller);
 						g1.setVisible(true);
 					}
 			}
