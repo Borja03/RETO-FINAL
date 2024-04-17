@@ -146,7 +146,7 @@ public class MenuEntrenador extends JFrame implements ActionListener {
 
 		JLabel lblNombre = new JLabel("Nombre :");
 		lblNombre.setFont(new Font("Tahoma", Font.BOLD, 14));
-		lblNombre.setBounds(204, 35, 82, 22);
+		lblNombre.setBounds(204, 39, 82, 22);
 		panel.add(lblNombre);
 
 		JLabel lblNewLabel = new JLabel("Equipo info");
@@ -156,7 +156,7 @@ public class MenuEntrenador extends JFrame implements ActionListener {
 
 		JLabel lblEqEstadio = new JLabel("Estadio :");
 		lblEqEstadio.setFont(new Font("Tahoma", Font.BOLD, 14));
-		lblEqEstadio.setBounds(204, 61, 82, 22);
+		lblEqEstadio.setBounds(204, 67, 82, 22);
 		panel.add(lblEqEstadio);
 
 		JLabel lblTitulos = new JLabel("Titulos :");
@@ -175,20 +175,20 @@ public class MenuEntrenador extends JFrame implements ActionListener {
 		panel.add(lblSegundoEntrenador);
 
 		txtEqNombre = new JTextField();
-		txtEqNombre.setBounds(296, 36, 254, 25);
+		txtEqNombre.setBounds(368, 40, 254, 25);
 		panel.add(txtEqNombre);
 		txtEqNombre.setEditable(false);
 		txtEqNombre.setColumns(10);
 
 		txtEqEstadio = new JTextField();
 		txtEqEstadio.setColumns(10);
-		txtEqEstadio.setBounds(296, 62, 254, 25);
+		txtEqEstadio.setBounds(368, 68, 254, 25);
 		txtEqEstadio.setEditable(false);
 		panel.add(txtEqEstadio);
 
 		txtEqTitulos = new JTextField();
 		txtEqTitulos.setColumns(10);
-		txtEqTitulos.setBounds(296, 94, 254, 25);
+		txtEqTitulos.setBounds(368, 94, 254, 25);
 		txtEqTitulos.setEditable(false);
 		panel.add(txtEqTitulos);
 

@@ -56,7 +56,7 @@ public interface IController {
 	public Equipo getEquipo(String nombreEquipo);
 	public String getPrimEntrenador(String eqName);
 	public String getSegEntrenador(String eqName);
-
+	public ArrayList<Integer> getUsedDorsal(String eqName);
 
 
 }

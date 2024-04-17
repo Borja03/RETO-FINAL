@@ -1,4 +1,4 @@
-package view;
+package view.toDelete;
 
 import java.awt.EventQueue;
 import java.awt.event.ActionEvent;
@@ -15,6 +15,7 @@ import javax.swing.border.EmptyBorder;
 
 import controller.Controller;
 import model.usuarios.CargoEntrenador;
+import view.GestionarEntre;
 
 import javax.swing.JComboBox;
 

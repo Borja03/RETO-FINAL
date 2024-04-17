@@ -45,6 +45,8 @@ public class Controller implements IController {
 	final String NOMBREequipo = "SELECT * FROM  equipo where nombreEquipo=?";
 	final String ENTRENADORnombre = "SELECT user FROM  entrenador where nombreEquipo=? and tipoEntrenador=?";
 	final String JUGADORESequipo = "SELECT * FROM  jugador where nombreEquipo=?";
+	final String DORSALlLista = "SELECT dorsal FROM  jugador where nombreEquipo=?";
+	
 	public boolean checkUserExist(String user) {
 		boolean exist = false;
 		this.openConnection("entrenador", "entrenador");
@@ -534,7 +536,7 @@ public class Controller implements IController {
 				String nombreEq = resultSet.getString("nombreEquipo");
 				String estadio = resultSet.getString("nombreEstadio");
 				int titulos = resultSet.getInt("titulos");
-				String logo = resultSet.getString("logo");
+				//String logo = resultSet.getString("logo");
 
 				myTeam = new Equipo(nombreEq, estadio, titulos);
 			}
@@ -617,6 +619,29 @@ public class Controller implements IController {
 		}
 
 		return jugadoresEq;
+	}
+	
+	public ArrayList<Integer> getUsedDorsal(String eqName) {
+		ArrayList<Integer>  dorsalLista = new ArrayList<>();
+		int dorsal;
+		this.openConnection("entrenador", "entrenador");
+		try {
+			statement = connection.prepareStatement(DORSALlLista);
+			statement.setString(1, eqName);
+
+			resultSet = statement.executeQuery();
+			while (resultSet.next()) {
+				dorsal = resultSet.getInt("dorsal");
+				dorsalLista.add(dorsal);
+			}
+
+		} catch (SQLException e) {
+			System.out.println("Error de SQL");
+			e.printStackTrace();
+		} finally {
+			this.closeConnection();
+		}
+		return dorsalLista;
 	}
 
 }
