@@ -1,6 +1,12 @@
 create database laLiga;
 use laLiga;
 
+create table usuario(
+user varchar(20) primary key,
+password varchar(20),
+tipo varchar(10)
+);
+
 create table equipo(
 nombreEquipo varchar(30) primary key,
 titulos integer,
