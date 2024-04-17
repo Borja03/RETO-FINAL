@@ -40,8 +40,6 @@ public interface IController {
 
 	public void modificarDorsal();
 
-	public void cambiarPassword();
-
 	public void consultarPartido();
 
 	public ArrayList<String> getEquipos();
@@ -53,5 +51,7 @@ public interface IController {
 	public ArrayList<Equipo> listarEquiposCP();
 
 	boolean crearPartido(String equipoLocal, String equipoVisitante, java.sql.Timestamp fechaInicio);
+
+	boolean cambiarPassword(String user, String newPassword, String userType);
 
 }

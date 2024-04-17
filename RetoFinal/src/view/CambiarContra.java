@@ -15,9 +15,15 @@ public class CambiarContra extends JFrame implements ActionListener {
     private JButton cerrarSesion;
     private JPasswordField passwordField;
     private JPasswordField confirmPasswordField;
+    private String userType;
+    private String username;
+    private JButton btnVolverMenu;
 
-    public CambiarContra(Controller controlador) {
+    public CambiarContra(Controller controlador, String userType, String username) {
         this.controller = controlador;
+        this.userType = userType;
+        this.username = username;
+
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setBounds(100, 100, 450, 300);
         contentPane = new JPanel();
@@ -56,6 +62,16 @@ public class CambiarContra extends JFrame implements ActionListener {
         contentPane.add(cerrarSesion);
 
         cerrarSesion.addActionListener(this);
+
+        // Crear y configurar el botón de volver al menú correspondiente
+        if ("Jugador".equals(userType)) {
+            btnVolverMenu = new JButton("Volver al Menú de Jugador");
+        } else if ("Entrenador".equals(userType)) {
+            btnVolverMenu = new JButton("Volver al Menú de Entrenador");
+        }
+        btnVolverMenu.setBounds(10, 240, 200, 23);
+        contentPane.add(btnVolverMenu);
+        btnVolverMenu.addActionListener(this);
     }
 
     public void actionPerformed(ActionEvent e) {
@@ -64,6 +80,15 @@ public class CambiarContra extends JFrame implements ActionListener {
             Login frame = new Login(controller);
             frame.setVisible(true);
             dispose();
+        } else if (o == btnVolverMenu) {
+            if ("Jugador".equals(userType)) {
+                MenuJugador menuJugador = new MenuJugador(controller, username);
+                menuJugador.setVisible(true);
+            } else if ("Entrenador".equals(userType)) {
+                MenuEntrenador menuEntrenador = new MenuEntrenador(controller, username);
+                menuEntrenador.setVisible(true);
+            }
+            dispose(); // Cerrar la ventana actual
         }
     }
 
@@ -76,9 +101,20 @@ public class CambiarContra extends JFrame implements ActionListener {
             return;
         }
 
-      
+        boolean changed = controller.cambiarPassword(username, newPassword, userType);
 
-        JOptionPane.showMessageDialog(this, "Contraseña cambiada exitosamente.", "Éxito", JOptionPane.INFORMATION_MESSAGE);
+        if (changed) {
+            JOptionPane.showMessageDialog(this, "Contraseña cambiada exitosamente.", "Éxito", JOptionPane.INFORMATION_MESSAGE);
+            if ("Jugador".equals(userType)) {
+                MenuJugador menuJugador = new MenuJugador(controller, username);
+                menuJugador.setVisible(true);
+            } else if ("Entrenador".equals(userType)) {
+                MenuEntrenador menuEntrenador = new MenuEntrenador(controller, username);
+                menuEntrenador.setVisible(true);
+            }
+            dispose(); 
+        } else {
+            JOptionPane.showMessageDialog(this, "Error al cambiar la contraseña.", "Error", JOptionPane.ERROR_MESSAGE);
+        }
     }
-
 }
