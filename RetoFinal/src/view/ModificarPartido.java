@@ -233,7 +233,8 @@ public class ModificarPartido extends JFrame implements ActionListener {
 		resultado2.setVisible(visible);
 		// Ocultar textos a la derecha
 		JLabel[] labels = { lblResultado1, label, lblNewLabel, lblNewLabel_1, lblNewLabel_2, lblNewLabel_3,
-				lblNewLabel_4 };
+				lblNewLabel_4
+				};
 		for (JLabel label : labels) {
 			label.setVisible(visible);
 		}
