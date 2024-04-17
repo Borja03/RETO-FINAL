@@ -185,7 +185,7 @@ public class MenuAdmin extends JFrame implements ActionListener {
 		} else if (o == btnLogOut) {
 			Login frame = new Login(controller);
 			frame.setVisible(true);
-			dispose()
+			dispose();
       }	else if (o == btnCrearEquipo) {
 				CrearEquipo frame = new CrearEquipo(controller);
 				frame.setVisible(true);
