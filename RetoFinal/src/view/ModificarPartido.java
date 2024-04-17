@@ -13,8 +13,8 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
-import javax.swing.JSpinner;
 import javax.swing.JTextField;
+import javax.swing.JSpinner;
 import javax.swing.SpinnerDateModel;
 import javax.swing.border.EmptyBorder;
 
@@ -127,6 +127,7 @@ public class ModificarPartido extends JFrame implements ActionListener {
         contentPane.add(lblNewLabel_5);
 
         partidosComboBox = new JComboBox<>();
+        partidosComboBox.addActionListener(this);
         partidosComboBox.setBounds(230, 239, 200, 20);
         contentPane.add(partidosComboBox);
 
@@ -182,45 +183,21 @@ public class ModificarPartido extends JFrame implements ActionListener {
             editarPartidoButton.setVisible(false);
             okButton.setVisible(true);
             partidosComboBox.setVisible(false);
-        } else if (e.getSource() == equipoLocalComboBox) {
-            String nombreEquipoLocal = (String) equipoLocalComboBox.getSelectedItem();
-            String estadioEquipoLocal = estadiosEquipos.get(nombreEquipoLocal);
-            estadioField.setText(estadioEquipoLocal);
+            lblNewLabel_5.setVisible(false);
+        } else if (e.getSource() == partidosComboBox) {
+            String nombrePartidoSeleccionado = (String) partidosComboBox.getSelectedItem();
+            if (!nombrePartidoSeleccionado.isEmpty()) {
+                // Aquí obtienes los nombres de los equipos local y visitante desde el nombre del partido seleccionado
+                String[] nombresEquipos = nombrePartidoSeleccionado.split(" VS ");
+                String nombreEquipoLocal = nombresEquipos[0];
+                String nombreEquipoVisitante = nombresEquipos[1];
 
-            equipoVisitanteComboBox.removeAllItems();
-            for (String equipo : equiposDisponibles) {
-                if (!equipo.equals(nombreEquipoLocal)) {
-                    equipoVisitanteComboBox.addItem(equipo);
-                }
+                // Estableces los nombres de los equipos en los labels correspondientes
+                equipoLocalLabel.setText(nombreEquipoLocal);
+                equipoVisitanteLabel.setText(nombreEquipoVisitante);
             }
         } else if (e.getSource() == okButton) {
-            String equipoLocal = (String) equipoLocalComboBox.getSelectedItem();
-            String equipoVisitante = (String) equipoVisitanteComboBox.getSelectedItem();
-            Timestamp fechaInicio = new Timestamp(datePicker.getDate().getTime());
-            java.util.Date horaSeleccionada = (java.util.Date) timeSpinner.getValue();
-            Timestamp horaInicio = new Timestamp(horaSeleccionada.getTime());
-
-            if (equipoLocal != null && equipoVisitante != null && fechaInicio != null && horaInicio != null) {
-                fechaInicio.setHours(horaInicio.getHours());
-                fechaInicio.setMinutes(horaInicio.getMinutes());
-                fechaInicio.setSeconds(horaInicio.getSeconds());
-
-                boolean partidoCreado = controller.crearPartido(equipoLocal, equipoVisitante, fechaInicio);
-                if (partidoCreado) {
-                    JOptionPane.showMessageDialog(this, "Partido creado exitosamente.");
-                    MenuAdmin menuAdmin = new MenuAdmin(controller);
-                    menuAdmin.setVisible(true);
-                    dispose();
-                } else {
-                    JOptionPane.showMessageDialog(this, "Error al crear el partido.");
-                }
-            } else {
-                if (estadioField.getText().isEmpty()) {
-                    JOptionPane.showMessageDialog(this, "Por favor, complete el campo del estadio.");
-                } else {
-                    JOptionPane.showMessageDialog(this, "Por favor, complete todos los campos.");
-                }
-            }
-        }
+            // Resto del código aquí
+        } 
     }
 }
