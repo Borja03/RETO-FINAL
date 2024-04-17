@@ -141,6 +141,7 @@ public class MenuAdmin extends JFrame implements ActionListener {
 		btnCrearEntrenador.addActionListener(this);
 		btnBorrarEntrenador.addActionListener(this);
 		btnModificarEntrenador.addActionListener(this);
+		btnCrearPartido.addActionListener(this);
 
 		// Agregar acci�n al bot�n de gestionar entrenador
 		btnGestionarEntrenador.addActionListener(this);
@@ -170,6 +171,7 @@ public class MenuAdmin extends JFrame implements ActionListener {
 			av.setVisible(true);
 
 		} else if (o == btnCrearPartido) {
+<<<<<<< HEAD
 
 			CrearPartido frame = new CrearPartido(controller);
 			frame.setVisible(true);
@@ -178,8 +180,33 @@ public class MenuAdmin extends JFrame implements ActionListener {
 			Login frame = new Login(controller);
 			frame.setVisible(true);
 			dispose();
+=======
+			CrearPartido frame = new CrearPartido(controller);
+			frame.setVisible(true);
+			dispose();
 		}
-	}
+			
+		else if (o == btnCrearEquipo) {
+				CrearEquipo frame = new CrearEquipo(controller);
+				frame.setVisible(true);
+				dispose();
+			} else if (o == btnGestionarEntrenador) {
+				GestionarEntre frame = new GestionarEntre(controller);
+				frame.setVisible(true);
+				dispose();
+			} else if (o == btnCrearEquipo) {
+
+				CrearPartido frame = new CrearPartido(controller);
+				frame.setVisible(true);
+				dispose();
+			} else if (o == btnLogOut) {
+				Login frame = new Login(controller);
+				frame.setVisible(true);
+				dispose();
+			}
+>>>>>>> 786e153e8a15a599c20584c8aa47e20b2f10f798
+		}
+	
 
 	private void mostrarBotonesEquipos() {
 		panelRight2.setVisible(true);

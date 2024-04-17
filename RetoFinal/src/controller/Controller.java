@@ -361,7 +361,10 @@ public class Controller implements IController {
 			statement.setString(5, user);
 			if (statement.executeUpdate() > 0) {
 				modified = true;
+
 				System.out.println("Dorsal modificado con �xito!");
+				System.out.println("Dorsal modificado con éxito!");
+
 			} else {
 				System.out.println("Error al modificar el dorsal");
 			}
