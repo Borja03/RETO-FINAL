@@ -30,7 +30,7 @@ public interface IController {
 
 	public boolean borrarJugador(String userName);
 
-	public boolean modificarEntrenador();
+	public boolean modificarEntrenador(String user, String password, CargoEntrenador tipoEntrenador);
 
 	public boolean modificarJugador(String user, String password, int dorsal, int numGoles, int numAsist);
 
@@ -39,8 +39,6 @@ public interface IController {
 	public void consultarEquipo();
 
 	public void modificarDorsal();
-
-	public void cambiarPassword();
 
 	public void consultarPartido();
 
@@ -58,5 +56,7 @@ public interface IController {
 	public String getSegEntrenador(String eqName);
 	public ArrayList<Integer> getUsedDorsal(String eqName);
 
+
+	boolean cambiarPassword(String user, String newPassword, String userType);
 
 }
