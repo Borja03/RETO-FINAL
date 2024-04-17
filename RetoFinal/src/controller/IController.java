@@ -30,7 +30,7 @@ public interface IController {
 
 	public boolean borrarJugador(String userName);
 
-	public boolean modificarEntrenador();
+	public boolean modificarEntrenador(String user, String password, CargoEntrenador tipoEntrenador);
 
 	public boolean modificarJugador(String user, String password, int dorsal, int numGoles, int numAsist);
 
