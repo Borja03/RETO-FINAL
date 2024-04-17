@@ -372,31 +372,32 @@ public class Controller implements IController {
 		}
 		return modified;
 	}
-	public ArrayList<String> listaPartidos() {
-	    this.openConnection("admin", "admin");
-	    ArrayList<String> partidosProgramados = new ArrayList<>();
-	    try {
-	        statement = connection.prepareStatement(Partidos);
-	        resultSet = statement.executeQuery();
 
-	        while (resultSet.next()) {
-	            String local = resultSet.getString("nombreEquipoLocal");
-	            String visitante = resultSet.getString("nombreEquipoVisitante");
-	            Date fecha = resultSet.getTimestamp("fechaInicio");
-	            String partido = local + " VS " + visitante + " fecha: " + fecha.toString();
-	            partidosProgramados.add(partido);
-	        }
-	    } catch (SQLException e) {
-	        e.printStackTrace();
-	    } finally {
-	        this.closeConnection();
-	    }
-	    return partidosProgramados;
+	public ArrayList<String> listaPartidos() {
+		this.openConnection("admin", "admin");
+		ArrayList<String> partidosProgramados = new ArrayList<>();
+		try {
+			statement = connection.prepareStatement(Partidos);
+			resultSet = statement.executeQuery();
+
+			while (resultSet.next()) {
+				String local = resultSet.getString("nombreEquipoLocal");
+				String visitante = resultSet.getString("nombreEquipoVisitante");
+				Date fecha = resultSet.getTimestamp("fechaInicio");
+				String partido = local + " VS " + visitante + " fecha: " + fecha.toString();
+				partidosProgramados.add(partido);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			this.closeConnection();
+		}
+		return partidosProgramados;
 	}
 
 	@Override
 	public void modificarPartido() {
-		
+
 	}
 
 	@Override
@@ -506,7 +507,6 @@ public class Controller implements IController {
 
 	@Override
 	public void consultarPartido() {
-		
 
 	}
 
@@ -598,7 +598,17 @@ public class Controller implements IController {
 				String password = resultSet.getString("password");
 				String nombreEquipo = resultSet.getString("nombreEquipo");
 				String cargoStr = resultSet.getString("tipoEntrenador");
-				CargoEntrenador cargo = CargoEntrenador.valueOf(cargoStr); // Convertir el String a CargoEntrenador
+				String cargoStr1 = resultSet.getString("tipoEntrenador");
+				CargoEntrenador cargo = null;
+
+				try {
+					cargo = CargoEntrenador.valueOf(cargoStr1.toUpperCase());
+				} catch (IllegalArgumentException e) {
+					// Manejar el caso en el que el valor de la base de datos no coincide con ningún
+					// valor del enum
+					System.out.println("Valor de tipoEntrenador no válido: " + cargoStr1);
+				}
+
 				entrenador = new Entrenador(userN, userN, password, nombreEquipo, cargo);
 			}
 		} catch (SQLException e) {
@@ -635,6 +645,7 @@ public class Controller implements IController {
 
 		return equipos;
 	}
+
 
 	
 	public Date obtenerFechaPartido(String nombrePartido) {
