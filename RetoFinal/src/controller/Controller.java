@@ -10,6 +10,8 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Date;
 
+import com.mysql.cj.protocol.Resultset;
+
 import model.equipos.Equipo;
 import model.usuarios.CargoEntrenador;
 import model.usuarios.Entrenador;
@@ -44,6 +46,7 @@ public class Controller implements IController {
 	final String nombreEquipo = "Select nombreEquipo FROM laliga WHERE user=?";
 	final String ALLequipos = "SELECT nombreEquipo FROM  equipo";
 	final String ENTRENADORequipo = "SELECT nombreEquipo FROM  entrenador where user=?";
+	final String Partidos = "SELECT nombreEquipoLocal, nombreEquipoVisitante, fechaInicio FROM juegan";
 
 	public boolean checkUserExist(String user) {
 		boolean exist = false;
@@ -366,11 +369,31 @@ public class Controller implements IController {
 		}
 		return modified;
 	}
+	public ArrayList<String> listaPartidos() {
+	    this.openConnection("admin", "admin");
+	    ArrayList<String> partidosProgramados = new ArrayList<>();
+	    try {
+	        statement = connection.prepareStatement(Partidos);
+	        resultSet = statement.executeQuery();
+
+	        while (resultSet.next()) {
+	            String local = resultSet.getString("nombreEquipoLocal");
+	            String visitante = resultSet.getString("nombreEquipoVisitante");
+	            Date fecha = resultSet.getTimestamp("fechaInicio");
+	            String partido = local + " VS " + visitante + " fecha: " + fecha.toString();
+	            partidosProgramados.add(partido);
+	        }
+	    } catch (SQLException e) {
+	        e.printStackTrace();
+	    } finally {
+	        this.closeConnection();
+	    }
+	    return partidosProgramados;
+	}
 
 	@Override
 	public void modificarPartido() {
-		// TODO Auto-generated method stub
-
+		
 	}
 
 	@Override
@@ -480,7 +503,7 @@ public class Controller implements IController {
 
 	@Override
 	public void consultarPartido() {
-		// TODO Auto-generated method stub
+		
 
 	}
 
@@ -608,6 +631,12 @@ public class Controller implements IController {
 		}
 
 		return equipos;
+	}
+
+	@Override
+	public boolean crearPartido(String equipoLocal, String equipoVisitante, java.sql.Timestamp fechaInicio) {
+		// TODO Auto-generated method stub
+		return false;
 	}
 
 }

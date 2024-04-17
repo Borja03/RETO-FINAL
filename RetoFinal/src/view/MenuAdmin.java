@@ -175,7 +175,7 @@ public class MenuAdmin extends JFrame implements ActionListener {
 
 		} else if (o == btnCrearPartido) {
 
-			CrearPartido frame = new CrearPartido(controller);
+			CrearPartido2 frame = new CrearPartido2(controller);
 			frame.setVisible(true);
 			dispose();
 		} else if (o == btnModificarPartido) { // Acci�n para el bot�n Modificar partido
@@ -185,22 +185,12 @@ public class MenuAdmin extends JFrame implements ActionListener {
 		} else if (o == btnLogOut) {
 			Login frame = new Login(controller);
 			frame.setVisible(true);
-			dispose();
-		} else if (o == btnCrearPartido) {
-
-			CrearPartido frame = new CrearPartido(controller);
-			frame.setVisible(true);
-			dispose();
-		} else if (o == btnCrearEquipo) {
-			CrearEquipo frame = new CrearEquipo(controller);
-			frame.setVisible(true);
-			dispose();
-
-		} else if (o == btnModificarPartido) { // Acci�n para el bot�n Modificar partido
-			ModificarPartido frame = new ModificarPartido(controller);
-			frame.setVisible(true);
-			dispose();
-		}
+			dispose()
+      }	else if (o == btnCrearEquipo) {
+				CrearEquipo frame = new CrearEquipo(controller);
+				frame.setVisible(true);
+				dispose();
+    }
 
 	}
 
