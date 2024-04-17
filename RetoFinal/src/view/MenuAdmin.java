@@ -187,8 +187,7 @@ public class MenuAdmin extends JFrame implements ActionListener {
 			Login frame = new Login(controller);
 			frame.setVisible(true);
 			dispose();
-
-			CrearPartido frame = new CrearPartido(controller);
+			CrearPartido2 frame = new CrearPartido2(controller);
 			frame.setVisible(true);
 			dispose();
 		}
@@ -203,7 +202,7 @@ public class MenuAdmin extends JFrame implements ActionListener {
 				dispose();
 			} else if (o == btnCrearEquipo) {
 
-				CrearPartido frame = new CrearPartido(controller);
+				CrearPartido2 frame = new CrearPartido2(controller);
 				frame.setVisible(true);
 				dispose();
 			} else if (o == btnLogOut) {

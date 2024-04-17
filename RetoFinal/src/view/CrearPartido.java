@@ -146,7 +146,7 @@ public class CrearPartido extends JFrame implements ActionListener {
                     JOptionPane.showMessageDialog(this, "Error al crear el partido.");
                 }
             } else {
-                // Comprobar si el campo del estadio está vacío
+        
                 if (estadioField.getText().isEmpty()) {
                     JOptionPane.showMessageDialog(this, "Por favor, complete el campo del estadio.");
                 } else {
