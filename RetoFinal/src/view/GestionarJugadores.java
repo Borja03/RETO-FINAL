@@ -33,7 +33,6 @@ public class GestionarJugadores extends JFrame implements ActionListener {
 	private Controller controller;
 	private JButton btnLogOut;
 	private JButton btnCambiarCont;
-	private JButton btnCambiarDorsal;
 	private JLabel lblWelcome;
 	private JButton btnConsultarPartidos;
 	private JButton btnConsultarEquipo;
@@ -143,33 +142,6 @@ public class GestionarJugadores extends JFrame implements ActionListener {
 				btnCambiarCont.setBackground(new Color(50, 70, 90));
 			}
 		});
-
-		btnCambiarDorsal = new JButton("     Cambiar Dorsal");
-		btnCambiarDorsal.addActionListener(this);
-		btnCambiarDorsal.setHorizontalAlignment(SwingConstants.LEFT);
-		btnCambiarDorsal.setFont(new Font("Tahoma", Font.BOLD, 14));
-		btnCambiarDorsal.setFocusable(false);
-		btnCambiarDorsal.setBorder(null);
-		btnCambiarDorsal.setBackground(new Color(128, 128, 0));
-		btnCambiarDorsal.setBounds(37, 445, 200, 49);
-		btnCambiarDorsal.addActionListener(this);
-		btnCambiarDorsal.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseEntered(MouseEvent e) {
-				btnCambiarDorsal.setBackground(new Color(90, 70, 50));
-			}
-
-			@Override
-			public void mouseExited(MouseEvent e) {
-				btnCambiarDorsal.setBackground(new Color(128, 128, 0));
-			}
-
-			@Override
-			public void mousePressed(MouseEvent e) {
-				btnCambiarDorsal.setBackground(new Color(50, 70, 90));
-			}
-		});
-		panelLeft.add(btnCambiarDorsal);
 
 		lblWelcome = new JLabel("Welcome " + userName + "");
 		lblWelcome.setForeground(new Color(255, 255, 0));

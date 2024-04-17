@@ -353,16 +353,7 @@ public class SearchJugadore extends JFrame implements ActionListener {
 		
 	
 	}
-	
-	public void jugadorOldInfo() {
-		Jugador usr =(Jugador) controller.getUsuario(userName);
-		textFieldUSer.setText(usr.getUser());
-		textFieldContrasena.setText(usr.getContrasenia());
-		fillDorsalBox();
-	//	textFieldDorsal.setText(usr.getDorsal()+"");
-		textFieldGoles.setText(usr.getGoles()+"");
-		textFieldAsist.setText(usr.getAsistencias()+"");
-	}
+
 
 	public void fillDorsalBox() {
 
@@ -376,7 +367,7 @@ public class SearchJugadore extends JFrame implements ActionListener {
 	
 	
 	public void fillUserData() {
-		Jugador usr =(Jugador) controller.getUsuario(userName);
+		Jugador usr =(Jugador) controller.getUsuario(textFieldUSer.getText());
 		textFieldUSer.setText(usr.getUser());
 		textFieldContrasena.setText(usr.getContrasenia());
 		textFieldDorsal.addItem(usr.getDorsal());
