@@ -79,7 +79,7 @@ public class ModificarEntrenador2 extends JFrame implements ActionListener {
 
 		Entrenador usr = (Entrenador) controller.getUsuario(user);
 		textFieldUSer.setText(usr.getUser());
-		textFieldContrasena.setText(usr.getContraseña());
+		textFieldContrasena.setText(usr.getContrasenia());
 	}
 
 	@Override
@@ -104,7 +104,7 @@ public class ModificarEntrenador2 extends JFrame implements ActionListener {
 
 			if (opcion == JOptionPane.NO_OPTION) {
 				this.dispose();
-				GestionarEntre g1 = new GestionarEntre(controller);
+				MenuAdmin g1 = new MenuAdmin(controller);
 				g1.setVisible(true);
 
 			} else {
