@@ -354,7 +354,7 @@ public class Controller implements IController {
 			Jugador jugador = (Jugador) usuario;
 			this.openConnection("jugador", "jugador");
 			statement = connection.prepareStatement(MODIFICARjugador);
-			statement.setString(1, ((Usuarios) jugador).getContrase�a());
+			statement.setString(1, ((Usuarios) jugador).getContrasenia());
 			statement.setInt(2, dorsal);
 			statement.setInt(3, jugador.getGoles());
 			statement.setInt(4, jugador.getAsistencias());
