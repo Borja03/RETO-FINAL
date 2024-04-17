@@ -5,20 +5,12 @@ import java.awt.Font;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.ArrayList;
-import java.util.HashMap;
-
 import javax.swing.JButton;
-import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-import javax.swing.JSpinner;
-import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
-
-import com.toedter.calendar.JCalendar;
 
 import controller.Controller;
 
@@ -32,7 +24,7 @@ public class MenuAdmin extends JFrame implements ActionListener {
     private Controller controller;
     private JButton btnGestionarEntrenador;
     private JButton btnCrearPartido;
-    private JButton btnModificarPartido; // Botón Modificar partido
+    private JButton btnModificarPartido;
     private JPanel panelRight;
     private JPanel panelRight2;
 
@@ -105,7 +97,6 @@ public class MenuAdmin extends JFrame implements ActionListener {
         btnCrearPartido.setBounds(57, 310, 200, 49);
         panelLeft.add(btnCrearPartido);
 
-        // Botón Modificar partido
         btnModificarPartido = new JButton("Modificar partido");
         btnModificarPartido.setHorizontalAlignment(SwingConstants.LEFT);
         btnModificarPartido.setFont(new Font("Tahoma", Font.BOLD, 14));
@@ -114,7 +105,7 @@ public class MenuAdmin extends JFrame implements ActionListener {
         btnModificarPartido.setBackground(new Color(128, 128, 0));
         btnModificarPartido.setBounds(57, 430, 200, 49);
         panelLeft.add(btnModificarPartido);
-        btnModificarPartido.addActionListener(this); // Agregar ActionListener
+        btnModificarPartido.addActionListener(this);
 
         panelRight = new JPanel();
         panelRight.setBounds(329, 0, 659, 680);
@@ -180,13 +171,11 @@ public class MenuAdmin extends JFrame implements ActionListener {
             this.dispose();
             ModificarEntrenador av = new ModificarEntrenador(controller);
             av.setVisible(true);
-
         } else if (o == btnCrearPartido) {
-
             CrearPartido2 frame = new CrearPartido2(controller);
             frame.setVisible(true);
             this.dispose();
-        } else if (o == btnModificarPartido) { // Acción para el botón Modificar partido
+        } else if (o == btnModificarPartido) {
             ModificarPartido frame = new ModificarPartido(controller);
             frame.setVisible(true);
             this.dispose();
@@ -199,7 +188,6 @@ public class MenuAdmin extends JFrame implements ActionListener {
             frame.setVisible(true);
             this.dispose();
         }
-
     }
 
     public void mostrarBotonesEquipos() {

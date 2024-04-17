@@ -633,4 +633,23 @@ public class Controller implements IController {
 		return equipos;
 	}
 
+	
+	public Date obtenerFechaPartido(String nombrePartido) {
+	    Date fechaPartido = null;
+	    this.openConnection("admin", "admin");
+	    try {
+	        statement = connection.prepareStatement("SELECT fechaInicio FROM juegan WHERE nombreEquipoLocal = ? OR nombreEquipoVisitante = ?");
+	        statement.setString(1, nombrePartido);
+	        statement.setString(2, nombrePartido);
+	        resultSet = statement.executeQuery();
+	        if (resultSet.next()) {
+	            fechaPartido = resultSet.getTimestamp("fechaInicio");
+	        }
+	    } catch (SQLException e) {
+	        e.printStackTrace();
+	    } finally {
+	        this.closeConnection();
+	    }
+	    return fechaPartido;
+	}
 }
