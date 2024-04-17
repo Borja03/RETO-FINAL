@@ -132,6 +132,10 @@ public class MenuJugador extends JFrame implements ActionListener {
 			CambiarDorsal ventanaDorsal = new CambiarDorsal(controller, userName);
 			ventanaDorsal.setVisible(true);
 			this.setVisible(false);
+		}else if (o == btnCambiarCont ) {
+			CambiarContra ventanaCont = new CambiarContra(controller, "Jugador", userName);
+		    ventanaCont.setVisible(true);
+		    this.setVisible(false);
 		}
 	}
 }

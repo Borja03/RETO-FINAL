@@ -28,6 +28,7 @@ public class MenuEntrenador extends JFrame implements ActionListener {
 	private JLabel lblWelcome;
 	private String userName;
 	private JButton btnConsultarPartidos;
+	private JButton btnCambiarContrasena;
 
 	public MenuEntrenador(Controller cont, String entrConnected) {
 		this.controller = cont;
@@ -108,7 +109,7 @@ public class MenuEntrenador extends JFrame implements ActionListener {
 		btnLogOut.addActionListener(this);
 		btnLogOut.setFont(new Font("Tahoma", Font.BOLD, 14));
 		
-		JButton btnCambiarContrasena = new JButton("Cambiar contraseña");
+		btnCambiarContrasena = new JButton("Cambiar contraseña");
 		btnCambiarContrasena.setBounds(57, 513, 200, 49);
 		panelLeft.add(btnCambiarContrasena);
 		btnCambiarContrasena.setHorizontalAlignment(SwingConstants.LEFT);
@@ -116,6 +117,7 @@ public class MenuEntrenador extends JFrame implements ActionListener {
 		btnCambiarContrasena.setFocusable(false);
 		btnCambiarContrasena.setBorder(null);
 		btnCambiarContrasena.setBackground(new Color(128, 128, 0));
+		btnCambiarContrasena.addActionListener(this);
 
 	}
 
@@ -137,6 +139,10 @@ public class MenuEntrenador extends JFrame implements ActionListener {
 			GestionarJugadores g1 = new GestionarJugadores(controller,userName,myTeam);
 			g1.setVisible(true);
 			this.dispose();
+		}else if (o == btnCambiarContrasena ) {
+			CambiarContra ventanaCont = new CambiarContra(controller, "Entrenador", userName);
+		    ventanaCont.setVisible(true);
+		    this.setVisible(false);
 		}
 
 	}
