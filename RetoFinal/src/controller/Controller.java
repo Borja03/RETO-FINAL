@@ -14,6 +14,7 @@ import com.mysql.cj.protocol.Resultset;
 
 import model.equipos.Equipo;
 import model.usuarios.CargoEntrenador;
+import model.usuarios.Entrenador;
 import model.usuarios.Jugador;
 import model.usuarios.Tipo;
 import model.usuarios.Usuarios;
@@ -35,9 +36,11 @@ public class Controller implements IController {
 
 	final String INNSERTjugador = "INSERT INTO jugador (user,password,dorsal,numeroGoles,numeroAsistencias,nombreEquipo) VALUES (?,?,?,?,?,?)";
 	final String GETjugador = "SELECT * FROM jugador WHERE user = ?";
+	final String GETentrenador = "SELECT * FROM entrenador WHERE user = ?";
 	final String GETjugadorEquipo = "SELECT * FROM jugador WHERE user = ? AND nombreEquipo= ?";
 	final String DELETEjugador = "DELETE FROM jugador WHERE user =?";
 	final String MODIFICARjugador = "UPDATE jugador SET password=?, dorsal=?,numeroGoles=?, numeroAsistencias=? WHERE user=?";
+	final String MODIFICARentrenador = "UPDATE entrenador SET password=?, user=?,tipoEntrenador=? WHERE user=?";
 
 	final String ConnectUser = "SELECT * FROM  laliga WHERE user_name =? AND password=?";
 	final String nombreEquipo = "Select nombreEquipo FROM laliga WHERE user=?";
@@ -50,6 +53,27 @@ public class Controller implements IController {
 		this.openConnection("entrenador", "entrenador");
 		try {
 			statement = connection.prepareStatement(GETjugador);
+
+			statement.setString(1, user);
+			resultSet = statement.executeQuery();
+			if (resultSet.next()) {
+				exist = true;
+			}
+
+		} catch (SQLException e) {
+			System.out.println("Error de SQL");
+			e.printStackTrace();
+		} finally {
+			this.closeConnection();
+		}
+		return exist;
+	}
+
+	public boolean checkUserExist2(String user) {
+		boolean exist = false;
+		this.openConnection("admin", "admin");
+		try {
+			statement = connection.prepareStatement(GETentrenador);
 
 			statement.setString(1, user);
 			resultSet = statement.executeQuery();
@@ -162,7 +186,7 @@ public class Controller implements IController {
 	public boolean crearEntrenador(String nombreEquipo, String user, String password, CargoEntrenador tipoEntrenador) {
 		boolean added = false;
 		this.openConnection("admin", "admin");
-		
+
 		try {
 			statement = connection.prepareStatement(INNSERTentrenador);
 
@@ -183,12 +207,40 @@ public class Controller implements IController {
 	}
 
 	@Override
+	public boolean crearPartido(String equipoLocal, String equipoVisitante, java.sql.Timestamp fechaInicio) {
+		boolean added = false;
+		try {
+			openConnection("admin", "admin");
+
+			String insertJueganQuery = "INSERT INTO juegan (nombreEquipoLocal, nombreEquipoVisitante, fechaInicio, resultado) VALUES (?, ?, ?, ?)";
+			PreparedStatement insertJueganStatement = connection.prepareStatement(insertJueganQuery);
+			insertJueganStatement.setString(1, equipoLocal);
+			insertJueganStatement.setString(2, equipoVisitante);
+			insertJueganStatement.setTimestamp(3, fechaInicio);
+			insertJueganStatement.setString(4, "0-0");
+
+			if (insertJueganStatement.executeUpdate() > 0) {
+				added = true;
+				System.out.println("Partido creado!");
+			} else {
+				System.out.println("Fallo al crear el partido en la tabla juegan.");
+			}
+		} catch (SQLException e) {
+			System.out.println("Error de SQL");
+			e.printStackTrace();
+		} finally {
+			closeConnection();
+		}
+		return added;
+	}
+
+	@Override
 	public boolean crearJugador(String user, String password, int dorsal, int numeroGoles, int numeroAsistencias,
 			String nombreEquipo) {
 		boolean added = false;
 		this.openConnection("entrenador", "entrenador");
 		try {
-			statement = connection.prepareStatement(INNSERTjugador);
+			statement = connection.prepareStatement(MODIFICARentrenador);
 			statement.setString(1, user);
 			statement.setString(2, password);
 			statement.setInt(3, dorsal);
@@ -263,10 +315,31 @@ public class Controller implements IController {
 	}
 
 	@Override
-	public boolean modificarEntrenador() {
-		return false;
-		// TODO Auto-generated method stub
+	public boolean modificarEntrenador(String user, String password, CargoEntrenador tipoEntrenador) {
+		boolean modified = false;
+		this.openConnection("admin", "admin");
+		try {
+			statement = connection.prepareStatement(MODIFICARentrenador);
+			// statement.setString(1, user);
+			statement.setString(1, password);
+			statement.setString(2, user);
+			statement.setString(3, tipoEntrenador.getNombre());
+			statement.setString(4, user);
 
+			if (statement.executeUpdate() > 0) {
+				modified = true;
+				System.out.println("Data inserted!");
+			} else {
+				System.out.println("Failed!");
+			}
+
+		} catch (SQLException e) {
+			System.out.println("Error de SQL");
+			e.printStackTrace();
+		} finally {
+			this.closeConnection();
+		}
+		return modified;
 	}
 
 	@Override
@@ -399,35 +472,34 @@ public class Controller implements IController {
 
 	@Override
 	public boolean cambiarPassword(String user, String newPassword, String userType) {
-	    boolean changed = false;
-	    String query = "";
-	    if ("Entrenador".equals(userType)) {
-	        query = "UPDATE entrenador SET password = ? WHERE user = ?";
-	    } else if ("Jugador".equals(userType)) {
-	        query = "UPDATE jugador SET password = ? WHERE user = ?";
-	    }
+		boolean changed = false;
+		String query = "";
+		if ("Entrenador".equals(userType)) {
+			query = "UPDATE entrenador SET password = ? WHERE user = ?";
+		} else if ("Jugador".equals(userType)) {
+			query = "UPDATE jugador SET password = ? WHERE user = ?";
+		}
 
-	    try {
-	        openConnection(user,password); 
-	        statement = connection.prepareStatement(query);
-	        statement.setString(1, newPassword);
-	        statement.setString(2, user);
+		try {
+			openConnection(user, password);
+			statement = connection.prepareStatement(query);
+			statement.setString(1, newPassword);
+			statement.setString(2, user);
 
-	        if (statement.executeUpdate() > 0) {
-	            changed = true;
-	            System.out.println("Contraseña cambiada exitosamente.");
-	        } else {
-	            System.out.println("Error al cambiar la contraseña.");
-	        }
-	    } catch (SQLException e) {
-	        System.out.println("Error de SQL");
-	        e.printStackTrace();
-	    } finally {
-	        closeConnection();
-	    }
-	    return changed;
+			if (statement.executeUpdate() > 0) {
+				changed = true;
+				System.out.println("Contraseña cambiada exitosamente.");
+			} else {
+				System.out.println("Error al cambiar la contraseña.");
+			}
+		} catch (SQLException e) {
+			System.out.println("Error de SQL");
+			e.printStackTrace();
+		} finally {
+			closeConnection();
+		}
+		return changed;
 	}
-
 
 	@Override
 	public void consultarPartido() {
@@ -508,6 +580,31 @@ public class Controller implements IController {
 		}
 		return usuario;
 
+	}
+
+	public Entrenador getUsuario2(String user) {
+		Entrenador entrenador = null;
+		this.openConnection("admin", "admin");
+		try {
+			statement = connection.prepareStatement(GETentrenador);
+			statement.setString(1, user);
+
+			resultSet = statement.executeQuery();
+			while (resultSet.next()) {
+				String userN = resultSet.getString("user");
+				String password = resultSet.getString("password");
+				String nombreEquipo = resultSet.getString("nombreEquipo");
+				String cargoStr = resultSet.getString("tipoEntrenador");
+				CargoEntrenador cargo = CargoEntrenador.valueOf(cargoStr); // Convertir el String a CargoEntrenador
+				entrenador = new Entrenador(userN, userN, password, nombreEquipo, cargo);
+			}
+		} catch (SQLException e) {
+			System.out.println("Error de SQL");
+			e.printStackTrace();
+		} finally {
+			this.closeConnection();
+		}
+		return entrenador;
 	}
 
 	@Override
