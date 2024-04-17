@@ -8,7 +8,6 @@ import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
 import controller.Controller;
-import view.toDelete.AnadirEntrenador;
 
 public class GestionarEntre extends JFrame implements ActionListener {
 

@@ -1,6 +1,6 @@
 package view;
 
-import java.awt.Color;
+import java.awt.Color; 
 import java.awt.EventQueue;
 import java.awt.Font;
 
@@ -314,11 +314,6 @@ public class GestionarJugadores extends JFrame implements ActionListener {
 			ConsultarPartidos consultarPartidos = new ConsultarPartidos(controller, userName);
 			this.dispose();
 			consultarPartidos.setVisible(true);
-		} else if (e.getSource() == btnCambiarDorsal) {
-			CambiarDorsal cambiarDorsal = new CambiarDorsal(controller, userName);
-			this.dispose();
-			cambiarDorsal.setVisible(true);
-
 		} else if (e.getSource() == btnLogOut) {
 			this.dispose();
 			controller.logOut();
