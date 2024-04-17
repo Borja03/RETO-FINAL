@@ -14,15 +14,15 @@ public class Usuarios {
 		this.contrasena = "";
 	}
 
-	public Usuarios(String nombre, String user, String contraseña) {
+	public Usuarios(String nombre, String user, String contrasenia) {
 		this.tipo = nombre;
 		this.user = user;
-		this.contrasena = contraseña;
+		this.contrasena = contrasenia;
 	}
 
-	public Usuarios(String user, String contraseña) {
+	public Usuarios(String user, String contrasenia) {
 		this.user = user;
-		this.contrasena = contraseña;
+		this.contrasena = contrasenia;
 	}
 
 	public String getTipo() {
@@ -41,12 +41,12 @@ public class Usuarios {
 		this.user = user;
 	}
 
-	public String getContraseña() {
+	public String getContrasenia() {
 		return contrasena;
 	}
 
-	public void setContraseña(String contraseña) {
-		this.contrasena = contraseña;
+	public void setContrasenia(String contrasenia) {
+		this.contrasena = contrasenia;
 	}
 
 	@Override
