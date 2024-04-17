@@ -158,7 +158,7 @@ public class MenuAdmin extends JFrame implements ActionListener {
 			mostrarBotonesEntrenadores();
 			ocultarBotonesEquipos();
 		} else if (o == btnCrearPartido) {
-			CrearPartido frame = new CrearPartido(controller);
+			CrearPartido2 frame = new CrearPartido2(controller);
 			frame.setVisible(true);
 			dispose();
 		}
@@ -173,7 +173,7 @@ public class MenuAdmin extends JFrame implements ActionListener {
 				dispose();
 			} else if (o == btnCrearEquipo) {
 
-				CrearPartido frame = new CrearPartido(controller);
+				CrearPartido2 frame = new CrearPartido2(controller);
 				frame.setVisible(true);
 				dispose();
 			} else if (o == btnLogOut) {
