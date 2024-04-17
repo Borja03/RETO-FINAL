@@ -40,8 +40,11 @@ public class Controller implements IController {
 	final String ConnectUser = "SELECT * FROM  laliga WHERE user_name =? AND password=?";
 	final String nombreEquipo = "Select nombreEquipo FROM laliga WHERE user=?";
 	final String ALLequipos = "SELECT nombreEquipo FROM  equipo";
+	
 	final String ENTRENADORequipo = "SELECT nombreEquipo FROM  entrenador where user=?";
-
+	final String NOMBREequipo = "SELECT * FROM  equipo where nombreEquipo=?";
+	final String ENTRENADORnombre = "SELECT user FROM  entrenador where nombreEquipo=? and tipoEntrenador=?";
+	final String JUGADORESequipo = "SELECT * FROM  jugador where nombreEquipo=?";
 	public boolean checkUserExist(String user) {
 		boolean exist = false;
 		this.openConnection("entrenador", "entrenador");
@@ -361,7 +364,6 @@ public class Controller implements IController {
 			statement.setString(5, user);
 			if (statement.executeUpdate() > 0) {
 				modified = true;
-
 				System.out.println("Dorsal modificado con �xito!");
 				System.out.println("Dorsal modificado con éxito!");
 
@@ -517,6 +519,104 @@ public class Controller implements IController {
 		}
 
 		return equipos;
+	}
+	
+	
+	public Equipo getEquipo(String nombreEquipo) {
+		Equipo myTeam = null;
+		this.openConnection("entrenador", "entrenador");
+		try {
+			statement = connection.prepareStatement(NOMBREequipo);
+			statement.setString(1, nombreEquipo);
+
+			resultSet = statement.executeQuery();
+			while (resultSet.next()) {
+				String nombreEq = resultSet.getString("nombreEquipo");
+				String estadio = resultSet.getString("nombreEstadio");
+				int titulos = resultSet.getInt("titulos");
+				String logo = resultSet.getString("logo");
+
+				myTeam = new Equipo(nombreEq, estadio, titulos);
+			}
+		} catch (SQLException e) {
+			System.out.println("Error de SQL");
+			e.printStackTrace();
+		} finally {
+			this.closeConnection();
+		}
+		return myTeam;
+	}
+
+	public String getPrimEntrenador(String eqName) {
+		String entName = null;
+		this.openConnection("entrenador", "entrenador");
+		try {
+			statement = connection.prepareStatement(ENTRENADORnombre);
+			statement.setString(1, eqName);
+			statement.setString(2, "PRIMER_ENTRENADOR");
+
+			resultSet = statement.executeQuery();
+			while (resultSet.next()) {
+				entName = resultSet.getString("user");
+			}
+
+		} catch (SQLException e) {
+			System.out.println("Error de SQL");
+			e.printStackTrace();
+		} finally {
+			this.closeConnection();
+		}
+		return entName;
+	}
+
+	public String getSegEntrenador(String eqName) {
+		String entName = null;
+		this.openConnection("entrenador", "entrenador");
+		try {
+			statement = connection.prepareStatement(ENTRENADORnombre);
+			statement.setString(1, eqName);
+			statement.setString(2, "SEGUNDO_ENTRENADOR");
+
+			resultSet = statement.executeQuery();
+			while (resultSet.next()) {
+				entName = resultSet.getString("user");
+			}
+
+		} catch (SQLException e) {
+			System.out.println("Error de SQL");
+			e.printStackTrace();
+		} finally {
+			this.closeConnection();
+		}
+		return entName;
+	}
+	
+	public ArrayList<Jugador> getJugadoresPorEquipo(String nombreEquipo) {
+		ArrayList<Jugador> jugadoresEq = new ArrayList<>();
+
+		try {
+			openConnection("entrenador", "entrenador");
+			statement = connection.prepareStatement(JUGADORESequipo);
+			statement.setString(1, nombreEquipo);
+			resultSet = statement.executeQuery();
+			while (resultSet.next()) {
+				String user = resultSet.getString("user");
+				String password = resultSet.getString("password");
+				String nbEquipo = resultSet.getString("nombreEquipo");
+				int dorsal = resultSet.getInt("dorsal");
+				int goles = resultSet.getInt("numeroGoles");
+				int asistencias = resultSet.getInt("numeroAsistencias");
+				Jugador jug = new Jugador(user,password,nbEquipo, dorsal, goles,asistencias);
+				jugadoresEq.add(jug);
+			}
+				
+		} catch (SQLException ex) {
+			ex.printStackTrace();
+		} finally {
+			closeConnection();
+		}
+
+		return jugadoresEq;
 	}
 
 }

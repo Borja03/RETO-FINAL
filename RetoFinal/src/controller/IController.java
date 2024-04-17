@@ -53,5 +53,10 @@ public interface IController {
 	public ArrayList<Equipo> listarEquiposCP();
 
 	boolean crearPartido(String equipoLocal, String equipoVisitante, java.sql.Timestamp fechaInicio);
+	public Equipo getEquipo(String nombreEquipo);
+	public String getPrimEntrenador(String eqName);
+	public String getSegEntrenador(String eqName);
+
+
 
 }
