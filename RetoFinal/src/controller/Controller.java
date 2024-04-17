@@ -657,6 +657,4 @@ public class Controller implements IController {
 	    }
 	    return fechaPartido;
 	}
-
-
 }
