@@ -156,30 +156,28 @@ public class MenuAdmin extends JFrame implements ActionListener {
 		} else if (o == btnGestionarEntrenador) {
 			mostrarBotonesEntrenadores();
 			ocultarBotonesEquipos();
+		} else if (o == btnCrearEntrenador) {
+			this.dispose();
+			AnadirEntrenador av = new AnadirEntrenador(controller);
+			av.setVisible(true);
+		} else if (o == btnBorrarEntrenador) {
+			this.dispose();
+			EliminarEntrenador av = new EliminarEntrenador(controller);
+			av.setVisible(true);
+		} else if (o == btnModificarEntrenador) {
+			this.dispose();
+			ModificarEntrenador av = new ModificarEntrenador(controller);
+			av.setVisible(true);
+
 		} else if (o == btnCrearPartido) {
 
-			if (o == btnCrearEquipo) {
-				CrearEquipo frame = new CrearEquipo(controller);
-				frame.setVisible(true);
-				dispose();
-			} else if (o == btnGestionarEntrenador) {
-				GestionarEntre frame = new GestionarEntre(controller);
-				frame.setVisible(true);
-				dispose();
-			} else if (o == cambiarContra) {
-				CambiarContra frame = new CambiarContra(controller);
-				frame.setVisible(true);
-				dispose();
-			} else if (o == btnCrearEquipo) {
-
-				CrearPartido frame = new CrearPartido(controller);
-				frame.setVisible(true);
-				dispose();
-			} else if (o == btnLogOut) {
-				Login frame = new Login(controller);
-				frame.setVisible(true);
-				dispose();
-			}
+			CrearPartido frame = new CrearPartido(controller);
+			frame.setVisible(true);
+			dispose();
+		} else if (o == btnLogOut) {
+			Login frame = new Login(controller);
+			frame.setVisible(true);
+			dispose();
 		}
 	}
 

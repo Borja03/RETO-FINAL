@@ -1,7 +1,7 @@
 package model.usuarios;
 
 public enum CargoEntrenador {
-	PRIMER_ENTRENADOR("Primer entrenador"), SEGUNDO_ENTRENADOR("Segundo entrenador");
+	PRIMER_ENTRENADOR("Primer_entrenador"), SEGUNDO_ENTRENADOR("Segundo_entrenador");
 
 	private final String nombre;
 

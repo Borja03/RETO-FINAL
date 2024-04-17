@@ -80,7 +80,7 @@ public class AnadirEntrenador extends JFrame implements ActionListener {
 		contentPane.add(lblEquipo);
 
 		String tipo = "";
-		String[] tipoEntrenador = { "Primer entrenador", "Segundo entrenador" };
+		String[] tipoEntrenador = { "Primer_entrenador", "Segundo_entrenador" };
 		for (int i = 0; i < tipoEntrenador.length; i++) {
 			tipo = tipoEntrenador[i];
 		}
@@ -98,9 +98,9 @@ public class AnadirEntrenador extends JFrame implements ActionListener {
 		String myTeam = txtEquiponame.getText();
 		String tipoString = (String) comboBoxTipo.getSelectedItem();
 		CargoEntrenador tipo = null;
-		if (tipoString.equals("Primer entrenador")) {
+		if (tipoString.equals("Primer_entrenador")) {
 			tipo = CargoEntrenador.PRIMER_ENTRENADOR;
-		} else if (tipoString.equals("Segundo entrenador")) {
+		} else if (tipoString.equals("Segundo_entrenador")) {
 			tipo = CargoEntrenador.SEGUNDO_ENTRENADOR;
 		}
 		
@@ -115,7 +115,7 @@ public class AnadirEntrenador extends JFrame implements ActionListener {
 
 				if (opcion == JOptionPane.NO_OPTION) {
 					this.dispose();
-					GestionarEntre g1 = new GestionarEntre(controller);
+					MenuAdmin g1 = new MenuAdmin(controller);
 					g1.setVisible(true);
 				}
 			}
