@@ -53,7 +53,7 @@ public class ModificarEntrenador extends JFrame implements ActionListener{
 		Object o = e.getSource();
 		String usr = textFieldEntrenador.getText();
 		if (o == btnOK) {
-			if (controller.checkUserExist(usr)) {
+			if (controller.checkUserExist2(usr)) {
 				ModificarEntrenador2 m1 = new ModificarEntrenador2(controller, usr);
 				m1.setVisible(true);
 			    dispose();

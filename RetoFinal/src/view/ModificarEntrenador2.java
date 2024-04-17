@@ -13,8 +13,10 @@ import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
 
 import controller.Controller;
+import model.usuarios.CargoEntrenador;
 import model.usuarios.Entrenador;
 import model.usuarios.Jugador;
+import javax.swing.JComboBox;
 
 public class ModificarEntrenador2 extends JFrame implements ActionListener {
 
@@ -25,13 +27,14 @@ public class ModificarEntrenador2 extends JFrame implements ActionListener {
 	private JLabel lblTipo;
 	private JTextField textFieldUSer;
 	private JTextField textFieldContrasena;
-	private JTextField textFieldTipo;
 	private JButton btnOK;
 	private Controller controller;
 	private String user;
+	private JComboBox comboBoxTipo;
 
 	public ModificarEntrenador2(Controller cont, String userC) {
 		this.controller = cont;
+		this.user = userC;
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 690, 486);
 		contentPane = new JPanel();
@@ -62,14 +65,19 @@ public class ModificarEntrenador2 extends JFrame implements ActionListener {
 		contentPane.add(textFieldContrasena);
 		textFieldContrasena.setColumns(10);
 
-		textFieldTipo = new JTextField();
-		textFieldTipo.setBounds(195, 151, 225, 20);
-		contentPane.add(textFieldTipo);
-		textFieldTipo.setColumns(10);
-
 		btnOK = new JButton("OK");
 		btnOK.setBounds(492, 366, 89, 23);
 		contentPane.add(btnOK);
+
+		String tipo = "";
+		String[] tipoEntrenador = { "Primer_entrenador", "Segundo_entrenador" };
+		for (int i = 0; i < tipoEntrenador.length; i++) {
+			tipo = tipoEntrenador[i];
+		}
+
+		comboBoxTipo = new JComboBox<String>(tipoEntrenador);
+		comboBoxTipo.setBounds(195, 150, 225, 22);
+		contentPane.add(comboBoxTipo);
 		btnOK.addActionListener(this);
 
 		entrenadorOldInfo();
@@ -91,12 +99,18 @@ public class ModificarEntrenador2 extends JFrame implements ActionListener {
 		// String user=textFieldUSer.getText();
 		String password = textFieldContrasena.getText();
 		// String myTeam= txtEquiponame.getText();
-		String tipo = textFieldTipo.getText();
+		String tipoString = (String) comboBoxTipo.getSelectedItem();
+		CargoEntrenador tipo = null;
+		if (tipoString.equals("Primer_entrenador")) {
+			tipo = CargoEntrenador.PRIMER_ENTRENADOR;
+		} else if (tipoString.equals("Segundo_entrenador")) {
+			tipo = CargoEntrenador.SEGUNDO_ENTRENADOR;
+		}
 		String team = controller.getMyTeam(user);
 
 		if (o == btnOK) {
 
-			if (controller.modificarEntrenador()) {
+			if (controller.modificarEntrenador(user, password, tipo)) {
 				opcion = JOptionPane.showConfirmDialog(this,
 						(String) "El entrenador ha sido modificado correctamente\n¿Desea modificar otro entrenador?",
 						"", JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE, null);
@@ -109,11 +123,10 @@ public class ModificarEntrenador2 extends JFrame implements ActionListener {
 
 			} else {
 				ModificarEntrenador m1 = new ModificarEntrenador(controller);
-				 m1.setVisible(true);
+				m1.setVisible(true);
 				this.dispose();
 			}
 		}
 
 	}
-
 }
