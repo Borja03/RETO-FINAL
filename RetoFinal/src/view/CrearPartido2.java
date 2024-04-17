@@ -120,7 +120,7 @@ class CrearPartido2 extends JFrame implements ActionListener {
 		btnModificarPartido.addActionListener(this); // Agregar ActionListener
 
 		btnCrearPartido.addActionListener(this);
-		btnCrearPartido.addActionListener(this);
+	
 
 		// Agregar acción al botón de gestionar entrenador
 		btnGestionarEntrenador.addActionListener(this);
@@ -225,7 +225,7 @@ class CrearPartido2 extends JFrame implements ActionListener {
 					JOptionPane.showMessageDialog(this, "Partido creado exitosamente.");
 					// Volver al menú admin
 					menuAdmin.setVisible(true);
-					// dispose();
+					this.dispose();
 				} else {
 					JOptionPane.showMessageDialog(this, "Error al crear el partido.");
 				}

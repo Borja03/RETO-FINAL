@@ -633,11 +633,6 @@ public class Controller implements IController {
 		return equipos;
 	}
 
-	@Override
-	public boolean crearPartido(String equipoLocal, String equipoVisitante, java.sql.Timestamp fechaInicio) {
-		// TODO Auto-generated method stub
-		return false;
-	}
 	
 	public Date obtenerFechaPartido(String nombrePartido) {
 	    Date fechaPartido = null;
