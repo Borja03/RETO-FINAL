@@ -407,10 +407,36 @@ public class Controller implements IController {
 	}
 
 	@Override
-	public void cambiarPassword() {
-		// TODO Auto-generated method stub
+	public boolean cambiarPassword(String user, String newPassword, String userType) {
+	    boolean changed = false;
+	    String query = "";
+	    if ("Entrenador".equals(userType)) {
+	        query = "UPDATE entrenador SET password = ? WHERE user = ?";
+	    } else if ("Jugador".equals(userType)) {
+	        query = "UPDATE jugador SET password = ? WHERE user = ?";
+	    }
 
+	    try {
+	        openConnection(user,password); 
+	        statement = connection.prepareStatement(query);
+	        statement.setString(1, newPassword);
+	        statement.setString(2, user);
+
+	        if (statement.executeUpdate() > 0) {
+	            changed = true;
+	            System.out.println("Contraseña cambiada exitosamente.");
+	        } else {
+	            System.out.println("Error al cambiar la contraseña.");
+	        }
+	    } catch (SQLException e) {
+	        System.out.println("Error de SQL");
+	        e.printStackTrace();
+	    } finally {
+	        closeConnection();
+	    }
+	    return changed;
 	}
+
 
 	@Override
 	public void consultarPartido() {

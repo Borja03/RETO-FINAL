@@ -24,15 +24,14 @@ public class MenuAdmin extends JFrame implements ActionListener {
 	private Controller controller;
 	private JButton btnGestionarEntrenador;
 	private JButton btnCrearPartido;
+	private JButton btnModificarPartido; // Bot�n Modificar partido
 	private JPanel panelRight;
 	private JPanel panelRight2;
 
-	// Botones relacionados con la gesti�n de equipos
 	private JButton btnCrearEquipo;
 	private JButton btnBorrarEquipo;
 	private JButton btnModificarEquipo;
 
-	// Botones relacionados con la gesti�n de entrenadores
 	private JButton btnCrearEntrenador;
 	private JButton btnBorrarEntrenador;
 	private JButton btnModificarEntrenador;
@@ -57,7 +56,7 @@ public class MenuAdmin extends JFrame implements ActionListener {
 		btnLogOut = new JButton("Log Out");
 		btnLogOut.setHorizontalAlignment(SwingConstants.LEFT);
 		btnLogOut.setBackground(new Color(128, 128, 0));
-		btnLogOut.setBounds(57, 500, 200, 49);
+		btnLogOut.setBounds(57, 550, 200, 49);
 		btnLogOut.setFocusable(false);
 		btnLogOut.setBorder(null);
 		panelLeft.add(btnLogOut);
@@ -71,7 +70,7 @@ public class MenuAdmin extends JFrame implements ActionListener {
 		btnAddEq.setFocusable(false);
 		btnAddEq.setBorder(null);
 		btnAddEq.setBackground(new Color(128, 128, 0));
-		btnAddEq.setBounds(57, 420, 200, 49);
+		btnAddEq.setBounds(57, 370, 200, 49);
 		panelLeft.add(btnAddEq);
 
 		lblWelcome = new JLabel("Welcome Admin");
@@ -86,7 +85,7 @@ public class MenuAdmin extends JFrame implements ActionListener {
 		btnGestionarEntrenador.setFocusable(false);
 		btnGestionarEntrenador.setBorder(null);
 		btnGestionarEntrenador.setBackground(new Color(128, 128, 0));
-		btnGestionarEntrenador.setBounds(57, 260, 200, 49);
+		btnGestionarEntrenador.setBounds(57, 250, 200, 49);
 		panelLeft.add(btnGestionarEntrenador);
 
 		btnCrearPartido = new JButton("Crear partido");
@@ -95,8 +94,19 @@ public class MenuAdmin extends JFrame implements ActionListener {
 		btnCrearPartido.setFocusable(false);
 		btnCrearPartido.setBorder(null);
 		btnCrearPartido.setBackground(new Color(128, 128, 0));
-		btnCrearPartido.setBounds(57, 340, 200, 49);
+		btnCrearPartido.setBounds(57, 310, 200, 49);
 		panelLeft.add(btnCrearPartido);
+
+		// Bot�n Modificar partido
+		btnModificarPartido = new JButton("Modificar partido");
+		btnModificarPartido.setHorizontalAlignment(SwingConstants.LEFT);
+		btnModificarPartido.setFont(new Font("Tahoma", Font.BOLD, 14));
+		btnModificarPartido.setFocusable(false);
+		btnModificarPartido.setBorder(null);
+		btnModificarPartido.setBackground(new Color(128, 128, 0));
+		btnModificarPartido.setBounds(57, 430, 200, 49);
+		panelLeft.add(btnModificarPartido);
+		btnModificarPartido.addActionListener(this); // Agregar ActionListener
 
 		panelRight = new JPanel();
 		panelRight.setBounds(329, 0, 659, 680);
@@ -110,17 +120,14 @@ public class MenuAdmin extends JFrame implements ActionListener {
 		contentPane.add(panelRight2);
 		panelRight2.setLayout(new GridLayout(0, 1, 0, 10));
 
-		// Inicializar los botones relacionados con la gesti�n de equipos
 		btnCrearEquipo = new JButton("Crear equipo");
 		btnBorrarEquipo = new JButton("Borrar equipo");
 		btnModificarEquipo = new JButton("Modificar equipo");
 
-		// Inicializar los botones relacionados con la gesti�n de entrenadores
 		btnCrearEntrenador = new JButton("Crear entrenador");
 		btnBorrarEntrenador = new JButton("Borrar entrenador");
 		btnModificarEntrenador = new JButton("Modificar entrenador");
 
-		// Ocultar los botones de gesti�n de equipos inicialmente
 		ocultarBotonesEquipos();
 		ocultarBotonesEntrenadores();
 
@@ -131,19 +138,15 @@ public class MenuAdmin extends JFrame implements ActionListener {
 		panelRight2.add(btnBorrarEquipo);
 		panelRight2.add(btnModificarEquipo);
 
-		// Agregar acci�n a los botones de gesti�n de equipos
 		btnCrearEquipo.addActionListener(this);
 		btnBorrarEquipo.addActionListener(this);
 		btnModificarEquipo.addActionListener(this);
 		btnCrearPartido.addActionListener(this);
 
-		// Agregar acci�n a los botones de gesti�n de entrenadores
 		btnCrearEntrenador.addActionListener(this);
 		btnBorrarEntrenador.addActionListener(this);
 		btnModificarEntrenador.addActionListener(this);
-		btnCrearPartido.addActionListener(this);
 
-		// Agregar acci�n al bot�n de gestionar entrenador
 		btnGestionarEntrenador.addActionListener(this);
 	}
 
@@ -179,37 +182,25 @@ public class MenuAdmin extends JFrame implements ActionListener {
 			ModificarPartido frame = new ModificarPartido(controller);
 			frame.setVisible(true);
 			dispose();
-
 		} else if (o == btnLogOut) {
 			Login frame = new Login(controller);
 			frame.setVisible(true);
 			dispose();
+		} else if (o == btnCrearPartido) {
 
 			CrearPartido frame = new CrearPartido(controller);
-			frame.setVisible(true);
-			dispose();
-		}
-
-		else if (o == btnCrearEquipo) {
-			CrearEquipo frame = new CrearEquipo(controller);
-			frame.setVisible(true);
-			dispose();
-		} else if (o == btnGestionarEntrenador) {
-			GestionarEntre frame = new GestionarEntre(controller);
 			frame.setVisible(true);
 			dispose();
 		} else if (o == btnCrearEquipo) {
-
-			CrearPartido frame = new CrearPartido(controller);
+			CrearEquipo frame = new CrearEquipo(controller);
 			frame.setVisible(true);
 			dispose();
-		} else if (o == btnLogOut) {
-			Login frame = new Login(controller);
+
+		} else if (o == btnModificarPartido) { // Acci�n para el bot�n Modificar partido
+			ModificarPartido frame = new ModificarPartido(controller);
 			frame.setVisible(true);
 			dispose();
 		}
-
-	}
 
 	}
 
