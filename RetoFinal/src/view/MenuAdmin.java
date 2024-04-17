@@ -24,7 +24,7 @@ public class MenuAdmin extends JFrame implements ActionListener {
     private Controller controller;
     private JButton btnGestionarEntrenador;
     private JButton btnCrearPartido;
-    private JButton btnModificarPartido; // Botón Modificar partido
+    private JButton btnModificarPartido; // Botï¿½n Modificar partido
     private JPanel panelRight;
     private JPanel panelRight2;
 
@@ -97,7 +97,7 @@ public class MenuAdmin extends JFrame implements ActionListener {
         btnCrearPartido.setBounds(57, 310, 200, 49);
         panelLeft.add(btnCrearPartido);
 
-        // Botón Modificar partido
+        // Botï¿½n Modificar partido
         btnModificarPartido = new JButton("Modificar partido");
         btnModificarPartido.setHorizontalAlignment(SwingConstants.LEFT);
         btnModificarPartido.setFont(new Font("Tahoma", Font.BOLD, 14));
@@ -150,46 +150,87 @@ public class MenuAdmin extends JFrame implements ActionListener {
         btnGestionarEntrenador.addActionListener(this);
     }
 
-    @Override
-    public void actionPerformed(ActionEvent e) {
-        Object o = e.getSource();
+	@Override
+	public void actionPerformed(ActionEvent e) {
+		Object o = e.getSource();
 
-        if (o == btnAddEq) {
-            mostrarBotonesEquipos();
-            ocultarBotonesEntrenadores();
-        } else if (o == btnGestionarEntrenador) {
-            mostrarBotonesEntrenadores();
-            ocultarBotonesEquipos();
-        } else if (o == btnCrearPartido) {
-            CrearPartido frame = new CrearPartido(controller);
-            frame.setVisible(true);
-            dispose();
-        } else if (o == btnModificarPartido) { // Acción para el botón Modificar partido
+		if (o == btnAddEq) {
+			mostrarBotonesEquipos();
+			ocultarBotonesEntrenadores();
+		} else if (o == btnGestionarEntrenador) {
+			mostrarBotonesEntrenadores();
+			ocultarBotonesEquipos();
+		} else if (o == btnCrearEntrenador) {
+			this.dispose();
+			AnadirEntrenador av = new AnadirEntrenador(controller);
+			av.setVisible(true);
+		} else if (o == btnBorrarEntrenador) {
+			this.dispose();
+			EliminarEntrenador av = new EliminarEntrenador(controller);
+			av.setVisible(true);
+		} else if (o == btnModificarEntrenador) {
+			this.dispose();
+			ModificarEntrenador av = new ModificarEntrenador(controller);
+			av.setVisible(true);
+
+		} else if (o == btnCrearPartido) {
+
+			CrearPartido frame = new CrearPartido(controller);
+			frame.setVisible(true);
+			dispose();
+       else if (o == btnModificarPartido) { // Acciï¿½n para el botï¿½n Modificar partido
             ModificarPartido frame = new ModificarPartido(controller);
             frame.setVisible(true);
             dispose();
-        } else if (o == btnLogOut) {
-            Login frame = new Login(controller);
-            frame.setVisible(true);
-            dispose();
-        }
-    }
+        
+    } else if (o == btnLogOut) {
+			Login frame = new Login(controller);
+			frame.setVisible(true);
+			dispose();
 
-    private void mostrarBotonesEquipos() {
-        panelRight2.setVisible(true);
-        panelRight.setVisible(false);
-    }
+			CrearPartido frame = new CrearPartido(controller);
+			frame.setVisible(true);
+			dispose();
+		}
+			
+		else if (o == btnCrearEquipo) {
+				CrearEquipo frame = new CrearEquipo(controller);
+				frame.setVisible(true);
+				dispose();
+			} else if (o == btnGestionarEntrenador) {
+				GestionarEntre frame = new GestionarEntre(controller);
+				frame.setVisible(true);
+				dispose();
+			} else if (o == btnCrearEquipo) {
 
-    private void ocultarBotonesEquipos() {
-        panelRight2.setVisible(false);
-    }
+				CrearPartido frame = new CrearPartido(controller);
+				frame.setVisible(true);
+				dispose();
+			} else if (o == btnLogOut) {
+				Login frame = new Login(controller);
+				frame.setVisible(true);
+				dispose();
+			}
 
-    private void mostrarBotonesEntrenadores() {
-        panelRight.setVisible(true);
-        panelRight2.setVisible(false);
-    }
+		}
+	
 
-    private void ocultarBotonesEntrenadores() {
-        panelRight.setVisible(false);
-    }
+	private void mostrarBotonesEquipos() {
+		panelRight2.setVisible(true);
+		panelRight.setVisible(false);
+	}
+
+	private void ocultarBotonesEquipos() {
+		panelRight2.setVisible(false);
+	}
+
+	private void mostrarBotonesEntrenadores() {
+		panelRight.setVisible(true);
+		panelRight2.setVisible(false);
+	}
+
+	private void ocultarBotonesEntrenadores() {
+		panelRight.setVisible(false);
+	}
 }
+
