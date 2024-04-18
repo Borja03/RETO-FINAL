@@ -1,6 +1,7 @@
 package controller;
 
 import java.security.Timestamp;
+import java.sql.Blob;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -9,7 +10,6 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Date;
 
-import com.mysql.cj.protocol.Resultset;
 
 import model.equipos.Equipo;
 import model.usuarios.CargoEntrenador;
@@ -50,7 +50,10 @@ public class Controller implements IController {
 	final String ENTRENADORnombre = "SELECT user FROM  entrenador where nombreEquipo=? and tipoEntrenador=?";
 	final String JUGADORESequipo = "SELECT * FROM  jugador where nombreEquipo=?";
 	final String DORSALlLista = "SELECT dorsal FROM  jugador where nombreEquipo=?";
-	
+	final String DELETEequipo = "DELETE FROM equipo WHERE nombreEquipo =?";
+	final String MODIFICARequipo = "UPDATE equipo SET titulos=?, nombreEstadio=? , logo=? WHERE nombreEquipo=?";
+
+
 	public boolean checkUserExist(String user) {
 		boolean exist = false;
 		this.openConnection("entrenador", "entrenador");
@@ -169,21 +172,7 @@ public class Controller implements IController {
 		return false;
 	}
 
-	@Override
-	public void crearEquipo(String nombreEquipo, int titulos, String nombreEstadio) {
-		try (Connection conn = DriverManager.getConnection(DB_URL, user, password)) {
-			String query = "INSERT INTO equipo (nombreEquipo, titulos, nombreEstadio) VALUES (?, ?, ?)";
-			try (PreparedStatement pstmt = conn.prepareStatement(query)) {
-				pstmt.setString(1, nombreEquipo);
-				pstmt.setInt(2, titulos);
-				pstmt.setString(3, nombreEstadio);
-				pstmt.executeUpdate();
-				System.out.println("Equipo creado exitosamente.");
-			}
-		} catch (SQLException e) {
-			System.err.println("Error al crear el equipo: " + e.getMessage());
-		}
-	}
+
 
 	@Override
 	public boolean crearEntrenador(String nombreEquipo, String user, String password, CargoEntrenador tipoEntrenador) {
@@ -429,7 +418,6 @@ public class Controller implements IController {
 			if (statement.executeUpdate() > 0) {
 				modified = true;
 
-				System.out.println("Dorsal modificado con �xito!");
 				System.out.println("Dorsal modificado con éxito!");
 
 			} else {
@@ -504,10 +492,7 @@ public class Controller implements IController {
 		return changed;
 	}
 
-	@Override
-	public void consultarPartido() {
-
-	}
+	
 
 	public ArrayList<String> getEquipos() {
 		ArrayList<String> misEquipos = new ArrayList<>();
@@ -568,8 +553,6 @@ public class Controller implements IController {
 				usuario = new Jugador(userN, password, nombreEquipo, dorsal, numGoles, numAsistencias);
 
 			}
-
-
 
 		} catch (SQLException e) {
 			System.out.println("Error de SQL");
@@ -641,27 +624,26 @@ public class Controller implements IController {
 		return equipos;
 	}
 
-
-	
 	public Date obtenerFechaPartido(String nombrePartido) {
-	    Date fechaPartido = null;
-	    this.openConnection("admin", "admin");
-	    try {
-	        statement = connection.prepareStatement("SELECT fechaInicio FROM juegan WHERE nombreEquipoLocal = ? OR nombreEquipoVisitante = ?");
-	        statement.setString(1, nombrePartido);
-	        statement.setString(2, nombrePartido);
-	        resultSet = statement.executeQuery();
-	        if (resultSet.next()) {
-	            fechaPartido = resultSet.getTimestamp("fechaInicio");
-	        }
-	    } catch (SQLException e) {
-	        e.printStackTrace();
-	    } finally {
-	        this.closeConnection();
-	    }
-	    return fechaPartido;
+		Date fechaPartido = null;
+		this.openConnection("admin", "admin");
+		try {
+			statement = connection.prepareStatement(
+					"SELECT fechaInicio FROM juegan WHERE nombreEquipoLocal = ? OR nombreEquipoVisitante = ?");
+			statement.setString(1, nombrePartido);
+			statement.setString(2, nombrePartido);
+			resultSet = statement.executeQuery();
+			if (resultSet.next()) {
+				fechaPartido = resultSet.getTimestamp("fechaInicio");
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			this.closeConnection();
+		}
+		return fechaPartido;
 	}
-	
+	@Override
 	public Equipo getEquipo(String nombreEquipo) {
 		Equipo myTeam = null;
 		this.openConnection("entrenador", "entrenador");
@@ -674,9 +656,9 @@ public class Controller implements IController {
 				String nombreEq = resultSet.getString("nombreEquipo");
 				String estadio = resultSet.getString("nombreEstadio");
 				int titulos = resultSet.getInt("titulos");
-				//String logo = resultSet.getString("logo");
+				 Blob logo = resultSet.getBlob("logo");
 
-				myTeam = new Equipo(nombreEq, estadio, titulos);
+				myTeam = new Equipo(nombreEq, estadio, titulos,logo);
 			}
 		} catch (SQLException e) {
 			System.out.println("Error de SQL");
@@ -708,7 +690,7 @@ public class Controller implements IController {
 		}
 		return entName;
 	}
-
+	@Override
 	public String getSegEntrenador(String eqName) {
 		String entName = null;
 		this.openConnection("entrenador", "entrenador");
@@ -730,7 +712,7 @@ public class Controller implements IController {
 		}
 		return entName;
 	}
-	
+	@Override
 	public ArrayList<Jugador> getJugadoresPorEquipo(String nombreEquipo) {
 		ArrayList<Jugador> jugadoresEq = new ArrayList<>();
 
@@ -746,10 +728,10 @@ public class Controller implements IController {
 				int dorsal = resultSet.getInt("dorsal");
 				int goles = resultSet.getInt("numeroGoles");
 				int asistencias = resultSet.getInt("numeroAsistencias");
-				Jugador jug = new Jugador(user,password,nbEquipo, dorsal, goles,asistencias);
+				Jugador jug = new Jugador(user, password, nbEquipo, dorsal, goles, asistencias);
 				jugadoresEq.add(jug);
 			}
-				
+
 		} catch (SQLException ex) {
 			ex.printStackTrace();
 		} finally {
@@ -758,9 +740,9 @@ public class Controller implements IController {
 
 		return jugadoresEq;
 	}
-	
+	@Override
 	public ArrayList<Integer> getUsedDorsal(String eqName) {
-		ArrayList<Integer>  dorsalLista = new ArrayList<>();
+		ArrayList<Integer> dorsalLista = new ArrayList<>();
 		int dorsal;
 		this.openConnection("entrenador", "entrenador");
 		try {
@@ -772,7 +754,6 @@ public class Controller implements IController {
 				dorsal = resultSet.getInt("dorsal");
 				dorsalLista.add(dorsal);
 			}
-
 		} catch (SQLException e) {
 			System.out.println("Error de SQL");
 			e.printStackTrace();
@@ -781,5 +762,96 @@ public class Controller implements IController {
 		}
 		return dorsalLista;
 	}
+	@Override
+
+	public boolean crearEquipo(String nombreEquipo, int titulos, String nombreEstadio, Blob logo) {
+		boolean inserted = false;
+
+		try (Connection conn = DriverManager.getConnection(DB_URL, user, password)) {
+			String query = "INSERT INTO equipo (nombreEquipo, titulos, nombreEstadio ,logo) VALUES (?, ?, ?, ?)";
+			try (PreparedStatement pstmt = conn.prepareStatement(query)) {
+				pstmt.setString(1, nombreEquipo);
+				pstmt.setInt(2, titulos);
+				pstmt.setString(3, nombreEstadio);
+				pstmt.setBlob(4, logo);
+				pstmt.executeUpdate();
+				System.out.println("Equipo creado exitosamente.");
+				//if (statement.executeUpdate() > 0) {
+					inserted = true;
+				//}
+				
+			} catch (SQLException e) {
+				System.err.println("Error al crear el equipo: " + e.getMessage());
+			}
+
+		} catch (SQLException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+		return inserted;
+
+	}
+
+	
+	@Override
+	public boolean borrarEquipo(String nombreEquipo) {
+		boolean deleted = false;
+		this.openConnection("admin", "admin");
+		try {
+			statement = connection.prepareStatement(DELETEequipo);
+
+			statement.setString(1, nombreEquipo);
+			if (statement.executeUpdate() > 0) {
+				deleted = true;
+			} else {
+				System.out.println("Failed!");
+			}
+
+		} catch (SQLException e) {
+			System.out.println("Error de SQL");
+			e.printStackTrace();
+		} finally {
+			this.closeConnection();
+		}
+		return deleted;
+
+	}
+
+	@Override
+	public boolean modificarEquipo(String nombreEquipo, int titulos, String nombreEstadio, Blob logo) {
+		boolean modified = false;
+		this.openConnection("admin", "admin");
+		try {
+			statement = connection.prepareStatement(MODIFICARequipo);
+			statement.setInt(1, titulos);
+			statement.setString(2, nombreEstadio);
+			statement.setBlob(3, logo);
+			statement.setString(4, nombreEquipo);
+
+			if (statement.executeUpdate() > 0) {
+				modified = true;
+				System.out.println("Data inserted!");
+			} else {
+				System.out.println("Failed!");
+			}
+
+		} catch (SQLException e) {
+			System.out.println("Error de SQL");
+			e.printStackTrace();
+		} finally {
+			this.closeConnection();
+		}
+		return modified;
+	}
+
+	@Override
+	public void consultarPartido() {
+		// TODO Auto-generated method stub
+		
+	}
+	
+
+
+
 
 }

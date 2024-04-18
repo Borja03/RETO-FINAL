@@ -73,31 +73,31 @@ public class SearchJugadore extends JFrame implements ActionListener {
 		contentPane.setSize(1366, 768);
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
-		
-				bottomPanelMsg = new JPanel();
-				bottomPanelMsg.setBackground(SystemColor.menu);
-				bottomPanelMsg.setBounds(310, 249, 676, 421);
-				contentPane.add(bottomPanelMsg);
-						bottomPanelMsg.setLayout(null);
-				
-						JLabel lblMsg = new JLabel("Este");
-						lblMsg.setBackground(SystemColor.textHighlightText);
-						lblMsg.setFont(new Font("Tahoma", Font.BOLD, 24));
-						lblMsg.setBounds(183, 49, 295, 72);
-						bottomPanelMsg.add(lblMsg);
-						
-						lblJugador = new JLabel("jugador");
-						lblJugador.setFont(new Font("Tahoma", Font.BOLD, 24));
-						lblJugador.setBackground(SystemColor.textHighlightText);
-						lblJugador.setBounds(183, 131, 295, 72);
-						bottomPanelMsg.add(lblJugador);
-						
-						lblNoExiste = new JLabel("NO existe !");
-						lblNoExiste.setFont(new Font("Tahoma", Font.BOLD, 24));
-						lblNoExiste.setBackground(SystemColor.textHighlightText);
-						lblNoExiste.setBounds(183, 226, 295, 72);
-						bottomPanelMsg.add(lblNoExiste);
-						bottomPanelMsg.setVisible(false);
+
+		bottomPanelMsg = new JPanel();
+		bottomPanelMsg.setBackground(SystemColor.menu);
+		bottomPanelMsg.setBounds(310, 249, 676, 421);
+		contentPane.add(bottomPanelMsg);
+		bottomPanelMsg.setLayout(null);
+
+		JLabel lblMsg = new JLabel("Este");
+		lblMsg.setBackground(SystemColor.textHighlightText);
+		lblMsg.setFont(new Font("Tahoma", Font.BOLD, 24));
+		lblMsg.setBounds(183, 49, 295, 72);
+		bottomPanelMsg.add(lblMsg);
+
+		lblJugador = new JLabel("jugador");
+		lblJugador.setFont(new Font("Tahoma", Font.BOLD, 24));
+		lblJugador.setBackground(SystemColor.textHighlightText);
+		lblJugador.setBounds(183, 131, 295, 72);
+		bottomPanelMsg.add(lblJugador);
+
+		lblNoExiste = new JLabel("NO existe !");
+		lblNoExiste.setFont(new Font("Tahoma", Font.BOLD, 24));
+		lblNoExiste.setBackground(SystemColor.textHighlightText);
+		lblNoExiste.setBounds(183, 226, 295, 72);
+		bottomPanelMsg.add(lblNoExiste);
+		bottomPanelMsg.setVisible(false);
 
 		bottomPanel = new JPanel();
 		bottomPanel.setBounds(310, 253, 674, 417);

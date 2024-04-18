@@ -204,7 +204,7 @@ public class MenuEntrenador extends JFrame implements ActionListener {
 		panel.add(txtEqSegundoEntre);
 
 		 nombreEquipo =controller.getMyTeam(userName);
-		 teamLogoLink = controller.getEquipo(nombreEquipo).getLogoLink();
+		 //teamLogoLink = controller.getEquipo(nombreEquipo).getLogoLink();
 		JLabel lblEqLogo = new JLabel();
 		//ImageIcon imgIcon = new ImageIcon(getClass().getResource(teamLogoLink));
 		ImageIcon imgIcon = new ImageIcon(getClass().getResource("/images/equiposLogo/athletic-bilbao.png"));
