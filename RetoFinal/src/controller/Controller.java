@@ -192,7 +192,6 @@ public class Controller implements IController {
 
 		try {
 			statement = connection.prepareStatement(INNSERTentrenador);
-
 			statement.setString(1, user);
 			statement.setString(2, password);
 			statement.setString(3, tipoEntrenador.getNombre());
@@ -570,10 +569,7 @@ public class Controller implements IController {
 
 			}
 
-			// usuario = new Jugador(userN, password, nombreEquipo, dorsal, numGoles,
-			// numAsistencias);
 
-			// TODO Auto-generated method stub
 
 		} catch (SQLException e) {
 			System.out.println("Error de SQL");
@@ -600,7 +596,6 @@ public class Controller implements IController {
 				String cargoStr = resultSet.getString("tipoEntrenador");
 				String cargoStr1 = resultSet.getString("tipoEntrenador");
 				CargoEntrenador cargo = null;
-
 				try {
 					cargo = CargoEntrenador.valueOf(cargoStr1.toUpperCase());
 				} catch (IllegalArgumentException e) {

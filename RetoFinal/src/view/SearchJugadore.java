@@ -25,6 +25,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.ActionEvent;
+import java.awt.SystemColor;
 
 public class SearchJugadore extends JFrame implements ActionListener {
 
@@ -56,6 +57,9 @@ public class SearchJugadore extends JFrame implements ActionListener {
 	private String userName;
 	private JButton btnBuscarJugador;
 	private JPanel bottomPanel;
+	private JPanel bottomPanelMsg;
+	private JLabel lblJugador;
+	private JLabel lblNoExiste;
 
 	public SearchJugadore(Controller controller, String user, String team) {
 		this.controller = controller;
@@ -69,6 +73,90 @@ public class SearchJugadore extends JFrame implements ActionListener {
 		contentPane.setSize(1366, 768);
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
+		
+				bottomPanelMsg = new JPanel();
+				bottomPanelMsg.setBackground(SystemColor.menu);
+				bottomPanelMsg.setBounds(310, 249, 676, 421);
+				contentPane.add(bottomPanelMsg);
+						bottomPanelMsg.setLayout(null);
+				
+						JLabel lblMsg = new JLabel("Este");
+						lblMsg.setBackground(SystemColor.textHighlightText);
+						lblMsg.setFont(new Font("Tahoma", Font.BOLD, 24));
+						lblMsg.setBounds(183, 49, 295, 72);
+						bottomPanelMsg.add(lblMsg);
+						
+						lblJugador = new JLabel("jugador");
+						lblJugador.setFont(new Font("Tahoma", Font.BOLD, 24));
+						lblJugador.setBackground(SystemColor.textHighlightText);
+						lblJugador.setBounds(183, 131, 295, 72);
+						bottomPanelMsg.add(lblJugador);
+						
+						lblNoExiste = new JLabel("NO existe !");
+						lblNoExiste.setFont(new Font("Tahoma", Font.BOLD, 24));
+						lblNoExiste.setBackground(SystemColor.textHighlightText);
+						lblNoExiste.setBounds(183, 226, 295, 72);
+						bottomPanelMsg.add(lblNoExiste);
+						bottomPanelMsg.setVisible(false);
+
+		bottomPanel = new JPanel();
+		bottomPanel.setBounds(310, 253, 674, 417);
+		contentPane.add(bottomPanel);
+		bottomPanel.setLayout(null);
+
+		lblContrasena = new JLabel("Contraseña");
+		lblContrasena.setBounds(80, 46, 90, 35);
+		lblContrasena.setFont(new Font("Tahoma", Font.BOLD, 14));
+		bottomPanel.add(lblContrasena);
+
+		lblDorsal = new JLabel("Dorsal");
+		lblDorsal.setBounds(80, 97, 90, 35);
+		lblDorsal.setFont(new Font("Tahoma", Font.BOLD, 14));
+		bottomPanel.add(lblDorsal);
+
+		lblGoles = new JLabel("Goles");
+		lblGoles.setBounds(80, 159, 90, 35);
+		lblGoles.setFont(new Font("Tahoma", Font.BOLD, 14));
+		bottomPanel.add(lblGoles);
+
+		lblAsistencias = new JLabel("Asistencias");
+		lblAsistencias.setBounds(80, 218, 90, 35);
+		lblAsistencias.setFont(new Font("Tahoma", Font.BOLD, 14));
+		bottomPanel.add(lblAsistencias);
+
+		textFieldContrasena = new JTextField();
+		textFieldContrasena.setBounds(245, 53, 250, 34);
+		textFieldContrasena.setFont(new Font("Tahoma", Font.BOLD, 14));
+		bottomPanel.add(textFieldContrasena);
+		textFieldContrasena.setColumns(10);
+
+		textFieldDorsal = new JComboBox<>();
+		textFieldDorsal.setBounds(245, 98, 250, 34);
+		textFieldDorsal.setFont(new Font("Tahoma", Font.BOLD, 14));
+		bottomPanel.add(textFieldDorsal);
+
+		textFieldGoles = new JTextField();
+		textFieldGoles.setBounds(245, 159, 250, 35);
+		textFieldGoles.setFont(new Font("Tahoma", Font.BOLD, 14));
+		bottomPanel.add(textFieldGoles);
+		textFieldGoles.setColumns(10);
+
+		textFieldAsist = new JTextField();
+		textFieldAsist.setBounds(245, 218, 250, 35);
+		textFieldAsist.setFont(new Font("Tahoma", Font.BOLD, 14));
+		bottomPanel.add(textFieldAsist);
+		textFieldAsist.setColumns(10);
+
+		btnElimimarJugador = new JButton("Eliminar jugador");
+		btnElimimarJugador.setBounds(442, 308, 176, 35);
+		btnElimimarJugador.setFont(new Font("Tahoma", Font.BOLD, 14));
+		bottomPanel.add(btnElimimarJugador);
+
+		JButton btnModificarJugador = new JButton("Modificar jugador");
+		btnModificarJugador.setBounds(204, 308, 169, 35);
+		btnModificarJugador.setFont(new Font("Tahoma", Font.BOLD, 14));
+		bottomPanel.add(btnModificarJugador);
+		bottomPanel.setVisible(false);
 
 		btnCrear = new JButton("Añadir Jugadores");
 		btnCrear.setBackground(new Color(240, 240, 240));
@@ -243,20 +331,19 @@ public class SearchJugadore extends JFrame implements ActionListener {
 		btnGestionarJugadores.setBackground(new Color(255, 128, 64));
 		btnGestionarJugadores.setBounds(37, 275, 200, 49);
 		panelLeft.add(btnGestionarJugadores);
-	
-		
+
 		// formulario
-		
+
 		JPanel topPanel = new JPanel();
 		topPanel.setBounds(310, 85, 676, 154);
 		contentPane.add(topPanel);
 		topPanel.setLayout(null);
-		
+
 		JLabel lblEquipo = new JLabel("Equipo");
 		lblEquipo.setFont(new Font("Tahoma", Font.BOLD, 14));
 		lblEquipo.setBounds(63, 42, 49, 17);
 		topPanel.add(lblEquipo);
-		
+
 		txtEquiponame = new JTextField();
 		txtEquiponame.setFont(new Font("Tahoma", Font.BOLD, 14));
 		txtEquiponame.setBounds(181, 39, 146, 23);
@@ -264,99 +351,28 @@ public class SearchJugadore extends JFrame implements ActionListener {
 		txtEquiponame.setText(miEquipo);
 		txtEquiponame.setEditable(false);
 		topPanel.add(txtEquiponame);
-		
+
 		lblUser = new JLabel("Usuario");
 		lblUser.setFont(new Font("Tahoma", Font.BOLD, 14));
 		lblUser.setBounds(63, 85, 55, 17);
 		topPanel.add(lblUser);
-		
+
 		textFieldUSer = new JTextField();
 		textFieldUSer.setFont(new Font("Tahoma", Font.BOLD, 14));
 		textFieldUSer.setBounds(181, 82, 146, 23);
 		topPanel.add(textFieldUSer);
 		textFieldUSer.setColumns(10);
-		
+
 		btnBuscarJugador = new JButton("Buscar jugador");
 		btnBuscarJugador.setFont(new Font("Tahoma", Font.BOLD, 14));
 		btnBuscarJugador.setBounds(467, 81, 143, 35);
 		topPanel.add(btnBuscarJugador);
 		btnBuscarJugador.addActionListener(this);
-
-		
-		JLabel lblMsgError = new JLabel("");
-		lblMsgError.setBounds(448, 235, 360, 41);
-		contentPane.add(lblMsgError);
-		
-		bottomPanel = new JPanel();
-		bottomPanel.setBounds(310, 253, 674, 417);
-		contentPane.add(bottomPanel);
-		bottomPanel.setLayout(null);
-		
-		lblContrasena = new JLabel("Contraseña");
-		lblContrasena.setFont(new Font("Tahoma", Font.BOLD, 14));
-		lblContrasena.setBounds(80, 46, 90, 35);
-		bottomPanel.add(lblContrasena);
-
-		lblDorsal = new JLabel("Dorsal");
-		lblDorsal.setFont(new Font("Tahoma", Font.BOLD, 14));
-		lblDorsal.setBounds(80, 97, 90, 35);
-		bottomPanel.add(lblDorsal);
-
-		lblGoles = new JLabel("Goles");
-		lblGoles.setFont(new Font("Tahoma", Font.BOLD, 14));
-		lblGoles.setBounds(80, 159, 90, 35);
-		bottomPanel.add(lblGoles);
-
-		lblAsistencias = new JLabel("Asistencias");
-		lblAsistencias.setFont(new Font("Tahoma", Font.BOLD, 14));
-		lblAsistencias.setBounds(80, 218, 90, 35);
-		bottomPanel.add(lblAsistencias);
-
-		
-
-		textFieldContrasena = new JTextField();
-		textFieldContrasena.setFont(new Font("Tahoma", Font.BOLD, 14));
-		textFieldContrasena.setBounds(245, 53, 250, 34);
-		bottomPanel.add(textFieldContrasena);
-		textFieldContrasena.setColumns(10);
-
-		textFieldDorsal = new JComboBox<>();
-		textFieldDorsal.setFont(new Font("Tahoma", Font.BOLD, 14));
-		textFieldDorsal.setBounds(245, 98, 250, 34);
 		fillDorsalBox();
-		bottomPanel.add(textFieldDorsal);
 
-		textFieldGoles = new JTextField();
-		textFieldGoles.setFont(new Font("Tahoma", Font.BOLD, 14));
-		textFieldGoles.setBounds(245, 159, 250, 35);
-		bottomPanel.add(textFieldGoles);
-		textFieldGoles.setColumns(10);
-
-		textFieldAsist = new JTextField();
-		textFieldAsist.setFont(new Font("Tahoma", Font.BOLD, 14));
-		textFieldAsist.setBounds(245, 218, 250, 35);
-		bottomPanel.add(textFieldAsist);
-		textFieldAsist.setColumns(10);
-
-		btnElimimarJugador = new JButton("Eliminar jugador");
-		btnElimimarJugador.setFont(new Font("Tahoma", Font.BOLD, 14));
-		btnElimimarJugador.setBounds(442, 308, 176, 35);
-		bottomPanel.add(btnElimimarJugador);
-
-	
-		
-		JButton btnModificarJugador = new JButton("Modificar jugador");
-		btnModificarJugador.setFont(new Font("Tahoma", Font.BOLD, 14));
-		btnModificarJugador.setBounds(204, 308, 169, 35);
-		bottomPanel.add(btnModificarJugador);
-		bottomPanel.setVisible(false);
-		
-	
 	}
 
-
 	public void fillDorsalBox() {
-
 		for (int i = 1; i <= 25; i++) {
 			if (!controller.getUsedDorsal(miEquipo).contains(i)) {
 				textFieldDorsal.addItem(i);
@@ -364,22 +380,19 @@ public class SearchJugadore extends JFrame implements ActionListener {
 		}
 	}
 
-	
-	
 	public void fillUserData() {
-		Jugador usr =(Jugador) controller.getUsuario(textFieldUSer.getText());
+		Jugador usr = (Jugador) controller.getUsuario(textFieldUSer.getText());
 		textFieldUSer.setText(usr.getUser());
 		textFieldContrasena.setText(usr.getContrasenia());
 		textFieldDorsal.addItem(usr.getDorsal());
-		textFieldGoles.setText(usr.getGoles()+"");
-		textFieldAsist.setText(usr.getAsistencias()+"");
+		textFieldGoles.setText(usr.getGoles() + "");
+		textFieldAsist.setText(usr.getAsistencias() + "");
 	}
-	
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
 
-	 if (e.getSource() == btnConsultarEquipo) {
+		if (e.getSource() == btnConsultarEquipo) {
 			MenuEntrenador menuEntrenador = new MenuEntrenador(controller, userName);
 			this.dispose();
 			menuEntrenador.setVisible(true);
@@ -396,28 +409,29 @@ public class SearchJugadore extends JFrame implements ActionListener {
 			this.dispose();
 			controller.logOut();
 		}
-		
-		else if(e.getSource() == btnBuscarJugador) {
-			if(controller.checkUserExist(textFieldUSer.getText())) {
+
+		else if (e.getSource() == btnBuscarJugador) {
+			if (controller.checkUserExist(textFieldUSer.getText())) {
 				fillUserData();
+				bottomPanelMsg.setVisible(false);
 				bottomPanel.setVisible(true);
-				
+			} else {
+				bottomPanel.setVisible(false);
+				bottomPanelMsg.setVisible(true);
 			}
 
 		}
 
-	 
 		if (e.getSource() == btnDelete) {
-			//EliminarJugadores e1 = new EliminarJugadores(controller, userName);
-		//	e1.setVisible(true);
-		//	this.dispose();
+			// EliminarJugadores e1 = new EliminarJugadores(controller, userName);
+			// e1.setVisible(true);
+			// this.dispose();
 		} else if (e.getSource() == btnModificar) {
 			ModificarJugadores m1 = new ModificarJugadores(controller);
 			m1.setVisible(true);
 			this.dispose();
 		}
-		
-		
+
 		if (e.getSource() == btnElimimarJugador) {
 			String user = textFieldUSer.getText();
 			String password = textFieldContrasena.getText();
