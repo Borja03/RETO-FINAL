@@ -6,8 +6,11 @@ import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.sql.Timestamp;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import javax.swing.JButton;
 import javax.swing.JComboBox;
@@ -203,39 +206,36 @@ class CrearPartido2 extends JFrame implements ActionListener {
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		Object o = e.getSource();
-		MenuAdmin menuAdmin = new MenuAdmin(controller);
-		if (o == btnCrearPartido) {
-			CrearPartido frame = new CrearPartido(controller);
-			frame.setVisible(true);
-			// dispose();
-		} else if (o == okButton) {
-			String equipoLocal = (String) equipoLocalComboBox.getSelectedItem();
-			String equipoVisitante = (String) equipoVisitanteComboBox.getSelectedItem();
-			Timestamp fechaInicio = new Timestamp(datePicker.getDate().getTime());
-			java.util.Date horaSeleccionada = (java.util.Date) timeSpinner.getValue();
-			Timestamp horaInicio = new Timestamp(horaSeleccionada.getTime());
+	    MenuAdmin menuAdmin = new MenuAdmin(controller);
+	    if (o == btnCrearPartido) {
+	        CrearPartido frame = new CrearPartido(controller);
+	        frame.setVisible(true);
+	        // dispose();
+	    } else if (o == okButton) {
+	        // Obtener el partido seleccionado del JComboBox
+	        String partidoSeleccionado = (String) equipoLocalComboBox.getSelectedItem();
 
-			if (equipoLocal != null && equipoVisitante != null && fechaInicio != null && horaInicio != null) {
-				fechaInicio.setHours(horaInicio.getHours());
-				fechaInicio.setMinutes(horaInicio.getMinutes());
-				fechaInicio.setSeconds(horaInicio.getSeconds());
+	        // Patrón para buscar los equipos y la fecha en el string seleccionado
+	        Pattern pattern = Pattern.compile("(\\w+)\\s+VS\\s+(\\w+):\\s+(\\d{4})\\.(\\d{2})-(\\d{2})");
+	        Matcher matcher = pattern.matcher(partidoSeleccionado);
 
-				boolean partidoCreado = controller.crearPartido(equipoLocal, equipoVisitante, fechaInicio);
-				if (partidoCreado) {
-					JOptionPane.showMessageDialog(this, "Partido creado exitosamente.");
-					// Volver al menú admin
-					menuAdmin.setVisible(true);
-					this.dispose();
-				} else {
-					JOptionPane.showMessageDialog(this, "Error al crear el partido.");
-				}
-			} else {
-				if (estadioField.getText().isEmpty()) {
-					JOptionPane.showMessageDialog(this, "Por favor, complete el campo del estadio.");
-				} else {
-					JOptionPane.showMessageDialog(this, "Por favor, complete todos los campos.");
-				}
-			}
+	        String equipoLocal = null;
+	        String equipoVisitante = null;
+	        LocalDate fecha = null;
+
+	        if (matcher.find()) {
+	            equipoLocal = matcher.group(1);
+	            equipoVisitante = matcher.group(2);
+	            int year = Integer.parseInt(matcher.group(3));
+	            int month = Integer.parseInt(matcher.group(4));
+	            int day = Integer.parseInt(matcher.group(5));
+	            fecha = LocalDate.of(year, month, day);
+	        }
+
+	        // Imprimir los resultados o procesarlos según necesites
+	        System.out.println("Equipo Local: " + equipoLocal);
+	        System.out.println("Equipo Visitante: " + equipoVisitante);
+	        System.out.println("Fecha: " + fecha);
 		} else if (o == equipoLocalComboBox) {
 			String nombreEquipoLocal = (String) equipoLocalComboBox.getSelectedItem();
 			String estadioEquipoLocal = estadiosEquipos.get(nombreEquipoLocal);
