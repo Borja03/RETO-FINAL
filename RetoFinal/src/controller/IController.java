@@ -34,8 +34,6 @@ public interface IController {
 
 	public boolean modificarJugador(String user, String password, int dorsal, int numGoles, int numAsist);
 
-	public void modificarPartido();
-
 	public void consultarEquipo();
 
 	public void modificarDorsal();
@@ -53,5 +51,7 @@ public interface IController {
 	boolean crearPartido(String equipoLocal, String equipoVisitante, java.sql.Timestamp fechaInicio);
 
 	boolean cambiarPassword(String user, String newPassword, String userType);
+
+	boolean modificarPartido(String nombrePartido, String nuevoResultado);
 
 }
