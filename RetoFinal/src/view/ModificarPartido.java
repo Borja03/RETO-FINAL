@@ -196,6 +196,7 @@ public class ModificarPartido extends JFrame implements ActionListener {
 		panelLeft.add(btnGestionarEntrenador);
 
 		btnCrearPartido = new JButton("Crear partido");
+		btnCrearPartido.addActionListener(this);
 		btnCrearPartido.setHorizontalAlignment(SwingConstants.LEFT);
 		btnCrearPartido.setFont(new Font("Tahoma", Font.BOLD, 14));
 		btnCrearPartido.setFocusable(false);
@@ -206,11 +207,12 @@ public class ModificarPartido extends JFrame implements ActionListener {
 
 		// Botón Modificar partido
 		btnModificarPartido = new JButton("Modificar partido");
+		btnModificarPartido.setEnabled(false);
 		btnModificarPartido.setHorizontalAlignment(SwingConstants.LEFT);
 		btnModificarPartido.setFont(new Font("Tahoma", Font.BOLD, 14));
 		btnModificarPartido.setFocusable(false);
 		btnModificarPartido.setBorder(null);
-		btnModificarPartido.setBackground(new Color(128, 128, 0));
+		btnModificarPartido.setBackground(new Color(79, 79, 0));
 		btnModificarPartido.setBounds(57, 430, 200, 49);
 		panelLeft.add(btnModificarPartido);
 		btnModificarPartido.addActionListener(this); // Agregar ActionListener
@@ -233,7 +235,8 @@ public class ModificarPartido extends JFrame implements ActionListener {
 		resultado2.setVisible(visible);
 		// Ocultar textos a la derecha
 		JLabel[] labels = { lblResultado1, label, lblNewLabel, lblNewLabel_1, lblNewLabel_2, lblNewLabel_3,
-				lblNewLabel_4 };
+				lblNewLabel_4
+				};
 		for (JLabel label : labels) {
 			label.setVisible(visible);
 		}
@@ -311,11 +314,7 @@ public class ModificarPartido extends JFrame implements ActionListener {
 			CrearPartido frame = new CrearPartido(controller);
 			frame.setVisible(true);
 			this.dispose();
-		} else if (o == btnModificarPartido) { // Acción para el botón Modificar partido
-			ModificarPartido frame = new ModificarPartido(controller);
-			frame.setVisible(true);
-			this.dispose();
-		} else if (o == btnLogOut) {
+		}  else if (o == btnLogOut) {
 			Login frame = new Login(controller);
 			frame.setVisible(true);
 			this.dispose();

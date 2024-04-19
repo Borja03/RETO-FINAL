@@ -1,6 +1,6 @@
 package view;
 
-import javax.swing.*;
+import javax.swing.*; 
 import javax.swing.border.EmptyBorder;
 
 import controller.Controller;

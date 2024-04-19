@@ -1,6 +1,6 @@
 package view;
 
-import java.awt.EventQueue;
+import java.awt.EventQueue; 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -85,9 +85,14 @@ public class ModificarEntrenador2 extends JFrame implements ActionListener {
 
 	public void entrenadorOldInfo() {
 
-		Entrenador usr = (Entrenador) controller.getUsuario(user);
-		textFieldUSer.setText(usr.getUser());
-		textFieldContrasena.setText(usr.getContrasenia());
+		Entrenador usr = (Entrenador) controller.getUsuario2(user);
+		if (usr != null) {
+			textFieldUSer.setText(usr.getUser());
+			textFieldContrasena.setText(usr.getContrasenia());
+		} else {
+			System.out.println("El usuario no existe");
+		}
+
 	}
 
 	@Override
@@ -101,9 +106,9 @@ public class ModificarEntrenador2 extends JFrame implements ActionListener {
 		// String myTeam= txtEquiponame.getText();
 		String tipoString = (String) comboBoxTipo.getSelectedItem();
 		CargoEntrenador tipo = null;
-		if (tipoString.equals("Primer_entrenador")) {
+		if (tipoString.equalsIgnoreCase("Primer_entrenador")) {
 			tipo = CargoEntrenador.PRIMER_ENTRENADOR;
-		} else if (tipoString.equals("Segundo_entrenador")) {
+		} else if (tipoString.equalsIgnoreCase("Segundo_entrenador")) {
 			tipo = CargoEntrenador.SEGUNDO_ENTRENADOR;
 		}
 		String team = controller.getMyTeam(user);

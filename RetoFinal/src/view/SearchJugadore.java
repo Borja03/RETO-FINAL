@@ -1,8 +1,10 @@
+
 package view;
 
-import java.awt.Color; 
+import java.awt.Color;
 import java.awt.EventQueue;
 import java.awt.Font;
+import java.awt.GridLayout;
 
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -13,6 +15,7 @@ import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
 
 import controller.Controller;
+import model.usuarios.Jugador;
 import view.toDelete.ModificarJugadores;
 
 import javax.swing.JButton;
@@ -23,16 +26,17 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.ActionEvent;
 
-public class GestionarJugadores extends JFrame implements ActionListener {
+public class SearchJugadore extends JFrame implements ActionListener {
 
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
 	private JButton btnCrear;
-	private JButton btnDeleteJugador;
+	private JButton btnDelete;
 	private JButton btnModificar;
 	private Controller controller;
 	private JButton btnLogOut;
 	private JButton btnCambiarCont;
+	private JButton btnCambiarDorsal;
 	private JLabel lblWelcome;
 	private JButton btnConsultarPartidos;
 	private JButton btnConsultarEquipo;
@@ -46,12 +50,14 @@ public class GestionarJugadores extends JFrame implements ActionListener {
 	private JComboBox<Integer> textFieldDorsal;
 	private JTextField textFieldGoles;
 	private JTextField textFieldAsist;
-	private JButton btnOK;
+	private JButton btnElimimarJugador;
 	private JTextField txtEquiponame;
 	private String miEquipo;
 	private String userName;
+	private JButton btnBuscarJugador;
+	private JPanel bottomPanel;
 
-	public GestionarJugadores(Controller controller, String user, String team) {
+	public SearchJugadore(Controller controller, String user, String team) {
 		this.controller = controller;
 		this.userName = user;
 		this.miEquipo = team;
@@ -65,18 +71,19 @@ public class GestionarJugadores extends JFrame implements ActionListener {
 		contentPane.setLayout(null);
 
 		btnCrear = new JButton("Añadir Jugadores");
-		btnCrear.setBackground(new Color(255, 128, 0));
+		btnCrear.setBackground(new Color(240, 240, 240));
 		btnCrear.setFocusable(false);
 		btnCrear.setBorder(null);
 		btnCrear.setBounds(328, 40, 176, 35);
 		contentPane.add(btnCrear);
 
-		btnDeleteJugador = new JButton("Eliminar Jugadores");
-		btnDeleteJugador.addActionListener(this);
-		btnDeleteJugador.setFocusable(false);
-		btnDeleteJugador.setBorder(null);
-		btnDeleteJugador.setBounds(564, 40, 176, 35);
-		contentPane.add(btnDeleteJugador);
+		btnDelete = new JButton("Eliminar Jugadores");
+		btnDelete.setBackground(new Color(255, 128, 0));
+		btnDelete.addActionListener(this);
+		btnDelete.setFocusable(false);
+		btnDelete.setBorder(null);
+		btnDelete.setBounds(564, 40, 176, 35);
+		contentPane.add(btnDelete);
 
 		btnModificar = new JButton("Modificar Jugadores");
 		btnModificar.setBounds(787, 40, 176, 35);
@@ -142,6 +149,33 @@ public class GestionarJugadores extends JFrame implements ActionListener {
 				btnCambiarCont.setBackground(new Color(50, 70, 90));
 			}
 		});
+
+		btnCambiarDorsal = new JButton("     Cambiar Dorsal");
+		btnCambiarDorsal.addActionListener(this);
+		btnCambiarDorsal.setHorizontalAlignment(SwingConstants.LEFT);
+		btnCambiarDorsal.setFont(new Font("Tahoma", Font.BOLD, 14));
+		btnCambiarDorsal.setFocusable(false);
+		btnCambiarDorsal.setBorder(null);
+		btnCambiarDorsal.setBackground(new Color(128, 128, 0));
+		btnCambiarDorsal.setBounds(37, 445, 200, 49);
+		btnCambiarDorsal.addActionListener(this);
+		btnCambiarDorsal.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseEntered(MouseEvent e) {
+				btnCambiarDorsal.setBackground(new Color(90, 70, 50));
+			}
+
+			@Override
+			public void mouseExited(MouseEvent e) {
+				btnCambiarDorsal.setBackground(new Color(128, 128, 0));
+			}
+
+			@Override
+			public void mousePressed(MouseEvent e) {
+				btnCambiarDorsal.setBackground(new Color(50, 70, 90));
+			}
+		});
+		panelLeft.add(btnCambiarDorsal);
 
 		lblWelcome = new JLabel("Welcome " + userName + "");
 		lblWelcome.setForeground(new Color(255, 255, 0));
@@ -209,84 +243,119 @@ public class GestionarJugadores extends JFrame implements ActionListener {
 		btnGestionarJugadores.setBackground(new Color(255, 128, 64));
 		btnGestionarJugadores.setBounds(37, 275, 200, 49);
 		panelLeft.add(btnGestionarJugadores);
+	
+		
 		// formulario
+		
+		JPanel topPanel = new JPanel();
+		topPanel.setBounds(310, 85, 676, 154);
+		contentPane.add(topPanel);
+		topPanel.setLayout(null);
+		
+		JLabel lblEquipo = new JLabel("Equipo");
+		lblEquipo.setFont(new Font("Tahoma", Font.BOLD, 14));
+		lblEquipo.setBounds(63, 42, 49, 17);
+		topPanel.add(lblEquipo);
+		
+		txtEquiponame = new JTextField();
+		txtEquiponame.setFont(new Font("Tahoma", Font.BOLD, 14));
+		txtEquiponame.setBounds(181, 39, 146, 23);
+		txtEquiponame.setColumns(10);
+		txtEquiponame.setText(miEquipo);
+		txtEquiponame.setEditable(false);
+		topPanel.add(txtEquiponame);
+		
 		lblUser = new JLabel("Usuario");
 		lblUser.setFont(new Font("Tahoma", Font.BOLD, 14));
-		lblUser.setBounds(350, 207, 90, 35);
-		contentPane.add(lblUser);
+		lblUser.setBounds(63, 85, 55, 17);
+		topPanel.add(lblUser);
+		
+		textFieldUSer = new JTextField();
+		textFieldUSer.setFont(new Font("Tahoma", Font.BOLD, 14));
+		textFieldUSer.setBounds(181, 82, 146, 23);
+		topPanel.add(textFieldUSer);
+		textFieldUSer.setColumns(10);
+		
+		btnBuscarJugador = new JButton("Buscar jugador");
+		btnBuscarJugador.setFont(new Font("Tahoma", Font.BOLD, 14));
+		btnBuscarJugador.setBounds(467, 81, 143, 35);
+		topPanel.add(btnBuscarJugador);
+		btnBuscarJugador.addActionListener(this);
 
+		
+		JLabel lblMsgError = new JLabel("");
+		lblMsgError.setBounds(448, 235, 360, 41);
+		contentPane.add(lblMsgError);
+		
+		bottomPanel = new JPanel();
+		bottomPanel.setBounds(310, 253, 674, 417);
+		contentPane.add(bottomPanel);
+		bottomPanel.setLayout(null);
+		
 		lblContrasena = new JLabel("Contraseña");
 		lblContrasena.setFont(new Font("Tahoma", Font.BOLD, 14));
-		lblContrasena.setBounds(350, 267, 90, 35);
-		contentPane.add(lblContrasena);
+		lblContrasena.setBounds(80, 46, 90, 35);
+		bottomPanel.add(lblContrasena);
 
 		lblDorsal = new JLabel("Dorsal");
 		lblDorsal.setFont(new Font("Tahoma", Font.BOLD, 14));
-		lblDorsal.setBounds(350, 332, 90, 35);
-		contentPane.add(lblDorsal);
+		lblDorsal.setBounds(80, 97, 90, 35);
+		bottomPanel.add(lblDorsal);
 
 		lblGoles = new JLabel("Goles");
 		lblGoles.setFont(new Font("Tahoma", Font.BOLD, 14));
-		lblGoles.setBounds(350, 399, 90, 35);
-		contentPane.add(lblGoles);
+		lblGoles.setBounds(80, 159, 90, 35);
+		bottomPanel.add(lblGoles);
 
 		lblAsistencias = new JLabel("Asistencias");
 		lblAsistencias.setFont(new Font("Tahoma", Font.BOLD, 14));
-		lblAsistencias.setBounds(350, 460, 90, 35);
-		contentPane.add(lblAsistencias);
+		lblAsistencias.setBounds(80, 218, 90, 35);
+		bottomPanel.add(lblAsistencias);
 
-		textFieldUSer = new JTextField();
-		textFieldUSer.setFont(new Font("Tahoma", Font.BOLD, 14));
-		textFieldUSer.setBounds(515, 208, 250, 34);
-		contentPane.add(textFieldUSer);
-		textFieldUSer.setColumns(10);
+		
 
 		textFieldContrasena = new JTextField();
 		textFieldContrasena.setFont(new Font("Tahoma", Font.BOLD, 14));
-		textFieldContrasena.setBounds(515, 274, 250, 34);
-		contentPane.add(textFieldContrasena);
+		textFieldContrasena.setBounds(245, 53, 250, 34);
+		bottomPanel.add(textFieldContrasena);
 		textFieldContrasena.setColumns(10);
 
 		textFieldDorsal = new JComboBox<>();
 		textFieldDorsal.setFont(new Font("Tahoma", Font.BOLD, 14));
-		textFieldDorsal.setBounds(515, 333, 250, 34);
-		fillDorsalBox ();
-		contentPane.add(textFieldDorsal);
+		textFieldDorsal.setBounds(245, 98, 250, 34);
+		fillDorsalBox();
+		bottomPanel.add(textFieldDorsal);
 
 		textFieldGoles = new JTextField();
 		textFieldGoles.setFont(new Font("Tahoma", Font.BOLD, 14));
-		textFieldGoles.setBounds(515, 399, 250, 35);
-		contentPane.add(textFieldGoles);
+		textFieldGoles.setBounds(245, 159, 250, 35);
+		bottomPanel.add(textFieldGoles);
 		textFieldGoles.setColumns(10);
 
 		textFieldAsist = new JTextField();
 		textFieldAsist.setFont(new Font("Tahoma", Font.BOLD, 14));
-		textFieldAsist.setBounds(515, 460, 250, 35);
-		contentPane.add(textFieldAsist);
+		textFieldAsist.setBounds(245, 218, 250, 35);
+		bottomPanel.add(textFieldAsist);
 		textFieldAsist.setColumns(10);
 
-		btnOK = new JButton("Añadir jugador");
-		btnOK.setFont(new Font("Tahoma", Font.BOLD, 14));
-		btnOK.setBounds(751, 562, 151, 35);
-		contentPane.add(btnOK);
+		btnElimimarJugador = new JButton("Eliminar jugador");
+		btnElimimarJugador.setFont(new Font("Tahoma", Font.BOLD, 14));
+		btnElimimarJugador.setBounds(442, 308, 176, 35);
+		bottomPanel.add(btnElimimarJugador);
 
-		txtEquiponame = new JTextField();
-		txtEquiponame.setFont(new Font("Tahoma", Font.BOLD, 14));
-		txtEquiponame.setBounds(515, 148, 250, 34);
-		txtEquiponame.setColumns(10);
-		txtEquiponame.setText(miEquipo);
-		txtEquiponame.setEditable(false);
-		contentPane.add(txtEquiponame);
-
-		JLabel lblEquipo = new JLabel("Equipo");
-		lblEquipo.setFont(new Font("Tahoma", Font.BOLD, 14));
-		lblEquipo.setBounds(350, 150, 90, 35);
-		contentPane.add(lblEquipo);
-		btnOK.addActionListener(this);
-
+	
+		
+		JButton btnModificarJugador = new JButton("Modificar jugador");
+		btnModificarJugador.setFont(new Font("Tahoma", Font.BOLD, 14));
+		btnModificarJugador.setBounds(204, 308, 169, 35);
+		bottomPanel.add(btnModificarJugador);
+		bottomPanel.setVisible(false);
+		
+	
 	}
 
-	public void fillDorsalBox () {
+
+	public void fillDorsalBox() {
 
 		for (int i = 1; i <= 25; i++) {
 			if (!controller.getUsedDorsal(miEquipo).contains(i)) {
@@ -294,19 +363,23 @@ public class GestionarJugadores extends JFrame implements ActionListener {
 			}
 		}
 	}
+
 	
+	
+	public void fillUserData() {
+		Jugador usr =(Jugador) controller.getUsuario(textFieldUSer.getText());
+		textFieldUSer.setText(usr.getUser());
+		textFieldContrasena.setText(usr.getContrasenia());
+		textFieldDorsal.addItem(usr.getDorsal());
+		textFieldGoles.setText(usr.getGoles()+"");
+		textFieldAsist.setText(usr.getAsistencias()+"");
+	}
+	
+
 	@Override
 	public void actionPerformed(ActionEvent e) {
 
-		if (e.getSource() == btnDeleteJugador) {
-			SearchJugadore eliminarJugadores = new SearchJugadore (controller,userName,miEquipo);
-			this.dispose();
-			eliminarJugadores.setVisible(true);
-		} else if (e.getSource() == btnModificar) {
-			ModificarJugadores m1 = new ModificarJugadores(controller);
-			m1.setVisible(true);
-			this.dispose();
-		} else if (e.getSource() == btnConsultarEquipo) {
+	 if (e.getSource() == btnConsultarEquipo) {
 			MenuEntrenador menuEntrenador = new MenuEntrenador(controller, userName);
 			this.dispose();
 			menuEntrenador.setVisible(true);
@@ -314,12 +387,38 @@ public class GestionarJugadores extends JFrame implements ActionListener {
 			ConsultarPartidos consultarPartidos = new ConsultarPartidos(controller, userName);
 			this.dispose();
 			consultarPartidos.setVisible(true);
+		} else if (e.getSource() == btnCambiarDorsal) {
+			CambiarDorsal cambiarDorsal = new CambiarDorsal(controller, userName);
+			this.dispose();
+			cambiarDorsal.setVisible(true);
+
 		} else if (e.getSource() == btnLogOut) {
 			this.dispose();
 			controller.logOut();
 		}
+		
+		else if(e.getSource() == btnBuscarJugador) {
+			if(controller.checkUserExist(textFieldUSer.getText())) {
+				fillUserData();
+				bottomPanel.setVisible(true);
+				
+			}
 
-		if (e.getSource() == btnOK) {
+		}
+
+	 
+		if (e.getSource() == btnDelete) {
+			//EliminarJugadores e1 = new EliminarJugadores(controller, userName);
+		//	e1.setVisible(true);
+		//	this.dispose();
+		} else if (e.getSource() == btnModificar) {
+			ModificarJugadores m1 = new ModificarJugadores(controller);
+			m1.setVisible(true);
+			this.dispose();
+		}
+		
+		
+		if (e.getSource() == btnElimimarJugador) {
 			String user = textFieldUSer.getText();
 			String password = textFieldContrasena.getText();
 			String myTeam = txtEquiponame.getText();
@@ -332,11 +431,11 @@ public class GestionarJugadores extends JFrame implements ActionListener {
 				int opcion = JOptionPane.showConfirmDialog(this, (String) " opopop",
 						"El jugador ha sido introducido correctamente\n¿Desea añadir otro jugador?",
 						JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE, null);
-//				textFieldUSer.setText("");
-//				textFieldContrasena.setText("");
-//				textFieldGoles.setText("");
-//				textFieldAsist.setText("");
-				GestionarJugadores gestionarJugadores= new GestionarJugadores(controller,user,miEquipo);
+//						textFieldUSer.setText("");
+//						textFieldContrasena.setText("");
+//						textFieldGoles.setText("");
+//						textFieldAsist.setText("");
+				GestionarJugadores gestionarJugadores = new GestionarJugadores(controller, user, miEquipo);
 				this.dispose();
 				gestionarJugadores.setVisible(true);
 

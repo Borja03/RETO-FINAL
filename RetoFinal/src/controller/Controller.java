@@ -1,4 +1,3 @@
-
 package controller;
 
 import java.security.Timestamp;
@@ -46,8 +45,12 @@ public class Controller implements IController {
 	final String nombreEquipo = "Select nombreEquipo FROM laliga WHERE user=?";
 	final String ALLequipos = "SELECT nombreEquipo FROM  equipo";
 	final String ENTRENADORequipo = "SELECT nombreEquipo FROM  entrenador where user=?";
+	final String NOMBREequipo = "SELECT * FROM  equipo where nombreEquipo=?";
 	final String Partidos = "SELECT nombreEquipoLocal, nombreEquipoVisitante, fechaInicio FROM juegan";
-
+	final String ENTRENADORnombre = "SELECT user FROM  entrenador where nombreEquipo=? and tipoEntrenador=?";
+	final String JUGADORESequipo = "SELECT * FROM  jugador where nombreEquipo=?";
+	final String DORSALlLista = "SELECT dorsal FROM  jugador where nombreEquipo=?";
+	
 	public boolean checkUserExist(String user) {
 		boolean exist = false;
 		this.openConnection("entrenador", "entrenador");
@@ -369,28 +372,28 @@ public class Controller implements IController {
 		}
 		return modified;
 	}
+
 	public ArrayList<String> listaPartidos() {
-	    this.openConnection("admin", "admin");
-	    ArrayList<String> partidosProgramados = new ArrayList<>();
-	    try {
-	        statement = connection.prepareStatement(Partidos);
-	        resultSet = statement.executeQuery();
+		this.openConnection("admin", "admin");
+		ArrayList<String> partidosProgramados = new ArrayList<>();
+		try {
+			statement = connection.prepareStatement(Partidos);
+			resultSet = statement.executeQuery();
 
-	        while (resultSet.next()) {
-	            String local = resultSet.getString("nombreEquipoLocal");
-	            String visitante = resultSet.getString("nombreEquipoVisitante");
-	            Date fecha = resultSet.getTimestamp("fechaInicio");
-	            String partido = local + " VS " + visitante + " fecha: " + fecha.toString();
-	            partidosProgramados.add(partido);
-	        }
-	    } catch (SQLException e) {
-	        e.printStackTrace();
-	    } finally {
-	        this.closeConnection();
-	    }
-	    return partidosProgramados;
+			while (resultSet.next()) {
+				String local = resultSet.getString("nombreEquipoLocal");
+				String visitante = resultSet.getString("nombreEquipoVisitante");
+				Date fecha = resultSet.getTimestamp("fechaInicio");
+				String partido = local + " VS " + visitante + " fecha: " + fecha.toString();
+				partidosProgramados.add(partido);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			this.closeConnection();
+		}
+		return partidosProgramados;
 	}
-
 	 @Override
 	    public boolean modificarPartido(String nombrePartido, String nuevoResultado) {
 	        boolean updated = false;
@@ -525,7 +528,6 @@ public class Controller implements IController {
 
 	@Override
 	public void consultarPartido() {
-		
 
 	}
 
@@ -617,7 +619,17 @@ public class Controller implements IController {
 				String password = resultSet.getString("password");
 				String nombreEquipo = resultSet.getString("nombreEquipo");
 				String cargoStr = resultSet.getString("tipoEntrenador");
-				CargoEntrenador cargo = CargoEntrenador.valueOf(cargoStr); // Convertir el String a CargoEntrenador
+				String cargoStr1 = resultSet.getString("tipoEntrenador");
+				CargoEntrenador cargo = null;
+
+				try {
+					cargo = CargoEntrenador.valueOf(cargoStr1.toUpperCase());
+				} catch (IllegalArgumentException e) {
+					// Manejar el caso en el que el valor de la base de datos no coincide con ningún
+					// valor del enum
+					System.out.println("Valor de tipoEntrenador no válido: " + cargoStr1);
+				}
+
 				entrenador = new Entrenador(userN, userN, password, nombreEquipo, cargo);
 			}
 		} catch (SQLException e) {
@@ -655,6 +667,7 @@ public class Controller implements IController {
 		return equipos;
 	}
 
+
 	
 	public Date obtenerFechaPartido(String nombrePartido) {
 	    Date fechaPartido = null;
@@ -674,4 +687,125 @@ public class Controller implements IController {
 	    }
 	    return fechaPartido;
 	}
+	
+	public Equipo getEquipo(String nombreEquipo) {
+		Equipo myTeam = null;
+		this.openConnection("entrenador", "entrenador");
+		try {
+			statement = connection.prepareStatement(NOMBREequipo);
+			statement.setString(1, nombreEquipo);
+
+			resultSet = statement.executeQuery();
+			while (resultSet.next()) {
+				String nombreEq = resultSet.getString("nombreEquipo");
+				String estadio = resultSet.getString("nombreEstadio");
+				int titulos = resultSet.getInt("titulos");
+				//String logo = resultSet.getString("logo");
+
+				myTeam = new Equipo(nombreEq, estadio, titulos);
+			}
+		} catch (SQLException e) {
+			System.out.println("Error de SQL");
+			e.printStackTrace();
+		} finally {
+			this.closeConnection();
+		}
+		return myTeam;
+	}
+
+	public String getPrimEntrenador(String eqName) {
+		String entName = null;
+		this.openConnection("entrenador", "entrenador");
+		try {
+			statement = connection.prepareStatement(ENTRENADORnombre);
+			statement.setString(1, eqName);
+			statement.setString(2, "PRIMER_ENTRENADOR");
+
+			resultSet = statement.executeQuery();
+			while (resultSet.next()) {
+				entName = resultSet.getString("user");
+			}
+
+		} catch (SQLException e) {
+			System.out.println("Error de SQL");
+			e.printStackTrace();
+		} finally {
+			this.closeConnection();
+		}
+		return entName;
+	}
+
+	public String getSegEntrenador(String eqName) {
+		String entName = null;
+		this.openConnection("entrenador", "entrenador");
+		try {
+			statement = connection.prepareStatement(ENTRENADORnombre);
+			statement.setString(1, eqName);
+			statement.setString(2, "SEGUNDO_ENTRENADOR");
+
+			resultSet = statement.executeQuery();
+			while (resultSet.next()) {
+				entName = resultSet.getString("user");
+			}
+
+		} catch (SQLException e) {
+			System.out.println("Error de SQL");
+			e.printStackTrace();
+		} finally {
+			this.closeConnection();
+		}
+		return entName;
+	}
+	
+	public ArrayList<Jugador> getJugadoresPorEquipo(String nombreEquipo) {
+		ArrayList<Jugador> jugadoresEq = new ArrayList<>();
+
+		try {
+			openConnection("entrenador", "entrenador");
+			statement = connection.prepareStatement(JUGADORESequipo);
+			statement.setString(1, nombreEquipo);
+			resultSet = statement.executeQuery();
+			while (resultSet.next()) {
+				String user = resultSet.getString("user");
+				String password = resultSet.getString("password");
+				String nbEquipo = resultSet.getString("nombreEquipo");
+				int dorsal = resultSet.getInt("dorsal");
+				int goles = resultSet.getInt("numeroGoles");
+				int asistencias = resultSet.getInt("numeroAsistencias");
+				Jugador jug = new Jugador(user,password,nbEquipo, dorsal, goles,asistencias);
+				jugadoresEq.add(jug);
+			}
+				
+		} catch (SQLException ex) {
+			ex.printStackTrace();
+		} finally {
+			closeConnection();
+		}
+
+		return jugadoresEq;
+	}
+	
+	public ArrayList<Integer> getUsedDorsal(String eqName) {
+		ArrayList<Integer>  dorsalLista = new ArrayList<>();
+		int dorsal;
+		this.openConnection("entrenador", "entrenador");
+		try {
+			statement = connection.prepareStatement(DORSALlLista);
+			statement.setString(1, eqName);
+
+			resultSet = statement.executeQuery();
+			while (resultSet.next()) {
+				dorsal = resultSet.getInt("dorsal");
+				dorsalLista.add(dorsal);
+			}
+
+		} catch (SQLException e) {
+			System.out.println("Error de SQL");
+			e.printStackTrace();
+		} finally {
+			this.closeConnection();
+		}
+		return dorsalLista;
+	}
+
 }
