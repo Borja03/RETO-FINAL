@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 create database laLiga;
 use laLiga;
 
@@ -78,7 +77,6 @@ SELECT * FROM juegan;
 
 select * from laliga.jugador where dorsal = 10 AND nombreEquipo = 'Barsa';
 
-=======
 create database laLiga;
 use laLiga;
 
@@ -150,4 +148,3 @@ SELECT * FROM juegan;
 
 select * from laliga.jugador where dorsal = 10 AND nombreEquipo = 'Barsa';
 
->>>>>>> 64ece0c9f44ad5f2b9282575d684f969240645f3
