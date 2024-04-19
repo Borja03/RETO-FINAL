@@ -121,11 +121,7 @@ public class MenuJugador extends JFrame implements ActionListener {
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		Object o = e.getSource();
-		if (o == btnLogOut) {
-			//controller.closeConnection();
-			//Login login = new Login(controller);
-			//login.setVisible(true);
-			//this.setVisible(false);
+		if (o == btnLogOut) {;
 			this.dispose();
 			controller.logOut();
 		} else if (o == btnCambiarDorsal) {

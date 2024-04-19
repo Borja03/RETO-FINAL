@@ -53,10 +53,8 @@ public class SearchEntrenador extends JFrame implements ActionListener {
 	private JButton btnBuscarJugador;
 	private JPanel bottomPanel;
 
-	public SearchEntrenador(Controller controller, String user, String team) {
+	public SearchEntrenador(Controller controller) {
 		this.controller = controller;
-		this.userName = user;
-		this.miEquipo = team;
 
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 1008, 717);
