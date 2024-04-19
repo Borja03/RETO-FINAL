@@ -2,12 +2,14 @@ package view;
 
 import java.awt.Color;
 import java.awt.Font;
-import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.sql.Timestamp;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import javax.swing.JButton;
 import javax.swing.JComboBox;
@@ -120,7 +122,6 @@ class CrearPartido extends JFrame implements ActionListener {
 		btnModificarPartido.addActionListener(this); // Agregar ActionListener
 
 		btnCrearPartido.addActionListener(this);
-	
 
 		// Agregar acción al botón de gestionar entrenador
 		btnGestionarEntrenador.addActionListener(this);
@@ -240,7 +241,6 @@ class CrearPartido extends JFrame implements ActionListener {
 			String nombreEquipoLocal = (String) equipoLocalComboBox.getSelectedItem();
 			String estadioEquipoLocal = estadiosEquipos.get(nombreEquipoLocal);
 			estadioField.setText(estadioEquipoLocal);
-
 			equipoVisitanteComboBox.removeAllItems();
 			for (String equipo : equiposDisponibles) {
 				if (!equipo.equals(nombreEquipoLocal)) {
