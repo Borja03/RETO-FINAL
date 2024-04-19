@@ -10,7 +10,6 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Date;
 
-
 import model.equipos.Equipo;
 import model.usuarios.CargoEntrenador;
 import model.usuarios.Entrenador;
@@ -32,8 +31,8 @@ public class Controller implements IController {
 
 	final String INNSERTentrenador = "INSERT INTO entrenador (user,password,tipoEntrenador,nombreEquipo) VALUES (?,?,?,?)";
 	final String DELETEentrenador = "DELETE FROM entrenador WHERE user =?";
-
-	final String INNSERTjugador = "INSERT INTO jugador (user,password,dorsal,numeroGoles,numeroAsistencias,nombreEquipo) VALUES (?,?,?,?,?,?)";
+	
+	final String INSERTjugador = "INSERT INTO jugador (user,password,dorsal,numeroGoles,numeroAsistencias,nombreEquipo) VALUES (?,?,?,?,?,?)";
 	final String GETjugador = "SELECT * FROM jugador WHERE user = ?";
 	final String GETentrenador = "SELECT * FROM entrenador WHERE user = ?";
 	final String GETjugadorEquipo = "SELECT * FROM jugador WHERE user = ? AND nombreEquipo= ?";
@@ -50,9 +49,9 @@ public class Controller implements IController {
 	final String ENTRENADORnombre = "SELECT user FROM  entrenador where nombreEquipo=? and tipoEntrenador=?";
 	final String JUGADORESequipo = "SELECT * FROM  jugador where nombreEquipo=?";
 	final String DORSALlLista = "SELECT dorsal FROM  jugador where nombreEquipo=?";
+	final String INSERTequipo = "INSERT INTO equipo (nombreEquipo, titulos, nombreEstadio ,logo) VALUES (?, ?, ?, ?)";
 	final String DELETEequipo = "DELETE FROM equipo WHERE nombreEquipo =?";
 	final String MODIFICARequipo = "UPDATE equipo SET titulos=?, nombreEstadio=? , logo=? WHERE nombreEquipo=?";
-
 
 	public boolean checkUserExist(String user) {
 		boolean exist = false;
@@ -172,8 +171,6 @@ public class Controller implements IController {
 		return false;
 	}
 
-
-
 	@Override
 	public boolean crearEntrenador(String nombreEquipo, String user, String password, CargoEntrenador tipoEntrenador) {
 		boolean added = false;
@@ -231,7 +228,7 @@ public class Controller implements IController {
 		boolean added = false;
 		this.openConnection("entrenador", "entrenador");
 		try {
-			statement = connection.prepareStatement(MODIFICARentrenador);
+			statement = connection.prepareStatement(INSERTjugador);
 			statement.setString(1, user);
 			statement.setString(2, password);
 			statement.setInt(3, dorsal);
@@ -243,9 +240,6 @@ public class Controller implements IController {
 				System.out.println("Data inserted!");
 			} else {
 				System.out.println("Failed!");
-			}
-			if (added) {
-
 			}
 		} catch (SQLException e) {
 			System.out.println("Error de SQL");
@@ -492,8 +486,6 @@ public class Controller implements IController {
 		return changed;
 	}
 
-	
-
 	public ArrayList<String> getEquipos() {
 		ArrayList<String> misEquipos = new ArrayList<>();
 		this.openConnection("admin", "admin");
@@ -550,7 +542,8 @@ public class Controller implements IController {
 				int dorsal = resultSet.getInt("dorsal");
 				int numGoles = resultSet.getInt("numeroGoles");
 				int numAsistencias = resultSet.getInt("numeroAsistencias");
-				usuario = new Jugador(userN, password, nombreEquipo, dorsal, numGoles, numAsistencias);
+				Blob icon = resultSet.getBlob("icon");
+				usuario = new Jugador(userN, password, nombreEquipo, dorsal, numGoles, numAsistencias,icon);
 
 			}
 
@@ -643,6 +636,7 @@ public class Controller implements IController {
 		}
 		return fechaPartido;
 	}
+
 	@Override
 	public Equipo getEquipo(String nombreEquipo) {
 		Equipo myTeam = null;
@@ -656,9 +650,9 @@ public class Controller implements IController {
 				String nombreEq = resultSet.getString("nombreEquipo");
 				String estadio = resultSet.getString("nombreEstadio");
 				int titulos = resultSet.getInt("titulos");
-				 Blob logo = resultSet.getBlob("logo");
+				Blob logo = resultSet.getBlob("logo");
 
-				myTeam = new Equipo(nombreEq, estadio, titulos,logo);
+				myTeam = new Equipo(nombreEq, estadio, titulos, logo);
 			}
 		} catch (SQLException e) {
 			System.out.println("Error de SQL");
@@ -690,6 +684,7 @@ public class Controller implements IController {
 		}
 		return entName;
 	}
+
 	@Override
 	public String getSegEntrenador(String eqName) {
 		String entName = null;
@@ -712,6 +707,7 @@ public class Controller implements IController {
 		}
 		return entName;
 	}
+
 	@Override
 	public ArrayList<Jugador> getJugadoresPorEquipo(String nombreEquipo) {
 		ArrayList<Jugador> jugadoresEq = new ArrayList<>();
@@ -728,7 +724,9 @@ public class Controller implements IController {
 				int dorsal = resultSet.getInt("dorsal");
 				int goles = resultSet.getInt("numeroGoles");
 				int asistencias = resultSet.getInt("numeroAsistencias");
-				Jugador jug = new Jugador(user, password, nbEquipo, dorsal, goles, asistencias);
+				Blob picProfile= resultSet.getBlob("icon");
+			
+				Jugador jug = new Jugador(user, password, nbEquipo, dorsal, goles, asistencias,picProfile);
 				jugadoresEq.add(jug);
 			}
 
@@ -740,6 +738,7 @@ public class Controller implements IController {
 
 		return jugadoresEq;
 	}
+
 	@Override
 	public ArrayList<Integer> getUsedDorsal(String eqName) {
 		ArrayList<Integer> dorsalLista = new ArrayList<>();
@@ -762,37 +761,35 @@ public class Controller implements IController {
 		}
 		return dorsalLista;
 	}
-	@Override
 
+	@Override
 	public boolean crearEquipo(String nombreEquipo, int titulos, String nombreEstadio, Blob logo) {
 		boolean inserted = false;
 
-		try (Connection conn = DriverManager.getConnection(DB_URL, user, password)) {
-			String query = "INSERT INTO equipo (nombreEquipo, titulos, nombreEstadio ,logo) VALUES (?, ?, ?, ?)";
-			try (PreparedStatement pstmt = conn.prepareStatement(query)) {
-				pstmt.setString(1, nombreEquipo);
-				pstmt.setInt(2, titulos);
-				pstmt.setString(3, nombreEstadio);
-				pstmt.setBlob(4, logo);
-				pstmt.executeUpdate();
-				System.out.println("Equipo creado exitosamente.");
-				//if (statement.executeUpdate() > 0) {
-					inserted = true;
-				//}
-				
-			} catch (SQLException e) {
-				System.err.println("Error al crear el equipo: " + e.getMessage());
+		this.openConnection("admin", "admin");
+		try {
+			statement = connection.prepareStatement(INSERTequipo);
+			statement.setString(1, nombreEquipo);
+			statement.setInt(2, titulos);
+			statement.setString(3, nombreEstadio);
+			statement.setBlob(4, logo);
+			if (statement.executeUpdate() > 0) {
+				inserted = true;
+				System.out.println("Data inserted!");
+			} else {
+				System.out.println("Failed!");
 			}
-
-		} catch (SQLException e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
+		} catch (SQLException e) {
+			System.out.println("Error de SQL");
+			e.printStackTrace();
+		} finally {
+			this.closeConnection();
 		}
+
 		return inserted;
 
 	}
 
-	
 	@Override
 	public boolean borrarEquipo(String nombreEquipo) {
 		boolean deleted = false;
@@ -847,11 +844,7 @@ public class Controller implements IController {
 	@Override
 	public void consultarPartido() {
 		// TODO Auto-generated method stub
-		
+
 	}
-	
-
-
-
 
 }

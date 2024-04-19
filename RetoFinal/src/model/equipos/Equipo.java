@@ -12,7 +12,7 @@ public class Equipo implements Serializable {
 	private String nombreEquipo;
 	private String estadio;
 	private int titulos;
-	private Blob logoLink;
+	private Blob logo;
 	private ArrayList<Partido> listaPartido;
 
 	public Equipo() {
@@ -33,7 +33,7 @@ public class Equipo implements Serializable {
 		this.nombreEquipo = nombreEquipo;
 		this.estadio = estadio;
 		this.titulos = titulos;
-		this.logoLink = logoLink;
+		this.logo = logoLink;
 		this.listaPartido = new ArrayList<>();
 	}
 
@@ -71,12 +71,13 @@ public class Equipo implements Serializable {
 
 
 
-	public Blob getLogoLink() {
-		return logoLink;
+
+	public Blob getLogo() {
+		return logo;
 	}
 
-	public void setLogoLink(Blob logoLink) {
-		this.logoLink = logoLink;
+	public void setLogo(Blob logo) {
+		this.logo = logo;
 	}
 
 	public void getDatosEquipo() {

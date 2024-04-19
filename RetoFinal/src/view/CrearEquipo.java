@@ -46,7 +46,7 @@ public class CrearEquipo extends JFrame implements ActionListener {
 	private JButton btnAddEquipo;
 	private JButton btnModificar;
 	private JButton btnUpload;
-	private JLabel imageLabel;
+	private JLabel lblEquipoLogo;
 	private ImageIcon imageIcon;
 	private Blob imageBlob;
 	private JLabel lblNombreDelEstadio;
@@ -270,6 +270,7 @@ public class CrearEquipo extends JFrame implements ActionListener {
 		rightPanelAddEd.add(txttitulosField);
 
 		bntAnadirEq = new JButton("Añadir Equipo");
+		bntAnadirEq.addActionListener(this);
 		bntAnadirEq.setFont(new Font("Tahoma", Font.BOLD, 14));
 		bntAnadirEq.setBounds(474, 450, 150, 34);
 		rightPanelAddEd.add(bntAnadirEq);
@@ -285,9 +286,9 @@ public class CrearEquipo extends JFrame implements ActionListener {
 		btnUpload.addActionListener(this);
 		rightPanelAddEd.add(btnUpload);
 
-		imageLabel = new JLabel("");
-		imageLabel.setBounds(53, 361, 200, 200);
-		rightPanelAddEd.add(imageLabel);
+		lblEquipoLogo = new JLabel("");
+		lblEquipoLogo.setBounds(53, 361, 200, 200);
+		rightPanelAddEd.add(lblEquipoLogo);
 		
 		lblNombreDelEstadio = new JLabel("Nombre del Estadio:");
 		lblNombreDelEstadio.setFont(new Font("Tahoma", Font.BOLD, 14));
@@ -337,11 +338,9 @@ public class CrearEquipo extends JFrame implements ActionListener {
 					try {
 						Path imagePath = selectedFile.toPath();
 						byte[] imageData = Files.readAllBytes(imagePath);
-
 						imageBlob = new javax.sql.rowset.serial.SerialBlob(imageData);
                         imageIcon = new ImageIcon(imageData);
-						 imageLabel.setIcon(imageIcon);
-
+						lblEquipoLogo.setIcon(imageIcon);
 					} catch (IOException ex) {
 						ex.printStackTrace();
 					} catch (SerialException e1) {
