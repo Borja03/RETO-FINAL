@@ -394,11 +394,32 @@ public class Controller implements IController {
 		}
 		return partidosProgramados;
 	}
+	 @Override
+	    public boolean modificarPartido(String nombrePartido, String nuevoResultado) {
+	        boolean updated = false;
+	        try {
+	            openConnection("admin", "admin");
 
-	@Override
-	public void modificarPartido() {
+	            String updatePartidoQuery = "UPDATE juegan SET resultado = ? WHERE nombreEquipoLocal = ? OR nombreEquipoVisitante = ?";
+	            PreparedStatement updatePartidoStatement = connection.prepareStatement(updatePartidoQuery);
+	            updatePartidoStatement.setString(1, nuevoResultado);
+	            updatePartidoStatement.setString(2, nombrePartido);
+	            updatePartidoStatement.setString(3, nombrePartido);
 
-	}
+	            if (updatePartidoStatement.executeUpdate() > 0) {
+	                updated = true;
+	                System.out.println("Partido actualizado!");
+	            } else {
+	                System.out.println("Fallo al actualizar el partido en la tabla juegan.");
+	            }
+	        } catch (SQLException e) {
+	            System.out.println("Error de SQL");
+	            e.printStackTrace();
+	        } finally {
+	            closeConnection();
+	        }
+	        return updated;
+	    }
 
 	@Override
 	public void consultarEquipo() {

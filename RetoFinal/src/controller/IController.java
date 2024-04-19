@@ -34,8 +34,6 @@ public interface IController {
 
 	public boolean modificarJugador(String user, String password, int dorsal, int numGoles, int numAsist);
 
-	public void modificarPartido();
-
 	public void consultarEquipo();
 
 	public void modificarDorsal();
@@ -58,5 +56,7 @@ public interface IController {
 
 
 	boolean cambiarPassword(String user, String newPassword, String userType);
+
+	boolean modificarPartido(String nombrePartido, String nuevoResultado);
 
 }
