@@ -67,13 +67,13 @@ public class MenuAdmin extends JFrame implements ActionListener {
 
 		JPanel panelLeft = new JPanel();
 		panelLeft.setBounds(0, 0, 329, 680);
-		panelLeft.setBackground(new Color(128, 128, 0));
+		panelLeft.setBackground(new Color(242, 45, 45));
 		contentPane.add(panelLeft);
 		panelLeft.setLayout(null);
 
 		btnLogOut = new JButton("Log Out");
 		btnLogOut.setHorizontalAlignment(SwingConstants.LEFT);
-		btnLogOut.setBackground(new Color(128, 128, 0));
+		btnLogOut.setBackground(new Color(242, 45, 45));
 		btnLogOut.setBounds(57, 550, 200, 49);
 		btnLogOut.setFocusable(false);
 		btnLogOut.setBorder(null);
@@ -87,7 +87,7 @@ public class MenuAdmin extends JFrame implements ActionListener {
 		btnAddEq.setFont(new Font("Tahoma", Font.BOLD, 14));
 		btnAddEq.setFocusable(false);
 		btnAddEq.setBorder(null);
-		btnAddEq.setBackground(new Color(128, 128, 0));
+		btnAddEq.setBackground(new Color(242, 45, 45));
 		btnAddEq.setBounds(57, 370, 200, 49);
 		panelLeft.add(btnAddEq);
 
@@ -102,7 +102,7 @@ public class MenuAdmin extends JFrame implements ActionListener {
 		btnGestionarEntrenador.setFont(new Font("Tahoma", Font.BOLD, 14));
 		btnGestionarEntrenador.setFocusable(false);
 		btnGestionarEntrenador.setBorder(null);
-		btnGestionarEntrenador.setBackground(new Color(128, 128, 0));
+		btnGestionarEntrenador.setBackground(new Color(242, 45, 45));
 		btnGestionarEntrenador.setBounds(57, 250, 200, 49);
 		panelLeft.add(btnGestionarEntrenador);
 
@@ -111,7 +111,7 @@ public class MenuAdmin extends JFrame implements ActionListener {
 		btnCrearPartido.setFont(new Font("Tahoma", Font.BOLD, 14));
 		btnCrearPartido.setFocusable(false);
 		btnCrearPartido.setBorder(null);
-		btnCrearPartido.setBackground(new Color(128, 128, 0));
+		btnCrearPartido.setBackground(new Color(242, 45, 45));
 		btnCrearPartido.setBounds(57, 310, 200, 49);
 		panelLeft.add(btnCrearPartido);
 
@@ -120,7 +120,7 @@ public class MenuAdmin extends JFrame implements ActionListener {
 		btnModificarPartido.setFont(new Font("Tahoma", Font.BOLD, 14));
 		btnModificarPartido.setFocusable(false);
 		btnModificarPartido.setBorder(null);
-		btnModificarPartido.setBackground(new Color(128, 128, 0));
+		btnModificarPartido.setBackground(new Color(242, 45, 45));
 		btnModificarPartido.setBounds(57, 430, 200, 49);
 		panelLeft.add(btnModificarPartido);
 
