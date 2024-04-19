@@ -50,7 +50,7 @@ public class Login extends JFrame implements ActionListener {
         setContentPane(contentPane);
 
         // Load and set the image
-        ImagePanel panelLeft = new ImagePanel(getClass().getResource("/images/menu.png"));
+        ImagePanel panelLeft = new ImagePanel(getClass().getResource("/images/fotoP.png"));
         panelLeft.setBounds(0, 0, 345, 680);
         contentPane.add(panelLeft);
 
