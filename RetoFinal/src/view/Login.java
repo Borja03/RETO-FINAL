@@ -136,7 +136,7 @@ public class Login extends JFrame implements ActionListener {
 				lblMsg.setText("ERROR: All fields are required");
 			} else if (controller.logIn(username, password, userType)) {
 				if ("Admin".equals(userType)) {
-					MenuAdmin menuAdmin = new MenuAdmin(controller);
+					MenuAdmin menuAdmin = new MenuAdmin(controller, username);
 					menuAdmin.setVisible(true);
 					this.setVisible(false);
 				} else if ("Entrenador".equals(userType)) {

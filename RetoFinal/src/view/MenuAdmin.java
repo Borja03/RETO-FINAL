@@ -35,9 +35,11 @@ public class MenuAdmin extends JFrame implements ActionListener {
     private JButton btnCrearEntrenador;
     private JButton btnBorrarEntrenador;
     private JButton btnModificarEntrenador;
+    private String user;
 
-    public MenuAdmin(Controller cont) {
+    public MenuAdmin(Controller cont, String usr) {
         this.controller = cont;
+        this.user = usr;
 
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setBounds(100, 100, 1008, 717);
@@ -161,22 +163,22 @@ public class MenuAdmin extends JFrame implements ActionListener {
             ocultarBotonesEquipos();
         } else if (o == btnCrearEntrenador) {
             this.dispose();
-            AnadirEntrenador av = new AnadirEntrenador(controller);
+            GestionarEntre av = new GestionarEntre(controller, user);
             av.setVisible(true);
         } else if (o == btnBorrarEntrenador) {
             this.dispose();
-            EliminarEntrenador av = new EliminarEntrenador(controller);
+            SearchEntrenador av = new SearchEntrenador(controller, user);
             av.setVisible(true);
         } else if (o == btnModificarEntrenador) {
             this.dispose();
-            ModificarEntrenador av = new ModificarEntrenador(controller);
+            SearchEntrenador av = new SearchEntrenador(controller, user);
             av.setVisible(true);
         } else if (o == btnCrearPartido) {
-            CrearPartido frame = new CrearPartido(controller);
+            CrearPartido frame = new CrearPartido(controller, user);
             frame.setVisible(true);
             this.dispose();
         } else if (o == btnModificarPartido) {
-            ModificarPartido frame = new ModificarPartido(controller);
+            ModificarPartido frame = new ModificarPartido(controller, user);
             frame.setVisible(true);
             this.dispose();
         } else if (o == btnLogOut) {
@@ -184,7 +186,7 @@ public class MenuAdmin extends JFrame implements ActionListener {
             frame.setVisible(true);
             this.dispose();
         } else if (o == btnCrearEquipo) {
-            CrearEquipo frame = new CrearEquipo(controller);
+            CrearEquipo frame = new CrearEquipo(controller, user);
             frame.setVisible(true);
             this.dispose();
         }

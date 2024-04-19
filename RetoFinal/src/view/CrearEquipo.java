@@ -22,10 +22,12 @@ public class CrearEquipo extends JFrame implements ActionListener {
     private JTextField nombreEstadioField;
     private JComboBox<Integer> titulosComboBox;
     private JButton btnOK;
+    private String user;
 
 
-    public CrearEquipo(Controller controlador) {
+    public CrearEquipo(Controller controlador, String usr) {
         this.controller = controlador;
+        this.user = usr;
        
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setBounds(100, 100, 450, 300);
@@ -92,7 +94,7 @@ public class CrearEquipo extends JFrame implements ActionListener {
 						JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE, null);
         	 if(opcion == JOptionPane.NO_OPTION) {
         		 this.dispose();
-        		 MenuAdmin ma = new MenuAdmin(controller);
+        		 MenuAdmin ma = new MenuAdmin(controller, user);
         		 ma.setVisible(true);
         	 }
         	 
