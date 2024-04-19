@@ -1,5 +1,6 @@
 package model.usuarios;
 
+import java.sql.Blob;
 
 public class Jugador extends Usuarios {
 	/**
@@ -10,6 +11,8 @@ public class Jugador extends Usuarios {
 	private int dorsal;
 	private int goles;
 	private int asistencias;
+	
+	
 
 	public Jugador(String tipo, String user, String contrasenia, String nombreEquipo, int dorsal, int goles,
 			int asistencias) {
@@ -28,14 +31,15 @@ public class Jugador extends Usuarios {
 		this.asistencias = 0;
 	}
 	
-	public Jugador(String user, String contrasenia, String nombreEquipo, int dorsal, int goles,
-			int asistencias) {
-		super(user, contrasenia);
+	public Jugador(String user, String contrasenia, String nombreEquipo, int dorsal, int goles,int asistencias,Blob picProfile) {
+		super(user, contrasenia,picProfile);
 		this.nombreEquipo = nombreEquipo;
 		this.dorsal = dorsal;
 		this.goles = goles;
 		this.asistencias = asistencias;
 	}
+
+
 
 	public String getNombreEquipo() {
 		return nombreEquipo;

@@ -243,13 +243,13 @@ public class GestionarJugadores extends JFrame implements ActionListener {
 
 		textFieldContrasena = new JTextField();
 		textFieldContrasena.setFont(new Font("Tahoma", Font.BOLD, 14));
-		textFieldContrasena.setBounds(515, 274, 250, 34);
+		textFieldContrasena.setBounds(515, 274, 250, 35);
 		contentPane.add(textFieldContrasena);
 		textFieldContrasena.setColumns(10);
 
 		textFieldDorsal = new JComboBox<>();
 		textFieldDorsal.setFont(new Font("Tahoma", Font.BOLD, 14));
-		textFieldDorsal.setBounds(515, 333, 250, 34);
+		textFieldDorsal.setBounds(515, 333, 250, 35);
 		fillDorsalBox ();
 		contentPane.add(textFieldDorsal);
 
@@ -267,12 +267,12 @@ public class GestionarJugadores extends JFrame implements ActionListener {
 
 		btnOK = new JButton("Añadir jugador");
 		btnOK.setFont(new Font("Tahoma", Font.BOLD, 14));
-		btnOK.setBounds(751, 562, 151, 35);
+		btnOK.setBounds(751, 562, 150, 35);
 		contentPane.add(btnOK);
 
 		txtEquiponame = new JTextField();
 		txtEquiponame.setFont(new Font("Tahoma", Font.BOLD, 14));
-		txtEquiponame.setBounds(515, 148, 250, 34);
+		txtEquiponame.setBounds(515, 148, 250, 35);
 		txtEquiponame.setColumns(10);
 		txtEquiponame.setText(miEquipo);
 		txtEquiponame.setEditable(false);

@@ -2,10 +2,13 @@ package view;
 
 import java.awt.Color;
 import java.awt.Font;
+import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.sql.Blob;
+import java.sql.SQLException;
 import java.util.ArrayList;
 
 import javax.swing.ImageIcon;
@@ -44,7 +47,7 @@ public class MenuEntrenador extends JFrame implements ActionListener {
 	private JTable table;
 	private JScrollPane scrollPane_1;
 	private String nombreEquipo;
-	private String teamLogoLink;
+	private Blob teamLogo;
 
 	private JLabel lblJugadoresLista;
 	public MenuEntrenador(Controller cont, String entrConnected) {
@@ -202,13 +205,25 @@ public class MenuEntrenador extends JFrame implements ActionListener {
 		txtEqSegundoEntre.setColumns(10);
 		txtEqSegundoEntre.setBounds(368, 149, 254, 25);
 		panel.add(txtEqSegundoEntre);
+		JLabel lblEqLogo = new JLabel();
 
 		 nombreEquipo =controller.getMyTeam(userName);
-		 teamLogoLink = controller.getEquipo(nombreEquipo).getLogoLink();
-		JLabel lblEqLogo = new JLabel();
-		//ImageIcon imgIcon = new ImageIcon(getClass().getResource(teamLogoLink));
-		ImageIcon imgIcon = new ImageIcon(getClass().getResource("/images/equiposLogo/athletic-bilbao.png"));
-		lblEqLogo.setIcon(imgIcon);
+		 teamLogo = controller.getEquipo(nombreEquipo).getLogo();
+		    if (teamLogo != null) {
+		        try {
+		            byte[] imageData = teamLogo.getBytes(1, (int) teamLogo.length());
+		            if (imageData != null && imageData.length > 0) {
+		                ImageIcon icon = new ImageIcon(imageData);
+		                Image image = icon.getImage().getScaledInstance(150, 150, Image.SCALE_SMOOTH);
+		                ImageIcon scaledIcon = new ImageIcon(image);
+		                lblEqLogo.setIcon(scaledIcon);
+		            } 
+		        } catch (SQLException e) {
+		            System.err.println("Error reading image data from Blob: " + e.getMessage());
+		            e.printStackTrace();
+		        }
+		    }   
+		 
 
 		lblEqLogo.setBounds(15, 15, 150, 150);
 		panel.add(lblEqLogo);
