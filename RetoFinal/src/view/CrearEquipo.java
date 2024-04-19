@@ -54,7 +54,7 @@ public class CrearEquipo extends JFrame implements ActionListener {
 
 	public CrearEquipo(Controller controller, String usr) {
 		this.controller = controller;
-	  this.userName = usr;
+		this.userName = usr;
 
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 1008, 717);
@@ -220,8 +220,8 @@ public class CrearEquipo extends JFrame implements ActionListener {
 		btnGestionarJugadores.setBackground(new Color(128, 128, 0));
 		btnGestionarJugadores.setBounds(37, 275, 200, 49);
 		panelLeft.add(btnGestionarJugadores);
-		
-		//top menu buttons 
+
+		// top menu buttons
 		topMenuPanelAddEq = new JPanel();
 		topMenuPanelAddEq.setBounds(310, 10, 674, 58);
 		contentPane.add(topMenuPanelAddEq);
@@ -242,8 +242,7 @@ public class CrearEquipo extends JFrame implements ActionListener {
 		btnModificar.setBounds(248, 10, 150, 34);
 		topMenuPanelAddEq.add(btnModificar);
 
-		
-		//right panel 
+		// right panel
 		JLabel lblNombreEquipo = new JLabel("Nombre del Equipo:");
 		lblNombreEquipo.setFont(new Font("Tahoma", Font.BOLD, 14));
 		lblNombreEquipo.setBounds(53, 75, 160, 34);
@@ -289,38 +288,36 @@ public class CrearEquipo extends JFrame implements ActionListener {
 		lblEquipoLogo = new JLabel("");
 		lblEquipoLogo.setBounds(53, 361, 200, 200);
 		rightPanelAddEd.add(lblEquipoLogo);
-		
+
 		lblNombreDelEstadio = new JLabel("Nombre del Estadio:");
 		lblNombreDelEstadio.setFont(new Font("Tahoma", Font.BOLD, 14));
 		lblNombreDelEstadio.setBounds(53, 153, 160, 34);
 		rightPanelAddEd.add(lblNombreDelEstadio);
-		
-	
-	}
 
+	}
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		Object o = e.getSource();
 
-			//left menu buttons 
+		// left menu buttons
 		if (e.getSource() == btnConsultarEquipo) {
 			MenuEntrenador menuEntrenador = new MenuEntrenador(controller, userName);
 			this.dispose();
-			//menuEntrenador.setVisible(true);
+			// menuEntrenador.setVisible(true);
 		} else if (e.getSource() == btnConsultarPartidos) {
 			ConsultarPartidos consultarPartidos = new ConsultarPartidos(controller, userName);
 			this.dispose();
-		//	consultarPartidos.setVisible(true);
+			// consultarPartidos.setVisible(true);
 		} else if (e.getSource() == btnCambiarDorsal) {
 			CambiarDorsal cambiarDorsal = new CambiarDorsal(controller, userName);
 			this.dispose();
 			cambiarDorsal.setVisible(true);
-			
+
 		} else if (e.getSource() == btnLogOut) {
 			this.dispose();
 			controller.logOut();
-		}else if (e.getSource() == btnModificar) {
+		} else if (e.getSource() == btnModificar) {
 			this.dispose();
 			ModificarEquipos modificarEquipos = new ModificarEquipos(controller);
 			modificarEquipos.setVisible(true);
@@ -339,7 +336,7 @@ public class CrearEquipo extends JFrame implements ActionListener {
 						Path imagePath = selectedFile.toPath();
 						byte[] imageData = Files.readAllBytes(imagePath);
 						imageBlob = new javax.sql.rowset.serial.SerialBlob(imageData);
-                        imageIcon = new ImageIcon(imageData);
+						imageIcon = new ImageIcon(imageData);
 						lblEquipoLogo.setIcon(imageIcon);
 					} catch (IOException ex) {
 						ex.printStackTrace();
@@ -356,8 +353,8 @@ public class CrearEquipo extends JFrame implements ActionListener {
 			}
 
 		} else if (o == bntAnadirEq) {
-			if (controller.crearEquipo(nombreEquipoField.getText(), Integer.valueOf(txttitulosField.getText()), nombreEstadioField.getText(),
-					imageBlob)) {
+			if (controller.crearEquipo(nombreEquipoField.getText(), Integer.valueOf(txttitulosField.getText()),
+					nombreEstadioField.getText(), imageBlob)) {
 				int opcion = JOptionPane.showConfirmDialog(this,
 						(String) "El equipo ha sido introducido correctamente\n¿Desea añadir otro equipo?", "",
 						JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE, null);
@@ -370,5 +367,4 @@ public class CrearEquipo extends JFrame implements ActionListener {
 			}
 		}
 	}
-		
-
+}
