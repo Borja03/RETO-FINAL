@@ -52,9 +52,9 @@ public class CrearEquipo extends JFrame implements ActionListener {
 	private JLabel lblNombreDelEstadio;
 	private JPanel topMenuPanelAddEq;
 
-	public CrearEquipo(Controller controller) {
+	public CrearEquipo(Controller controller, String usr) {
 		this.controller = controller;
-	
+	  this.userName = usr;
 
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 1008, 717);
@@ -363,7 +363,7 @@ public class CrearEquipo extends JFrame implements ActionListener {
 						JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE, null);
 				if (opcion == JOptionPane.NO_OPTION) {
 					this.dispose();
-					MenuAdmin ma = new MenuAdmin(controller);
+					MenuAdmin ma = new MenuAdmin(controller, userName);
 					ma.setVisible(true);
 				}
 
@@ -372,6 +372,3 @@ public class CrearEquipo extends JFrame implements ActionListener {
 	}
 		
 
-
-
-}
