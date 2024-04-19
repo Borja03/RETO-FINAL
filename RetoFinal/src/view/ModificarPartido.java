@@ -308,7 +308,7 @@ public class ModificarPartido extends JFrame implements ActionListener {
 			menuAdmin.setVisible(true);
 			this.dispose();
 		} else if (o == btnCrearPartido) {
-			CrearPartido2 frame = new CrearPartido2(controller);
+			CrearPartido frame = new CrearPartido(controller);
 			frame.setVisible(true);
 			this.dispose();
 		} else if (o == btnModificarPartido) { // Acción para el botón Modificar partido

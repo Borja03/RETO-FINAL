@@ -172,7 +172,7 @@ public class MenuAdmin extends JFrame implements ActionListener {
             ModificarEntrenador av = new ModificarEntrenador(controller);
             av.setVisible(true);
         } else if (o == btnCrearPartido) {
-            CrearPartido2 frame = new CrearPartido2(controller);
+            CrearPartido frame = new CrearPartido(controller);
             frame.setVisible(true);
             this.dispose();
         } else if (o == btnModificarPartido) {
