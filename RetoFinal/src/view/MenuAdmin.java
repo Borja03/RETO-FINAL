@@ -51,10 +51,12 @@ public class MenuAdmin extends JFrame implements ActionListener {
     private JButton btnBorrarEntrenador;
     private JButton btnModificarEntrenador;
     private String user;
+    private String userType ;
 
-    public MenuAdmin(Controller cont, String usr) {
+    public MenuAdmin(Controller cont, String usrConnected, String userType) {
         this.controller = cont;
-        this.user = usr;
+        this.user = usrConnected;
+        this.userType=userType;
 
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setBounds(100, 100, 1008, 717);
@@ -178,22 +180,22 @@ public class MenuAdmin extends JFrame implements ActionListener {
             ocultarBotonesEquipos();
         } else if (o == btnCrearEntrenador) {
             this.dispose();
-            GestionarEntre av = new GestionarEntre(controller, user);
+            GestionarEntre av = new GestionarEntre(controller, user,userType);
             av.setVisible(true);
         } else if (o == btnBorrarEntrenador) {
             this.dispose();
-            SearchEntrenador av = new SearchEntrenador(controller, user);
+            SearchEntrenador av = new SearchEntrenador(controller, user,userType);
             av.setVisible(true);
         } else if (o == btnModificarEntrenador) {
             this.dispose();
-            SearchEntrenador av = new SearchEntrenador(controller, user);
+            SearchEntrenador av = new SearchEntrenador(controller, user,userType);
             av.setVisible(true);
         } else if (o == btnCrearPartido) {
-            CrearPartido frame = new CrearPartido(controller, user);
+            CrearPartido frame = new CrearPartido(controller, user,userType);
             frame.setVisible(true);
             this.dispose();
         } else if (o == btnModificarPartido) {
-            ModificarPartido frame = new ModificarPartido(controller, user);
+            ModificarPartido frame = new ModificarPartido(controller, user,userType);
             frame.setVisible(true);
             this.dispose();
         } else if (o == btnLogOut) {
@@ -201,7 +203,7 @@ public class MenuAdmin extends JFrame implements ActionListener {
             frame.setVisible(true);
             this.dispose();
         } else if (o == btnCrearEquipo) {
-            CrearEquipo frame = new CrearEquipo(controller, user);
+            CrearEquipo frame = new CrearEquipo(controller, user,userType);
             frame.setVisible(true);
             this.dispose();
         }

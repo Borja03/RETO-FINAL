@@ -7,14 +7,21 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.sql.Blob;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
+import javax.sql.rowset.serial.SerialException;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
+import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
@@ -27,6 +34,7 @@ import javax.swing.table.DefaultTableModel;
 import controller.Controller;
 import model.equipos.Equipo;
 import model.usuarios.Jugador;
+import java.awt.SystemColor;
 
 public class MenuJugador extends JFrame implements ActionListener {
 
@@ -49,11 +57,20 @@ public class MenuJugador extends JFrame implements ActionListener {
 	private JScrollPane scrollPane_1;
 	private String nombreEquipo;
 	private Blob teamLogo;
+	private String userType;
 
 	private JLabel lblJugadoresLista;
-	public MenuJugador(Controller cont, String userC) {
+	private JLabel lblUserPic;
+	private JLabel lblBtnAddPic;
+	
+	private ImageIcon imageIcon;
+	private Blob usrBlobIcon;
+	private JButton btnUpload;
+	
+	public MenuJugador(Controller cont, String userConnected,String userType) {
 		this.controller = cont;
-		this.userName = userC;
+		this.userName = userConnected;
+		this.userType=userType;
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 1008, 717);
 		contentPane = new JPanel();
@@ -86,6 +103,29 @@ public class MenuJugador extends JFrame implements ActionListener {
 				btnLogOut.setBackground(new Color(50, 70, 90));
 			}
 		});
+		
+		
+		lblBtnAddPic = new JLabel();
+		lblBtnAddPic.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+                userUploadImgDialog();
+
+			}
+		});
+		
+		ImageIcon imgIcon = new ImageIcon(getClass().getResource("/images/icons/add.png"));
+		Image imageUser = imgIcon.getImage().getScaledInstance(50, 50, Image.SCALE_SMOOTH); 
+		lblBtnAddPic.setForeground(SystemColor.activeCaption);
+		lblBtnAddPic.setBounds(191, 158, 50, 50);
+		panelLeft.add(lblBtnAddPic);
+		lblBtnAddPic.setIcon(new ImageIcon(imageUser));
+		
+		lblUserPic = new JLabel();
+		lblUserPic.setBackground(SystemColor.activeCaption);
+		lblUserPic.setForeground(SystemColor.activeCaption);
+		lblUserPic.setBounds(54, 33, 150, 150);
+		panelLeft.add(lblUserPic);
 		btnLogOut.setBackground(new Color(128, 128, 0));
 		btnLogOut.setBounds(40, 546, 200, 49);
 		btnLogOut.setFocusable(false);
@@ -114,10 +154,10 @@ public class MenuJugador extends JFrame implements ActionListener {
 		btnCambiarDorsal.setBounds(40, 406, 200, 49);
 		panelLeft.add(btnCambiarDorsal);
 
-		lblWelcome = new JLabel("Welcome " +userName);
+		lblWelcome = new JLabel("     Welcome "+userName);
 		lblWelcome.setForeground(new Color(255, 255, 0));
 		lblWelcome.setFont(new Font("Tahoma", Font.BOLD, 14));
-		lblWelcome.setBounds(64, 180, 217, 34);
+		lblWelcome.setBounds(40, 227, 217, 34);
 		panelLeft.add(lblWelcome);
 
 		btnConsultarPartidos = new JButton("     Consultar Partidos");
@@ -138,6 +178,9 @@ public class MenuJugador extends JFrame implements ActionListener {
 		btnConsultarEquipo.setBackground(new Color(255, 128, 64));
 		btnConsultarEquipo.setBounds(40, 271, 200, 49);
 		panelLeft.add(btnConsultarEquipo);
+		
+	
+		
 		JPanel panel = new JPanel();
 		panel.setBounds(308, 10, 676, 178);
 		panel.setForeground(new Color(255, 128, 64));
@@ -238,6 +281,25 @@ public class MenuJugador extends JFrame implements ActionListener {
 		    data[i][1] = obj.getDorsal();     
 		    data[i][2] = obj.getAsistencias();     
 		}
+		for(Jugador jug : dataList) {
+			if(userName.equals(jug.getUser())) {
+				if(jug.getPicProfile()!= null) {
+					   try {
+				            byte[] imageData = jug.getPicProfile().getBytes(1, (int) jug.getPicProfile().length());
+				            if (imageData != null && imageData.length > 0) {
+				                ImageIcon icon2 = new ImageIcon(imageData);
+				                Image image2 = icon2.getImage().getScaledInstance(150, 150, Image.SCALE_SMOOTH);
+				                ImageIcon scaledIcon2 = new ImageIcon(image2);
+				                lblUserPic.setIcon(scaledIcon2);
+				            } 
+				        } catch (SQLException e) {
+				            System.err.println("Error reading image data from Blob: " + e.getMessage());
+				            e.printStackTrace();
+				        }
+				}
+			}
+			
+		}
 
 		DefaultTableModel model = new DefaultTableModel(data, columnNames);
 
@@ -246,6 +308,7 @@ public class MenuJugador extends JFrame implements ActionListener {
 		contentPane.add(scrollPane_1);
 
 		table = new JTable(model);
+		table.setRowSelectionAllowed(false);
 		table.setFont(new Font("Tahoma", Font.BOLD, 14));
 		JScrollPane scrollPane = new JScrollPane(table);
 		scrollPane_1.setColumnHeaderView(scrollPane);
@@ -261,7 +324,7 @@ public class MenuJugador extends JFrame implements ActionListener {
 		fillEntrenadoresInfo();
 	}
 	public void fillEquipoInfo() {
-		 nombreEquipo =controller.getMyTeam(userName,"jugador");
+		 nombreEquipo =controller.getMyTeam(userName,userType);
 		Equipo eq= controller.getEquipo(nombreEquipo);
 		txtEqNombre.setText(eq.getNombreEquipo());
 		txtEqEstadio.setText(eq.getEstadio());
@@ -277,6 +340,47 @@ public class MenuJugador extends JFrame implements ActionListener {
 		txtEqSegundoEntre.setText(segEntrenador);
 	}
 	
+	
+	private void userUploadImgDialog() {
+	    btnUpload = new JButton("Upload Image");
+	    btnUpload.addActionListener(new ActionListener() {
+	        @Override
+	        public void actionPerformed(ActionEvent e) {
+	            JFileChooser fileChooser = new JFileChooser();
+	            int result = fileChooser.showOpenDialog(null);
+
+	            if (result == JFileChooser.APPROVE_OPTION) {
+	                File selectedFile = fileChooser.getSelectedFile();
+	                if (selectedFile != null) {
+	                    try {
+	                        Path imagePath = selectedFile.toPath();
+	                        byte[] imageData = Files.readAllBytes(imagePath);
+	                        usrBlobIcon = new javax.sql.rowset.serial.SerialBlob(imageData);
+	                        imageIcon = new ImageIcon(imageData);
+	                        lblUserPic.setIcon(imageIcon);
+	                        
+	                        if (controller.updateUsrIcon(userName, usrBlobIcon,userType)) {
+	                            JOptionPane.showMessageDialog(MenuJugador.this, "Image uploaded to database!", "Success", JOptionPane.INFORMATION_MESSAGE);
+	                        } else {
+	                            JOptionPane.showMessageDialog(MenuJugador.this, "Failed to upload image to database!", "Error", JOptionPane.ERROR_MESSAGE);
+	                        }
+	                    } catch (IOException ex) {
+	                        ex.printStackTrace();
+	                    } catch (SerialException e1) {
+	                        e1.printStackTrace();
+	                    } catch (SQLException e1) {
+	                        e1.printStackTrace();
+	                    }
+	                } else {
+	                	//
+	                }
+	            }
+	        }
+	    });
+
+	    JOptionPane.showMessageDialog(this, btnUpload, "Upload Image", JOptionPane.PLAIN_MESSAGE);
+	}
+
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		Object o = e.getSource();
@@ -288,14 +392,17 @@ public class MenuJugador extends JFrame implements ActionListener {
 			ventanaDorsal.setVisible(true);
 			this.setVisible(false);
 		}else if(o==btnConsultarPartidos) {
-			ConsultarPartidos consultarPartidos = new ConsultarPartidos(controller,userName);
+			ConsultarPartidos consultarPartidos = new ConsultarPartidos(controller,userName,userType);
 			consultarPartidos.setVisible(true);
 			this.dispose();
 			
 		}else if (o == btnCambiarCont ) {
-			CambiarContra ventanaCont = new CambiarContra(controller, "jugador", userName);
+			CambiarContra ventanaCont = new CambiarContra(controller, userName,userType);
 		    ventanaCont.setVisible(true);
 			this.dispose();
 		}
+		
+		
+		
 	}
 }

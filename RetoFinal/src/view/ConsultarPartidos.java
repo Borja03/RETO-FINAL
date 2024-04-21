@@ -47,11 +47,12 @@ public class ConsultarPartidos extends JFrame implements ActionListener {
 	private JLabel lblFechaYHora;
 	private JLabel lblEstadio;
 	private JPanel cardsPanel;
+	private String userType;
 
-	public ConsultarPartidos(Controller cont, String entrConnected) {
+	public ConsultarPartidos(Controller cont, String entrConnected,String userType) {
 		this.controller = cont;
-		userName = entrConnected;
-
+		this.userName = entrConnected;
+		this.userType = userType;
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 1008, 717);
 		contentPane = new JPanel(); // Use BorderLayout for the content pane
@@ -99,7 +100,7 @@ public class ConsultarPartidos extends JFrame implements ActionListener {
         btnConsultarPartidos.setFont(new Font("Tahoma", Font.BOLD, 14));
         btnConsultarPartidos.setFocusable(false);
         btnConsultarPartidos.setBorder(null);
-        btnConsultarPartidos.setBackground(Color.ORANGE);
+        btnConsultarPartidos.setBackground(new Color(255, 128, 64));
         btnConsultarPartidos.setBounds(20, 454, 200, 49);
         panelLeft.add(btnConsultarPartidos);
 
@@ -235,11 +236,11 @@ public class ConsultarPartidos extends JFrame implements ActionListener {
 
 		} else if (e.getSource() == btnGestJugadores) {
 			String myTeam = "";
-			GestionarJugadores g1 = new GestionarJugadores(controller, userName, myTeam);
+			GestionarJugadores g1 = new GestionarJugadores(controller, userName,userType, myTeam);
 			g1.setVisible(true);
 			this.dispose();
 		} else if (e.getSource() == btnConsultarEquipo) {
-			MenuEntrenador menuEntrenador = new MenuEntrenador(controller, userName);
+			MenuEntrenador menuEntrenador = new MenuEntrenador(controller, userName,userType);
 			menuEntrenador.setVisible(true);
 			this.dispose();
 		}

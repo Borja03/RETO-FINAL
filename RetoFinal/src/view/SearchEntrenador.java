@@ -52,10 +52,12 @@ public class SearchEntrenador extends JFrame implements ActionListener {
 	private JPanel bottomPanel;
 	private String user;
 	private JButton btnModificarEntrenador;
+	private String userType;
 
-	public SearchEntrenador(Controller controller, String usr) {
+	public SearchEntrenador(Controller controller, String usr,String userType) {
 		this.controller = controller;
 		this.user = usr;
+		this.userType=userType;
 
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 1008, 717);
@@ -314,11 +316,11 @@ public class SearchEntrenador extends JFrame implements ActionListener {
 	public void actionPerformed(ActionEvent e) {
 
 		if (e.getSource() == btnCrearPartido) {
-			CrearPartido cPartido = new CrearPartido(controller, user);
+			CrearPartido cPartido = new CrearPartido(controller, user,userType);
 			this.dispose();
 			cPartido.setVisible(true);
 		} else if (e.getSource() == btnGestionarEquipo) {
-			CrearEquipo cEquipo = new CrearEquipo(controller, user);
+			CrearEquipo cEquipo = new CrearEquipo(controller, user,userType);
 			this.dispose();
 			cEquipo.setVisible(true);
 		} else if (e.getSource() == btnLogOut) {
@@ -330,7 +332,7 @@ public class SearchEntrenador extends JFrame implements ActionListener {
 				bottomPanel.setVisible(true);
 
 			} else if (e.getSource() == btnCrear) {
-				GestionarEntre gEntrenador = new GestionarEntre(controller, user);
+				GestionarEntre gEntrenador = new GestionarEntre(controller, user,userType);
 				this.dispose();
 				gEntrenador.setVisible(true);
 
@@ -342,14 +344,14 @@ public class SearchEntrenador extends JFrame implements ActionListener {
 
 					if (opcion == JOptionPane.NO_OPTION) {
 						this.dispose();
-						MenuAdmin g1 = new MenuAdmin(controller, user);
+						MenuAdmin g1 = new MenuAdmin(controller, user,userType);
 						g1.setVisible(true);
 					}
 				}
 			} else if (e.getSource() == btnModificarEntrenador) {
 				String usr = textFieldUSer.getText();
 				String password = textFieldContrasena.getText();
-				String myTeam = controller.getMyTeam(textFieldUSer.getText(),"entrenador");
+				String myTeam = controller.getMyTeam(textFieldUSer.getText(),userType);
 				String tipoString = (String) textFieldCargo.getSelectedItem();
 				CargoEntrenador tipo = null;
 				if (tipoString.equals("Primer_entrenador")) {
@@ -366,7 +368,7 @@ public class SearchEntrenador extends JFrame implements ActionListener {
 
 					if (opcion == JOptionPane.NO_OPTION) {
 						this.dispose();
-						MenuAdmin g1 = new MenuAdmin(controller, user);
+						MenuAdmin g1 = new MenuAdmin(controller, user,userType);
 						g1.setVisible(true);
 					}
 				}

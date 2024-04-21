@@ -60,6 +60,7 @@ public interface IController {
 	public boolean borrarEquipo(String nombreEquipo);
 	public boolean modificarEquipo(String nombreEquipo, int titulos, String nombreEstadio, Blob logo);
 	public String getUsuarioPassword(String userName,String userType);
+	public boolean updateUsrIcon(String user, Blob userIcon,String userType); 
 
 
 }

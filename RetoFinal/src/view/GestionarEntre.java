@@ -48,10 +48,12 @@ public class GestionarEntre extends JFrame implements ActionListener {
 	private String user;
 	private String myTeam;
 	private JComboBox<String> textFieldEquipo;
+	private String userType;
 
-	public GestionarEntre(Controller controller, String usr) {
+	public GestionarEntre(Controller controller, String usr,String userType) {
 		this.controller = controller;
 		this.user = usr;
+		this.userType=userType;
 
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 1008, 717);
@@ -261,15 +263,15 @@ public class GestionarEntre extends JFrame implements ActionListener {
 	public void actionPerformed(ActionEvent e) {
 
 		if (e.getSource() == btnDeleteMod) {
-			SearchEntrenador eliminarJugadores = new SearchEntrenador(controller, user);
+			SearchEntrenador eliminarJugadores = new SearchEntrenador(controller, user,userType);
 			this.dispose();
 			eliminarJugadores.setVisible(true);
 		} else if (e.getSource() == btnCrearPartido) {
-			CrearPartido cPartidos = new CrearPartido(controller, user);
+			CrearPartido cPartidos = new CrearPartido(controller, user,userType);
 			this.dispose();
 			cPartidos.setVisible(true);
 		} else if (e.getSource() == btnGestionarEquipo) {
-			CrearEquipo cPartidos = new CrearEquipo(controller, user);
+			CrearEquipo cPartidos = new CrearEquipo(controller, user,userType);
 			this.dispose();
 			cPartidos.setVisible(true);
 		} else if (e.getSource() == btnLogOut) {
@@ -296,7 +298,7 @@ public class GestionarEntre extends JFrame implements ActionListener {
 
 			if (opcion == JOptionPane.NO_OPTION) {
 				this.dispose();
-				MenuAdmin g1 = new MenuAdmin(controller, user);
+				MenuAdmin g1 = new MenuAdmin(controller,user,userType);
 				g1.setVisible(true);
 			}
 		}

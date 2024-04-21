@@ -48,11 +48,13 @@ public class MenuEntrenador extends JFrame implements ActionListener {
 	private JScrollPane scrollPane_1;
 	private String nombreEquipo;
 	private Blob teamLogo;
+	private String userType;
 
 	private JLabel lblJugadoresLista;
-	public MenuEntrenador(Controller cont, String entrConnected) {
+	public MenuEntrenador(Controller cont, String entrConnected,String userType) {
 		this.controller = cont;
 		userName = entrConnected;
+		this.userType=userType;
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 1008, 717);
 		contentPane = new JPanel();
@@ -87,7 +89,7 @@ public class MenuEntrenador extends JFrame implements ActionListener {
 		btnGestJugadores.setBounds(20, 332, 200, 49);
 		panelLeft.add(btnGestJugadores);
 
-		lblWelcome = new JLabel("Welcome "+entrConnected+"");
+		lblWelcome = new JLabel("Welcome "+entrConnected);
 		lblWelcome.setForeground(new Color(255, 255, 0));
 		lblWelcome.setFont(new Font("Tahoma", Font.BOLD, 14));
 		lblWelcome.setBounds(20, 182, 217, 34);
@@ -207,7 +209,7 @@ public class MenuEntrenador extends JFrame implements ActionListener {
 		panel.add(txtEqSegundoEntre);
 		JLabel lblEqLogo = new JLabel();
 
-		 nombreEquipo =controller.getMyTeam(userName,"entrenador");
+		 nombreEquipo =controller.getMyTeam(userName,userType);
 		 teamLogo = controller.getEquipo(nombreEquipo).getLogo();
 		    if (teamLogo != null) {
 		        try {
@@ -262,7 +264,7 @@ public class MenuEntrenador extends JFrame implements ActionListener {
 		fillEntrenadoresInfo();
 	}
 	public void fillEquipoInfo() {
-		 nombreEquipo =controller.getMyTeam(userName,"entrenador");
+		 nombreEquipo =controller.getMyTeam(userName,userType);
 		Equipo eq= controller.getEquipo(nombreEquipo);
 		txtEqNombre.setText(eq.getNombreEquipo());
 		txtEqEstadio.setText(eq.getEstadio());
@@ -289,12 +291,12 @@ public class MenuEntrenador extends JFrame implements ActionListener {
 			controller.logOut();
 
 		} else if (e.getSource() == btnGestJugadores) {
-			GestionarJugadores g1 = new GestionarJugadores(controller, userName, nombreEquipo);
+			GestionarJugadores g1 = new GestionarJugadores(controller, userName,userType, nombreEquipo);
 			g1.setVisible(true);
 			this.dispose();
 		}
 		else if (e.getSource() == btnConsultarPartidos) {
-			ConsultarPartidos consultarPartidos = new ConsultarPartidos(controller,userName);
+			ConsultarPartidos consultarPartidos = new ConsultarPartidos(controller,userName,userType);
 			consultarPartidos.setVisible(true);
 			this.dispose();
 		}

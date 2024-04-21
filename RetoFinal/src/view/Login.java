@@ -141,24 +141,24 @@ public class Login extends JFrame implements ActionListener {
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		if (e.getSource() == btnLogIn) {
-			String username = txtUserName.getText();
+			String userName = txtUserName.getText();
 			String password = new String(txtPass.getPassword());
 			String userType = (String) cBxRole.getSelectedItem();
 			// String myTeam = controller.getMyTeam(username);
 
 			if (txtUserName.getText().isEmpty() || txtPass.getPassword().length == 0) {
 				lblMsg.setText("ERROR: All fields are required");
-			} else if (controller.logIn(username, password, userType)) {
+			} else if (controller.logIn(userName, password, userType)) {
 				if ("Admin".equals(userType)) {
-					MenuAdmin menuAdmin = new MenuAdmin(controller, username);
+					MenuAdmin menuAdmin = new MenuAdmin(controller,userName,userType.toLowerCase());
 					menuAdmin.setVisible(true);
 					this.setVisible(false);
 				} else if ("Entrenador".equals(userType)) {
-					MenuEntrenador menuEntrenador = new MenuEntrenador(controller, username);
+					MenuEntrenador menuEntrenador = new MenuEntrenador(controller,userName,userType.toLowerCase());
 					menuEntrenador.setVisible(true);
 					this.setVisible(false);
 				} else if ("Jugador".equals(userType)) {
-					MenuJugador menuJugador = new MenuJugador(controller, username);
+					MenuJugador menuJugador = new MenuJugador(controller,userName,userType.toLowerCase());
 					menuJugador.setVisible(true);
 					this.setVisible(false);
 				}

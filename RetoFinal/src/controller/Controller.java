@@ -31,7 +31,7 @@ public class Controller implements IController {
 
 	final String INNSERTentrenador = "INSERT INTO entrenador (user,password,tipoEntrenador,nombreEquipo) VALUES (?,?,?,?)";
 	final String DELETEentrenador = "DELETE FROM entrenador WHERE user =?";
-	
+
 	final String INSERTjugador = "INSERT INTO jugador (user,password,dorsal,numeroGoles,numeroAsistencias,nombreEquipo) VALUES (?,?,?,?,?,?)";
 	final String GETjugador = "SELECT * FROM jugador WHERE user = ?";
 	final String GETentrenador = "SELECT * FROM entrenador WHERE user = ?";
@@ -55,6 +55,7 @@ public class Controller implements IController {
 	final String MODIFICARequipo = "UPDATE equipo SET titulos=?, nombreEstadio=? , logo=? WHERE nombreEquipo=?";
 	final String GETJugadorPassword = "SELECT password FROM  jugador where user=?";
 	final String GETEntrenadorPassword = "SELECT password FROM  entrenador where user=?";
+	final String MODIFICARuserIcon = "UPDATE jugador SET icon=?  WHERE user = ?";
 
 	public boolean checkUserExist(String user) {
 		boolean exist = false;
@@ -509,16 +510,16 @@ public class Controller implements IController {
 		return misEquipos;
 	}
 
-	public String getMyTeam(String userName,String userType) {
+	public String getMyTeam(String userName, String userType) {
 		String myTeam = null;
-		String query ="";
-		
+		String query = "";
+
 		if ("entrenador".equals(userType)) {
 			query = ENTRENADORequipo;
 		} else if ("jugador".equals(userType)) {
-			query =JUGADORDORequipo ;
+			query = JUGADORDORequipo;
 		}
-		this.openConnection(userType,userType);
+		this.openConnection(userType, userType);
 		try {
 			statement = connection.prepareStatement(query);
 			statement.setString(1, userName);
@@ -527,8 +528,7 @@ public class Controller implements IController {
 			while (resultSet.next()) {
 				myTeam = resultSet.getString("nombreEquipo");
 			}
-			
-		
+
 		} catch (SQLException e) {
 			System.out.println("Error de SQL");
 			e.printStackTrace();
@@ -554,7 +554,7 @@ public class Controller implements IController {
 				int numGoles = resultSet.getInt("numeroGoles");
 				int numAsistencias = resultSet.getInt("numeroAsistencias");
 				Blob icon = resultSet.getBlob("icon");
-				usuario = new Jugador(userN, password, nombreEquipo, dorsal, numGoles, numAsistencias,icon);
+				usuario = new Jugador(userN, password, nombreEquipo, dorsal, numGoles, numAsistencias, icon);
 
 			}
 
@@ -735,9 +735,9 @@ public class Controller implements IController {
 				int dorsal = resultSet.getInt("dorsal");
 				int goles = resultSet.getInt("numeroGoles");
 				int asistencias = resultSet.getInt("numeroAsistencias");
-				Blob picProfile= resultSet.getBlob("icon");
-			
-				Jugador jug = new Jugador(user, password, nbEquipo, dorsal, goles, asistencias,picProfile);
+				Blob picProfile = resultSet.getBlob("icon");
+
+				Jugador jug = new Jugador(user, password, nbEquipo, dorsal, goles, asistencias, picProfile);
 				jugadoresEq.add(jug);
 			}
 
@@ -857,16 +857,18 @@ public class Controller implements IController {
 		// TODO Auto-generated method stub
 
 	}
-	public String getUsuarioPassword(String userName,String userType) {
-		
+
+	@Override
+	public String getUsuarioPassword(String userName, String userType) {
+
 		String pass = "";
 		String query = "";
 		if ("entrenador".equals(userType)) {
-			query = GETEntrenadorPassword ;
+			query = GETEntrenadorPassword;
 		} else if ("jugador".equals(userType)) {
 			query = GETJugadorPassword;
 		}
-		
+
 		openConnection(userType, userType);
 
 		try {
@@ -883,7 +885,32 @@ public class Controller implements IController {
 		} finally {
 			closeConnection();
 		}
-	return pass;
+		return pass;
 	}
 
+	@Override
+	public boolean updateUsrIcon(String user, Blob userIcon, String userType) {
+
+		boolean modified = false;
+		this.openConnection(userType, userType);
+		try {
+			statement = connection.prepareStatement(MODIFICARuserIcon);
+			statement.setBlob(1, userIcon);
+			statement.setString(2, user);
+
+			if (statement.executeUpdate() > 0) {
+				modified = true;
+				System.out.println("Data inserted!");
+			} else {
+				System.out.println("Failed!");
+			}
+
+		} catch (SQLException e) {
+			System.out.println("Error de SQL");
+			e.printStackTrace();
+		} finally {
+			this.closeConnection();
+		}
+		return modified;
+	}
 }

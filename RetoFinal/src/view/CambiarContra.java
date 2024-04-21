@@ -34,10 +34,10 @@ public class CambiarContra extends JFrame implements ActionListener {
 	private JButton btnVerificar;
 	private  JButton btnSave;
 	private JLabel lnlNewPass;
-    public CambiarContra(Controller controlador, String userType, String userName) {
+    public CambiarContra(Controller controlador,String userName,String userType) {
         this.controller = controlador;
-        this.userType = userType;
         this.userName = userName;
+        this.userType = userType;
 
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 1008, 717);
@@ -220,7 +220,7 @@ public class CambiarContra extends JFrame implements ActionListener {
         Object o = e.getSource();
         if(e.getSource() == btnVerificar) {
         	String oldPassword = new String (textFieldOldPassword.getPassword());
-        	if(!oldPassword .equals(controller.getUsuarioPassword(userName,"jugador"))) {
+        	if(!oldPassword .equals(controller.getUsuarioPassword(userName,userType))) {
         		bottomPanelMsg.setVisible(true);
         	}else {
                 bottomPanel.setVisible(true);
