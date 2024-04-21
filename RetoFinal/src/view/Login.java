@@ -6,6 +6,11 @@ import java.awt.EventQueue;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
+
+import com.formdev.flatlaf.FlatDarkLaf;
+import com.formdev.flatlaf.FlatLightLaf;
+
+import aplicacion.Splash;
 import controller.Controller;
 
 import java.awt.Color;
@@ -13,6 +18,13 @@ import java.awt.EventQueue;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.ItemEvent;
+import java.awt.event.ItemListener;
+import java.io.BufferedReader;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
+import java.io.PrintWriter;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -23,9 +35,12 @@ import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
+import javax.swing.SwingUtilities;
+import javax.swing.UIManager;
 import javax.swing.border.EmptyBorder;
 import controller.Controller;
 import javax.swing.JCheckBox;
+import javax.swing.JToggleButton;
 
 public class Login extends JFrame implements ActionListener {
 
@@ -38,9 +53,13 @@ public class Login extends JFrame implements ActionListener {
 	private Controller controller;
 	private JLabel lblMsg;
 	private JCheckBox chckbxShowPassword;
+	private JToggleButton tglBtnDark ;
+	private boolean darkModeState;
+	
 
 	public Login(Controller cont) {
 		this.controller = cont;
+		this.darkModeState= Splash.darkModeState;
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 1008, 717);
 		contentPane = new JPanel();
@@ -123,21 +142,60 @@ public class Login extends JFrame implements ActionListener {
 		lblNewLabel_1.setBounds(809, 394, 112, 13);
 		contentPane.add(lblNewLabel_1);
 		
-		JLabel lblDarkModeImg = new JLabel();
-		ImageIcon darkMode = new ImageIcon(getClass().getResource("/images/icons/darkmodeIcon.png"));
-		lblDarkModeImg.setIcon(darkMode);
-		lblDarkModeImg.setBounds(758, 49, 150, 50);
-		contentPane.add(lblDarkModeImg);
-		
-		JLabel lblBrightModeImg = new JLabel();
-		ImageIcon imgIconBright = new ImageIcon(getClass().getResource("/images/icons/brightModeIcon.png"));
-		lblBrightModeImg.setIcon(imgIconBright);
-		lblBrightModeImg.setBounds(780, 49, 150, 50);
-		contentPane.add(lblBrightModeImg);
-		
+		 tglBtnDark = new JToggleButton("Dark Mode");
+		tglBtnDark.setBounds(769, 50, 128, 53);
+
+        tglBtnDark = new JToggleButton("Dark Mode");
+        tglBtnDark.setBounds(769, 50, 128, 53);
+        tglBtnDark.addItemListener(new ItemListener() {
+            public void itemStateChanged(ItemEvent e) {
+                if (e.getStateChange() == ItemEvent.SELECTED) {
+                    savePreference(true);
+                    tglBtnDark.setText("Light Mode");
+                    applyDarkMode(true);
+                } else {
+                    savePreference(false);
+                    tglBtnDark.setText("Dark Mode");
+                    applyDarkMode(false);
+                }
+            }
+        });
+        tglBtnDark.setSelected(darkModeState);
+        contentPane.add(tglBtnDark);
+
+        applyDarkMode(darkModeState); 
+
+				
 	
 	}
 
+	
+	 private void savePreference(boolean enabled) {
+	        try (PrintWriter writer = new PrintWriter("preferences.txt")) {
+	            writer.println(enabled);
+	        } catch (FileNotFoundException ex) {
+	            ex.printStackTrace();
+	        }
+	    }
+	 private void applyDarkMode(boolean enabled) {
+		    if (enabled) {
+		        try {
+		            UIManager.setLookAndFeel(new FlatDarkLaf());
+		        } catch (Exception ex) {
+		            System.err.println("Failed to initialize LaF");
+		        }
+		    } else {
+		        try {
+		            UIManager.setLookAndFeel(new FlatLightLaf());
+		        } catch (Exception ex) {
+		            System.err.println("Failed to initialize LaF");
+		        }
+		    }
+		    // Update the UI to reflect the new look and feel
+		    SwingUtilities.updateComponentTreeUI(this);
+		}
+
+	  
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		if (e.getSource() == btnLogIn) {
