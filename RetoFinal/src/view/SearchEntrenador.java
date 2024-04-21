@@ -45,7 +45,7 @@ public class SearchEntrenador extends JFrame implements ActionListener {
 	private JLabel lblCargo;
 	private JTextField textFieldUSer;
 	private JTextField textFieldContrasena;
-	private JComboBox textFieldCargo;
+	private JComboBox<String> textFieldCargo;
 	private JButton btnEliminarEntrenador;
 	private JTextField txtEquiponame;
 	private JButton btnBuscarEntrenador;
@@ -349,7 +349,7 @@ public class SearchEntrenador extends JFrame implements ActionListener {
 			} else if (e.getSource() == btnModificarEntrenador) {
 				String usr = textFieldUSer.getText();
 				String password = textFieldContrasena.getText();
-				String myTeam = controller.getMyTeam(textFieldUSer.getText());
+				String myTeam = controller.getMyTeam(textFieldUSer.getText(),"entrenador");
 				String tipoString = (String) textFieldCargo.getSelectedItem();
 				CargoEntrenador tipo = null;
 				if (tipoString.equals("Primer_entrenador")) {

@@ -44,6 +44,7 @@ public class Controller implements IController {
 	final String nombreEquipo = "Select nombreEquipo FROM laliga WHERE user=?";
 	final String ALLequipos = "SELECT nombreEquipo FROM  equipo";
 	final String ENTRENADORequipo = "SELECT nombreEquipo FROM  entrenador where user=?";
+	final String JUGADORDORequipo = "SELECT nombreEquipo FROM  jugador where user=?";
 	final String NOMBREequipo = "SELECT * FROM  equipo where nombreEquipo=?";
 	final String Partidos = "SELECT nombreEquipoLocal, nombreEquipoVisitante, fechaInicio FROM juegan";
 	final String ENTRENADORnombre = "SELECT user FROM  entrenador where nombreEquipo=? and tipoEntrenador=?";
@@ -52,6 +53,8 @@ public class Controller implements IController {
 	final String INSERTequipo = "INSERT INTO equipo (nombreEquipo, titulos, nombreEstadio ,logo) VALUES (?, ?, ?, ?)";
 	final String DELETEequipo = "DELETE FROM equipo WHERE nombreEquipo =?";
 	final String MODIFICARequipo = "UPDATE equipo SET titulos=?, nombreEstadio=? , logo=? WHERE nombreEquipo=?";
+	final String GETJugadorPassword = "SELECT password FROM  jugador where user=?";
+	final String GETEntrenadorPassword = "SELECT password FROM  entrenador where user=?";
 
 	public boolean checkUserExist(String user) {
 		boolean exist = false;
@@ -459,14 +462,14 @@ public class Controller implements IController {
 	public boolean cambiarPassword(String user, String newPassword, String userType) {
 		boolean changed = false;
 		String query = "";
-		if ("Entrenador".equals(userType)) {
+		if ("entrenador".equals(userType)) {
 			query = "UPDATE entrenador SET password = ? WHERE user = ?";
-		} else if ("Jugador".equals(userType)) {
+		} else if ("jugador".equals(userType)) {
 			query = "UPDATE jugador SET password = ? WHERE user = ?";
 		}
+		openConnection(userType, userType);
 
 		try {
-			openConnection(user, password);
 			statement = connection.prepareStatement(query);
 			statement.setString(1, newPassword);
 			statement.setString(2, user);
@@ -506,18 +509,26 @@ public class Controller implements IController {
 		return misEquipos;
 	}
 
-	public String getMyTeam(String entName) {
+	public String getMyTeam(String userName,String userType) {
 		String myTeam = null;
-		this.openConnection("entrenador", "entrenador");
+		String query ="";
+		
+		if ("entrenador".equals(userType)) {
+			query = ENTRENADORequipo;
+		} else if ("jugador".equals(userType)) {
+			query =JUGADORDORequipo ;
+		}
+		this.openConnection(userType,userType);
 		try {
-			statement = connection.prepareStatement(ENTRENADORequipo);
-			statement.setString(1, entName);
+			statement = connection.prepareStatement(query);
+			statement.setString(1, userName);
 
 			resultSet = statement.executeQuery();
 			while (resultSet.next()) {
 				myTeam = resultSet.getString("nombreEquipo");
 			}
-
+			
+		
 		} catch (SQLException e) {
 			System.out.println("Error de SQL");
 			e.printStackTrace();
@@ -845,6 +856,34 @@ public class Controller implements IController {
 	public void consultarPartido() {
 		// TODO Auto-generated method stub
 
+	}
+	public String getUsuarioPassword(String userName,String userType) {
+		
+		String pass = "";
+		String query = "";
+		if ("entrenador".equals(userType)) {
+			query = GETEntrenadorPassword ;
+		} else if ("jugador".equals(userType)) {
+			query = GETJugadorPassword;
+		}
+		
+		openConnection(userType, userType);
+
+		try {
+			statement = connection.prepareStatement(query);
+			statement.setString(1, userName);
+
+			resultSet = statement.executeQuery();
+			while (resultSet.next()) {
+				pass = resultSet.getString("password");
+			}
+		} catch (SQLException e) {
+			System.out.println("Error de SQL");
+			e.printStackTrace();
+		} finally {
+			closeConnection();
+		}
+	return pass;
 	}
 
 }

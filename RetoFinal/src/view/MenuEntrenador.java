@@ -207,7 +207,7 @@ public class MenuEntrenador extends JFrame implements ActionListener {
 		panel.add(txtEqSegundoEntre);
 		JLabel lblEqLogo = new JLabel();
 
-		 nombreEquipo =controller.getMyTeam(userName);
+		 nombreEquipo =controller.getMyTeam(userName,"entrenador");
 		 teamLogo = controller.getEquipo(nombreEquipo).getLogo();
 		    if (teamLogo != null) {
 		        try {
@@ -262,7 +262,7 @@ public class MenuEntrenador extends JFrame implements ActionListener {
 		fillEntrenadoresInfo();
 	}
 	public void fillEquipoInfo() {
-		 nombreEquipo =controller.getMyTeam(userName);
+		 nombreEquipo =controller.getMyTeam(userName,"entrenador");
 		Equipo eq= controller.getEquipo(nombreEquipo);
 		txtEqNombre.setText(eq.getNombreEquipo());
 		txtEqEstadio.setText(eq.getEstadio());
