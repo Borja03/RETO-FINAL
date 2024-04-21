@@ -152,7 +152,7 @@ public class MenuEntrenador extends JFrame implements ActionListener {
 		panel.add(lblNombre);
 
 		JLabel lblNewLabel = new JLabel("Equipo info");
-		lblNewLabel.setBounds(319, 5, 104, 22);
+		lblNewLabel.setBounds(286, 10, 104, 22);
 		lblNewLabel.setFont(new Font("Tahoma", Font.BOLD, 18));
 		panel.add(lblNewLabel);
 

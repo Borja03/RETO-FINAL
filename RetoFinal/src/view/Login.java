@@ -50,68 +50,68 @@ public class Login extends JFrame implements ActionListener {
 		contentPane.setLayout(null);
 
 		JPanel panelLeft = new JPanel();
-		panelLeft.setBackground(new Color(128, 128, 0));
 		panelLeft.setBounds(0, 0, 345, 680);
+		panelLeft.setBackground(new Color(128, 128, 0));
 		contentPane.add(panelLeft);
 		JLabel imgTitle = new JLabel();
+		imgTitle.setBounds(0, 0, 345, 680);
 
 		ImageIcon imgIcon = new ImageIcon(getClass().getResource("/images/copa.png"));
 		imgTitle.setIcon(imgIcon);
-		imgTitle.setBounds(0, 0, 345, 680);
 		contentPane.add(imgTitle);
 
 		txtUserName = new JTextField();
-		txtUserName.setFont(new Font("Tahoma", Font.BOLD, 14));
 		txtUserName.setBounds(514, 235, 407, 53);
+		txtUserName.setFont(new Font("Tahoma", Font.BOLD, 14));
 		contentPane.add(txtUserName);
 		txtUserName.setColumns(10);
 
 		JLabel lblUserName = new JLabel("User Name");
-		lblUserName.setFont(new Font("Tahoma", Font.BOLD, 14));
 		lblUserName.setBounds(383, 235, 151, 53);
+		lblUserName.setFont(new Font("Tahoma", Font.BOLD, 14));
 		contentPane.add(lblUserName);
 
 		JLabel lblPass = new JLabel("Password");
-		lblPass.setFont(new Font("Tahoma", Font.BOLD, 14));
 		lblPass.setBounds(383, 324, 151, 53);
+		lblPass.setFont(new Font("Tahoma", Font.BOLD, 14));
 		contentPane.add(lblPass);
 
 		txtPass = new JPasswordField();
+		txtPass.setBounds(514, 324, 407, 53);
 		txtPass.setFont(new Font("Tahoma", Font.BOLD, 14));
 		txtPass.setColumns(10);
-		txtPass.setBounds(514, 324, 407, 53);
 		contentPane.add(txtPass);
 
 		btnLogIn = new JButton("Log in");
+		btnLogIn.setBounds(758, 544, 163, 53);
 		btnLogIn.addActionListener(this);
 		btnLogIn.setFont(new Font("Tahoma", Font.BOLD, 14));
-		btnLogIn.setBounds(758, 544, 163, 53);
 		contentPane.add(btnLogIn);
 
 		JLabel lblNewLabel = new JLabel("Forgot password ?");
-		lblNewLabel.setFont(new Font("Tahoma", Font.BOLD, 10));
 		lblNewLabel.setBounds(624, 625, 163, 21);
+		lblNewLabel.setFont(new Font("Tahoma", Font.BOLD, 10));
 		contentPane.add(lblNewLabel);
 
 		JLabel lblRole = new JLabel("Role");
-		lblRole.setFont(new Font("Tahoma", Font.BOLD, 14));
 		lblRole.setBounds(383, 417, 151, 53);
+		lblRole.setFont(new Font("Tahoma", Font.BOLD, 14));
 		contentPane.add(lblRole);
 
 		// Create a JComboBox for role selection
 		cBxRole = new JComboBox<>();
-		cBxRole.setFont(new Font("Tahoma", Font.BOLD, 14));
 		cBxRole.setBounds(514, 417, 407, 53);
+		cBxRole.setFont(new Font("Tahoma", Font.BOLD, 14));
 		cBxRole.addItem("Admin");
 		cBxRole.addItem("Entrenador");
 		cBxRole.addItem("Jugador");
 		contentPane.add(cBxRole);
 
 		lblMsg = new JLabel("");
+		lblMsg.setBounds(588, 513, 239, 21);
 		lblMsg.setForeground(new Color(255, 0, 0));
 		lblMsg.setBackground(new Color(255, 0, 0));
 		lblMsg.setFont(new Font("Tahoma", Font.BOLD, 12));
-		lblMsg.setBounds(588, 513, 239, 21);
 		contentPane.add(lblMsg);
 
 		chckbxShowPassword = new JCheckBox("");
@@ -122,6 +122,20 @@ public class Login extends JFrame implements ActionListener {
 		JLabel lblNewLabel_1 = new JLabel("Show password");
 		lblNewLabel_1.setBounds(809, 394, 112, 13);
 		contentPane.add(lblNewLabel_1);
+		
+		JLabel lblDarkModeImg = new JLabel();
+		ImageIcon darkMode = new ImageIcon(getClass().getResource("/images/icons/darkmodeIcon.png"));
+		lblDarkModeImg.setIcon(darkMode);
+		lblDarkModeImg.setBounds(758, 49, 150, 50);
+		contentPane.add(lblDarkModeImg);
+		
+		JLabel lblBrightModeImg = new JLabel();
+		ImageIcon imgIconBright = new ImageIcon(getClass().getResource("/images/icons/brightModeIcon.png"));
+		lblBrightModeImg.setIcon(imgIconBright);
+		lblBrightModeImg.setBounds(780, 49, 150, 50);
+		contentPane.add(lblBrightModeImg);
+		
+	
 	}
 
 	@Override
@@ -153,11 +167,9 @@ public class Login extends JFrame implements ActionListener {
 			}
 		} else if (e.getSource() == chckbxShowPassword) {
 			if (chckbxShowPassword.isSelected()) {
-				// Set password field type to text to show characters
 				txtPass.setEchoChar((char) 0);
 			} else {
-				// Set password field type back to password to hide characters with asterisks
-				// (*)
+				
 				txtPass.setEchoChar('*');
 			}
 		}

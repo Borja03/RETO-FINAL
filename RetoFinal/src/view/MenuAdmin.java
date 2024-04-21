@@ -90,7 +90,7 @@ public class MenuAdmin extends JFrame implements ActionListener {
         btnAddEq.setBounds(57, 370, 200, 49);
         panelLeft.add(btnAddEq);
 
-        lblWelcome = new JLabel("Welcome Admin");
+        lblWelcome = new JLabel("Welcome " + user);
         lblWelcome.setForeground(new Color(255, 255, 0));
         lblWelcome.setFont(new Font("Tahoma", Font.BOLD, 14));
         lblWelcome.setBounds(64, 180, 217, 34);
