@@ -20,6 +20,15 @@ import javax.swing.border.EmptyBorder;
 import controller.Controller;
 import model.usuarios.CargoEntrenador;
 import model.usuarios.Entrenador;
+import model.usuarios.Jugador;
+
+import javax.swing.JButton;
+import javax.swing.JComboBox;
+
+import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.awt.event.ActionEvent;
 
 public class SearchEntrenador extends JFrame implements ActionListener {
 

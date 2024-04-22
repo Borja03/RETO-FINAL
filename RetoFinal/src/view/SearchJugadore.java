@@ -434,6 +434,12 @@ public class SearchJugadore extends JFrame implements ActionListener {
 			//this.dispose();
 		}
 
+		} else if (e.getSource() == btnModificar) {
+			SearchJugadore m1 = new SearchJugadore(controller, userName, miEquipo);
+			m1.setVisible(true);
+			this.dispose();
+		}
+
 		if (e.getSource() == btnElimimarJugador) {
 			String user = textFieldUSer.getText();
 			String password = textFieldContrasena.getText();
