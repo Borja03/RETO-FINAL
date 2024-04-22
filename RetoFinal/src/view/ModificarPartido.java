@@ -58,7 +58,7 @@ public class ModificarPartido extends JFrame implements ActionListener {
 
 	private JLabel lblWelcome;
 	private JButton btnLogOut;
-	private JButton btnAddEq;
+	private JButton btnGesEquipo;
 	private JButton btnGestionarEntrenador;
 	private JButton btnCrearPartido;
 	private JButton btnModificarPartido;
@@ -67,6 +67,7 @@ public class ModificarPartido extends JFrame implements ActionListener {
 	private String user;
 	private String userType;
 
+	
 	public ModificarPartido(Controller controlador, String usr,String userType) {
 		this.controller = controlador;
 		this.user = usr;
@@ -174,15 +175,15 @@ public class ModificarPartido extends JFrame implements ActionListener {
 		btnLogOut.addActionListener(this);
 		btnLogOut.setFont(new Font("Tahoma", Font.BOLD, 14));
 
-		btnAddEq = new JButton("Gestionar equipo");
-		btnAddEq.addActionListener(this);
-		btnAddEq.setHorizontalAlignment(SwingConstants.LEFT);
-		btnAddEq.setFont(new Font("Tahoma", Font.BOLD, 14));
-		btnAddEq.setFocusable(false);
-		btnAddEq.setBorder(null);
-		btnAddEq.setBackground(new Color(128, 128, 0));
-		btnAddEq.setBounds(57, 370, 200, 49);
-		panelLeft.add(btnAddEq);
+		btnGesEquipo = new JButton("Gestionar equipo");
+		btnGesEquipo.addActionListener(this);
+		btnGesEquipo.setHorizontalAlignment(SwingConstants.LEFT);
+		btnGesEquipo.setFont(new Font("Tahoma", Font.BOLD, 14));
+		btnGesEquipo.setFocusable(false);
+		btnGesEquipo.setBorder(null);
+		btnGesEquipo.setBackground(new Color(128, 128, 0));
+		btnGesEquipo.setBounds(57, 370, 200, 49);
+		panelLeft.add(btnGesEquipo);
 
 		lblWelcome = new JLabel("Welcome Admin");
 		lblWelcome.setForeground(new Color(255, 255, 0));
@@ -191,6 +192,7 @@ public class ModificarPartido extends JFrame implements ActionListener {
 		panelLeft.add(lblWelcome);
 
 		btnGestionarEntrenador = new JButton("Gestionar entrenador");
+		btnGestionarEntrenador.addActionListener(this);
 		btnGestionarEntrenador.setHorizontalAlignment(SwingConstants.LEFT);
 		btnGestionarEntrenador.setFont(new Font("Tahoma", Font.BOLD, 14));
 		btnGestionarEntrenador.setFocusable(false);
@@ -211,12 +213,13 @@ public class ModificarPartido extends JFrame implements ActionListener {
 
 		// Botón Modificar partido
 		btnModificarPartido = new JButton("Modificar partido");
+		btnModificarPartido.setForeground(new Color(128, 128, 0));
 		btnModificarPartido.setEnabled(false);
 		btnModificarPartido.setHorizontalAlignment(SwingConstants.LEFT);
 		btnModificarPartido.setFont(new Font("Tahoma", Font.BOLD, 14));
 		btnModificarPartido.setFocusable(false);
 		btnModificarPartido.setBorder(null);
-		btnModificarPartido.setBackground(new Color(79, 79, 0));
+		btnModificarPartido.setBackground(new Color(255, 128, 64));
 		btnModificarPartido.setBounds(57, 430, 200, 49);
 		panelLeft.add(btnModificarPartido);
 		btnModificarPartido.addActionListener(this); // Agregar ActionListener
@@ -304,20 +307,20 @@ public class ModificarPartido extends JFrame implements ActionListener {
 					JOptionPane.showMessageDialog(this, "Por favor, complete todos los campos.");
 				}
 			}
-		} else if (o == btnAddEq) {
-			menuAdmin.mostrarBotonesEquipos();
-			menuAdmin.ocultarBotonesEntrenadores();
-			menuAdmin.setVisible(true);
-			this.dispose();
-		} else if (o == btnGestionarEntrenador) {
-			menuAdmin.mostrarBotonesEntrenadores();
-			menuAdmin.ocultarBotonesEquipos();
-			menuAdmin.setVisible(true);
-			this.dispose();
 		} else if (o == btnCrearPartido) {
-			CrearPartido frame = new CrearPartido(controller, user,userType);
-			frame.setVisible(true);
+			CrearPartido crearPartido = new CrearPartido(controller, user,userType);
+			crearPartido.setVisible(true);
 			this.dispose();
+		}  else if (o == btnGesEquipo) {
+			MenuAdmin menusAdmin= new MenuAdmin(controller,user,userType);
+			menusAdmin.setVisible(true);
+			this.dispose();
+		
+		}else if (o == btnGestionarEntrenador) {
+			GestionarEntre gestionarEntre= new GestionarEntre(controller,user,userType);
+			gestionarEntre.setVisible(true);
+			this.dispose();
+			
 		}  else if (o == btnLogOut) {
 			Login frame = new Login(controller);
 			frame.setVisible(true);
@@ -325,3 +328,4 @@ public class ModificarPartido extends JFrame implements ActionListener {
 		}
 	}
 }
+

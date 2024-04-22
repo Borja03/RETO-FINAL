@@ -49,11 +49,12 @@ public class GestionarEntre extends JFrame implements ActionListener {
 	private JComboBox<String> textFieldEquipo;
 	private String userType;
 
+	
 	public GestionarEntre(Controller controller, String usr,String userType) {
 		this.controller = controller;
 		this.user = usr;
 		this.userType=userType;
-
+		
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 1008, 717);
 		contentPane = new JPanel();
@@ -134,6 +135,7 @@ public class GestionarEntre extends JFrame implements ActionListener {
 			}
 		});
 
+		
 		lblWelcome = new JLabel("Welcome " + user + "");
 		lblWelcome.setBounds(64, 180, 217, 34);
 		lblWelcome.setForeground(new Color(255, 255, 0));
@@ -270,9 +272,13 @@ public class GestionarEntre extends JFrame implements ActionListener {
 			this.dispose();
 			cPartidos.setVisible(true);
 		} else if (e.getSource() == btnGestionarEquipo) {
-			CrearEquipo cPartidos = new CrearEquipo(controller, user,userType);
+			MenuAdmin cPartidos = new MenuAdmin(controller, user,userType);
 			this.dispose();
 			cPartidos.setVisible(true);
+		} else if (e.getSource() == btnModPartidos) {
+			ModificarPartido modificarPartido = new ModificarPartido(controller, user,userType);
+			this.dispose();
+			modificarPartido.setVisible(true);
 		} else if (e.getSource() == btnLogOut) {
 			this.dispose();
 			controller.logOut();

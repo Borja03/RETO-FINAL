@@ -306,6 +306,7 @@ public class SearchEntrenador extends JFrame implements ActionListener {
 		}
 	}
 
+	
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		if (e.getSource() == btnCrearPartido) {
@@ -313,9 +314,9 @@ public class SearchEntrenador extends JFrame implements ActionListener {
 			this.dispose();
 			cPartido.setVisible(true);
 		} else if (e.getSource() == btnGestionarEquipo) {
-			CrearEquipo cEquipo = new CrearEquipo(controller, user, userType);
-			this.dispose();
-			cEquipo.setVisible(true);
+			//CrearEquipo cEquipo = new CrearEquipo(controller, user, userType);
+			//this.dispose();
+			//cEquipo.setVisible(true);
 		} else if (e.getSource() == btnLogOut) {
 			this.dispose();
 			controller.logOut();

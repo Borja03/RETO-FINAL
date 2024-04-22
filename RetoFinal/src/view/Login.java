@@ -79,6 +79,8 @@ public class Login extends JFrame implements ActionListener {
         contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
         setContentPane(contentPane);
 
+		this.darkModeState= Splash.darkModeState;
+
         // Load and set the image
         ImagePanel panelLeft = new ImagePanel(getClass().getResource("/images/fotoP.png"));
         panelLeft.setBounds(0, 0, 345, 680);
@@ -218,7 +220,6 @@ public class Login extends JFrame implements ActionListener {
 			String userName = txtUserName.getText();
 			String password = new String(txtPass.getPassword());
 			String userType = (String) cBxRole.getSelectedItem();
-			this.darkModeState= Splash.darkModeState;
 
 			if (txtUserName.getText().isEmpty() || txtPass.getPassword().length == 0) {
 				lblMsg.setText("ERROR: All fields are required");
