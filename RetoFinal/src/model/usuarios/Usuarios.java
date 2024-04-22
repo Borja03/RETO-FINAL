@@ -1,28 +1,36 @@
 package model.usuarios;
 
+import java.sql.Blob;
 
 public class Usuarios {
 
 	private static final long serialVersionUID = 1L;
 	protected String tipo;
 	protected String user;
-	protected String contrasena;
+	protected String contrasenia;
+	protected Blob picProfile;
 
 	public Usuarios() {
 		this.tipo = "";
 		this.user = "";
-		this.contrasena = "";
+		this.contrasenia = "";
 	}
 
-	public Usuarios(String nombre, String user, String contraseña) {
+
+
+
+	public Usuarios(String nombre, String user, String contrasenia) {
 		this.tipo = nombre;
 		this.user = user;
-		this.contrasena = contraseña;
+		this.contrasenia = contrasenia;
 	}
+	
 
-	public Usuarios(String user, String contraseña) {
+	public Usuarios(String user, String contrasenia,Blob picProfile) {
 		this.user = user;
-		this.contrasena = contraseña;
+		this.contrasenia = contrasenia;
+		this.picProfile = picProfile;
+
 	}
 
 	public String getTipo() {
@@ -41,13 +49,25 @@ public class Usuarios {
 		this.user = user;
 	}
 
-	public String getContraseña() {
-		return contrasena;
+	public String getContrasenia() {
+		return contrasenia;
 	}
 
-	public void setContraseña(String contraseña) {
-		this.contrasena = contraseña;
+	public void setContrasenia(String contrasenia) {
+		this.contrasenia = contrasenia;
 	}
+	
+
+	public Blob getPicProfile() {
+		return picProfile;
+	}
+
+
+	public void setPicProfile(Blob picProfile) {
+		this.picProfile = picProfile;
+	}
+
+
 
 	@Override
 	public String toString() {

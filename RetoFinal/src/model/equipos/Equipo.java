@@ -1,6 +1,7 @@
 package model.equipos;
 
 import java.io.Serializable;
+import java.sql.Blob;
 import java.util.ArrayList;
 
 import model.partido.Partido;
@@ -11,6 +12,7 @@ public class Equipo implements Serializable {
 	private String nombreEquipo;
 	private String estadio;
 	private int titulos;
+	private Blob logo;
 	private ArrayList<Partido> listaPartido;
 
 	public Equipo() {
@@ -25,7 +27,14 @@ public class Equipo implements Serializable {
 		this.estadio = estadio;
 		this.titulos = titulos;
 		this.listaPartido = new ArrayList<>();
-		;
+	}
+
+	public Equipo(String nombreEquipo, String estadio, int titulos,Blob logoLink) {
+		this.nombreEquipo = nombreEquipo;
+		this.estadio = estadio;
+		this.titulos = titulos;
+		this.logo = logoLink;
+		this.listaPartido = new ArrayList<>();
 	}
 
 	public String getNombreEquipo() {
@@ -58,6 +67,17 @@ public class Equipo implements Serializable {
 
 	public void setListaPartido(ArrayList<Partido> listaPartido) {
 		this.listaPartido = listaPartido;
+	}
+
+
+
+
+	public Blob getLogo() {
+		return logo;
+	}
+
+	public void setLogo(Blob logo) {
+		this.logo = logo;
 	}
 
 	public void getDatosEquipo() {

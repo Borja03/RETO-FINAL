@@ -11,6 +11,9 @@ import view.Login;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.IOException;
 import java.awt.Label;
 import java.awt.Font;
 import java.awt.Color;
@@ -20,7 +23,7 @@ public class Splash extends JFrame {
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
 	private static Controller controller;
-
+	public static boolean darkModeState;
 	public Splash(Controller cont) {
 		this.controller = cont;
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -49,7 +52,7 @@ public class Splash extends JFrame {
 		label.setBounds(413, 596, 250, 41);
 		contentPane.add(label);
 
-		Timer timer = new Timer(5000, new ActionListener() {
+		Timer timer = new Timer(1000, new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				Login login = new Login(controller);
@@ -59,5 +62,20 @@ public class Splash extends JFrame {
 		});
 		timer.setRepeats(false);
 		timer.start();
+        darkModeState = loadPreference();
+
 	}
+	
+	  private boolean loadPreference() {
+		  boolean darkModeEnabled=false;
+	        try (BufferedReader reader = new BufferedReader(new FileReader("../preferences.txt"))) {
+	            String line = reader.readLine();
+	            if (line != null) {
+	                 darkModeEnabled = Boolean.parseBoolean(line);
+	            }
+	        } catch (IOException ex) {
+	            ex.printStackTrace();
+	        }
+	        return darkModeEnabled;
+	    }
 }

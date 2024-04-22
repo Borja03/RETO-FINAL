@@ -2,6 +2,8 @@ package model.usuarios;
 
 import java.util.ArrayList;
 
+import com.mysql.cj.jdbc.Blob;
+
 import model.equipos.Equipo;
 
 public class Entrenador extends Usuarios {
@@ -10,8 +12,13 @@ public class Entrenador extends Usuarios {
 	private String nombreEquipo;
 	private CargoEntrenador cargo;
 
-	public Entrenador(String nombre, String user, String contraseña, String nombreEquipo, CargoEntrenador cargo) {
-		super(nombre, user, contraseña);
+	public Entrenador(String nombre, String user, String contrasenia, String nombreEquipo, CargoEntrenador cargo) {
+		super(nombre, user, contrasenia);
+		this.nombreEquipo = nombreEquipo;
+		this.cargo = cargo;
+	}
+	public Entrenador(String nombre, String user, String contrasenia, String nombreEquipo, CargoEntrenador cargo,Blob picProfile) {
+		super(user, contrasenia,picProfile);
 		this.nombreEquipo = nombreEquipo;
 		this.cargo = cargo;
 	}

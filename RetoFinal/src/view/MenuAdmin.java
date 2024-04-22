@@ -1,27 +1,33 @@
 package view;
 
 import java.awt.Color;
-import java.awt.Container;
-import java.awt.EventQueue;
-import javax.swing.JButton;
-import javax.swing.JFrame;
-import javax.swing.JPanel;
-import javax.swing.JTextPane;
-import javax.swing.SwingConstants;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import javax.swing.JFrame;
-import javax.swing.JPanel;
-import javax.swing.border.EmptyBorder;
-import controller.Controller;
-import javax.swing.JLabel;
 import java.awt.Font;
+import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
+import java.io.File;
+import java.io.IOException;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.HashMap;
+
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
-import javax.swing.JTextPane;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.SwingConstants;
+import javax.swing.border.EmptyBorder;
+
+import controller.Controller;
+import model.equipos.Equipo;
+import view.CrearEquipo;
+
+import javax.swing.JComboBox;
+import javax.swing.JFileChooser;
 
 public class MenuAdmin extends JFrame implements ActionListener {
 
@@ -29,21 +35,26 @@ public class MenuAdmin extends JFrame implements ActionListener {
 	private JPanel contentPane;
 	private JButton btnLogOut;
 	private JButton btnAddEq;
-	private JButton btnAddJugado;
-	private JButton crearEquipo;
-	private JButton gestionarEntre;
-	private JButton cambiarContra;
-	private JButton crearPartido;
-	private JButton cerrarSesion;
 	private JLabel lblWelcome;
 	private Controller controller;
-	private String userName;
-	private String myTeam;
+	private JButton btnGestionarEntrenador;
+	private JButton btnCrearPartido;
+	private JButton btnModificarPartido;
+	private JPanel panelRight;
+	private JPanel panelRight2;
 
-	public MenuAdmin(Controller cont, String user, String team) {
+	private JButton btnCrearEquipo;
+	private JButton btnBorrarEquipo;
+	private JButton btnModificarEquipo;
+
+	private JButton btnCrearEntrenador;
+	private JButton btnBorrarEntrenador;
+	private JButton btnModificarEntrenador;
+	private JLabel lblImg;
+
+	public MenuAdmin(Controller cont) {
 		this.controller = cont;
-		this.userName = user;
-		this.myTeam = team;
+
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 1008, 717);
 		contentPane = new JPanel();
@@ -60,59 +71,10 @@ public class MenuAdmin extends JFrame implements ActionListener {
 
 		btnLogOut = new JButton("Log Out");
 		btnLogOut.setHorizontalAlignment(SwingConstants.LEFT);
-		btnLogOut.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseEntered(MouseEvent e) {
-				btnLogOut.setBackground(new Color(90, 70, 50));
-			}
-
-			@Override
-			public void mouseExited(MouseEvent e) {
-				btnLogOut.setBackground(new Color(128, 128, 0));
-			}
-
-			@Override
-			public void mousePressed(MouseEvent e) {
-				btnLogOut.setBackground(new Color(50, 70, 90));
-			}
-		});
-
-		crearEquipo = new JButton("Crear equipo");
-		crearEquipo.setBounds(391, 124, 163, 45);
-		contentPane.add(crearEquipo);
-
-		gestionarEntre = new JButton("Gestionar entrenador");
-		gestionarEntre.setBounds(564, 124, 163, 45);
-		contentPane.add(gestionarEntre);
-
-		cambiarContra = new JButton("Cambiar contraseña");
-		cambiarContra.setBounds(391, 179, 163, 45);
-		contentPane.add(cambiarContra);
-
-		crearPartido = new JButton("Crear partido");
-		crearPartido.setBounds(564, 179, 163, 45);
-		contentPane.add(crearPartido);
-
-		JTextPane titulo = new JTextPane();
-		titulo.setBounds(509, 80, 114, 19);
-		titulo.setText("DISPLAY ADMIN");
-		titulo.setEditable(false);
-		contentPane.add(titulo);
-
-		cerrarSesion = new JButton("Cerrar sesión");
-		cerrarSesion.setBounds(661, 257, 140, 21);
-		contentPane.add(cerrarSesion);
-
-		crearEquipo.addActionListener(this);
-		gestionarEntre.addActionListener(this);
-		cambiarContra.addActionListener(this);
-		crearPartido.addActionListener(this);
-		cerrarSesion.addActionListener(this);
 		btnLogOut.setBackground(new Color(128, 128, 0));
-		btnLogOut.setBounds(57, 536, 200, 49);
+		btnLogOut.setBounds(57, 550, 200, 49);
 		btnLogOut.setFocusable(false);
 		btnLogOut.setBorder(null);
-
 		panelLeft.add(btnLogOut);
 		btnLogOut.addActionListener(this);
 		btnLogOut.setFont(new Font("Tahoma", Font.BOLD, 14));
@@ -124,7 +86,7 @@ public class MenuAdmin extends JFrame implements ActionListener {
 		btnAddEq.setFocusable(false);
 		btnAddEq.setBorder(null);
 		btnAddEq.setBackground(new Color(128, 128, 0));
-		btnAddEq.setBounds(57, 466, 200, 49);
+		btnAddEq.setBounds(57, 370, 200, 49);
 		panelLeft.add(btnAddEq);
 
 		lblWelcome = new JLabel("Welcome Admin");
@@ -133,41 +95,135 @@ public class MenuAdmin extends JFrame implements ActionListener {
 		lblWelcome.setBounds(64, 180, 217, 34);
 		panelLeft.add(lblWelcome);
 
+		btnGestionarEntrenador = new JButton("Gestionar entrenador");
+		btnGestionarEntrenador.setHorizontalAlignment(SwingConstants.LEFT);
+		btnGestionarEntrenador.setFont(new Font("Tahoma", Font.BOLD, 14));
+		btnGestionarEntrenador.setFocusable(false);
+		btnGestionarEntrenador.setBorder(null);
+		btnGestionarEntrenador.setBackground(new Color(128, 128, 0));
+		btnGestionarEntrenador.setBounds(57, 250, 200, 49);
+		panelLeft.add(btnGestionarEntrenador);
+
+		btnCrearPartido = new JButton("Crear partido");
+		btnCrearPartido.setHorizontalAlignment(SwingConstants.LEFT);
+		btnCrearPartido.setFont(new Font("Tahoma", Font.BOLD, 14));
+		btnCrearPartido.setFocusable(false);
+		btnCrearPartido.setBorder(null);
+		btnCrearPartido.setBackground(new Color(128, 128, 0));
+		btnCrearPartido.setBounds(57, 310, 200, 49);
+		panelLeft.add(btnCrearPartido);
+
+		btnModificarPartido = new JButton("Modificar partido");
+		btnModificarPartido.setHorizontalAlignment(SwingConstants.LEFT);
+		btnModificarPartido.setFont(new Font("Tahoma", Font.BOLD, 14));
+		btnModificarPartido.setFocusable(false);
+		btnModificarPartido.setBorder(null);
+		btnModificarPartido.setBackground(new Color(128, 128, 0));
+		btnModificarPartido.setBounds(57, 430, 200, 49);
+		panelLeft.add(btnModificarPartido);
+
+		lblImg = new JLabel();
+		lblImg.setBounds(64, 26, 153, 144);
+		panelLeft.add(lblImg);
+		btnModificarPartido.addActionListener(this);
+
+		panelRight = new JPanel();
+		panelRight.setBounds(329, 0, 659, 680);
+		panelRight.setBackground(Color.WHITE);
+		contentPane.add(panelRight);
+		panelRight.setLayout(new GridLayout(0, 1, 0, 10));
+
+		panelRight2 = new JPanel();
+		panelRight2.setBounds(329, 0, 659, 680);
+		panelRight2.setBackground(Color.WHITE);
+		contentPane.add(panelRight2);
+		panelRight2.setLayout(new GridLayout(0, 1, 0, 10));
+
+		btnCrearEquipo = new JButton("Crear equipo");
+		btnBorrarEquipo = new JButton("Borrar equipo");
+		btnModificarEquipo = new JButton("Modificar equipo");
+
+		btnCrearEntrenador = new JButton("Crear entrenador");
+		btnBorrarEntrenador = new JButton("Borrar entrenador");
+		btnModificarEntrenador = new JButton("Modificar entrenador");
+
+		ocultarBotonesEquipos();
+		ocultarBotonesEntrenadores();
+
+		panelRight.add(btnCrearEntrenador);
+		panelRight.add(btnBorrarEntrenador);
+		panelRight.add(btnModificarEntrenador);
+		panelRight2.add(btnCrearEquipo);
+		panelRight2.add(btnBorrarEquipo);
+		panelRight2.add(btnModificarEquipo);
+
+		btnCrearEquipo.addActionListener(this);
+		btnBorrarEquipo.addActionListener(this);
+		btnModificarEquipo.addActionListener(this);
+		btnCrearPartido.addActionListener(this);
+
+		btnCrearEntrenador.addActionListener(this);
+		btnBorrarEntrenador.addActionListener(this);
+		btnModificarEntrenador.addActionListener(this);
 	}
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		Object o = e.getSource();
-		if (o == crearEquipo) {
-			CrearEquipo frame = new CrearEquipo(controller, userName, myTeam);
-			frame.setVisible(true);
-			dispose();
-		} else if (o == gestionarEntre) {
-			GestionarEntre frame = new GestionarEntre(controller);
-			frame.setVisible(true);
-			dispose();
-		} else if (o == cambiarContra) {
-			CambiarContra frame = new CambiarContra(controller);
-			frame.setVisible(true);
-			dispose();
-		} else if (o == crearPartido) {
+
+		if (o == btnAddEq) {
+			mostrarBotonesEquipos();
+			ocultarBotonesEntrenadores();
+		} else if (o == btnGestionarEntrenador) {
+			mostrarBotonesEntrenadores();
+			ocultarBotonesEquipos();
+		} else if (o == btnCrearEntrenador) {
+			this.dispose();
+			AnadirEntrenador av = new AnadirEntrenador(controller);
+			av.setVisible(true);
+		} else if (o == btnBorrarEntrenador) {
+			this.dispose();
+			EliminarEntrenador av = new EliminarEntrenador(controller);
+			av.setVisible(true);
+		} else if (o == btnModificarEntrenador) {
+			this.dispose();
+			ModificarEntrenador av = new ModificarEntrenador(controller);
+			av.setVisible(true);
+		} else if (o == btnCrearPartido) {
 			CrearPartido frame = new CrearPartido(controller);
 			frame.setVisible(true);
-			dispose();
-		} else if (o == cerrarSesion) {
+			this.dispose();
+		} else if (o == btnModificarPartido) {
+			ModificarPartido frame = new ModificarPartido(controller);
+			frame.setVisible(true);
+			this.dispose();
+		} else if (o == btnLogOut) {
 			Login frame = new Login(controller);
 			frame.setVisible(true);
-			dispose();
-		}
-
-		if (o == btnLogOut) {
-			// controller.closeConnection();
-			// Login login = new Login(controller);
-			// login.setVisible(true);
-			// this.setVisible(false);
 			this.dispose();
-			controller.logOut();
-
+		} else if (o == btnCrearEquipo) {
+			CrearEquipo frame = new CrearEquipo(controller);
+			frame.setVisible(true);
+			this.dispose();
 		}
 	}
+
+	public void mostrarBotonesEquipos() {
+		panelRight2.setVisible(true);
+		panelRight.setVisible(false);
+	}
+
+	public void ocultarBotonesEquipos() {
+		panelRight2.setVisible(false);
+	}
+
+	public void mostrarBotonesEntrenadores() {
+		panelRight.setVisible(true);
+		panelRight2.setVisible(false);
+	}
+
+	public void ocultarBotonesEntrenadores() {
+		panelRight.setVisible(false);
+	}
+
 }
