@@ -2,6 +2,7 @@
 package view;
 
 import java.awt.Color;
+
 import java.awt.EventQueue;
 import java.awt.Font;
 import java.awt.GridLayout;
@@ -59,11 +60,13 @@ public class SearchJugadore extends JFrame implements ActionListener {
 	private JPanel bottomPanelMsg;
 	private JLabel lblJugador;
 	private JLabel lblNoExiste;
+	private String userType;
 
-	public SearchJugadore(Controller controller, String user, String team) {
+	public SearchJugadore(Controller controller, String user, String team,String userType) {
 		this.controller = controller;
 		this.userName = user;
 		this.miEquipo = team;
+		this.userType=userType;
 
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 1008, 717);
@@ -392,11 +395,11 @@ public class SearchJugadore extends JFrame implements ActionListener {
 	public void actionPerformed(ActionEvent e) {
 
 		if (e.getSource() == btnConsultarEquipo) {
-			MenuEntrenador menuEntrenador = new MenuEntrenador(controller, userName);
+			MenuEntrenador menuEntrenador = new MenuEntrenador(controller, userName,userType);
 			this.dispose();
 			menuEntrenador.setVisible(true);
 		} else if (e.getSource() == btnConsultarPartidos) {
-			ConsultarPartidos consultarPartidos = new ConsultarPartidos(controller, userName);
+			ConsultarPartidos consultarPartidos = new ConsultarPartidos(controller, userName,userType);
 			this.dispose();
 			consultarPartidos.setVisible(true);
 		} else if (e.getSource() == btnCambiarDorsal) {
@@ -425,6 +428,8 @@ public class SearchJugadore extends JFrame implements ActionListener {
 			// EliminarJugadores e1 = new EliminarJugadores(controller, userName);
 			// e1.setVisible(true);
 			// this.dispose();
+		} 
+
 		} else if (e.getSource() == btnModificar) {
 			SearchJugadore m1 = new SearchJugadore(controller, userName, miEquipo);
 			m1.setVisible(true);
@@ -448,13 +453,13 @@ public class SearchJugadore extends JFrame implements ActionListener {
 //						textFieldContrasena.setText("");
 //						textFieldGoles.setText("");
 //						textFieldAsist.setText("");
-				GestionarJugadores gestionarJugadores = new GestionarJugadores(controller, user, miEquipo);
+				GestionarJugadores gestionarJugadores = new GestionarJugadores(controller, user,userType, miEquipo);
 				this.dispose();
 				gestionarJugadores.setVisible(true);
 
 				if (opcion == JOptionPane.NO_OPTION) {
 					this.dispose();
-					GestionarJugadores g1 = new GestionarJugadores(controller, user, myTeam);
+					GestionarJugadores g1 = new GestionarJugadores(controller, user,userType, myTeam);
 					g1.setVisible(true);
 				}
 			}
