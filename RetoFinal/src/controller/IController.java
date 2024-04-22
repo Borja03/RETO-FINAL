@@ -34,8 +34,6 @@ public interface IController {
 
 	public boolean modificarJugador(String user, String password, int dorsal, int numGoles, int numAsist);
 
-	public void modificarPartido();
-
 	public void consultarEquipo();
 
 	public void modificarDorsal();
@@ -44,7 +42,7 @@ public interface IController {
 
 	public ArrayList<String> getEquipos();
 
-	public String getMyTeam(String entName);
+	public String getMyTeam(String userName,String userType);
 
 	public Usuarios getUsuario(String user);
 
@@ -59,6 +57,10 @@ public interface IController {
 	boolean cambiarPassword(String user, String newPassword, String userType);
 	public boolean borrarEquipo(String nombreEquipo);
 	public boolean modificarEquipo(String nombreEquipo, int titulos, String nombreEstadio, Blob logo);
+	public String getUsuarioPassword(String userName,String userType);
+	public boolean updateUsrIcon(String user, Blob userIcon,String userType); 
 
+
+	boolean modificarPartido(String nombrePartido, String nuevoResultado);
 
 }

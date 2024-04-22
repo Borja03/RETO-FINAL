@@ -60,9 +60,12 @@ public class ModificarEquipos extends JFrame implements ActionListener {
 	private JPanel panelSearch;
 	private JLabel lblNombreEquipo_1;
 	private JComboBox<String> cBoxEquipos;
+	private String userType;
 
-	public ModificarEquipos(Controller controller) {
+	public ModificarEquipos(Controller controller,String user,String userType) {
 		this.controller = controller;
+		this.userName = user;
+		this.userType=userType;
 
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 1008, 717);
@@ -368,11 +371,11 @@ public class ModificarEquipos extends JFrame implements ActionListener {
 
 		// left menu buttons
 		if (e.getSource() == btnConsultarEquipo) {
-			MenuEntrenador menuEntrenador = new MenuEntrenador(controller, userName);
+			MenuEntrenador menuEntrenador = new MenuEntrenador(controller, userName,userType);
 			this.dispose();
 			// menuEntrenador.setVisible(true);
 		} else if (e.getSource() == btnConsultarPartidos) {
-			ConsultarPartidos consultarPartidos = new ConsultarPartidos(controller, userName);
+			ConsultarPartidos consultarPartidos = new ConsultarPartidos(controller, userName,userType);
 			this.dispose();
 			// consultarPartidos.setVisible(true);
 		} else if (e.getSource() == btnCambiarDorsal) {
@@ -393,13 +396,14 @@ public class ModificarEquipos extends JFrame implements ActionListener {
 		if(o==btnBorrarEquipo) {
 			if(controller.borrarEquipo(nombreEquipoField.getText())) {
 				this.dispose();
-				ModificarEquipos modificarEquipos = new ModificarEquipos(controller);
+				ModificarEquipos modificarEquipos = new ModificarEquipos(controller,userName,userType);
 				modificarEquipos.setVisible(true);
 			}
 		}
 
 		// top paenel buttons
 		if (o == btnAddEquipo) {
+
 			CrearEquipo crearEquipo = new CrearEquipo(controller, userName);
 			this.dispose();
 
@@ -443,6 +447,7 @@ public class ModificarEquipos extends JFrame implements ActionListener {
 						JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE, null);
 				if (opcion == JOptionPane.NO_OPTION) {
 					this.dispose();
+
 					MenuAdmin ma = new MenuAdmin(controller, userName);
 					ma.setVisible(true);
 				}
