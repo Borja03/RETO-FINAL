@@ -31,7 +31,7 @@ public class Controller implements IController {
 
 	final String INNSERTentrenador = "INSERT INTO entrenador (user,password,tipoEntrenador,nombreEquipo) VALUES (?,?,?,?)";
 	final String DELETEentrenador = "DELETE FROM entrenador WHERE user =?";
-	
+
 	final String INSERTjugador = "INSERT INTO jugador (user,password,dorsal,numeroGoles,numeroAsistencias,nombreEquipo) VALUES (?,?,?,?,?,?)";
 	final String GETjugador = "SELECT * FROM jugador WHERE user = ?";
 	final String GETentrenador = "SELECT * FROM entrenador WHERE user = ?";
@@ -44,6 +44,7 @@ public class Controller implements IController {
 	final String nombreEquipo = "Select nombreEquipo FROM laliga WHERE user=?";
 	final String ALLequipos = "SELECT nombreEquipo FROM  equipo";
 	final String ENTRENADORequipo = "SELECT nombreEquipo FROM  entrenador where user=?";
+	final String JUGADORDORequipo = "SELECT nombreEquipo FROM  jugador where user=?";
 	final String NOMBREequipo = "SELECT * FROM  equipo where nombreEquipo=?";
 	final String Partidos = "SELECT nombreEquipoLocal, nombreEquipoVisitante, fechaInicio FROM juegan";
 	final String ENTRENADORnombre = "SELECT user FROM  entrenador where nombreEquipo=? and tipoEntrenador=?";
@@ -52,6 +53,9 @@ public class Controller implements IController {
 	final String INSERTequipo = "INSERT INTO equipo (nombreEquipo, titulos, nombreEstadio ,logo) VALUES (?, ?, ?, ?)";
 	final String DELETEequipo = "DELETE FROM equipo WHERE nombreEquipo =?";
 	final String MODIFICARequipo = "UPDATE equipo SET titulos=?, nombreEstadio=? , logo=? WHERE nombreEquipo=?";
+	final String GETJugadorPassword = "SELECT password FROM  jugador where user=?";
+	final String GETEntrenadorPassword = "SELECT password FROM  entrenador where user=?";
+	final String MODIFICARuserIcon = "UPDATE jugador SET icon=?  WHERE user = ?";
 
 	public boolean checkUserExist(String user) {
 		boolean exist = false;
@@ -480,14 +484,14 @@ public class Controller implements IController {
 	public boolean cambiarPassword(String user, String newPassword, String userType) {
 		boolean changed = false;
 		String query = "";
-		if ("Entrenador".equals(userType)) {
+		if ("entrenador".equals(userType)) {
 			query = "UPDATE entrenador SET password = ? WHERE user = ?";
-		} else if ("Jugador".equals(userType)) {
+		} else if ("jugador".equals(userType)) {
 			query = "UPDATE jugador SET password = ? WHERE user = ?";
 		}
+		openConnection(userType, userType);
 
 		try {
-			openConnection(user, password);
 			statement = connection.prepareStatement(query);
 			statement.setString(1, newPassword);
 			statement.setString(2, user);
@@ -527,12 +531,19 @@ public class Controller implements IController {
 		return misEquipos;
 	}
 
-	public String getMyTeam(String entName) {
+	public String getMyTeam(String userName, String userType) {
 		String myTeam = null;
-		this.openConnection("entrenador", "entrenador");
+		String query = "";
+
+		if ("entrenador".equals(userType)) {
+			query = ENTRENADORequipo;
+		} else if ("jugador".equals(userType)) {
+			query = JUGADORDORequipo;
+		}
+		this.openConnection(userType, userType);
 		try {
-			statement = connection.prepareStatement(ENTRENADORequipo);
-			statement.setString(1, entName);
+			statement = connection.prepareStatement(query);
+			statement.setString(1, userName);
 
 			resultSet = statement.executeQuery();
 			while (resultSet.next()) {
@@ -564,7 +575,7 @@ public class Controller implements IController {
 				int numGoles = resultSet.getInt("numeroGoles");
 				int numAsistencias = resultSet.getInt("numeroAsistencias");
 				Blob icon = resultSet.getBlob("icon");
-				usuario = new Jugador(userN, password, nombreEquipo, dorsal, numGoles, numAsistencias,icon);
+				usuario = new Jugador(userN, password, nombreEquipo, dorsal, numGoles, numAsistencias, icon);
 
 			}
 
@@ -745,9 +756,9 @@ public class Controller implements IController {
 				int dorsal = resultSet.getInt("dorsal");
 				int goles = resultSet.getInt("numeroGoles");
 				int asistencias = resultSet.getInt("numeroAsistencias");
-				Blob picProfile= resultSet.getBlob("icon");
-			
-				Jugador jug = new Jugador(user, password, nbEquipo, dorsal, goles, asistencias,picProfile);
+				Blob picProfile = resultSet.getBlob("icon");
+
+				Jugador jug = new Jugador(user, password, nbEquipo, dorsal, goles, asistencias, picProfile);
 				jugadoresEq.add(jug);
 			}
 
@@ -868,4 +879,59 @@ public class Controller implements IController {
 
 	}
 
+	@Override
+	public String getUsuarioPassword(String userName, String userType) {
+
+		String pass = "";
+		String query = "";
+		if ("entrenador".equals(userType)) {
+			query = GETEntrenadorPassword;
+		} else if ("jugador".equals(userType)) {
+			query = GETJugadorPassword;
+		}
+
+		openConnection(userType, userType);
+
+		try {
+			statement = connection.prepareStatement(query);
+			statement.setString(1, userName);
+
+			resultSet = statement.executeQuery();
+			while (resultSet.next()) {
+				pass = resultSet.getString("password");
+			}
+		} catch (SQLException e) {
+			System.out.println("Error de SQL");
+			e.printStackTrace();
+		} finally {
+			closeConnection();
+		}
+		return pass;
+	}
+
+	@Override
+	public boolean updateUsrIcon(String user, Blob userIcon, String userType) {
+
+		boolean modified = false;
+		this.openConnection(userType, userType);
+		try {
+			statement = connection.prepareStatement(MODIFICARuserIcon);
+			statement.setBlob(1, userIcon);
+			statement.setString(2, user);
+
+			if (statement.executeUpdate() > 0) {
+				modified = true;
+				System.out.println("Data inserted!");
+			} else {
+				System.out.println("Failed!");
+			}
+
+		} catch (SQLException e) {
+			System.out.println("Error de SQL");
+			e.printStackTrace();
+		} finally {
+			this.closeConnection();
+		}
+		return modified;
+	}
 }

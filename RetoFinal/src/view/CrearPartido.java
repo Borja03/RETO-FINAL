@@ -47,10 +47,14 @@ class CrearPartido extends JFrame implements ActionListener {
 	private ArrayList<String> equiposDisponibles = new ArrayList<>();
 	private JButton okButton;
 	private JButton btnModificarPartido; // Botón Modificar partido
+	private String user;
+	private String userType;
 
-	public CrearPartido(Controller cont) {
+	public CrearPartido(Controller cont, String usr,String userType) {
 		this.controller = cont;
-
+		this.user = usr;
+		this.userType=userType;
+		
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 1008, 717);
 		contentPane = new JPanel();
@@ -205,9 +209,9 @@ class CrearPartido extends JFrame implements ActionListener {
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		Object o = e.getSource();
-		MenuAdmin menuAdmin = new MenuAdmin(controller);
+		MenuAdmin menuAdmin = new MenuAdmin(controller, user,userType);
 		if (o == btnCrearPartido) {
-			CrearPartido frame = new CrearPartido(controller);
+			CrearPartido frame = new CrearPartido(controller, user,userType);
 			frame.setVisible(true);
 			// dispose();
 		} else if (o == okButton) {
@@ -259,7 +263,7 @@ class CrearPartido extends JFrame implements ActionListener {
 			menuAdmin.setVisible(true);
 			this.dispose();
 		} else if (o == btnModificarPartido) { // Acción para el botón Modificar partido
-			ModificarPartido frame = new ModificarPartido(controller);
+			ModificarPartido frame = new ModificarPartido(controller, user,userType);
 			frame.setVisible(true);
 			this.dispose();
 		} else if (o == btnLogOut) {
