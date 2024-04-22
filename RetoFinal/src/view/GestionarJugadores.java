@@ -309,11 +309,11 @@ public class GestionarJugadores extends JFrame implements ActionListener {
 			MenuEntrenador menuEntrenador = new MenuEntrenador(controller, userName,userType);
 
 		} else if (e.getSource() == btnModificar) {
-			SearchJugadore m1 = new SearchJugadore(controller, userName, miEquipo);
+			SearchJugadore m1 = new SearchJugadore(controller, userName, miEquipo, userType);
 			m1.setVisible(true);
 			this.dispose();
 		} else if (e.getSource() == btnConsultarEquipo) {
-			MenuEntrenador menuEntrenador = new MenuEntrenador(controller, userName);
+			MenuEntrenador menuEntrenador = new MenuEntrenador(controller, userName, userType);
 
 			this.dispose();
 			menuEntrenador.setVisible(true);

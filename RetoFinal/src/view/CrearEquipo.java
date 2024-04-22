@@ -307,7 +307,7 @@ public class CrearEquipo extends JFrame implements ActionListener {
 		if (e.getSource() == btnConsultarEquipo) {
 			MenuEntrenador menuEntrenador = new MenuEntrenador(controller, userName,userType);
 			this.dispose();
-			// menuEntrenador.setVisible(true);
+			menuEntrenador.setVisible(true);
 		} else if (e.getSource() == btnConsultarPartidos) {
 			ConsultarPartidos consultarPartidos = new ConsultarPartidos(controller, userName,userType);
 			this.dispose();

@@ -404,7 +404,7 @@ public class ModificarEquipos extends JFrame implements ActionListener {
 		// top paenel buttons
 		if (o == btnAddEquipo) {
 
-			CrearEquipo crearEquipo = new CrearEquipo(controller, userName);
+			CrearEquipo crearEquipo = new CrearEquipo(controller, userName, userType);
 			this.dispose();
 
 			crearEquipo.setVisible(true);
@@ -448,7 +448,7 @@ public class ModificarEquipos extends JFrame implements ActionListener {
 				if (opcion == JOptionPane.NO_OPTION) {
 					this.dispose();
 
-					MenuAdmin ma = new MenuAdmin(controller, userName);
+					MenuAdmin ma = new MenuAdmin(controller, userName, userType);
 					ma.setVisible(true);
 				}
 
