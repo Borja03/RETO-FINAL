@@ -56,10 +56,8 @@ public class SearchEntrenador extends JFrame implements ActionListener {
 	private JButton btnModificarEntrenador;
 	private String userType;
 
-	public SearchEntrenador(Controller controller, String usr, String userType) {
+	public SearchEntrenador(Controller controller) {
 		this.controller = controller;
-		this.user = usr;
-		this.userType = userType;
 
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 1008, 717);

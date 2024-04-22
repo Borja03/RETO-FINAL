@@ -384,7 +384,10 @@ public class MenuJugador extends JFrame implements ActionListener {
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		Object o = e.getSource();
-		if (o == btnLogOut) {
+
+		if (o == btnLogOut) {;
+			this.dispose();
+
 			controller.logOut();
 			this.dispose();
 		} else if (o == btnCambiarDorsal) {

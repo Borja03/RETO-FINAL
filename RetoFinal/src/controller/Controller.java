@@ -56,6 +56,7 @@ public class Controller implements IController {
 	final String GETJugadorPassword = "SELECT password FROM  jugador where user=?";
 	final String GETEntrenadorPassword = "SELECT password FROM  entrenador where user=?";
 	final String MODIFICARuserIcon = "UPDATE jugador SET icon=?  WHERE user = ?";
+	final String NOMBREquipoE = "Select nombreEquipo FROM entrenador WHERE user = ?";
 
 	public boolean checkUserExist(String user) {
 		boolean exist = false;
@@ -380,32 +381,33 @@ public class Controller implements IController {
 		}
 		return partidosProgramados;
 	}
-	 @Override
-	    public boolean modificarPartido(String nombrePartido, String nuevoResultado) {
-	        boolean updated = false;
-	        try {
-	            openConnection("admin", "admin");
 
-	            String updatePartidoQuery = "UPDATE juegan SET resultado = ? WHERE nombreEquipoLocal = ? OR nombreEquipoVisitante = ?";
-	            PreparedStatement updatePartidoStatement = connection.prepareStatement(updatePartidoQuery);
-	            updatePartidoStatement.setString(1, nuevoResultado);
-	            updatePartidoStatement.setString(2, nombrePartido);
-	            updatePartidoStatement.setString(3, nombrePartido);
+	@Override
+	public boolean modificarPartido(String nombrePartido, String nuevoResultado) {
+		boolean updated = false;
+		try {
+			openConnection("admin", "admin");
 
-	            if (updatePartidoStatement.executeUpdate() > 0) {
-	                updated = true;
-	                System.out.println("Partido actualizado!");
-	            } else {
-	                System.out.println("Fallo al actualizar el partido en la tabla juegan.");
-	            }
-	        } catch (SQLException e) {
-	            System.out.println("Error de SQL");
-	            e.printStackTrace();
-	        } finally {
-	            closeConnection();
-	        }
-	        return updated;
-	    }
+			String updatePartidoQuery = "UPDATE juegan SET resultado = ? WHERE nombreEquipoLocal = ? OR nombreEquipoVisitante = ?";
+			PreparedStatement updatePartidoStatement = connection.prepareStatement(updatePartidoQuery);
+			updatePartidoStatement.setString(1, nuevoResultado);
+			updatePartidoStatement.setString(2, nombrePartido);
+			updatePartidoStatement.setString(3, nombrePartido);
+
+			if (updatePartidoStatement.executeUpdate() > 0) {
+				updated = true;
+				System.out.println("Partido actualizado!");
+			} else {
+				System.out.println("Fallo al actualizar el partido en la tabla juegan.");
+			}
+		} catch (SQLException e) {
+			System.out.println("Error de SQL");
+			e.printStackTrace();
+		} finally {
+			closeConnection();
+		}
+		return updated;
+	}
 
 	@Override
 	public void consultarEquipo() {

@@ -50,10 +50,8 @@ public class GestionarEntre extends JFrame implements ActionListener {
 	private JComboBox<String> textFieldEquipo;
 	private String userType;
 
-	public GestionarEntre(Controller controller, String usr,String userType) {
-		this.controller = controller;
-		this.user = usr;
-		this.userType=userType;
+	public GestionarEntre(Controller controller) {
+	this.controller = controller;
 
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 1008, 717);
@@ -230,7 +228,7 @@ public class GestionarEntre extends JFrame implements ActionListener {
 		textFieldContrasena.setColumns(10);
 
 		textFieldCargo = new JComboBox<String>();
-		textFieldCargo.setBounds(515, 332, 250, 34);
+		textFieldCargo.setBounds(250, 187, 225, 22);
 		textFieldCargo.addItem("");
 		textFieldCargo.addItem("Primer_entrenador");
 		textFieldCargo.addItem("Segundo_entrenador");
@@ -290,16 +288,19 @@ public class GestionarEntre extends JFrame implements ActionListener {
 			} else if (tipoString.equals("Segundo_entrenador")) {
 				tipo = CargoEntrenador.SEGUNDO_ENTRENADOR;
 			}
+			if (controller.crearEntrenador(user, password, myTeam, tipo)) {
+				int opcion = JOptionPane.showConfirmDialog(this, (String) "",
+						"El entrenador ha sido introducido correctamente\n¿Desea añadir otro jugador?",
+						JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE, null);
 
-			controller.crearEntrenador(myTeam, usr, password, tipo);
-			int opcion = JOptionPane.showConfirmDialog(this, (String) "",
-					"El entrenador ha sido introducido correctamente\n¿Desea añadir otro entrenador?",
-					JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE, null);
-
-			if (opcion == JOptionPane.NO_OPTION) {
-				this.dispose();
-				MenuAdmin g1 = new MenuAdmin(controller,user,userType);
-				g1.setVisible(true);
+				if (opcion == JOptionPane.NO_OPTION) {
+					this.dispose();
+					MenuAdmin g1 = new MenuAdmin(controller);
+					g1.setVisible(true);
+				}else {
+					GestionarEntre gestionarEntre = new GestionarEntre(controller);
+					this.dispose();
+				}
 			}
 		}
 	}
