@@ -13,7 +13,6 @@ import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
 
 import controller.Controller;
-import view.toDelete.ModificarJugadores;
 
 import javax.swing.JButton;
 import javax.swing.JComboBox;
@@ -303,7 +302,7 @@ public class GestionarJugadores extends JFrame implements ActionListener {
 			this.dispose();
 			eliminarJugadores.setVisible(true);
 		} else if (e.getSource() == btnModificar) {
-			ModificarJugadores m1 = new ModificarJugadores(controller);
+			SearchJugadore m1 = new SearchJugadore(controller, userName, miEquipo);
 			m1.setVisible(true);
 			this.dispose();
 		} else if (e.getSource() == btnConsultarEquipo) {

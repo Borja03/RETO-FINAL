@@ -18,7 +18,6 @@ import controller.Controller;
 import model.usuarios.CargoEntrenador;
 import model.usuarios.Entrenador;
 import model.usuarios.Jugador;
-import view.toDelete.ModificarJugadores;
 
 import javax.swing.JButton;
 import javax.swing.JComboBox;

@@ -15,7 +15,6 @@ import javax.swing.border.EmptyBorder;
 import controller.Controller;
 import model.equipos.Equipo;
 import model.usuarios.CargoEntrenador;
-import view.toDelete.ModificarJugadores;
 
 import javax.swing.JButton;
 import javax.swing.JComboBox;
