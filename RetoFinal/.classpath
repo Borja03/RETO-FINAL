@@ -6,6 +6,7 @@
 			<attribute name="module" value="true"/>
 		</attributes>
 	</classpathentry>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
 	<classpathentry kind="lib" path="src/libraries/jcalendar-1.4.jar"/>
 	<classpathentry kind="lib" path="src/libraries/mysql-connector-java-8.0.15.jar"/>
 	<classpathentry kind="lib" path="src/libraries/flatlaf-3.4.jar"/>
