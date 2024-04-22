@@ -16,7 +16,6 @@ import javax.swing.border.EmptyBorder;
 
 import controller.Controller;
 import model.usuarios.Jugador;
-import view.toDelete.ModificarJugadores;
 
 import javax.swing.JButton;
 import javax.swing.JComboBox;
@@ -429,9 +428,9 @@ public class SearchJugadore extends JFrame implements ActionListener {
 			// e1.setVisible(true);
 			// this.dispose();
 		} else if (e.getSource() == btnModificar) {
-			ModificarJugadores m1 = new ModificarJugadores(controller);
-			m1.setVisible(true);
-			this.dispose();
+		//	ModificarJugadores m1 = new ModificarJugadores(controller);
+			//m1.setVisible(true);
+			//this.dispose();
 		}
 
 		if (e.getSource() == btnElimimarJugador) {
