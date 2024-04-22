@@ -47,10 +47,14 @@ class CrearPartido extends JFrame implements ActionListener {
 	private ArrayList<String> equiposDisponibles = new ArrayList<>();
 	private JButton okButton;
 	private JButton btnModificarPartido; // Botón Modificar partido
+	private String user;
+	private String userType;
 
-	public CrearPartido(Controller cont) {
+	public CrearPartido(Controller cont, String usr,String userType) {
 		this.controller = cont;
-
+		this.user = usr;
+		this.userType=userType;
+		
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 1008, 717);
 		contentPane = new JPanel();
@@ -61,13 +65,13 @@ class CrearPartido extends JFrame implements ActionListener {
 
 		JPanel panelLeft = new JPanel();
 		panelLeft.setBounds(0, 0, 329, 680);
-		panelLeft.setBackground(new Color(128, 128, 0));
+		panelLeft.setBackground(new Color(242, 45, 45));
 		getContentPane().add(panelLeft);
 		panelLeft.setLayout(null);
 
 		btnLogOut = new JButton("Log Out");
 		btnLogOut.setHorizontalAlignment(SwingConstants.LEFT);
-		btnLogOut.setBackground(new Color(128, 128, 0));
+		btnLogOut.setBackground(new Color(242, 45, 45));
 		btnLogOut.setBounds(57, 550, 200, 49);
 		btnLogOut.setFocusable(false);
 		btnLogOut.setBorder(null);
@@ -81,7 +85,7 @@ class CrearPartido extends JFrame implements ActionListener {
 		btnAddEq.setFont(new Font("Tahoma", Font.BOLD, 14));
 		btnAddEq.setFocusable(false);
 		btnAddEq.setBorder(null);
-		btnAddEq.setBackground(new Color(128, 128, 0));
+		btnAddEq.setBackground(new Color(242, 45, 45));
 		btnAddEq.setBounds(57, 370, 200, 49);
 		panelLeft.add(btnAddEq);
 
@@ -96,17 +100,18 @@ class CrearPartido extends JFrame implements ActionListener {
 		btnGestionarEntrenador.setFont(new Font("Tahoma", Font.BOLD, 14));
 		btnGestionarEntrenador.setFocusable(false);
 		btnGestionarEntrenador.setBorder(null);
-		btnGestionarEntrenador.setBackground(new Color(128, 128, 0));
+		btnGestionarEntrenador.setBackground(new Color(242, 45, 45));
 		btnGestionarEntrenador.setBounds(57, 250, 200, 49);
 		panelLeft.add(btnGestionarEntrenador);
 
 		btnCrearPartido = new JButton("Crear partido");
+		btnCrearPartido.setForeground(new Color(0, 0, 0));
 		btnCrearPartido.setEnabled(false);
 		btnCrearPartido.setHorizontalAlignment(SwingConstants.LEFT);
 		btnCrearPartido.setFont(new Font("Tahoma", Font.BOLD, 14));
 		btnCrearPartido.setFocusable(false);
 		btnCrearPartido.setBorder(null);
-		btnCrearPartido.setBackground(new Color(79, 79, 0));
+		btnCrearPartido.setBackground(new Color(194, 12, 12));
 		btnCrearPartido.setBounds(57, 310, 200, 49);
 		panelLeft.add(btnCrearPartido);
 
@@ -116,7 +121,7 @@ class CrearPartido extends JFrame implements ActionListener {
 		btnModificarPartido.setFont(new Font("Tahoma", Font.BOLD, 14));
 		btnModificarPartido.setFocusable(false);
 		btnModificarPartido.setBorder(null);
-		btnModificarPartido.setBackground(new Color(128, 128, 0));
+		btnModificarPartido.setBackground(new Color(242, 45, 45));
 		btnModificarPartido.setBounds(57, 430, 200, 49);
 		panelLeft.add(btnModificarPartido);
 		btnModificarPartido.addActionListener(this); // Agregar ActionListener
@@ -204,9 +209,9 @@ class CrearPartido extends JFrame implements ActionListener {
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		Object o = e.getSource();
-		MenuAdmin menuAdmin = new MenuAdmin(controller);
+		MenuAdmin menuAdmin = new MenuAdmin(controller, user,userType);
 		if (o == btnCrearPartido) {
-			CrearPartido frame = new CrearPartido(controller);
+			CrearPartido frame = new CrearPartido(controller, user,userType);
 			frame.setVisible(true);
 			// dispose();
 		} else if (o == okButton) {
@@ -258,7 +263,7 @@ class CrearPartido extends JFrame implements ActionListener {
 			menuAdmin.setVisible(true);
 			this.dispose();
 		} else if (o == btnModificarPartido) { // Acción para el botón Modificar partido
-			ModificarPartido frame = new ModificarPartido(controller);
+			ModificarPartido frame = new ModificarPartido(controller, user,userType);
 			frame.setVisible(true);
 			this.dispose();
 		} else if (o == btnLogOut) {

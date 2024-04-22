@@ -225,4 +225,5 @@ public class MenuAdmin extends JFrame implements ActionListener {
 	public void ocultarBotonesEntrenadores() {
 		panelRight.setVisible(false);
 	}
+
 }
