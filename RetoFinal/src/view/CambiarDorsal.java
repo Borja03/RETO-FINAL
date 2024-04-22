@@ -136,6 +136,7 @@ public class CambiarDorsal extends JFrame implements ActionListener {
 		String buttonText = clickedButton.getText();
 
 		int dorsal = Integer.parseInt(buttonText);
+		
 
 		int dialogResult = JOptionPane.showConfirmDialog(null, " Est s seguro que deseas cambiar el dorsal?",
 				"Confirmar", JOptionPane.YES_NO_OPTION);

@@ -53,10 +53,8 @@ public class MenuAdmin extends JFrame implements ActionListener {
 	private String userType;
 	private JButton btnGestionarEntrenador;
 
-	public MenuAdmin(Controller controller, String usr,String userType) {
+	public MenuAdmin(Controller controller) {
 		this.controller = controller;
-	  this.userName = usr;
-	  this.userType=userType;
 
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 1008, 717);
@@ -181,7 +179,6 @@ public class MenuAdmin extends JFrame implements ActionListener {
 				btnCrearPartido.setBackground(new Color(128, 128, 0));
 			}
 
-			
 			@Override
 			public void mousePressed(MouseEvent e) {
 				btnCrearPartido.setBackground(new Color(50, 70, 90));
@@ -198,8 +195,8 @@ public class MenuAdmin extends JFrame implements ActionListener {
 		btnGestionarEntrenador.setBounds(37, 275, 200, 49);
 		btnGestionarEntrenador.addActionListener(this);
 		panelLeft.add(btnGestionarEntrenador);
-		
-		//top menu buttons 
+
+		// top menu buttons
 		topMenuPanelAddEq = new JPanel();
 		topMenuPanelAddEq.setBounds(310, 10, 674, 58);
 		contentPane.add(topMenuPanelAddEq);
@@ -220,8 +217,7 @@ public class MenuAdmin extends JFrame implements ActionListener {
 		btnModificar.setBounds(248, 10, 150, 34);
 		topMenuPanelAddEq.add(btnModificar);
 
-		
-		//right panel 
+		// right panel
 		JLabel lblNombreEquipo = new JLabel("Nombre del Equipo:");
 		lblNombreEquipo.setFont(new Font("Tahoma", Font.BOLD, 14));
 		lblNombreEquipo.setBounds(53, 75, 160, 34);
@@ -267,41 +263,38 @@ public class MenuAdmin extends JFrame implements ActionListener {
 		lblEquipoLogo = new JLabel("");
 		lblEquipoLogo.setBounds(53, 361, 200, 200);
 		rightPanelAddEd.add(lblEquipoLogo);
-		
+
 		lblNombreDelEstadio = new JLabel("Nombre del Estadio:");
 		lblNombreDelEstadio.setFont(new Font("Tahoma", Font.BOLD, 14));
 		lblNombreDelEstadio.setBounds(53, 153, 160, 34);
 		rightPanelAddEd.add(lblNombreDelEstadio);
-		
-	
-	}
 
+	}
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		Object o = e.getSource();
 
-			//left menu buttons 
+		// left menu buttons
 		if (e.getSource() == btnCrearPartido) {
-			CrearPartido crearPartido = new CrearPartido(controller, userName,userType);
+			CrearPartido crearPartido = new CrearPartido(controller);
 			this.dispose();
 			crearPartido.setVisible(true);
 		} else if (e.getSource() == btnModificarPartido) {
-			ModificarPartido modificarPartido = new ModificarPartido(controller, userName,userType);
+			ModificarPartido modificarPartido = new ModificarPartido(controller);
 			this.dispose();
 			modificarPartido.setVisible(true);
-			
-		}else if(e.getSource() == btnGestionarEntrenador) {
-			GestionarEntre gestionarEntre = new GestionarEntre(controller, userName,userType);
+
+		} else if (e.getSource() == btnGestionarEntrenador) {
+			GestionarEntre gestionarEntre = new GestionarEntre(controller);
 			this.dispose();
 			gestionarEntre.setVisible(true);
-		}
-			else if (e.getSource() == btnLogOut) {
+		} else if (e.getSource() == btnLogOut) {
 			this.dispose();
 			controller.logOut();
-		}else if (e.getSource() == btnModificar) {
+		} else if (e.getSource() == btnModificar) {
 			this.dispose();
-			MenuAdmin	 modificarEquipos = new MenuAdmin(controller,userName,userType);
+			MenuAdmin modificarEquipos = new MenuAdmin(controller);
 			modificarEquipos.setVisible(true);
 		}
 		// right panel buttons
@@ -318,7 +311,7 @@ public class MenuAdmin extends JFrame implements ActionListener {
 						Path imagePath = selectedFile.toPath();
 						byte[] imageData = Files.readAllBytes(imagePath);
 						imageBlob = new javax.sql.rowset.serial.SerialBlob(imageData);
-                        imageIcon = new ImageIcon(imageData);
+						imageIcon = new ImageIcon(imageData);
 						lblEquipoLogo.setIcon(imageIcon);
 					} catch (IOException ex) {
 						ex.printStackTrace();
@@ -330,19 +323,19 @@ public class MenuAdmin extends JFrame implements ActionListener {
 						e1.printStackTrace();
 					}
 				} else {
-					
+
 				}
 			}
 
 		} else if (o == bntAnadirEq) {
-			if (controller.crearEquipo(nombreEquipoField.getText(), Integer.valueOf(txttitulosField.getText()), nombreEstadioField.getText(),
-					imageBlob)) {
+			if (controller.crearEquipo(nombreEquipoField.getText(), Integer.valueOf(txttitulosField.getText()),
+					nombreEstadioField.getText(), imageBlob)) {
 				int opcion = JOptionPane.showConfirmDialog(this,
 						(String) "El equipo ha sido introducido correctamente\n¿Desea añadir otro equipo?", "",
 						JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE, null);
 				if (opcion == JOptionPane.NO_OPTION) {
 					this.dispose();
-					MenuAdmin ma = new MenuAdmin(controller, userName,userType);
+					MenuAdmin ma = new MenuAdmin(controller);
 					ma.setVisible(true);
 				}
 
@@ -350,5 +343,3 @@ public class MenuAdmin extends JFrame implements ActionListener {
 		}
 	}
 }
-		
-

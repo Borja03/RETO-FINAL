@@ -71,6 +71,7 @@ public class Login extends JFrame implements ActionListener {
     private JToggleButton tglBtnDark;
     private boolean darkModeState;
 
+   
     public Login(Controller cont) {
         this.controller = cont;
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -225,7 +226,7 @@ public class Login extends JFrame implements ActionListener {
 				lblMsg.setText("ERROR: All fields are required");
 			} else if (controller.logIn(userName, password, userType)) {
 				if ("Admin".equals(userType)) {
-					MenuAdmin menuAdmin = new MenuAdmin(controller,userName,userType.toLowerCase());
+					MenuAdmin menuAdmin = new MenuAdmin(controller);
 					menuAdmin.setVisible(true);
 					this.setVisible(false);
 				} else if ("Entrenador".equals(userType)) {

@@ -50,10 +50,8 @@ class CrearPartido extends JFrame implements ActionListener {
 	private String user;
 	private String userType;
 
-	public CrearPartido(Controller cont, String usr,String userType) {
+	public CrearPartido(Controller cont) {
 		this.controller = cont;
-		this.user = usr;
-		this.userType=userType;
 		
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 1008, 717);
@@ -219,10 +217,10 @@ class CrearPartido extends JFrame implements ActionListener {
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		Object o = e.getSource();
-		MenuAdmin menuAdmin = new MenuAdmin(controller, user,userType);
+		MenuAdmin menuAdmin = new MenuAdmin(controller);
 
 		if (o == btnCrearPartido) {
-			CrearPartido frame = new CrearPartido(controller, user,userType);
+			CrearPartido frame = new CrearPartido(controller);
 			frame.setVisible(true);
 			// dispose();
 		} else if (o == okButton) {
@@ -264,19 +262,19 @@ class CrearPartido extends JFrame implements ActionListener {
 				}
 			}
 		} else  if (o == btnModificarPartido) { // Acción para el botón Modificar partido
-			ModificarPartido frame = new ModificarPartido(controller, user,userType);
+			ModificarPartido frame = new ModificarPartido(controller);
 			frame.setVisible(true);
 			this.dispose();
 		} else if (o == btnGestionarEntrenador) {
-			GestionarEntre gestionarEntre = new GestionarEntre(controller,user,userType);
+			GestionarEntre gestionarEntre = new GestionarEntre(controller);
 			gestionarEntre.setVisible(true);
 			this.dispose();
 		} else if (o == btnGestEquipo) {
-			MenuAdmin menAdmin = new MenuAdmin(controller, user,userType);
+			MenuAdmin menAdmin = new MenuAdmin(controller);
 			menuAdmin.setVisible(true);
 			this.dispose();
 		}else if (o == btnModificarPartido) {
-			ModificarPartido modificarPartido = new ModificarPartido(controller, user,userType);
+			ModificarPartido modificarPartido = new ModificarPartido(controller);
 			menuAdmin.setVisible(true);
 			this.dispose();
 		}else if (o == btnLogOut) {

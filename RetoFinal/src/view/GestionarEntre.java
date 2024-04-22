@@ -50,11 +50,9 @@ public class GestionarEntre extends JFrame implements ActionListener {
 	private String userType;
 
 	
-	public GestionarEntre(Controller controller, String usr,String userType) {
+	public GestionarEntre(Controller controller) {
 		this.controller = controller;
-		this.user = usr;
-		this.userType=userType;
-		
+
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 1008, 717);
 		contentPane = new JPanel();
@@ -135,7 +133,6 @@ public class GestionarEntre extends JFrame implements ActionListener {
 			}
 		});
 
-		
 		lblWelcome = new JLabel("Welcome " + user + "");
 		lblWelcome.setBounds(64, 180, 217, 34);
 		lblWelcome.setForeground(new Color(255, 255, 0));
@@ -214,7 +211,7 @@ public class GestionarEntre extends JFrame implements ActionListener {
 		contentPane.add(lblContrasena);
 
 		lblCargo = new JLabel("Cargo entrenador");
-		lblCargo.setBounds(350, 332, 90, 35);
+		lblCargo.setBounds(350, 338, 185, 35);
 		lblCargo.setFont(new Font("Tahoma", Font.BOLD, 14));
 		contentPane.add(lblCargo);
 
@@ -231,7 +228,8 @@ public class GestionarEntre extends JFrame implements ActionListener {
 		textFieldContrasena.setColumns(10);
 
 		textFieldCargo = new JComboBox<String>();
-		textFieldCargo.setBounds(515, 332, 250, 34);
+
+		textFieldCargo.setBounds(515, 340, 250, 34);
 		textFieldCargo.addItem("");
 		textFieldCargo.addItem("Primer_entrenador");
 		textFieldCargo.addItem("Segundo_entrenador");
@@ -257,54 +255,70 @@ public class GestionarEntre extends JFrame implements ActionListener {
 		for (Equipo eq : equipos) {
 			textFieldEquipo.addItem(eq.getNombreEquipo());
 		}
-
 	}
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
 
 		if (e.getSource() == btnDeleteMod) {
-			SearchEntrenador eliminarJugadores = new SearchEntrenador(controller, user,userType);
+			SearchEntrenador eliminarJugadores = new SearchEntrenador(controller);
 			this.dispose();
 			eliminarJugadores.setVisible(true);
 		} else if (e.getSource() == btnCrearPartido) {
-			CrearPartido cPartidos = new CrearPartido(controller, user,userType);
+			CrearPartido cPartidos = new CrearPartido(controller);
 			this.dispose();
 			cPartidos.setVisible(true);
 		} else if (e.getSource() == btnGestionarEquipo) {
-			MenuAdmin cPartidos = new MenuAdmin(controller, user,userType);
+			MenuAdmin cPartidos = new MenuAdmin(controller);
 			this.dispose();
 			cPartidos.setVisible(true);
 		} else if (e.getSource() == btnModPartidos) {
-			ModificarPartido modificarPartido = new ModificarPartido(controller, user,userType);
+			ModificarPartido modificarPartido = new ModificarPartido(controller);
 			this.dispose();
 			modificarPartido.setVisible(true);
 		} else if (e.getSource() == btnLogOut) {
-			this.dispose();
-			controller.logOut();
-		}
+			Object o = e.getSource();
+			if (o == btnDeleteMod) {
+				SearchEntrenador searchEntrenador = new SearchEntrenador(controller);
+				this.dispose();
+				searchEntrenador.setVisible(true);
+			} else if (o == btnCrearPartido) {
+				CrearPartido crearPartido = new CrearPartido(controller);
+				this.dispose();
+				crearPartido.setVisible(true);
+			} else if (o == btnGestionarEquipo) {
 
-		if (e.getSource() == btnAnadir) {
-			String usr = textFieldUSer.getText();
-			String password = textFieldContrasena.getText();
-			String myTeam = (String) textFieldEquipo.getSelectedItem();
-			String tipoString = (String) textFieldCargo.getSelectedItem();
-			CargoEntrenador tipo = null;
-			if (tipoString.equals("Primer_entrenador")) {
-				tipo = CargoEntrenador.PRIMER_ENTRENADOR;
-			} else if (tipoString.equals("Segundo_entrenador")) {
-				tipo = CargoEntrenador.SEGUNDO_ENTRENADOR;
+			} else if (o == btnLogOut) {
+				this.dispose();
+				controller.logOut();
 			}
 
-			controller.crearEntrenador(myTeam, usr, password, tipo);
-			int opcion = JOptionPane.showConfirmDialog(this, (String) "",
-					"El entrenador ha sido introducido correctamente\n¿Desea añadir otro entrenador?",
-					JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE, null);
+			if (e.getSource() == btnAnadir) {
+				String usr = textFieldUSer.getText();
+				String password = textFieldContrasena.getText();
+				String myTeam = (String) textFieldEquipo.getSelectedItem();
+				String tipoString = (String) textFieldCargo.getSelectedItem();
+				CargoEntrenador tipo = null;
+				if (tipoString.equals("Primer_entrenador")) {
+					tipo = CargoEntrenador.PRIMER_ENTRENADOR;
+				} else if (tipoString.equals("Segundo_entrenador")) {
+					tipo = CargoEntrenador.SEGUNDO_ENTRENADOR;
+				}
 
-			if (opcion == JOptionPane.NO_OPTION) {
-				this.dispose();
-				MenuAdmin g1 = new MenuAdmin(controller,user,userType);
-				g1.setVisible(true);
+				if (controller.crearEntrenador(user, password, myTeam, tipo)) {
+					int opcion = JOptionPane.showConfirmDialog(this, (String) "",
+							"El entrenador ha sido introducido correctamente\n¿Desea añadir otro jugador?",
+							JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE, null);
+
+					if (opcion == JOptionPane.NO_OPTION) {
+						this.dispose();
+						MenuAdmin g1 = new MenuAdmin(controller);
+						g1.setVisible(true);
+					} else {
+						GestionarEntre gestionarEntre = new GestionarEntre(controller);
+						this.dispose();
+					}
+				}
 			}
 		}
 	}

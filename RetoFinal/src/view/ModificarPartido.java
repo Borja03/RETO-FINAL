@@ -68,11 +68,9 @@ public class ModificarPartido extends JFrame implements ActionListener {
 	private String userType;
 
 	
-	public ModificarPartido(Controller controlador, String usr,String userType) {
+	public ModificarPartido(Controller controlador) {
 		this.controller = controlador;
-		this.user = usr;
-		this.userType=userType;
-
+		
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 1008, 717);
 		contentPane = new JPanel();
@@ -260,7 +258,7 @@ public class ModificarPartido extends JFrame implements ActionListener {
 	}
 
 	public void actionPerformed(ActionEvent e) {
-		MenuAdmin menuAdmin = new MenuAdmin(controller, user ,userType);
+		MenuAdmin menuAdmin = new MenuAdmin(controller);
 		Object o = e.getSource();
 		if (o == editarPartidoButton) {
 			mostrarComponentes = !mostrarComponentes;
@@ -308,16 +306,16 @@ public class ModificarPartido extends JFrame implements ActionListener {
 				}
 			}
 		} else if (o == btnCrearPartido) {
-			CrearPartido crearPartido = new CrearPartido(controller, user,userType);
+			CrearPartido crearPartido = new CrearPartido(controller);
 			crearPartido.setVisible(true);
 			this.dispose();
 		}  else if (o == btnGesEquipo) {
-			MenuAdmin menusAdmin= new MenuAdmin(controller,user,userType);
+			MenuAdmin menusAdmin= new MenuAdmin(controller);
 			menusAdmin.setVisible(true);
 			this.dispose();
 		
 		}else if (o == btnGestionarEntrenador) {
-			GestionarEntre gestionarEntre= new GestionarEntre(controller,user,userType);
+			GestionarEntre gestionarEntre= new GestionarEntre(controller);
 			gestionarEntre.setVisible(true);
 			this.dispose();
 			
