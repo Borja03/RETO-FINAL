@@ -89,39 +89,96 @@ public class CambiarContra extends JFrame implements ActionListener {
 		btnCambiarCont.setBounds(40, 476, 200, 49);
 		panelLeft.add(btnCambiarCont);
 
-		btnCambiarDorsal = new JButton("     Cambiar Dorsal");
+        JButton btnOk = new JButton("OK");
+        btnOk.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                cambiarContrasenia();
+            }
+        });
+        btnOk.setBounds(335, 240, 89, 23);
+        contentPane.add(btnOk);
+        
+        JPanel panelLeft = new JPanel();
+		panelLeft.setBackground(new Color(128, 128, 0));
+		panelLeft.setBounds(0, 0, 345, 680);
+		contentPane.add(panelLeft);
+		panelLeft.setLayout(null);
+
+		btnLogOut = new JButton("Log Out");
+		btnLogOut.setHorizontalAlignment(SwingConstants.LEFT);
+		btnLogOut.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseEntered(MouseEvent e) {
+				btnLogOut.setBackground(new Color(90, 70, 50));
+			}
+
+			@Override
+			public void mouseExited(MouseEvent e) {
+				btnLogOut.setBackground(new Color(128, 128, 0));
+			}
+
+			@Override
+			public void mousePressed(MouseEvent e) {
+				btnLogOut.setBackground(new Color(50, 70, 90));
+			}
+		});
+		btnLogOut.setBackground(new Color(128, 128, 0));
+		btnLogOut.setBounds(57, 536, 200, 49);
+		btnLogOut.setFocusable(false);
+		btnLogOut.setBorder(null);
+		panelLeft.add(btnLogOut);
+		btnLogOut.addActionListener(this);
+		btnLogOut.setFont(new Font("Tahoma", Font.BOLD, 14));
+
+		btnCambiarCont = new JButton("Cambiar Contraseña");
+		btnCambiarCont.addActionListener(this);
+		btnCambiarCont.setHorizontalAlignment(SwingConstants.LEFT);
+		btnCambiarCont.setFont(new Font("Tahoma", Font.BOLD, 14));
+		btnCambiarCont.setFocusable(false);
+		btnCambiarCont.setBorder(null);
+		btnCambiarCont.setBackground(new Color(128, 128, 0));
+		btnCambiarCont.setBounds(57, 466, 200, 49);
+		panelLeft.add(btnCambiarCont);
+
+		btnCambiarDorsal = new JButton("Cambiar Dorsal");
 		btnCambiarDorsal.addActionListener(this);
 		btnCambiarDorsal.setHorizontalAlignment(SwingConstants.LEFT);
 		btnCambiarDorsal.setFont(new Font("Tahoma", Font.BOLD, 14));
 		btnCambiarDorsal.setFocusable(false);
 		btnCambiarDorsal.setBorder(null);
 		btnCambiarDorsal.setBackground(new Color(128, 128, 0));
-		btnCambiarDorsal.setBounds(40, 406, 200, 49);
-		panelLeft.add(btnCambiarDorsal);
 
-		lblWelcome = new JLabel("Welcome " +userName);
+
+	
+
+		btnCambiarDorsal.setBounds(57, 396, 200, 49);
+		panelLeft.add(btnCambiarDorsal);
+      
+	  lblWelcome = new JLabel("Welcome " +userName);
 		lblWelcome.setForeground(new Color(255, 255, 0));
 		lblWelcome.setFont(new Font("Tahoma", Font.BOLD, 14));
 		lblWelcome.setBounds(64, 180, 217, 34);
 		panelLeft.add(lblWelcome);
 
-		btnConsultarPartidos = new JButton("     Consultar Partidos");
+		btnConsultarPartidos = new JButton("Consultar Partidos");
 		btnConsultarPartidos.addActionListener(this);
 		btnConsultarPartidos.setHorizontalAlignment(SwingConstants.LEFT);
 		btnConsultarPartidos.setFont(new Font("Tahoma", Font.BOLD, 14));
 		btnConsultarPartidos.setFocusable(false);
 		btnConsultarPartidos.setBorder(null);
 		btnConsultarPartidos.setBackground(new Color(128, 128, 0));
-		btnConsultarPartidos.setBounds(40, 338, 200, 49);
+
+		btnConsultarPartidos.setBounds(57, 328, 200, 49);
 		panelLeft.add(btnConsultarPartidos);
 
-		btnConsultarEquipo = new JButton("     Consultar Equipo");
+		btnConsultarEquipo = new JButton("Consultar Equipo");
+
 		btnConsultarEquipo.setHorizontalAlignment(SwingConstants.LEFT);
 		btnConsultarEquipo.setFont(new Font("Tahoma", Font.BOLD, 14));
 		btnConsultarEquipo.setFocusable(false);
 		btnConsultarEquipo.setBorder(null);
 		btnConsultarEquipo.setBackground(new Color(128, 128, 0));
-		btnConsultarEquipo.setBounds(40, 271, 200, 49);
+		btnConsultarEquipo.setBounds(57, 261, 200, 49);
 		panelLeft.add(btnConsultarEquipo);
 		JLabel lblEqLogo = new JLabel();
 
@@ -212,39 +269,31 @@ public class CambiarContra extends JFrame implements ActionListener {
         contentPane.add(bottomPanelMsg);
         bottomPanelMsg.setVisible(false);
         bottomPanel.setVisible(false);
-        
-        
     }
 
     public void actionPerformed(ActionEvent e) {
         Object o = e.getSource();
-        if(e.getSource() == btnVerificar) {
-        	String oldPassword = new String (textFieldOldPassword.getPassword());
-        	if(!oldPassword .equals(controller.getUsuarioPassword(userName,userType))) {
-        		bottomPanelMsg.setVisible(true);
-        	}else {
-                bottomPanel.setVisible(true);
-                
-        	}
-        }
-        if(e.getSource() == btnSave) {
-        	System.out.println("btn saved clicked ");
 
-            cambiarContrasenia();
-        }
-        if (o == btnLogOut) {
-        	controller.logOut();
-            this.dispose();
-        } /*else if (o == btnVolverMenu) {
-            if ("Jugador".equals(userType)) {
-                MenuJugador menuJugador = new MenuJugador(controller, userName);
-                menuJugador.setVisible(true);
-            } else if ("Entrenador".equals(userType)) {
-                MenuEntrenador menuEntrenador = new MenuEntrenador(controller, userName);
-                menuEntrenador.setVisible(true);
-            }
-            dispose(); // Cerrar la ventana actual
-        }*/
+
+		if (e.getSource() == btnLogOut) {
+	
+			this.dispose();
+			controller.logOut();
+
+		} else if (e.getSource() == btnGestJugadores) {
+			GestionarJugadores g1 = new GestionarJugadores(controller, username, nombreEquipo);
+			g1.setVisible(true);
+			this.dispose();
+		}
+		else if (e.getSource() == btnConsultarPartidos) {
+			ConsultarPartidos consultarPartidos = new ConsultarPartidos(controller,username);
+			consultarPartidos.setVisible(true);
+			this.dispose();
+		}else if(e.getSource() == btnConsultarEquipo) {
+			MenuEntrenador menuEntrenador = new MenuEntrenador(controller,username);
+			menuEntrenador.setVisible(true);
+			this.dispose();
+		}
     }
 
     private void cambiarContrasenia() {
@@ -261,17 +310,18 @@ public class CambiarContra extends JFrame implements ActionListener {
 
         if (changed) {
             JOptionPane.showMessageDialog(this, "Contraseña cambiada exitosamente.", "Éxito", JOptionPane.INFORMATION_MESSAGE);
-          /*  if ("jugador".equals(userType)) {
+          if ("jugador".equals(userType)) {
                 MenuJugador menuJugador = new MenuJugador(controller, userName);
                 menuJugador.setVisible(true);
             } else if ("entrenador".equals(userType)) {
                 MenuEntrenador menuEntrenador = new MenuEntrenador(controller, userName);
                 menuEntrenador.setVisible(true);
-            }*/
+            }
             this.dispose(); 
             controller.logOut();
         } else {
             JOptionPane.showMessageDialog(this, "Error al cambiar la contraseña.", "Error", JOptionPane.ERROR_MESSAGE);
         }
+        
     }
 }

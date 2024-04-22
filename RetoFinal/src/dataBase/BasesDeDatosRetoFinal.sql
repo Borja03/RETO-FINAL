@@ -4,13 +4,15 @@ use laLiga;
 create table usuario(
 user varchar(20) primary key,
 password varchar(20),
-tipo varchar(10)
+tipo varchar(10),
+icon blob
 );
 
 create table equipo(
 nombreEquipo varchar(30) primary key,
 titulos integer unsigned,
-nombreEstadio varchar(30)
+nombreEstadio varchar(30),
+logo blob
 );
 
 create table juegan(
