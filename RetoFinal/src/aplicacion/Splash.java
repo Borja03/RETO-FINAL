@@ -68,7 +68,7 @@ public class Splash extends JFrame {
 	
 	  private boolean loadPreference() {
 		  boolean darkModeEnabled=false;
-	        try (BufferedReader reader = new BufferedReader(new FileReader("preferences.txt"))) {
+	        try (BufferedReader reader = new BufferedReader(new FileReader("../preferences.txt"))) {
 	            String line = reader.readLine();
 	            if (line != null) {
 	                 darkModeEnabled = Boolean.parseBoolean(line);

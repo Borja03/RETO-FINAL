@@ -1,6 +1,7 @@
 package view;
 
 import java.awt.Color; 
+
 import java.awt.EventQueue;
 import java.awt.Font;
 
@@ -13,7 +14,6 @@ import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
 
 import controller.Controller;
-import view.toDelete.ModificarJugadores;
 
 import javax.swing.JButton;
 import javax.swing.JComboBox;
@@ -304,11 +304,7 @@ public class GestionarJugadores extends JFrame implements ActionListener {
 			SearchJugadore eliminarJugadores = new SearchJugadore (controller,userName,userType,miEquipo);
 			this.dispose();
 			eliminarJugadores.setVisible(true);
-		} else if (e.getSource() == btnModificar) {
-			ModificarJugadores m1 = new ModificarJugadores(controller);
-			m1.setVisible(true);
-			this.dispose();
-		} else if (e.getSource() == btnConsultarEquipo) {
+		}  else if (e.getSource() == btnConsultarEquipo) {
 			MenuEntrenador menuEntrenador = new MenuEntrenador(controller, userName,userType);
 			this.dispose();
 			menuEntrenador.setVisible(true);
