@@ -1,4 +1,4 @@
-<<<<<<< HEAD
+
 use laLiga;
 
 
@@ -19,7 +19,6 @@ GRANT SELECT ON laLiga.entrenador TO jugador_role;
 
 CREATE USER 'admin'@'localhost'  IDENTIFIED by 'admin' default role 'admin_role';
 CREATE USER 'entrenador'@'localhost'  IDENTIFIED by 'entrenador' default role 'entrenador_role';
-=======
 use laLiga;
 
 CREATE ROLE admin_role;
@@ -46,5 +45,4 @@ GRANT SELECT ON laLiga.entrenador TO jugador_role;
 
 CREATE USER 'admin'@'localhost'  IDENTIFIED by 'admin' default role 'admin_role';
 CREATE USER 'entrenador'@'localhost'  IDENTIFIED by 'entrenador' default role 'entrenador_role';
->>>>>>> 64ece0c9f44ad5f2b9282575d684f969240645f3
 CREATE USER 'jugador'@'localhost'  IDENTIFIED by 'jugador' default role 'jugador_role';

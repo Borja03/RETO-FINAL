@@ -1,11 +1,14 @@
-
 package view;
 
 import java.awt.Color;
-import java.awt.EventQueue;
 import java.awt.Font;
-import java.awt.GridLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
+import javax.swing.JButton;
+import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
@@ -17,16 +20,6 @@ import javax.swing.border.EmptyBorder;
 import controller.Controller;
 import model.usuarios.CargoEntrenador;
 import model.usuarios.Entrenador;
-import model.usuarios.Jugador;
-import view.toDelete.ModificarJugadores;
-
-import javax.swing.JButton;
-import javax.swing.JComboBox;
-
-import java.awt.event.ActionListener;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
-import java.awt.event.ActionEvent;
 
 public class SearchEntrenador extends JFrame implements ActionListener {
 
@@ -54,10 +47,10 @@ public class SearchEntrenador extends JFrame implements ActionListener {
 	private JButton btnModificarEntrenador;
 	private String userType;
 
-	public SearchEntrenador(Controller controller, String usr,String userType) {
+	public SearchEntrenador(Controller controller, String usr, String userType) {
 		this.controller = controller;
 		this.user = usr;
-		this.userType=userType;
+		this.userType = userType;
 
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 1008, 717);
@@ -74,7 +67,9 @@ public class SearchEntrenador extends JFrame implements ActionListener {
 		btnCrear.setBounds(328, 40, 176, 35);
 		contentPane.add(btnCrear);
 
+
 		btnDeleteMod = new JButton("Eliminar/Modificar Entrenadores");
+
 		btnDeleteMod.setBackground(new Color(255, 128, 0));
 		btnDeleteMod.addActionListener(this);
 		btnDeleteMod.setFocusable(false);
@@ -141,7 +136,9 @@ public class SearchEntrenador extends JFrame implements ActionListener {
 		});
 		panelLeft.add(btnModPartidos);
 
+
 		lblWelcome = new JLabel("Welcome " + user + "");
+
 		lblWelcome.setForeground(new Color(255, 255, 0));
 		lblWelcome.setFont(new Font("Tahoma", Font.BOLD, 14));
 		lblWelcome.setBounds(64, 180, 217, 34);
@@ -181,7 +178,9 @@ public class SearchEntrenador extends JFrame implements ActionListener {
 		btnCrearPartido.setBorder(null);
 		btnCrearPartido.setBackground(new Color(128, 128, 0));
 		btnCrearPartido.setBounds(37, 327, 200, 49);
+
 		btnCrearPartido.addActionListener(this);
+
 		btnCrearPartido.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseEntered(MouseEvent e) {
@@ -208,8 +207,6 @@ public class SearchEntrenador extends JFrame implements ActionListener {
 		btnGestionarEntrenador.setBackground(new Color(255, 128, 64));
 		btnGestionarEntrenador.setBounds(37, 275, 200, 49);
 		panelLeft.add(btnGestionarEntrenador);
-
-		// formulario
 
 		JPanel topPanel = new JPanel();
 		topPanel.setBounds(310, 85, 676, 154);
@@ -288,8 +285,6 @@ public class SearchEntrenador extends JFrame implements ActionListener {
 		btnModificarEntrenador.setBounds(204, 308, 200, 35);
 		bottomPanel.add(btnModificarEntrenador);
 		bottomPanel.setVisible(false);
-		btnModificarEntrenador.addActionListener(this);
-
 	}
 
 	public void fillUserData() {
@@ -304,9 +299,8 @@ public class SearchEntrenador extends JFrame implements ActionListener {
 			if (cargo == CargoEntrenador.PRIMER_ENTRENADOR) {
 				textFieldCargo.setSelectedItem("Primer_entrenador");
 			} else if (cargo == CargoEntrenador.SEGUNDO_ENTRENADOR) {
-				textFieldCargo.setSelectedItem("Segundo-entrenador");
+				textFieldCargo.setSelectedItem("Segundo_entrenador");
 			}
-
 		} else {
 			System.out.println("El usuario no existe");
 		}
@@ -314,13 +308,12 @@ public class SearchEntrenador extends JFrame implements ActionListener {
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
-
 		if (e.getSource() == btnCrearPartido) {
-			CrearPartido cPartido = new CrearPartido(controller, user,userType);
+			CrearPartido cPartido = new CrearPartido(controller, user, userType);
 			this.dispose();
 			cPartido.setVisible(true);
 		} else if (e.getSource() == btnGestionarEquipo) {
-			CrearEquipo cEquipo = new CrearEquipo(controller, user,userType);
+			CrearEquipo cEquipo = new CrearEquipo(controller, user, userType);
 			this.dispose();
 			cEquipo.setVisible(true);
 		} else if (e.getSource() == btnLogOut) {
@@ -330,50 +323,42 @@ public class SearchEntrenador extends JFrame implements ActionListener {
 			if (controller.checkUserExist2(textFieldUSer.getText())) {
 				fillUserData();
 				bottomPanel.setVisible(true);
+			}
+		} else if (e.getSource() == btnEliminarEntrenador) {
+			if (controller.borrarEntrenador(textFieldUSer.getText())) {
+				int opcion = JOptionPane.showConfirmDialog(this,
+						"El entrenador ha sido eliminado correctamente\n¿Desea eliminar otro entrenador?", "",
+						JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE, null);
 
-			} else if (e.getSource() == btnCrear) {
-				GestionarEntre gEntrenador = new GestionarEntre(controller, user,userType);
-				this.dispose();
-				gEntrenador.setVisible(true);
-
-			} else if (e.getSource() == btnEliminarEntrenador) {
-				if (controller.borrarEntrenador(textFieldUSer.getText())) {
-					int opcion = JOptionPane.showConfirmDialog(this,
-							(String) "El entrenador ha sido eliminado correctamente\n¿Desea eliminar otro entrenador?",
-							"", JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE, null);
-
-					if (opcion == JOptionPane.NO_OPTION) {
-						this.dispose();
-						MenuAdmin g1 = new MenuAdmin(controller, user,userType);
-						g1.setVisible(true);
-					}
+				if (opcion == JOptionPane.NO_OPTION) {
+					this.dispose();
+					MenuAdmin g1 = new MenuAdmin(controller, user, userType);
+					g1.setVisible(true);
 				}
-			} else if (e.getSource() == btnModificarEntrenador) {
-				String usr = textFieldUSer.getText();
-				String password = textFieldContrasena.getText();
-				String myTeam = controller.getMyTeam(textFieldUSer.getText(),userType);
-				String tipoString = (String) textFieldCargo.getSelectedItem();
-				CargoEntrenador tipo = null;
-				if (tipoString.equals("Primer_entrenador")) {
-					tipo = CargoEntrenador.PRIMER_ENTRENADOR;
-				} else if (tipoString.equals("Segundo_entrenador")) {
-					tipo = CargoEntrenador.SEGUNDO_ENTRENADOR;
-				}
+			}
+		} else if (e.getSource() == btnModificarEntrenador) {
+			String usr = textFieldUSer.getText();
+			String password = textFieldContrasena.getText();
+			String myTeam = controller.getMyTeam(textFieldUSer.getText(), userType);
+			String tipoString = (String) textFieldCargo.getSelectedItem();
+			CargoEntrenador tipo = null;
+			if (tipoString.equals("Primer_entrenador")) {
+				tipo = CargoEntrenador.PRIMER_ENTRENADOR;
+			} else if (tipoString.equals("Segundo_entrenador")) {
+				tipo = CargoEntrenador.SEGUNDO_ENTRENADOR;
+			}
 
-				// Object o = e.getSource();
-				if (controller.modificarEntrenador(usr, password, tipo)) {
-					int opcion = JOptionPane.showConfirmDialog(this, (String) "",
-							"El entrenador ha sido modificado correctamente\n¿Desea modificar otro entrenador?",
-							JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE, null);
+			if (controller.modificarEntrenador(usr, password, tipo)) {
+				int opcion = JOptionPane.showConfirmDialog(this, "",
+						"El entrenador ha sido modificado correctamente\n¿Desea modificar otro entrenador?",
+						JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE, null);
 
-					if (opcion == JOptionPane.NO_OPTION) {
-						this.dispose();
-						MenuAdmin g1 = new MenuAdmin(controller, user,userType);
-						g1.setVisible(true);
-					}
+				if (opcion == JOptionPane.NO_OPTION) {
+					this.dispose();
+					MenuAdmin g1 = new MenuAdmin(controller, user, userType);
+					g1.setVisible(true);
 				}
 			}
 		}
-
 	}
 }

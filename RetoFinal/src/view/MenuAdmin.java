@@ -31,6 +31,7 @@ import javax.swing.JFileChooser;
 
 public class MenuAdmin extends JFrame implements ActionListener {
 
+
     private static final long serialVersionUID = 1L;
     private JPanel contentPane;
     private JButton btnLogOut;
@@ -68,7 +69,7 @@ public class MenuAdmin extends JFrame implements ActionListener {
 
         JPanel panelLeft = new JPanel();
         panelLeft.setBounds(0, 0, 329, 680);
-        panelLeft.setBackground(new Color(128, 128, 0));
+        panelLeft.setBackground(new Color(242, 45, 45));
         contentPane.add(panelLeft);
         panelLeft.setLayout(null);
 
@@ -226,4 +227,5 @@ public class MenuAdmin extends JFrame implements ActionListener {
     public void ocultarBotonesEntrenadores() {
         panelRight.setVisible(false);
     }
+
 }
