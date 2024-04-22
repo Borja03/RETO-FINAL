@@ -56,6 +56,7 @@ INSERT INTO jugador (user, password, tipo, dorsal, numeroGoles, numeroAsistencia
 VALUES ('alder', 'alder', 'jugador', 10, 0, 0, 'Barsa');
 =======
 VALUES ('alder', 'alder', 'jugador', 10, 0, 0, 'Barsa');
+<<<<<<< HEAD
 
 select * from laliga.jugador;
 
@@ -145,3 +146,5 @@ SELECT * FROM juegan;
 select * from laliga.jugador where dorsal = 10 AND nombreEquipo = 'Barsa';
 
 >>>>>>> 93be55beaad0224cf9ff4ab1c98edddfc3abb2da
+=======
+>>>>>>> 44017c4edf03f09c710a4bb576d73eb82387724f
