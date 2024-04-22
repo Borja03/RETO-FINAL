@@ -1,4 +1,3 @@
-
 package view;
 
 import java.awt.BorderLayout;
@@ -72,6 +71,7 @@ public class Login extends JFrame implements ActionListener {
     private JToggleButton tglBtnDark;
     private boolean darkModeState;
 
+   
     public Login(Controller cont) {
         this.controller = cont;
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -79,6 +79,8 @@ public class Login extends JFrame implements ActionListener {
         contentPane = new JPanel();
         contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
         setContentPane(contentPane);
+
+		this.darkModeState= Splash.darkModeState;
 
         // Load and set the image
         ImagePanel panelLeft = new ImagePanel(getClass().getResource("/images/fotoP.png"));
@@ -187,7 +189,6 @@ public class Login extends JFrame implements ActionListener {
         }
     }
 
-
     
 	
 	 private void savePreference(boolean enabled) {
@@ -220,13 +221,12 @@ public class Login extends JFrame implements ActionListener {
 			String userName = txtUserName.getText();
 			String password = new String(txtPass.getPassword());
 			String userType = (String) cBxRole.getSelectedItem();
-			this.darkModeState= Splash.darkModeState;
 
 			if (txtUserName.getText().isEmpty() || txtPass.getPassword().length == 0) {
 				lblMsg.setText("ERROR: All fields are required");
 			} else if (controller.logIn(userName, password, userType)) {
 				if ("Admin".equals(userType)) {
-					MenuAdmin menuAdmin = new MenuAdmin(controller,userName,userType.toLowerCase());
+					MenuAdmin menuAdmin = new MenuAdmin(controller);
 					menuAdmin.setVisible(true);
 					this.setVisible(false);
 				} else if ("Entrenador".equals(userType)) {
