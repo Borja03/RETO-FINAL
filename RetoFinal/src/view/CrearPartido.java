@@ -1,6 +1,8 @@
 package view;
 
 import java.awt.Color;
+
+
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -10,6 +12,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+
 
 import javax.swing.JButton;
 import javax.swing.JComboBox;
@@ -21,6 +24,7 @@ import javax.swing.JSpinner;
 import javax.swing.JTextField;
 import javax.swing.SpinnerDateModel;
 import javax.swing.SwingConstants;
+import javax.swing.UIManager;
 import javax.swing.border.EmptyBorder;
 
 import com.toedter.calendar.JCalendar;
@@ -51,6 +55,9 @@ class CrearPartido extends JFrame implements ActionListener {
 	private String userType;
 
 	public CrearPartido(Controller cont, String usr,String userType) {
+		
+		
+		 
 		this.controller = cont;
 		this.user = usr;
 		this.userType=userType;

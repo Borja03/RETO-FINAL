@@ -33,23 +33,23 @@ public class Splash extends JFrame {
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		contentPane.setSize(1366, 768);
 		setContentPane(contentPane);
-		contentPane.setLayout(null);
 
 		JLabel imgTitle = new JLabel();
-		ImageIcon imgIcon = new ImageIcon(getClass().getResource("/images/titlelogo.png"));
-		imgTitle.setIcon(imgIcon);
 		imgTitle.setBounds(277, 74, 463, 149);
+		ImageIcon imgIcon = new ImageIcon(getClass().getResource("/images/titlelogo.png"));
+		contentPane.setLayout(null);
+		imgTitle.setIcon(imgIcon);
 		contentPane.add(imgTitle);
 
 		JLabel imageLabel = new JLabel();
+		imageLabel.setBounds(305, 143, 403, 403);
 		ImageIcon imageIcon = new ImageIcon(getClass().getResource("/images/logo.gif"));
 		imageLabel.setIcon(imageIcon);
-		imageLabel.setBounds(305, 143, 403, 403);
 		contentPane.add(imageLabel);
 
 		Label label = new Label("Made in Tartanga 2023/2024");
-		label.setFont(new Font("VASCA", Font.BOLD, 14));
 		label.setBounds(413, 596, 250, 41);
+		label.setFont(new Font("VASCA", Font.BOLD, 14));
 		contentPane.add(label);
 
 		Timer timer = new Timer(1000, new ActionListener() {
@@ -68,7 +68,7 @@ public class Splash extends JFrame {
 	
 	  private boolean loadPreference() {
 		  boolean darkModeEnabled=false;
-	        try (BufferedReader reader = new BufferedReader(new FileReader("../preferences.txt"))) {
+	        try (BufferedReader reader = new BufferedReader(new FileReader("preferences.txt"))) {
 	            String line = reader.readLine();
 	            if (line != null) {
 	                 darkModeEnabled = Boolean.parseBoolean(line);
