@@ -16,6 +16,7 @@ public class CambiarContra extends JFrame implements ActionListener {
     private JPanel contentPane;
     private Controller controller;
     private String userType;
+
     private String userName;
 	private JButton btnLogOut;
 	private JButton btnCambiarCont;
@@ -33,6 +34,7 @@ public class CambiarContra extends JFrame implements ActionListener {
 	private JLabel lblMsg3;
 	private JButton btnVerificar;
 	private  JButton btnSave;
+	
 	private JLabel lnlNewPass;
     public CambiarContra(Controller controlador,String userName,String userType) {
         this.controller = controlador;
@@ -159,6 +161,7 @@ public class CambiarContra extends JFrame implements ActionListener {
         bottomPanel.setLayout(null);
         
         confirmPasswordField = new JPasswordField();
+
         confirmPasswordField.setFont(new Font("Tahoma", Font.BOLD, 14));
         confirmPasswordField.setBounds(200, 201, 250, 34);
         bottomPanel.add(confirmPasswordField);
@@ -213,7 +216,6 @@ public class CambiarContra extends JFrame implements ActionListener {
         bottomPanelMsg.setVisible(false);
         bottomPanel.setVisible(false);
         
-        
     }
 
     public void actionPerformed(ActionEvent e) {
@@ -242,10 +244,8 @@ public class CambiarContra extends JFrame implements ActionListener {
             } else if ("Entrenador".equals(userType)) {
                 MenuEntrenador menuEntrenador = new MenuEntrenador(controller, userName);
                 menuEntrenador.setVisible(true);
-            }
-            dispose(); // Cerrar la ventana actual
-        }*/
-    }
+            }*/
+        }
 
     private void cambiarContrasenia() {
     	System.out.println("i'm here");

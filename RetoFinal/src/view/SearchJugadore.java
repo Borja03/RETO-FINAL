@@ -1,5 +1,4 @@
 
-
 package view;
 
 import java.awt.Color;
@@ -432,12 +431,6 @@ public class SearchJugadore extends JFrame implements ActionListener {
 		//	ModificarJugadores m1 = new ModificarJugadores(controller);
 			//m1.setVisible(true);
 			//this.dispose();
-		}
-
-		} else if (e.getSource() == btnModificar) {
-			SearchJugadore m1 = new SearchJugadore(controller, userName, miEquipo);
-			m1.setVisible(true);
-			this.dispose();
 		}
 
 		if (e.getSource() == btnElimimarJugador) {
