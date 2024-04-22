@@ -403,7 +403,8 @@ public class ModificarEquipos extends JFrame implements ActionListener {
 
 		// top paenel buttons
 		if (o == btnAddEquipo) {
-			CrearEquipo crearEquipo = new CrearEquipo(controller,userName,userType);
+
+			CrearEquipo crearEquipo = new CrearEquipo(controller, userName);
 			this.dispose();
 
 			crearEquipo.setVisible(true);
@@ -446,7 +447,8 @@ public class ModificarEquipos extends JFrame implements ActionListener {
 						JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE, null);
 				if (opcion == JOptionPane.NO_OPTION) {
 					this.dispose();
-					MenuAdmin ma = new MenuAdmin(controller,userName,userType);
+
+					MenuAdmin ma = new MenuAdmin(controller, userName);
 					ma.setVisible(true);
 				}
 

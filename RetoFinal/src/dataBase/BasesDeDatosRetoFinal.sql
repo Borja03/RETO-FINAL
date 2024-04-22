@@ -117,6 +117,8 @@ nombreEquipo varchar(30),
 foreign key (nombreEquipo) references equipo(nombreEquipo) on delete cascade
 );
 
+drop table entrenador;
+
 
 insert into equipo values('Athletic de Bilbao',100,'San Mames');
 insert into entrenador values('entrenador','1234','1','PrimerEntrenador','Athletic de Bilbao');
@@ -125,8 +127,10 @@ INSERT INTO equipo (nombreEquipo, titulos, nombreEstadio) VALUES ('Barsa', 0, 'C
 
 select * from equipo;
 select * from entrenador;
+insert into entrenador values('entrenador','1234','1','Primer_entrenador','Athletic de Bilbao');
 
-
+alter table equipo add logo blob;
+alter table jugador add icon blob;
 insert into equipo values('Athletic de Bilbao',100,'San Mames');
 insert into entrenador values('entrenador','1234','1','PrimerEntrenador','Athletic de Bilbao');
 insert into jugador values('jugador','1234','1',9,99,500,'Athletic de Bilbao');
