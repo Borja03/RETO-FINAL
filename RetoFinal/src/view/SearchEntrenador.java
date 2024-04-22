@@ -25,7 +25,7 @@ public class SearchEntrenador extends JFrame implements ActionListener {
 
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
-	private JButton btnCrear;
+	private JButton btnAddEntrenador;
 	private JButton btnDeleteMod;
 	private Controller controller;
 	private JButton btnLogOut;
@@ -58,12 +58,13 @@ public class SearchEntrenador extends JFrame implements ActionListener {
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 
-		btnCrear = new JButton("Añadir Entrenadores");
-		btnCrear.setBackground(new Color(240, 240, 240));
-		btnCrear.setFocusable(false);
-		btnCrear.setBorder(null);
-		btnCrear.setBounds(328, 40, 176, 35);
-		contentPane.add(btnCrear);
+		btnAddEntrenador = new JButton("Añadir Entrenadores");
+		btnAddEntrenador.addActionListener(this);
+		btnAddEntrenador.setBackground(new Color(240, 240, 240));
+		btnAddEntrenador.setFocusable(false);
+		btnAddEntrenador.setBorder(null);
+		btnAddEntrenador.setBounds(328, 40, 176, 35);
+		contentPane.add(btnAddEntrenador);
 
 
 		btnDeleteMod = new JButton("Eliminar/Modificar Entrenadores");
@@ -311,11 +312,22 @@ public class SearchEntrenador extends JFrame implements ActionListener {
 			CrearPartido cPartido = new CrearPartido(controller);
 			this.dispose();
 			cPartido.setVisible(true);
-		} else if (e.getSource() == btnGestionarEquipo) {
-			//CrearEquipo cEquipo = new CrearEquipo(controller, user, userType);
-			//this.dispose();
-			//cEquipo.setVisible(true);
+		}else if(e.getSource() ==  btnAddEntrenador) {
+			
+			GestionarEntre gestionarEntre = new GestionarEntre(controller);
+			this.dispose();
+			gestionarEntre.setVisible(true);
+			
+		}else if (e.getSource() == btnGestionarEquipo) {
+			MenuAdmin cEquipo = new MenuAdmin(controller);
+			this.dispose();
+			cEquipo.setVisible(true);
 		} else if (e.getSource() == btnLogOut) {
+			this.dispose();
+			controller.logOut();
+		} else if (e.getSource() == btnModPartidos) {
+			MenuAdmin cEquipo = new MenuAdmin(controller);
+
 			this.dispose();
 			controller.logOut();
 		} else if (e.getSource() == btnBuscarEntrenador) {

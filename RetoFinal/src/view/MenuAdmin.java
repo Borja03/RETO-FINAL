@@ -43,7 +43,7 @@ public class MenuAdmin extends JFrame implements ActionListener {
 	private JTextField txttitulosField;
 	private JButton bntAnadirEq;
 	private JButton btnAddEquipo;
-	private JButton btnModificar;
+	private JButton btnModificarEquipo;
 	private JButton btnUpload;
 	private JLabel lblEquipoLogo;
 	private ImageIcon imageIcon;
@@ -209,13 +209,13 @@ public class MenuAdmin extends JFrame implements ActionListener {
 		btnAddEquipo.setBounds(74, 10, 150, 34);
 		topMenuPanelAddEq.add(btnAddEquipo);
 
-		btnModificar = new JButton("Modifacar  equipo");
-		btnModificar.setBackground(SystemColor.menu);
-		btnModificar.addActionListener(this);
-		btnModificar.setFocusable(false);
-		btnModificar.setBorder(null);
-		btnModificar.setBounds(248, 10, 150, 34);
-		topMenuPanelAddEq.add(btnModificar);
+		btnModificarEquipo = new JButton("Modifacar  equipo");
+		btnModificarEquipo.setBackground(SystemColor.menu);
+		btnModificarEquipo.addActionListener(this);
+		btnModificarEquipo.setFocusable(false);
+		btnModificarEquipo.setBorder(null);
+		btnModificarEquipo.setBounds(248, 10, 150, 34);
+		topMenuPanelAddEq.add(btnModificarEquipo);
 
 		// right panel
 		JLabel lblNombreEquipo = new JLabel("Nombre del Equipo:");
@@ -292,9 +292,9 @@ public class MenuAdmin extends JFrame implements ActionListener {
 		} else if (e.getSource() == btnLogOut) {
 			this.dispose();
 			controller.logOut();
-		} else if (e.getSource() == btnModificar) {
+		} else if (e.getSource() == btnModificarEquipo) {
 			this.dispose();
-			MenuAdmin modificarEquipos = new MenuAdmin(controller);
+			ModificarEquipos modificarEquipos = new ModificarEquipos(controller);
 			modificarEquipos.setVisible(true);
 		}
 		// right panel buttons
