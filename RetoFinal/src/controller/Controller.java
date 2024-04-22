@@ -31,7 +31,7 @@ public class Controller implements IController {
 
 	final String INNSERTentrenador = "INSERT INTO entrenador (user,password,tipoEntrenador,nombreEquipo) VALUES (?,?,?,?)";
 	final String DELETEentrenador = "DELETE FROM entrenador WHERE user =?";
-	
+
 	final String INSERTjugador = "INSERT INTO jugador (user,password,dorsal,numeroGoles,numeroAsistencias,nombreEquipo) VALUES (?,?,?,?,?,?)";
 	final String GETjugador = "SELECT * FROM jugador WHERE user = ?";
 	final String GETentrenador = "SELECT * FROM entrenador WHERE user = ?";
@@ -52,6 +52,7 @@ public class Controller implements IController {
 	final String INSERTequipo = "INSERT INTO equipo (nombreEquipo, titulos, nombreEstadio ,logo) VALUES (?, ?, ?, ?)";
 	final String DELETEequipo = "DELETE FROM equipo WHERE nombreEquipo =?";
 	final String MODIFICARequipo = "UPDATE equipo SET titulos=?, nombreEstadio=? , logo=? WHERE nombreEquipo=?";
+	final String NOMBREquipoE = "Select nombreEquipo FROM entrenador WHERE user = ?";
 
 	public boolean checkUserExist(String user) {
 		boolean exist = false;
@@ -376,32 +377,33 @@ public class Controller implements IController {
 		}
 		return partidosProgramados;
 	}
-	 @Override
-	    public boolean modificarPartido(String nombrePartido, String nuevoResultado) {
-	        boolean updated = false;
-	        try {
-	            openConnection("admin", "admin");
 
-	            String updatePartidoQuery = "UPDATE juegan SET resultado = ? WHERE nombreEquipoLocal = ? OR nombreEquipoVisitante = ?";
-	            PreparedStatement updatePartidoStatement = connection.prepareStatement(updatePartidoQuery);
-	            updatePartidoStatement.setString(1, nuevoResultado);
-	            updatePartidoStatement.setString(2, nombrePartido);
-	            updatePartidoStatement.setString(3, nombrePartido);
+	@Override
+	public boolean modificarPartido(String nombrePartido, String nuevoResultado) {
+		boolean updated = false;
+		try {
+			openConnection("admin", "admin");
 
-	            if (updatePartidoStatement.executeUpdate() > 0) {
-	                updated = true;
-	                System.out.println("Partido actualizado!");
-	            } else {
-	                System.out.println("Fallo al actualizar el partido en la tabla juegan.");
-	            }
-	        } catch (SQLException e) {
-	            System.out.println("Error de SQL");
-	            e.printStackTrace();
-	        } finally {
-	            closeConnection();
-	        }
-	        return updated;
-	    }
+			String updatePartidoQuery = "UPDATE juegan SET resultado = ? WHERE nombreEquipoLocal = ? OR nombreEquipoVisitante = ?";
+			PreparedStatement updatePartidoStatement = connection.prepareStatement(updatePartidoQuery);
+			updatePartidoStatement.setString(1, nuevoResultado);
+			updatePartidoStatement.setString(2, nombrePartido);
+			updatePartidoStatement.setString(3, nombrePartido);
+
+			if (updatePartidoStatement.executeUpdate() > 0) {
+				updated = true;
+				System.out.println("Partido actualizado!");
+			} else {
+				System.out.println("Fallo al actualizar el partido en la tabla juegan.");
+			}
+		} catch (SQLException e) {
+			System.out.println("Error de SQL");
+			e.printStackTrace();
+		} finally {
+			closeConnection();
+		}
+		return updated;
+	}
 
 	@Override
 	public void consultarEquipo() {
@@ -564,7 +566,7 @@ public class Controller implements IController {
 				int numGoles = resultSet.getInt("numeroGoles");
 				int numAsistencias = resultSet.getInt("numeroAsistencias");
 				Blob icon = resultSet.getBlob("icon");
-				usuario = new Jugador(userN, password, nombreEquipo, dorsal, numGoles, numAsistencias,icon);
+				usuario = new Jugador(userN, password, nombreEquipo, dorsal, numGoles, numAsistencias, icon);
 
 			}
 
@@ -745,9 +747,9 @@ public class Controller implements IController {
 				int dorsal = resultSet.getInt("dorsal");
 				int goles = resultSet.getInt("numeroGoles");
 				int asistencias = resultSet.getInt("numeroAsistencias");
-				Blob picProfile= resultSet.getBlob("icon");
-			
-				Jugador jug = new Jugador(user, password, nbEquipo, dorsal, goles, asistencias,picProfile);
+				Blob picProfile = resultSet.getBlob("icon");
+
+				Jugador jug = new Jugador(user, password, nbEquipo, dorsal, goles, asistencias, picProfile);
 				jugadoresEq.add(jug);
 			}
 

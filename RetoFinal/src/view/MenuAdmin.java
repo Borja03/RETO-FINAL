@@ -52,8 +52,6 @@ public class MenuAdmin extends JFrame implements ActionListener {
 	private JButton btnModificarEntrenador;
 	private JLabel lblImg;
 
-	private HashMap<String, Equipo> equipMap = new HashMap<>();
-
 	public MenuAdmin(Controller cont) {
 		this.controller = cont;
 
@@ -167,63 +165,11 @@ public class MenuAdmin extends JFrame implements ActionListener {
 		btnCrearEntrenador.addActionListener(this);
 		btnBorrarEntrenador.addActionListener(this);
 		btnModificarEntrenador.addActionListener(this);
-
-<<<<<<< HEAD
-        if (o == btnAddEq) {
-            mostrarBotonesEquipos();
-            ocultarBotonesEntrenadores();
-        } else if (o == btnGestionarEntrenador) {
-            mostrarBotonesEntrenadores();
-            ocultarBotonesEquipos();
-        } else if (o == btnCrearEntrenador) {
-            this.dispose();
-            GestionarEntre gestionarEntrenador = new GestionarEntre(controller);
-            gestionarEntrenador.setVisible(true);
-        } else if (o == btnBorrarEntrenador) {
-            this.dispose();
-            SearchEntrenador searchEntrenador = new SearchEntrenador(controller);
-            searchEntrenador.setVisible(true);
-        } else if (o == btnCrearPartido) {
-            CrearPartido frame = new CrearPartido(controller);
-            frame.setVisible(true);
-            this.dispose();
-        } else if (o == btnModificarPartido) {
-            ModificarPartido frame = new ModificarPartido(controller);
-            frame.setVisible(true);
-            this.dispose();
-        } else if (o == btnLogOut) {
-            Login frame = new Login(controller);
-            frame.setVisible(true);
-            this.dispose();
-        } else if (o == btnCrearEquipo) {
-            CrearEquipo frame = new CrearEquipo(controller);
-            frame.setVisible(true);
-            this.dispose();
-        }
-    }
-=======
-		btnGestionarEntrenador.addActionListener(this);
->>>>>>> 72c68bf1a6c1f6943aa5454af898eaad1510e29c
-
-		ArrayList<Equipo> eqLista = new ArrayList<Equipo>();
-		//eqLista = controller.listarEquipos();
-
 	}
-
-	private void displayImageFromDatabase() {
-
-		//byte[] imageBytes = resultSet.getBytes("image");
-		//Image image = Toolkit.getDefaultToolkit().createImage(imageBytes);
-		//ImageIcon icon = new ImageIcon(image.getScaledInstance(300, 300, Image.SCALE_SMOOTH));
-		//imageLabel.setIcon(icon);
-
-	}
-
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		Object o = e.getSource();
-
 
 		if (o == btnAddEq) {
 			mostrarBotonesEquipos();

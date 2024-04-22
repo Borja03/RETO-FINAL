@@ -14,18 +14,18 @@ public class CambiarContra extends JFrame implements ActionListener {
     private static final long serialVersionUID = 1L;
     private JPanel contentPane;
     private Controller controller;
-    private JButton cerrarSesion;
     private JPasswordField passwordField;
     private JPasswordField confirmPasswordField;
     private String userType;
-    private JButton btnVolverMenu;
     private JButton btnLogOut;
 	private JButton btnCambiarCont;
 	private JButton btnCambiarDorsal;
 	private JLabel lblWelcome;
 	private String username;
 	private JButton btnConsultarPartidos;
+	private JButton btnGestJugadores;
 	private JButton btnConsultarEquipo;
+	private String nombreEquipo;
 
     public CambiarContra(Controller controlador, String userType, String username) {
         this.controller = controlador;
@@ -143,34 +143,30 @@ public class CambiarContra extends JFrame implements ActionListener {
 		btnConsultarEquipo.setBackground(new Color(128, 128, 0));
 		btnConsultarEquipo.setBounds(57, 261, 200, 49);
 		panelLeft.add(btnConsultarEquipo);
-
-        // Crear y configurar el botón de volver al menú correspondiente
-        if ("Jugador".equals(userType)) {
-            btnVolverMenu = new JButton("Volver al Menú de Jugador");
-        } else if ("Entrenador".equals(userType)) {
-            btnVolverMenu = new JButton("Volver al Menú de Entrenador");
-        }
-        btnVolverMenu.setBounds(10, 240, 200, 23);
-        contentPane.add(btnVolverMenu);
-        btnVolverMenu.addActionListener(this);
     }
 
     public void actionPerformed(ActionEvent e) {
         Object o = e.getSource();
-        if (o == cerrarSesion) {
-            Login frame = new Login(controller);
-            frame.setVisible(true);
-            dispose();
-        } else if (o == btnVolverMenu) {
-            if ("Jugador".equals(userType)) {
-                MenuJugador menuJugador = new MenuJugador(controller, username);
-                menuJugador.setVisible(true);
-            } else if ("Entrenador".equals(userType)) {
-                MenuEntrenador menuEntrenador = new MenuEntrenador(controller, username);
-                menuEntrenador.setVisible(true);
-            }
-            dispose();
-        }
+
+		if (e.getSource() == btnLogOut) {
+	
+			this.dispose();
+			controller.logOut();
+
+		} else if (e.getSource() == btnGestJugadores) {
+			GestionarJugadores g1 = new GestionarJugadores(controller, username, nombreEquipo);
+			g1.setVisible(true);
+			this.dispose();
+		}
+		else if (e.getSource() == btnConsultarPartidos) {
+			ConsultarPartidos consultarPartidos = new ConsultarPartidos(controller,username);
+			consultarPartidos.setVisible(true);
+			this.dispose();
+		}else if(e.getSource() == btnConsultarEquipo) {
+			MenuEntrenador menuEntrenador = new MenuEntrenador(controller,username);
+			menuEntrenador.setVisible(true);
+			this.dispose();
+		}
     }
 
     private void cambiarContrasenia() {
@@ -197,5 +193,6 @@ public class CambiarContra extends JFrame implements ActionListener {
         } else {
             JOptionPane.showMessageDialog(this, "Error al cambiar la contraseña.", "Error", JOptionPane.ERROR_MESSAGE);
         }
+        
     }
 }
