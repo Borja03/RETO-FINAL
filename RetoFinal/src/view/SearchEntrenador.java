@@ -313,16 +313,17 @@ public class SearchEntrenador extends JFrame implements ActionListener {
 		}
 	}
 
+	
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		if (e.getSource() == btnCrearPartido) {
-			CrearPartido cPartido = new CrearPartido(controller, user, userType);
+			CrearPartido cPartido = new CrearPartido(controller);
 			this.dispose();
 			cPartido.setVisible(true);
 		} else if (e.getSource() == btnGestionarEquipo) {
-			CrearEquipo cEquipo = new CrearEquipo(controller, user, userType);
-			this.dispose();
-			cEquipo.setVisible(true);
+			//CrearEquipo cEquipo = new CrearEquipo(controller, user, userType);
+			//this.dispose();
+			//cEquipo.setVisible(true);
 		} else if (e.getSource() == btnLogOut) {
 			this.dispose();
 			controller.logOut();
@@ -339,7 +340,7 @@ public class SearchEntrenador extends JFrame implements ActionListener {
 
 				if (opcion == JOptionPane.NO_OPTION) {
 					this.dispose();
-					MenuAdmin g1 = new MenuAdmin(controller, user, userType);
+					MenuAdmin g1 = new MenuAdmin(controller);
 					g1.setVisible(true);
 				}
 			}
@@ -362,10 +363,11 @@ public class SearchEntrenador extends JFrame implements ActionListener {
 
 				if (opcion == JOptionPane.NO_OPTION) {
 					this.dispose();
-					MenuAdmin g1 = new MenuAdmin(controller, user, userType);
+					MenuAdmin g1 = new MenuAdmin(controller);
 					g1.setVisible(true);
 				}
 			}
 		}
 	}
+	
 }
