@@ -48,7 +48,11 @@ icon blob
 );
 
 insert into equipo values('Athletic de Bilbao',100,'San Mames');
+<<<<<<< HEAD
 insert into entrenador values('entrenador','1234','1','Primer_entrenador','Athletic de Bilbao');
+=======
+insert into entrenador values('entrenador','1234','1','PrimerEntrenador','Athletic de Bilbao');
+>>>>>>> 6bb11080992ffe17408607de307d6a7ef2e36895
 insert into jugador values('jugador','1234','1',9,99,500,'Athletic de Bilbao');
 INSERT INTO equipo (nombreEquipo, titulos, nombreEstadio) VALUES ('Barsa', 1000, 'Camp Nou');
 INSERT INTO jugador (user, password, tipo, dorsal, numeroGoles, numeroAsistencias, nombreEquipo)
