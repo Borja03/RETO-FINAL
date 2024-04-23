@@ -36,6 +36,12 @@ public class ModificarEquipos extends JFrame implements ActionListener {
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
 	private Controller controller;
+	private JButton btnLogOut;
+	private JButton btnCambiarCont;
+	private JButton btnCambiarDorsal;
+	private JLabel lblWelcome;
+	private JButton btnConsultarPartidos;
+	private JButton btnConsultarEquipo;
 	private String userName;
 	private JPanel rightPanelAddEd;
 	private JTextField nombreEquipoField;
@@ -54,20 +60,12 @@ public class ModificarEquipos extends JFrame implements ActionListener {
 	private JPanel panelSearch;
 	private JLabel lblNombreEquipo_1;
 	private JComboBox<String> cBoxEquipos;
-	private JButton btnLogOut;
-	private JButton btnModificarPartido;
-	private JLabel lblWelcome;
-	private JButton btnConsultarPartidos;
-	private JButton btnCrearPartido;
-
-	private JButton bntAnadirEq;
-	private JButton btnModificarEquipo;
-	private JLabel lblEquipoLogo;
 	private String userType;
-	private JButton btnGestionarEntrenador;
 
-	public ModificarEquipos(Controller controller) {
+	public ModificarEquipos(Controller controller, String user, String userType) {
 		this.controller = controller;
+		this.userName = user;
+		this.userType = userType;
 
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 1008, 717);
@@ -81,6 +79,7 @@ public class ModificarEquipos extends JFrame implements ActionListener {
 		rightPanelAddEd.setBounds(310, 154, 674, 526);
 		contentPane.add(rightPanelAddEd);
 		rightPanelAddEd.setLayout(null);
+
 		JPanel panelLeft = new JPanel();
 		panelLeft.setBackground(new Color(128, 128, 0));
 		panelLeft.setBounds(0, 0, 300, 680);
@@ -113,28 +112,77 @@ public class ModificarEquipos extends JFrame implements ActionListener {
 		btnLogOut.addActionListener(this);
 		btnLogOut.setFont(new Font("Tahoma", Font.BOLD, 14));
 
-		btnModificarPartido = new JButton("     Modificar partido");
-		btnModificarPartido.addActionListener(this);
-		btnModificarPartido.setHorizontalAlignment(SwingConstants.LEFT);
-		btnModificarPartido.setFont(new Font("Tahoma", Font.BOLD, 14));
-		btnModificarPartido.setFocusable(false);
-		btnModificarPartido.setBorder(null);
-		btnModificarPartido.setBackground(new Color(128, 128, 0));
-		btnModificarPartido.setBounds(37, 445, 200, 49);
-		btnModificarPartido.addActionListener(this);
-		btnModificarPartido.addMouseListener(new MouseAdapter() {
+		btnCambiarCont = new JButton("     Cambiar Contraseña");
+		btnCambiarCont.addActionListener(this);
+		btnCambiarCont.setHorizontalAlignment(SwingConstants.LEFT);
+		btnCambiarCont.setFont(new Font("Tahoma", Font.BOLD, 14));
+		btnCambiarCont.setFocusable(false);
+		btnCambiarCont.setBorder(null);
+		btnCambiarCont.setBackground(new Color(128, 128, 0));
+		btnCambiarCont.setBounds(37, 504, 200, 49);
+		panelLeft.add(btnCambiarCont);
+		btnCambiarCont.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseEntered(MouseEvent e) {
-				btnModificarPartido.setBackground(new Color(90, 70, 50));
-			}
+				btnCambiarCont.setBackground(new Color(90, 70, 50));
 
-			@Override
-			public void mouseExited(MouseEvent e) {
+				btnModificarPartido = new JButton("     Modificar partido");
+				btnModificarPartido.addActionListener(this);
+				btnModificarPartido.setHorizontalAlignment(SwingConstants.LEFT);
+				btnModificarPartido.setFont(new Font("Tahoma", Font.BOLD, 14));
+				btnModificarPartido.setFocusable(false);
+				btnModificarPartido.setBorder(null);
 				btnModificarPartido.setBackground(new Color(128, 128, 0));
-			}
+				btnModificarPartido.setBounds(37, 445, 200, 49);
+				btnModificarPartido.addActionListener(this);
+				btnModificarPartido.addMouseListener(new MouseAdapter() {
+					@Override
+					public void mouseEntered(MouseEvent e) {
+						btnModificarPartido.setBackground(new Color(90, 70, 50));
 
-			@Override
-			public void mousePressed(MouseEvent e) {
+					}
+
+					@Override
+					public void mouseExited(MouseEvent e) {
+
+						btnCambiarCont.setBackground(new Color(128, 128, 0));
+						btnModificarPartido.setBackground(new Color(128, 128, 0));
+
+					}
+
+					@Override
+					public void mousePressed(MouseEvent e) {
+						btnCambiarCont.setBackground(new Color(50, 70, 90));
+					}
+				});
+
+				btnCambiarDorsal = new JButton("     Modificar partido");
+				btnCambiarDorsal.addActionListener(this);
+				btnCambiarDorsal.setHorizontalAlignment(SwingConstants.LEFT);
+				btnCambiarDorsal.setFont(new Font("Tahoma", Font.BOLD, 14));
+				btnCambiarDorsal.setFocusable(false);
+				btnCambiarDorsal.setBorder(null);
+				btnCambiarDorsal.setBackground(new Color(128, 128, 0));
+				btnCambiarDorsal.setBounds(37, 445, 200, 49);
+				btnCambiarDorsal.addActionListener(this);
+				btnCambiarDorsal.addMouseListener(new MouseAdapter() {
+					@Override
+					public void mouseEntered(MouseEvent e) {
+						btnCambiarDorsal.setBackground(new Color(90, 70, 50));
+					}
+
+					@Override
+					public void mouseExited(MouseEvent e) {
+						btnCambiarDorsal.setBackground(new Color(128, 128, 0));
+					}
+
+					@Override
+					public void mousePressed(MouseEvent e) {
+						btnCambiarDorsal.setBackground(new Color(50, 70, 90));
+					}
+				});
+				panelLeft.add(btnCambiarDorsal);
+
 				btnModificarPartido.setBackground(new Color(50, 70, 90));
 			}
 		});
@@ -172,34 +220,63 @@ public class ModificarEquipos extends JFrame implements ActionListener {
 		});
 		panelLeft.add(btnConsultarPartidos);
 
-		btnCrearPartido = new JButton("     Crear partido");
-		btnCrearPartido.addActionListener(this);
-		btnCrearPartido.setHorizontalAlignment(SwingConstants.LEFT);
-		btnCrearPartido.setFont(new Font("Tahoma", Font.BOLD, 14));
-		btnCrearPartido.setFocusable(false);
-		btnCrearPartido.setBorder(null);
-		btnCrearPartido.setBackground(new Color(128, 128, 0));
-		btnCrearPartido.setBounds(37, 327, 200, 49);
-		btnCrearPartido.addMouseListener(new MouseAdapter() {
+		btnConsultarEquipo = new JButton("     Crear partido");
+		btnConsultarEquipo.addActionListener(this);
+		btnConsultarEquipo.setHorizontalAlignment(SwingConstants.LEFT);
+		btnConsultarEquipo.setFont(new Font("Tahoma", Font.BOLD, 14));
+		btnConsultarEquipo.setFocusable(false);
+		btnConsultarEquipo.setBorder(null);
+		btnConsultarEquipo.setBackground(new Color(128, 128, 0));
+		btnConsultarEquipo.setBounds(37, 327, 200, 49);
+		btnConsultarEquipo.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseEntered(MouseEvent e) {
-				btnCrearPartido.setBackground(new Color(90, 70, 50));
-			}
-
-			@Override
-			public void mouseExited(MouseEvent e) {
+				btnConsultarEquipo.setBackground(new Color(90, 70, 50));
+				btnCrearPartido = new JButton("     Crear partido");
+				btnCrearPartido.addActionListener(this);
+				btnCrearPartido.setHorizontalAlignment(SwingConstants.LEFT);
+				btnCrearPartido.setFont(new Font("Tahoma", Font.BOLD, 14));
+				btnCrearPartido.setFocusable(false);
+				btnCrearPartido.setBorder(null);
 				btnCrearPartido.setBackground(new Color(128, 128, 0));
-			}
+				btnCrearPartido.setBounds(37, 327, 200, 49);
+				btnCrearPartido.addMouseListener(new MouseAdapter() {
+					@Override
+					public void mouseEntered(MouseEvent e) {
+						btnCrearPartido.setBackground(new Color(90, 70, 50));
 
-			@Override
-			public void mousePressed(MouseEvent e) {
+					}
+
+					@Override
+					public void mouseExited(MouseEvent e) {
+
+						btnConsultarEquipo.setBackground(new Color(128, 128, 0));
+
+						btnCrearPartido.setBackground(new Color(128, 128, 0));
+					}
+
+					@Override
+					public void mousePressed(MouseEvent e) {
+						btnConsultarEquipo.setBackground(new Color(50, 70, 90));
+					}
+				});
+				panelLeft.add(btnConsultarEquipo);
+
+				JButton btnGestionarJugadores = new JButton("     Gestionar entrenador");
+				btnGestionarJugadores.setHorizontalAlignment(SwingConstants.LEFT);
+				btnGestionarJugadores.setFont(new Font("Tahoma", Font.BOLD, 14));
+				btnGestionarJugadores.setFocusable(false);
+				btnGestionarJugadores.setBorder(null);
+				btnGestionarJugadores.setBackground(new Color(128, 128, 0));
+				btnGestionarJugadores.setBounds(37, 275, 200, 49);
+				panelLeft.add(btnGestionarJugadores);
 				btnCrearPartido.setBackground(new Color(50, 70, 90));
 			}
 		});
 		panelLeft.add(btnCrearPartido);
-		
-		 btnGestionarEntrenador = new JButton("     Gestionar entrenador");
-		 btnGestionarEntrenador.addActionListener(this);
+
+		btnGestionarEntrenador = new JButton("     Gestionar entrenador");
+		btnGestionarEntrenador.addActionListener(this);
 		btnGestionarEntrenador.setHorizontalAlignment(SwingConstants.LEFT);
 		btnGestionarEntrenador.setFont(new Font("Tahoma", Font.BOLD, 14));
 		btnGestionarEntrenador.setFocusable(false);
@@ -317,69 +394,70 @@ public class ModificarEquipos extends JFrame implements ActionListener {
 			cBoxEquipos.addItem(eqName);
 		}
 	}
+
 	public void fillDataEquipo(String selectedEquipo) {
-	    Equipo eq = controller.getEquipo(selectedEquipo);
-	    nombreEquipoField.setText(eq.getNombreEquipo());
-	    nombreEstadioField.setText(eq.getEstadio());
-	    txttitulosField.setText(eq.getTitulos() + "");
+		Equipo eq = controller.getEquipo(selectedEquipo);
+		nombreEquipoField.setText(eq.getNombreEquipo());
+		nombreEstadioField.setText(eq.getEstadio());
+		txttitulosField.setText(eq.getTitulos() + "");
 
-	    Blob imgB = eq.getLogo();
-	    if (imgB != null) {
-	        try {
-	            byte[] imageData = imgB.getBytes(1, (int) imgB.length());
-	            if (imageData != null && imageData.length > 0) {
-	                ImageIcon icon = new ImageIcon(imageData);
-	                Image image = icon.getImage().getScaledInstance(200, 200, Image.SCALE_SMOOTH);
-	                ImageIcon scaledIcon = new ImageIcon(image);
-	                lblEqLogo.setIcon(scaledIcon);
-	            } 
-	        } catch (SQLException e) {
-	            System.err.println("Error reading image data from Blob: " + e.getMessage());
-	            e.printStackTrace();
-	        }
-	    }   
+		Blob imgB = eq.getLogo();
+		if (imgB != null) {
+			try {
+				byte[] imageData = imgB.getBytes(1, (int) imgB.length());
+				if (imageData != null && imageData.length > 0) {
+					ImageIcon icon = new ImageIcon(imageData);
+					Image image = icon.getImage().getScaledInstance(200, 200, Image.SCALE_SMOOTH);
+					ImageIcon scaledIcon = new ImageIcon(image);
+					lblEqLogo.setIcon(scaledIcon);
+				}
+			} catch (SQLException e) {
+				System.err.println("Error reading image data from Blob: " + e.getMessage());
+				e.printStackTrace();
+			}
+		}
 	}
-
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		Object o = e.getSource();
-		
-		// left menu 
+
+		// left menu
 		if (o == btnModificarPartido) {
 			ModificarPartido modificarPartido = new ModificarPartido(controller);
 			this.dispose();
 			modificarPartido.setVisible(true);
-		}else if(e.getSource() == btnCrearPartido) {
+		} else if (e.getSource() == btnCrearPartido) {
 			CrearPartido crearPartido = new CrearPartido(controller);
 			this.dispose();
 			crearPartido.setVisible(true);
-		}else if(e.getSource() == btnGestionarEntrenador) {
+		} else if (e.getSource() == btnGestionarEntrenador) {
 			GestionarEntre gestionarEntre = new GestionarEntre(controller);
 			this.dispose();
 			gestionarEntre.setVisible(true);
-		}else if(e.getSource() == btnLogOut) {
+		} else if (e.getSource() == btnLogOut) {
 			this.dispose();
 			controller.logOut();
 		}
-		
-		
+
 		// right panel buttons
 		if (o == cBoxEquipos) {
 
 			fillDataEquipo((String) cBoxEquipos.getSelectedItem());
 			rightPanelAddEd.setVisible(true);
 		}
-		if(o==btnBorrarEquipo) {
-			if(controller.borrarEquipo(nombreEquipoField.getText())) {
+		if (o == btnBorrarEquipo) {
+			if (controller.borrarEquipo(nombreEquipoField.getText())) {
 				this.dispose();
-				ModificarEquipos modificarEquipos = new ModificarEquipos(controller);
+
+				ModificarEquipos modificarEquipos = new ModificarEquipos(controller, userName, userType);
 				modificarEquipos.setVisible(true);
 			}
 		}
 
 		// top paenel buttons
 		if (o == btnAddEquipo) {
+
 			MenuAdmin menuAdmin = new MenuAdmin(controller);
 			this.dispose();
 

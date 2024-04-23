@@ -67,10 +67,9 @@ public class ModificarPartido extends JFrame implements ActionListener {
 	private String user;
 	private String userType;
 
-	
 	public ModificarPartido(Controller controlador) {
 		this.controller = controlador;
-		
+
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 1008, 717);
 		contentPane = new JPanel();
@@ -240,8 +239,7 @@ public class ModificarPartido extends JFrame implements ActionListener {
 		resultado2.setVisible(visible);
 		// Ocultar textos a la derecha
 		JLabel[] labels = { lblResultado1, label, lblNewLabel, lblNewLabel_1, lblNewLabel_2, lblNewLabel_3,
-				lblNewLabel_4
-				};
+				lblNewLabel_4 };
 		for (JLabel label : labels) {
 			label.setVisible(visible);
 		}
@@ -309,21 +307,20 @@ public class ModificarPartido extends JFrame implements ActionListener {
 			CrearPartido crearPartido = new CrearPartido(controller);
 			crearPartido.setVisible(true);
 			this.dispose();
-		}  else if (o == btnGesEquipo) {
-			MenuAdmin menusAdmin= new MenuAdmin(controller);
+		} else if (o == btnGesEquipo) {
+			MenuAdmin menusAdmin = new MenuAdmin(controller);
 			menusAdmin.setVisible(true);
 			this.dispose();
-		
-		}else if (o == btnGestionarEntrenador) {
-			GestionarEntre gestionarEntre= new GestionarEntre(controller);
+
+		} else if (o == btnGestionarEntrenador) {
+			GestionarEntre gestionarEntre = new GestionarEntre(controller);
 			gestionarEntre.setVisible(true);
 			this.dispose();
-			
-		}  else if (o == btnLogOut) {
+
+		} else if (o == btnLogOut) {
 			Login frame = new Login(controller);
 			frame.setVisible(true);
 			this.dispose();
 		}
 	}
 }
-

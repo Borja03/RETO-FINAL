@@ -50,6 +50,7 @@ public class SearchEntrenador extends JFrame implements ActionListener {
 	private String user;
 	private JButton btnModificarEntrenador;
 	private String userType;
+	private JButton btnGestionarEntrenador;
 
 	public SearchEntrenador(Controller controller) {
 		this.controller = controller;
@@ -62,49 +63,43 @@ public class SearchEntrenador extends JFrame implements ActionListener {
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 
-		btnAddEntrenador = new JButton("Añadir Entrenadores");
-		btnAddEntrenador.addActionListener(this);
-		btnAddEntrenador.setBackground(new Color(240, 240, 240));
-		btnAddEntrenador.setFocusable(false);
-		btnAddEntrenador.setBorder(null);
-		btnAddEntrenador.setBounds(328, 40, 176, 35);
-		contentPane.add(btnAddEntrenador);
-
 		btnDeleteMod = new JButton("Eliminar/Modificar Entrenadores");
+		btnDeleteMod.setFont(new Font("Tahoma", Font.BOLD, 14));
 
-		btnDeleteMod.setBackground(new Color(255, 128, 0));
+		btnDeleteMod.setBackground(new Color(220, 3, 9));
 		btnDeleteMod.addActionListener(this);
 		btnDeleteMod.setFocusable(false);
 		btnDeleteMod.setBorder(null);
-		btnDeleteMod.setBounds(564, 40, 176, 35);
+		btnDeleteMod.setBounds(564, 40, 261, 35);
 		contentPane.add(btnDeleteMod);
 
 		JPanel panelLeft = new JPanel();
-		panelLeft.setBackground(new Color(128, 128, 0));
-		panelLeft.setBounds(0, 0, 300, 680);
+		panelLeft.setBackground(new Color(242, 45, 45));
+		panelLeft.setBounds(0, 0, 312, 680);
 		contentPane.add(panelLeft);
 		panelLeft.setLayout(null);
 
 		btnLogOut = new JButton("     Log Out");
+		btnLogOut.setForeground(new Color(255, 255, 255));
 		btnLogOut.setHorizontalAlignment(SwingConstants.LEFT);
 		btnLogOut.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseEntered(MouseEvent e) {
-				btnLogOut.setBackground(new Color(90, 70, 50));
+				btnLogOut.setBackground(new Color(220, 3, 9));
 			}
 
 			@Override
 			public void mouseExited(MouseEvent e) {
-				btnLogOut.setBackground(new Color(128, 128, 0));
+				btnLogOut.setBackground(new Color(242, 45, 45));
 			}
 
 			@Override
 			public void mousePressed(MouseEvent e) {
-				btnLogOut.setBackground(new Color(50, 70, 90));
+				btnLogOut.setBackground(new Color(242, 45, 45));
 			}
 		});
-		btnLogOut.setBackground(new Color(128, 128, 0));
-		btnLogOut.setBounds(37, 595, 200, 49);
+		btnLogOut.setBackground(new Color(242, 45, 45));
+		btnLogOut.setBounds(0, 595, 310, 49);
 		btnLogOut.setFocusable(false);
 		btnLogOut.setBorder(null);
 		panelLeft.add(btnLogOut);
@@ -112,101 +107,120 @@ public class SearchEntrenador extends JFrame implements ActionListener {
 		btnLogOut.setFont(new Font("Tahoma", Font.BOLD, 14));
 
 		btnModPartidos = new JButton("     Modificar partidos");
+		btnModPartidos.setForeground(new Color(255, 255, 255));
 		btnModPartidos.addActionListener(this);
 		btnModPartidos.setHorizontalAlignment(SwingConstants.LEFT);
 		btnModPartidos.setFont(new Font("Tahoma", Font.BOLD, 14));
 		btnModPartidos.setFocusable(false);
 		btnModPartidos.setBorder(null);
-		btnModPartidos.setBackground(new Color(128, 128, 0));
-		btnModPartidos.setBounds(37, 445, 200, 49);
+		btnModPartidos.setBackground(new Color(242, 45, 45));
+		btnModPartidos.setBounds(0, 445, 310, 49);
 		btnModPartidos.addActionListener(this);
 		btnModPartidos.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseEntered(MouseEvent e) {
-				btnModPartidos.setBackground(new Color(90, 70, 50));
+				btnModPartidos.setBackground(new Color(220, 3, 9));
 			}
 
 			@Override
 			public void mouseExited(MouseEvent e) {
-				btnModPartidos.setBackground(new Color(128, 128, 0));
+				btnModPartidos.setBackground(new Color(242, 45, 45));
 			}
 
 			@Override
 			public void mousePressed(MouseEvent e) {
-				btnModPartidos.setBackground(new Color(50, 70, 90));
+				btnModPartidos.setBackground(new Color(242, 45, 45));
 			}
 		});
 		panelLeft.add(btnModPartidos);
 
-		lblWelcome = new JLabel("Welcome " + user + "");
-
-		lblWelcome.setForeground(new Color(255, 255, 0));
-		lblWelcome.setFont(new Font("Tahoma", Font.BOLD, 14));
-		lblWelcome.setBounds(64, 180, 217, 34);
+		lblWelcome = new JLabel("   Welcome Admin");
+		lblWelcome.setForeground(new Color(0, 0, 0));
+		lblWelcome.setFont(new Font("Tahoma", Font.BOLD, 20));
+		lblWelcome.setBounds(37, 180, 217, 34);
 		panelLeft.add(lblWelcome);
 
 		btnGestionarEquipo = new JButton("     Gestionar Equipo");
+		btnGestionarEquipo.setForeground(new Color(255, 255, 255));
 		btnGestionarEquipo.setHorizontalAlignment(SwingConstants.LEFT);
 		btnGestionarEquipo.setFont(new Font("Tahoma", Font.BOLD, 14));
 		btnGestionarEquipo.setFocusable(false);
 		btnGestionarEquipo.setBorder(null);
-		btnGestionarEquipo.setBackground(new Color(128, 128, 0));
-		btnGestionarEquipo.setBounds(37, 386, 200, 49);
+		btnGestionarEquipo.setBackground(new Color(242, 45, 45));
+		btnGestionarEquipo.setBounds(0, 386, 310, 49);
 		btnGestionarEquipo.addActionListener(this);
 		btnGestionarEquipo.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseEntered(MouseEvent e) {
-				btnGestionarEquipo.setBackground(new Color(90, 70, 50));
+				btnGestionarEquipo.setBackground(new Color(220, 3, 9));
 			}
 
 			@Override
 			public void mouseExited(MouseEvent e) {
-				btnGestionarEquipo.setBackground(new Color(128, 128, 0));
+				btnGestionarEquipo.setBackground(new Color(242, 45, 45));
 			}
 
 			@Override
 			public void mousePressed(MouseEvent e) {
-				btnGestionarEquipo.setBackground(new Color(50, 70, 90));
+				btnGestionarEquipo.setBackground(new Color(242, 45, 45));
 			}
 		});
 		panelLeft.add(btnGestionarEquipo);
 
 		btnCrearPartido = new JButton("     Crear partido");
+		btnCrearPartido.setForeground(new Color(255, 255, 255));
 		btnCrearPartido.addActionListener(this);
 		btnCrearPartido.setHorizontalAlignment(SwingConstants.LEFT);
 		btnCrearPartido.setFont(new Font("Tahoma", Font.BOLD, 14));
 		btnCrearPartido.setFocusable(false);
 		btnCrearPartido.setBorder(null);
-		btnCrearPartido.setBackground(new Color(128, 128, 0));
-		btnCrearPartido.setBounds(37, 327, 200, 49);
+		btnCrearPartido.setBackground(new Color(242, 45, 45));
+		btnCrearPartido.setBounds(0, 327, 310, 49);
 
 		btnCrearPartido.addActionListener(this);
 
 		btnCrearPartido.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseEntered(MouseEvent e) {
-				btnCrearPartido.setBackground(new Color(90, 70, 50));
+				btnCrearPartido.setBackground(new Color(220, 3, 9));
 			}
 
 			@Override
 			public void mouseExited(MouseEvent e) {
-				btnCrearPartido.setBackground(new Color(128, 128, 0));
+				btnCrearPartido.setBackground(new Color(242, 45, 45));
 			}
 
 			@Override
 			public void mousePressed(MouseEvent e) {
-				btnCrearPartido.setBackground(new Color(50, 70, 90));
+				btnCrearPartido.setBackground(new Color(242, 45, 45));
 			}
 		});
 		panelLeft.add(btnCrearPartido);
 
-		JButton btnGestionarEntrenador = new JButton("     Gestionar entrenadores");
+		btnGestionarEntrenador = new JButton("     Gestionar entrenadores");
+		btnGestionarEntrenador.setForeground(new Color(255, 255, 255));
 		btnGestionarEntrenador.setHorizontalAlignment(SwingConstants.LEFT);
 		btnGestionarEntrenador.setFont(new Font("Tahoma", Font.BOLD, 14));
 		btnGestionarEntrenador.setFocusable(false);
 		btnGestionarEntrenador.setBorder(null);
-		btnGestionarEntrenador.setBackground(new Color(255, 128, 64));
-		btnGestionarEntrenador.setBounds(37, 275, 200, 49);
+		btnGestionarEntrenador.setBackground(new Color(220, 3, 9));
+		btnGestionarEntrenador.setBounds(0, 275, 310, 49);
+		btnGestionarEntrenador.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseEntered(MouseEvent e) {
+				btnGestionarEntrenador.setBackground(new Color(220, 3, 9));
+			}
+
+			@Override
+			public void mouseExited(MouseEvent e) {
+				btnGestionarEntrenador.setBackground(new Color(242, 45, 45));
+			}
+
+			@Override
+			public void mousePressed(MouseEvent e) {
+				btnGestionarEntrenador.setBackground(new Color(242, 45, 45));
+			}
+		});
 		panelLeft.add(btnGestionarEntrenador);
 
 		JPanel topPanel = new JPanel();
@@ -292,42 +306,32 @@ public class SearchEntrenador extends JFrame implements ActionListener {
 		fillEquiposNames();
 
 	}
-	
-	
-	
-
-	
-
-
-	
-
 
 	public void fillEquiposNames() {
-		ArrayList<String> equiListaBox= new ArrayList<>();
+		ArrayList<String> equiListaBox = new ArrayList<>();
 		equiListaBox.removeAll(equiListaBox);
 		equiListaBox.add("");
 		equiListaBox = controller.getEquipos();
 
-	    for (String equipo : equiListaBox ) {
-	        txtEquiponame.addItem(equipo);
-	    }
+		for (String equipo : equiListaBox) {
+			txtEquiponame.addItem(equipo);
+		}
 
 	}
 
-	public void fillEntrenadoresEquipo(String nombreEquipo) { 
-		ArrayList<String> entListaBox= new ArrayList<>();
-	   // textFieldUSer.removeAllItems();
-	    entListaBox.removeAll(entListaBox);
-	    String primEntrenador = controller.getPrimEntrenador(nombreEquipo);
-	    String segEntrenador = controller.getSegEntrenador(nombreEquipo);
-	    
-	entListaBox = new ArrayList<>(Arrays.asList("", primEntrenador, segEntrenador));
+	public void fillEntrenadoresEquipo(String nombreEquipo) {
+		ArrayList<String> entListaBox = new ArrayList<>();
+		// textFieldUSer.removeAllItems();
+		entListaBox.removeAll(entListaBox);
+		String primEntrenador = controller.getPrimEntrenador(nombreEquipo);
+		String segEntrenador = controller.getSegEntrenador(nombreEquipo);
 
-	    for(String str : entListaBox) {
-	        textFieldUSer.addItem(str);
-	    }
+		entListaBox = new ArrayList<>(Arrays.asList("", primEntrenador, segEntrenador));
+
+		for (String str : entListaBox) {
+			textFieldUSer.addItem(str);
+		}
 	}
-
 
 	public void fillUserData(String miUser) {
 		Entrenador usr = (Entrenador) controller.getUsuario2(miUser);
@@ -378,9 +382,9 @@ public class SearchEntrenador extends JFrame implements ActionListener {
 				if (!nombreEquipo.isEmpty()) {
 					fillEntrenadoresEquipo(nombreEquipo);
 				}
-			} 
+			}
 
-		} else if (e.getSource() == textFieldUSer) {	
+		} else if (e.getSource() == textFieldUSer) {
 			Object selectedItem = textFieldUSer.getSelectedItem();
 
 			if (selectedItem instanceof String) {
@@ -390,8 +394,7 @@ public class SearchEntrenador extends JFrame implements ActionListener {
 					bottomPanel.setVisible(true);
 
 				}
-			} 
-		
+			}
 
 		} else if (e.getSource() == btnEliminarEntrenador) {
 			if (controller.borrarEntrenador(textFieldUSer.getSelectedItem().toString())) {
