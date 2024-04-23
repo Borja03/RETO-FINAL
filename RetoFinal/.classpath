@@ -8,8 +8,11 @@
 	<classpathentry kind="src" path="src"/>
 	<classpathentry kind="lib" path="src/libraries/flatlaf-3.4.jar"/>
 	<classpathentry kind="lib" path="src/libraries/jcalendar-1.4.jar"/>
+<<<<<<< HEAD
 	<classpathentry kind="lib" path="src/libraries/jgoodies-common-1.2.0.jar"/>
 	<classpathentry kind="lib" path="src/libraries/jgoodies-looks-2.4.1.jar"/>
+=======
+>>>>>>> d12c6eb3d85e8e66ab5e94a7572586e722491bb2
 	<classpathentry kind="lib" path="src/libraries/mysql-connector-java-8.0.15.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

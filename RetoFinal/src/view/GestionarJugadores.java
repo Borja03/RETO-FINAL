@@ -304,14 +304,6 @@ public class GestionarJugadores extends JFrame implements ActionListener {
 			this.dispose();
 			eliminarJugadores.setVisible(true);
 		} else if (e.getSource() == btnModificar) {
-
-			SearchJugadore m1 = new SearchJugadore(controller, userName, miEquipo, userType);
-			m1.setVisible(true);
-			this.dispose();
-		} else if (e.getSource() == btnConsultarEquipo) {
-			MenuEntrenador menuEntrenador = new MenuEntrenador(controller, userName, userType);
-
-
 			//ModificarJugadores m1 = new ModificarJugadores(controller);
 			//m1.setVisible(true);
 			//this.dispose();
@@ -326,6 +318,10 @@ public class GestionarJugadores extends JFrame implements ActionListener {
 		} else if (e.getSource() == btnLogOut) {
 			this.dispose();
 			controller.logOut();
+		}else if(e.getSource() == btnCambiarCont) {
+			CambiarContra cambiarContra = new CambiarContra(controller,userName,userType);
+			cambiarContra.setVisible(true);
+			this.dispose();
 		}
 
 		if (e.getSource() == btnOK) {
