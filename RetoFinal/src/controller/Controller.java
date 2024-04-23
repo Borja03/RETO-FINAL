@@ -56,7 +56,6 @@ public class Controller implements IController {
 	final String GETJugadorPassword = "SELECT password FROM  jugador where user=?";
 	final String GETEntrenadorPassword = "SELECT password FROM  entrenador where user=?";
 	final String MODIFICARuserIcon = "UPDATE jugador SET icon=?  WHERE user = ?";
-	final String NOMBREquipoE = "Select nombreEquipo FROM entrenador WHERE user = ?";
 
 	public boolean checkUserExist(String user) {
 		boolean exist = false;
@@ -381,33 +380,32 @@ public class Controller implements IController {
 		}
 		return partidosProgramados;
 	}
+	 @Override
+	    public boolean modificarPartido(String nombrePartido, String nuevoResultado) {
+	        boolean updated = false;
+	        try {
+	            openConnection("admin", "admin");
 
-	@Override
-	public boolean modificarPartido(String nombrePartido, String nuevoResultado) {
-		boolean updated = false;
-		try {
-			openConnection("admin", "admin");
+	            String updatePartidoQuery = "UPDATE juegan SET resultado = ? WHERE nombreEquipoLocal = ? OR nombreEquipoVisitante = ?";
+	            PreparedStatement updatePartidoStatement = connection.prepareStatement(updatePartidoQuery);
+	            updatePartidoStatement.setString(1, nuevoResultado);
+	            updatePartidoStatement.setString(2, nombrePartido);
+	            updatePartidoStatement.setString(3, nombrePartido);
 
-			String updatePartidoQuery = "UPDATE juegan SET resultado = ? WHERE nombreEquipoLocal = ? OR nombreEquipoVisitante = ?";
-			PreparedStatement updatePartidoStatement = connection.prepareStatement(updatePartidoQuery);
-			updatePartidoStatement.setString(1, nuevoResultado);
-			updatePartidoStatement.setString(2, nombrePartido);
-			updatePartidoStatement.setString(3, nombrePartido);
-
-			if (updatePartidoStatement.executeUpdate() > 0) {
-				updated = true;
-				System.out.println("Partido actualizado!");
-			} else {
-				System.out.println("Fallo al actualizar el partido en la tabla juegan.");
-			}
-		} catch (SQLException e) {
-			System.out.println("Error de SQL");
-			e.printStackTrace();
-		} finally {
-			closeConnection();
-		}
-		return updated;
-	}
+	            if (updatePartidoStatement.executeUpdate() > 0) {
+	                updated = true;
+	                System.out.println("Partido actualizado!");
+	            } else {
+	                System.out.println("Fallo al actualizar el partido en la tabla juegan.");
+	            }
+	        } catch (SQLException e) {
+	            System.out.println("Error de SQL");
+	            e.printStackTrace();
+	        } finally {
+	            closeConnection();
+	        }
+	        return updated;
+	    }
 
 	@Override
 	public void consultarEquipo() {
@@ -936,4 +934,20 @@ public class Controller implements IController {
 		}
 		return modified;
 	}
+	
+	  public boolean existePartidoEnFecha(java.sql.Timestamp fecha) {
+	        String query = "SELECT COUNT(*) AS count FROM juegan WHERE fechaInicio = ?";
+	        try (PreparedStatement statement = connection.prepareStatement(query)) {
+	            statement.setTimestamp(1, fecha);
+	            try (ResultSet resultSet = statement.executeQuery()) {
+	                if (resultSet.next()) {
+	                    int count = resultSet.getInt("count");
+	                    return count > 0;
+	                }
+	            }
+	        } catch (SQLException e) {
+	            e.printStackTrace();
+	        }
+	        return false;
+	    }
 }
