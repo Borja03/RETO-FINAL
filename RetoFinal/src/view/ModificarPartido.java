@@ -271,7 +271,7 @@ public class ModificarPartido extends JFrame implements ActionListener {
 				}
 				equipoLocalLabel.setText(juegan.getNombreEquipoLocal());
 				equipoVisitanteLabel.setText(juegan.getNombreEquipoVisitante());
-				System.out.println(juegan.getResultado());
+				estadioField.setText(controller.getNombreEstadio(juegan));
 				char res1 = juegan.getResultado().charAt(0);
 				resultado1.setText(String.valueOf(res1));
 				char res2 = juegan.getResultado().charAt(2);
@@ -306,7 +306,6 @@ public class ModificarPartido extends JFrame implements ActionListener {
 			int minute = calendar.get(Calendar.MINUTE);
 			int second = calendar.get(Calendar.SECOND);
 			fecha = fecha.withHour(hour).withMinute(minute).withSecond(second);
-			fecha = fecha.minusMonths(1);
 			String resultado = resultado1.getText() + label.getText() + resultado2.getText();
 			Juegan juegan = new Juegan(local, visitante, fecha, resultado);
 			controller.modificarPartido(juegan, date);
