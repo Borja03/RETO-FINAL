@@ -1,16 +1,18 @@
 package controller;
 
-import java.security.Timestamp;
+import java.time.LocalDateTime;
 import java.sql.Blob;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Date;
 
 import model.equipos.Equipo;
+import model.partido.Juegan;
 import model.usuarios.CargoEntrenador;
 import model.usuarios.Entrenador;
 import model.usuarios.Jugador;
@@ -46,7 +48,7 @@ public class Controller implements IController {
 	final String ENTRENADORequipo = "SELECT nombreEquipo FROM  entrenador where user=?";
 	final String JUGADORDORequipo = "SELECT nombreEquipo FROM  jugador where user=?";
 	final String NOMBREequipo = "SELECT * FROM  equipo where nombreEquipo=?";
-	final String Partidos = "SELECT nombreEquipoLocal, nombreEquipoVisitante, fechaInicio FROM juegan";
+	final String Partidos = "SELECT nombreEquipoLocal, nombreEquipoVisitante, fechaInicio, resultado FROM juegan";
 	final String ENTRENADORnombre = "SELECT user FROM  entrenador where nombreEquipo=? and tipoEntrenador=?";
 	final String JUGADORESequipo = "SELECT * FROM  jugador where nombreEquipo=?";
 	final String DORSALlLista = "SELECT dorsal FROM  jugador where nombreEquipo=?";
@@ -57,6 +59,8 @@ public class Controller implements IController {
 	final String GETEntrenadorPassword = "SELECT password FROM  entrenador where user=?";
 	final String MODIFICARuserIcon = "UPDATE jugador SET icon=?  WHERE user = ?";
 	final String NOMBREquipoE = "Select nombreEquipo FROM entrenador WHERE user = ?";
+	final String nombreEstadio = "SELECT nombreEstadio from EQUIPO where nombreEquipo = ?";
+	final String modificarPartido = "UPDATE juegan SET fechaInicio = ?, resultado = ? WHERE fechaInicio = ?";
 
 	public boolean checkUserExist(String user) {
 		boolean exist = false;
@@ -360,9 +364,9 @@ public class Controller implements IController {
 		return modified;
 	}
 
-	public ArrayList<String> listaPartidos() {
+	public ArrayList<Juegan> listaPartidos() {
 		this.openConnection("admin", "admin");
-		ArrayList<String> partidosProgramados = new ArrayList<>();
+		ArrayList<Juegan> partidosProgramados = new ArrayList<>();
 		try {
 			statement = connection.prepareStatement(Partidos);
 			resultSet = statement.executeQuery();
@@ -370,8 +374,10 @@ public class Controller implements IController {
 			while (resultSet.next()) {
 				String local = resultSet.getString("nombreEquipoLocal");
 				String visitante = resultSet.getString("nombreEquipoVisitante");
-				Date fecha = resultSet.getTimestamp("fechaInicio");
-				String partido = local + " VS " + visitante + " fecha: " + fecha.toString();
+				java.sql.Timestamp timestamp = resultSet.getTimestamp("fechaInicio");
+				LocalDateTime fecha = timestamp.toLocalDateTime();
+				String resultado = resultSet.getString("resultado");
+				Juegan partido = new Juegan(local, visitante, fecha, resultado);
 				partidosProgramados.add(partido);
 			}
 		} catch (SQLException e) {
@@ -383,30 +389,20 @@ public class Controller implements IController {
 	}
 
 	@Override
-	public boolean modificarPartido(String nombrePartido, String nuevoResultado) {
-		boolean updated = false;
+	public void modificarPartido(Juegan juegan, LocalDateTime fecha) {
+		this.openConnection("admin", "admin");
+		Timestamp fechaCambiada = Timestamp.valueOf(juegan.getFechaInicio());
+		Timestamp fechaAntigua = Timestamp.valueOf(fecha);
 		try {
-			openConnection("admin", "admin");
-
-			String updatePartidoQuery = "UPDATE juegan SET resultado = ? WHERE nombreEquipoLocal = ? OR nombreEquipoVisitante = ?";
-			PreparedStatement updatePartidoStatement = connection.prepareStatement(updatePartidoQuery);
-			updatePartidoStatement.setString(1, nuevoResultado);
-			updatePartidoStatement.setString(2, nombrePartido);
-			updatePartidoStatement.setString(3, nombrePartido);
-
-			if (updatePartidoStatement.executeUpdate() > 0) {
-				updated = true;
-				System.out.println("Partido actualizado!");
-			} else {
-				System.out.println("Fallo al actualizar el partido en la tabla juegan.");
-			}
+			statement = connection.prepareStatement(modificarPartido);
+			statement.setTimestamp(1, fechaCambiada);
+			statement.setString(2, juegan.getResultado());
+			statement.setTimestamp(3, fechaAntigua);
+			statement.executeUpdate();
 		} catch (SQLException e) {
-			System.out.println("Error de SQL");
 			e.printStackTrace();
-		} finally {
-			closeConnection();
 		}
-		return updated;
+		this.closeConnection();
 	}
 
 	@Override
@@ -935,5 +931,23 @@ public class Controller implements IController {
 			this.closeConnection();
 		}
 		return modified;
+	}
+
+	public String getNombreEstadio(Juegan juegan) {
+		String estadio = "";
+		this.openConnection("admin", "admin");
+		try {
+			statement = connection.prepareStatement(nombreEstadio);
+			statement.setString(1, juegan.getNombreEquipoLocal());
+			resultSet = statement.executeQuery();
+			if (resultSet.next()) {
+				estadio = resultSet.getString("nombreEstadio");
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		this.closeConnection();
+		return estadio;
+
 	}
 }

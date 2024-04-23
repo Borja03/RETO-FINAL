@@ -3,14 +3,15 @@ package controller;
 
 import java.security.Timestamp;
 import java.sql.Blob;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Date;
 
 import model.equipos.Equipo;
+import model.partido.Juegan;
 import model.usuarios.CargoEntrenador;
 import model.usuarios.Jugador;
 import model.usuarios.Usuarios;
-
 
 public interface IController {
 	public boolean checkUserExist(String user);
@@ -23,7 +24,7 @@ public interface IController {
 
 	public boolean crearEntrenador(String nombreEquipo, String user, String password, CargoEntrenador tipoEntrenador);
 
-	public boolean crearJugador(String user,String password,int dorsal,int numeroGoles,int numeroAsistencias,
+	public boolean crearJugador(String user, String password, int dorsal, int numeroGoles, int numeroAsistencias,
 			String nombreEquipo);
 
 	public boolean borrarEntrenador(String user);
@@ -42,25 +43,34 @@ public interface IController {
 
 	public ArrayList<String> getEquipos();
 
-	public String getMyTeam(String userName,String userType);
+	public String getMyTeam(String userName, String userType);
 
 	public Usuarios getUsuario(String user);
 
 	public ArrayList<Equipo> listarEquiposCP();
 
 	boolean crearPartido(String equipoLocal, String equipoVisitante, java.sql.Timestamp fechaInicio);
+
 	public Equipo getEquipo(String nombreEquipo);
+
 	public String getPrimEntrenador(String eqName);
+
 	public String getSegEntrenador(String eqName);
+
 	public ArrayList<Integer> getUsedDorsal(String eqName);
+
 	public ArrayList<Jugador> getJugadoresPorEquipo(String nombreEquipo);
+
 	boolean cambiarPassword(String user, String newPassword, String userType);
+
 	public boolean borrarEquipo(String nombreEquipo);
+
 	public boolean modificarEquipo(String nombreEquipo, int titulos, String nombreEstadio, Blob logo);
-	public String getUsuarioPassword(String userName,String userType);
-	public boolean updateUsrIcon(String user, Blob userIcon,String userType); 
 
+	public String getUsuarioPassword(String userName, String userType);
 
-	boolean modificarPartido(String nombrePartido, String nuevoResultado);
+	public boolean updateUsrIcon(String user, Blob userIcon, String userType);
+
+	public void modificarPartido(Juegan juegan, LocalDateTime fecha);
 
 }
