@@ -6,6 +6,9 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.sql.Timestamp;
 import java.time.LocalDate;
+import java.time.LocalTime;
+import java.time.ZoneId;
+import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.regex.Matcher;
@@ -46,7 +49,7 @@ class CrearPartido extends JFrame implements ActionListener {
 	private HashMap<String, String> estadiosEquipos = new HashMap<>();
 	private ArrayList<String> equiposDisponibles = new ArrayList<>();
 	private JButton okButton;
-	private JButton btnModificarPartido; // Botón Modificar partido
+	private JButton btnModificarPartido; 
 	private String user;
 	private String userType;
 
@@ -224,11 +227,38 @@ class CrearPartido extends JFrame implements ActionListener {
 			frame.setVisible(true);
 			// dispose();
 		} else if (o == okButton) {
-			String equipoLocal = (String) equipoLocalComboBox.getSelectedItem();
-			String equipoVisitante = (String) equipoVisitanteComboBox.getSelectedItem();
-			Timestamp fechaInicio = new Timestamp(datePicker.getDate().getTime());
-			java.util.Date horaSeleccionada = (java.util.Date) timeSpinner.getValue();
-			Timestamp horaInicio = new Timestamp(horaSeleccionada.getTime());
+			// Obtener la hora actual
+	        LocalTime horaActual = LocalTime.now();
+	        // Obtener la hora seleccionada para el partido
+	        java.util.Date horaSeleccionada = (java.util.Date) timeSpinner.getValue();
+	        LocalTime horaPartido = horaSeleccionada.toInstant().atZone(ZoneId.systemDefault()).toLocalTime();
+
+	        // Calcular la diferencia en horas
+	        long horasDiferencia = ChronoUnit.HOURS.between(horaActual, horaPartido);
+
+	        // Verificar si la diferencia es menor que dos horas
+	        if (horasDiferencia < 2) {
+	            JOptionPane.showMessageDialog(this, "Debe haber al menos dos horas de diferencia entre la hora actual y la hora del partido.");
+	            return; // No permite continuar
+	        }
+			LocalDate currentDate = LocalDate.now();
+
+	        String equipoLocal = (String) equipoLocalComboBox.getSelectedItem();
+	        String equipoVisitante = (String) equipoVisitanteComboBox.getSelectedItem();
+	        Timestamp fechaInicio = new Timestamp(datePicker.getDate().getTime());
+	        Timestamp horaInicio = new Timestamp(horaSeleccionada.getTime());
+
+	        // Verificar si la fecha seleccionada es anterior a la fecha actual
+	        if (fechaInicio.toLocalDateTime().toLocalDate().isBefore(currentDate)) {
+	            JOptionPane.showMessageDialog(this, "La fecha seleccionada es anterior a la fecha actual.");
+	            return; // No permite continuar
+	        }
+
+	        // Verificar si la fecha seleccionada ya tiene un partido programado
+	        if (controller.existePartidoEnFecha(fechaInicio)) {
+	            JOptionPane.showMessageDialog(this, "Ya existe un partido programado para la fecha seleccionada.");
+	            return; // No permite continuar
+	        }
 
 			if (equipoLocal != null && equipoVisitante != null && fechaInicio != null && horaInicio != null) {
 				fechaInicio.setHours(horaInicio.getHours());
