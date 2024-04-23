@@ -448,7 +448,7 @@ public class ModificarEquipos extends JFrame implements ActionListener {
 				if (opcion == JOptionPane.NO_OPTION) {
 					this.dispose();
 
-					MenuAdmin ma = new MenuAdmin(controller, userName, userType);
+					MenuAdmin ma = new MenuAdmin(controller);
 					ma.setVisible(true);
 				}
 

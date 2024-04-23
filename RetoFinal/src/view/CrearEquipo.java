@@ -363,7 +363,7 @@ public class CrearEquipo extends JFrame implements ActionListener {
 						JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE, null);
 				if (opcion == JOptionPane.NO_OPTION) {
 					this.dispose();
-					MenuAdmin ma = new MenuAdmin(controller, userName,userType);
+					MenuAdmin ma = new MenuAdmin(controller);
 					ma.setVisible(true);
 				}
 
