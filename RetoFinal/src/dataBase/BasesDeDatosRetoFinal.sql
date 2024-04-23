@@ -4,15 +4,13 @@ use laLiga;
 create table usuario(
 user varchar(20) primary key,
 password varchar(20),
-tipo varchar(10),
-icon blob
+tipo varchar(10)
 );
 
 create table equipo(
 nombreEquipo varchar(30) primary key,
 titulos integer unsigned,
-nombreEstadio varchar(30),
-logo blob
+nombreEstadio varchar(30)
 );
 
 create table juegan(
@@ -48,11 +46,7 @@ icon blob
 );
 
 insert into equipo values('Athletic de Bilbao',100,'San Mames');
-<<<<<<< HEAD
-insert into entrenador values('entrenador','1234','1','Primer_entrenador','Athletic de Bilbao');
-=======
-insert into entrenador values('entrenador','1234','1','PrimerEntrenador','Athletic de Bilbao');
->>>>>>> 6bb11080992ffe17408607de307d6a7ef2e36895
+insert into entrenador (user, password, tipo, tipoEntrenador, nombreEquipo) values('entrenador','1234','1','Primer_entrenador','Athletic de Bilbao');
 insert into jugador values('jugador','1234','1',9,99,500,'Athletic de Bilbao');
 INSERT INTO equipo (nombreEquipo, titulos, nombreEstadio) VALUES ('Barsa', 1000, 'Camp Nou');
 INSERT INTO jugador (user, password, tipo, dorsal, numeroGoles, numeroAsistencias, nombreEquipo)

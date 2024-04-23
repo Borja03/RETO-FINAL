@@ -6,6 +6,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.util.ArrayList;
+import java.util.Arrays;
 
 import javax.swing.JButton;
 import javax.swing.JComboBox;
@@ -25,7 +27,6 @@ public class SearchEntrenador extends JFrame implements ActionListener {
 
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
-	private JButton btnCrear;
 	private JButton btnDeleteMod;
 	private Controller controller;
 	private JButton btnLogOut;
@@ -36,16 +37,17 @@ public class SearchEntrenador extends JFrame implements ActionListener {
 	private JLabel lblUser;
 	private JLabel lblContrasena;
 	private JLabel lblCargo;
-	private JTextField textFieldUSer;
+	private JComboBox<String> textFieldUSer;
 	private JTextField textFieldContrasena;
 	private JComboBox<String> textFieldCargo;
 	private JButton btnEliminarEntrenador;
-	private JTextField txtEquiponame;
+	private JComboBox<String> txtEquiponame;
 	private JButton btnBuscarEntrenador;
 	private JPanel bottomPanel;
 	private String user;
 	private JButton btnModificarEntrenador;
 	private String userType;
+	private JButton btnAddEntrenador;
 	private JButton btnGestionarEntrenador;
 
 	public SearchEntrenador(Controller controller) {
@@ -58,15 +60,15 @@ public class SearchEntrenador extends JFrame implements ActionListener {
 		contentPane.setSize(1366, 768);
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
-
-		btnCrear = new JButton("Añadir Entrenadores");
-		btnCrear.setFont(new Font("Tahoma", Font.BOLD, 14));
-		btnCrear.setBackground(new Color(240, 240, 240));
-		btnCrear.setFocusable(false);
-		btnCrear.setBorder(null);
-		btnCrear.setBounds(328, 40, 176, 35);
-		contentPane.add(btnCrear);
-
+		
+		btnAddEntrenador = new JButton("Añadir Entrenadores");
+		btnAddEntrenador.setFont(new Font("Tahoma", Font.BOLD, 14));
+		btnAddEntrenador.addActionListener(this);
+		btnAddEntrenador.setBackground(new Color(240, 240, 240));
+		btnAddEntrenador.setFocusable(false);
+		btnAddEntrenador.setBorder(null);
+		btnAddEntrenador.setBounds(328, 40, 176, 35);
+		contentPane.add(btnAddEntrenador);
 
 		btnDeleteMod = new JButton("Eliminar/Modificar Entrenadores");
 		btnDeleteMod.setFont(new Font("Tahoma", Font.BOLD, 14));
@@ -138,7 +140,6 @@ public class SearchEntrenador extends JFrame implements ActionListener {
 			}
 		});
 		panelLeft.add(btnModPartidos);
-
 
 		lblWelcome = new JLabel("   Welcome Admin");
 
@@ -240,12 +241,10 @@ public class SearchEntrenador extends JFrame implements ActionListener {
 		lblEquipo.setBounds(63, 42, 49, 17);
 		topPanel.add(lblEquipo);
 
-		txtEquiponame = new JTextField();
+		txtEquiponame = new JComboBox<String>();
+		txtEquiponame.addActionListener(this);
 		txtEquiponame.setFont(new Font("Tahoma", Font.BOLD, 14));
-		txtEquiponame.setBounds(181, 39, 146, 23);
-		txtEquiponame.setColumns(10);
-		txtEquiponame.setText("");
-		txtEquiponame.setEditable(false);
+		txtEquiponame.setBounds(150, 27, 250, 34);
 		topPanel.add(txtEquiponame);
 
 		lblUser = new JLabel("Usuario");
@@ -253,15 +252,15 @@ public class SearchEntrenador extends JFrame implements ActionListener {
 		lblUser.setBounds(63, 85, 55, 17);
 		topPanel.add(lblUser);
 
-		textFieldUSer = new JTextField();
+		textFieldUSer = new JComboBox<String>();
+		textFieldUSer.addActionListener(this);
 		textFieldUSer.setFont(new Font("Tahoma", Font.BOLD, 14));
-		textFieldUSer.setBounds(181, 82, 146, 23);
+		textFieldUSer.setBounds(150, 81, 250, 34);
 		topPanel.add(textFieldUSer);
-		textFieldUSer.setColumns(10);
 
 		btnBuscarEntrenador = new JButton("Buscar Entrenador");
 		btnBuscarEntrenador.setFont(new Font("Tahoma", Font.BOLD, 14));
-		btnBuscarEntrenador.setBounds(467, 81, 200, 35);
+		btnBuscarEntrenador.setBounds(467, 115, 200, 35);
 		topPanel.add(btnBuscarEntrenador);
 		btnBuscarEntrenador.addActionListener(this);
 
@@ -309,12 +308,38 @@ public class SearchEntrenador extends JFrame implements ActionListener {
 		bottomPanel.setVisible(false);
 	}
 
-	public void fillUserData() {
-		Entrenador usr = (Entrenador) controller.getUsuario2(textFieldUSer.getText());
+	public void fillEquiposNames() {
+		ArrayList<String> equiListaBox = new ArrayList<>();
+		equiListaBox.removeAll(equiListaBox);
+		equiListaBox.add("");
+		equiListaBox = controller.getEquipos();
+
+		for (String equipo : equiListaBox) {
+			txtEquiponame.addItem(equipo);
+		}
+
+	}
+
+	public void fillEntrenadoresEquipo(String nombreEquipo) {
+		ArrayList<String> entListaBox = new ArrayList<>();
+		// textFieldUSer.removeAllItems();
+		entListaBox.removeAll(entListaBox);
+		String primEntrenador = controller.getPrimEntrenador(nombreEquipo);
+		String segEntrenador = controller.getSegEntrenador(nombreEquipo);
+
+		entListaBox = new ArrayList<>(Arrays.asList("", primEntrenador, segEntrenador));
+
+		for (String str : entListaBox) {
+			textFieldUSer.addItem(str);
+		}
+	}
+
+	public void fillUserData(String miUser) {
+		Entrenador usr = (Entrenador) controller.getUsuario2(miUser);
 		if (usr != null) {
-			textFieldUSer.setText(usr.getUser());
+			textFieldUSer.addItem(usr.getUser());
 			textFieldContrasena.setText(usr.getContrasenia());
-			txtEquiponame.setText(usr.getNombreEquipo());
+			txtEquiponame.addItem(usr.getNombreEquipo());
 
 			CargoEntrenador cargo = usr.getCargo();
 
@@ -328,27 +353,53 @@ public class SearchEntrenador extends JFrame implements ActionListener {
 		}
 	}
 
-	
+
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		if (e.getSource() == btnCrearPartido) {
 			CrearPartido cPartido = new CrearPartido(controller);
 			this.dispose();
 			cPartido.setVisible(true);
+		} else if (e.getSource() == btnAddEntrenador) {
+
+			GestionarEntre gestionarEntre = new GestionarEntre(controller);
+			this.dispose();
+			gestionarEntre.setVisible(true);
+
 		} else if (e.getSource() == btnGestionarEquipo) {
-			//CrearEquipo cEquipo = new CrearEquipo(controller, user, userType);
-			//this.dispose();
-			//cEquipo.setVisible(true);
+			MenuAdmin cEquipo = new MenuAdmin(controller);
+			this.dispose();
+			cEquipo.setVisible(true);
 		} else if (e.getSource() == btnLogOut) {
 			this.dispose();
 			controller.logOut();
-		} else if (e.getSource() == btnBuscarEntrenador) {
-			if (controller.checkUserExist2(textFieldUSer.getText())) {
-				fillUserData();
-				bottomPanel.setVisible(true);
+		} else if (e.getSource() == btnModPartidos) {
+			MenuAdmin cEquipo = new MenuAdmin(controller);
+			this.dispose();
+			controller.logOut();
+		} else if (e.getSource() == txtEquiponame) {
+			Object selectedItem = txtEquiponame.getSelectedItem();
+			if (selectedItem instanceof String) {
+				String nombreEquipo = (String) selectedItem;
+				if (!nombreEquipo.isEmpty()) {
+					fillEntrenadoresEquipo(nombreEquipo);
+				}
 			}
+
+		} else if (e.getSource() == textFieldUSer) {
+			Object selectedItem = textFieldUSer.getSelectedItem();
+
+			if (selectedItem instanceof String) {
+				String usr = (String) selectedItem;
+				if (!usr.isEmpty()) {
+					fillUserData(usr);
+					bottomPanel.setVisible(true);
+
+				}
+			}
+
 		} else if (e.getSource() == btnEliminarEntrenador) {
-			if (controller.borrarEntrenador(textFieldUSer.getText())) {
+			if (controller.borrarEntrenador(textFieldUSer.getSelectedItem().toString())) {
 				int opcion = JOptionPane.showConfirmDialog(this,
 						"El entrenador ha sido eliminado correctamente\n¿Desea eliminar otro entrenador?", "",
 						JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE, null);
@@ -360,9 +411,9 @@ public class SearchEntrenador extends JFrame implements ActionListener {
 				}
 			}
 		} else if (e.getSource() == btnModificarEntrenador) {
-			String usr = textFieldUSer.getText();
+			String usr = textFieldUSer.getSelectedItem().toString();
 			String password = textFieldContrasena.getText();
-			String myTeam = controller.getMyTeam(textFieldUSer.getText(), userType);
+			String myTeam = controller.getMyTeam(textFieldUSer.getSelectedItem().toString(), userType);
 			String tipoString = (String) textFieldCargo.getSelectedItem();
 			CargoEntrenador tipo = null;
 			if (tipoString.equals("Primer_entrenador")) {
@@ -384,5 +435,5 @@ public class SearchEntrenador extends JFrame implements ActionListener {
 			}
 		}
 	}
-	
+
 }

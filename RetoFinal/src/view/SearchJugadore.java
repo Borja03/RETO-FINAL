@@ -426,13 +426,11 @@ public class SearchJugadore extends JFrame implements ActionListener {
 		if (e.getSource() == btnDelete) {
 			// EliminarJugadores e1 = new EliminarJugadores(controller, userName);
 			// e1.setVisible(true);
-
-			// this.dispose(); 
-
+			// this.dispose();
 		} else if (e.getSource() == btnModificar) {
-			SearchJugadore m1 = new SearchJugadore(controller, userName, miEquipo, userType);
-			m1.setVisible(true);
-			this.dispose();
+		//	ModificarJugadores m1 = new ModificarJugadores(controller);
+			//m1.setVisible(true);
+			//this.dispose();
 		}
 
 		if (e.getSource() == btnElimimarJugador) {
