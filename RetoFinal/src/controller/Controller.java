@@ -935,19 +935,24 @@ public class Controller implements IController {
 		return modified;
 	}
 	
-	  public boolean existePartidoEnFecha(java.sql.Timestamp fecha) {
-	        String query = "SELECT COUNT(*) AS count FROM juegan WHERE fechaInicio = ?";
-	        try (PreparedStatement statement = connection.prepareStatement(query)) {
-	            statement.setTimestamp(1, fecha);
-	            try (ResultSet resultSet = statement.executeQuery()) {
-	                if (resultSet.next()) {
-	                    int count = resultSet.getInt("count");
-	                    return count > 0;
-	                }
+	public boolean existePartidoEnFecha(java.sql.Timestamp fecha) {
+	    // Seleccionar todos los partidos que ocurran en la misma fecha o hasta dos horas después
+	    String query = "SELECT COUNT(*) AS count FROM juegan WHERE fechaInicio >= ? AND fechaInicio <= DATE_ADD(?, INTERVAL 2 HOUR)";
+	    try (PreparedStatement statement = connection.prepareStatement(query)) {
+	        statement.setTimestamp(1, fecha);
+	        statement.setTimestamp(2, fecha);
+	        try (ResultSet resultSet = statement.executeQuery()) {
+	            if (resultSet.next()) {
+	                int count = resultSet.getInt("count");
+	                return count > 0;
 	            }
-	        } catch (SQLException e) {
-	            e.printStackTrace();
 	        }
-	        return false;
+	    } catch (SQLException e) {
+	        e.printStackTrace();
 	    }
+	    return false;
+	}
+
+	  
+	  
 }
