@@ -62,5 +62,6 @@ public interface IController {
 
 
 	boolean modificarPartido(String nombrePartido, String nuevoResultado);
+	public boolean existePartidoEnFecha(java.sql.Timestamp fecha);
 
 }
