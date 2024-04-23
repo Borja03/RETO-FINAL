@@ -67,6 +67,7 @@ public class MenuJugador extends JFrame implements ActionListener {
 	private Blob usrBlobIcon;
 	private JButton btnUpload;
 	
+	
 	public MenuJugador(Controller cont, String userConnected,String userType) {
 		this.controller = cont;
 		this.userName = userConnected;
