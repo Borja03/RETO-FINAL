@@ -132,7 +132,7 @@ public class GestionarEntre extends JFrame implements ActionListener {
 			}
 		});
 
-		lblWelcome = new JLabel("Welcome " + user + "");
+		lblWelcome = new JLabel("Welcome Admin" + "");
 		lblWelcome.setBounds(64, 180, 217, 34);
 		lblWelcome.setForeground(new Color(255, 255, 0));
 		lblWelcome.setFont(new Font("Tahoma", Font.BOLD, 14));

@@ -157,7 +157,7 @@ public class CrearEquipo extends JFrame implements ActionListener {
 		});
 		panelLeft.add(btnCambiarDorsal);
 
-		lblWelcome = new JLabel("Welcome " + userName + "");
+		lblWelcome = new JLabel("Welcome Admin" + "");
 		lblWelcome.setForeground(new Color(255, 255, 0));
 		lblWelcome.setFont(new Font("Tahoma", Font.BOLD, 14));
 		lblWelcome.setBounds(64, 180, 217, 34);
@@ -237,7 +237,7 @@ public class CrearEquipo extends JFrame implements ActionListener {
 		btnAddEquipo.setBounds(74, 10, 150, 34);
 		topMenuPanelAddEq.add(btnAddEquipo);
 
-		btnModificar = new JButton("Modifacar  equipo");
+		btnModificar = new JButton("Modificar  equipo");
 		btnModificar.setBackground(SystemColor.menu);
 		btnModificar.addActionListener(this);
 		btnModificar.setFocusable(false);

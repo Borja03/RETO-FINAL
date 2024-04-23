@@ -135,7 +135,7 @@ public class SearchEntrenador extends JFrame implements ActionListener {
 		panelLeft.add(btnModPartidos);
 
 
-		lblWelcome = new JLabel("Welcome " + user + "");
+		lblWelcome = new JLabel("Welcome Admin" +"");
 
 		lblWelcome.setForeground(new Color(255, 255, 0));
 		lblWelcome.setFont(new Font("Tahoma", Font.BOLD, 14));
