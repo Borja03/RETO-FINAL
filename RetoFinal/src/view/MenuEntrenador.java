@@ -49,6 +49,7 @@ public class MenuEntrenador extends JFrame implements ActionListener {
 	private String nombreEquipo;
 	private Blob teamLogo;
 	private String userType;
+	private JButton btnCambiarContrasena;
 
 	private JLabel lblJugadoresLista;
 	public MenuEntrenador(Controller cont, String entrConnected,String userType) {
@@ -131,7 +132,7 @@ public class MenuEntrenador extends JFrame implements ActionListener {
 		btnLogOut.addActionListener(this);
 		btnLogOut.setFont(new Font("Tahoma", Font.BOLD, 14));
 
-		JButton btnCambiarContrasena = new JButton("     Cambiar contraseña");
+		 btnCambiarContrasena = new JButton("     Cambiar contraseña");
 		btnCambiarContrasena.addActionListener(this);
 		btnCambiarContrasena.setBounds(20, 513, 200, 49);
 		panelLeft.add(btnCambiarContrasena);
@@ -298,6 +299,10 @@ public class MenuEntrenador extends JFrame implements ActionListener {
 		else if (e.getSource() == btnConsultarPartidos) {
 			ConsultarPartidos consultarPartidos = new ConsultarPartidos(controller,userName,userType);
 			consultarPartidos.setVisible(true);
+			this.dispose();
+		}else if(e.getSource() == btnCambiarContrasena) {
+			CambiarContra cambiarContra = new CambiarContra(controller,userName,userType);
+			cambiarContra.setVisible(true);
 			this.dispose();
 		}
 

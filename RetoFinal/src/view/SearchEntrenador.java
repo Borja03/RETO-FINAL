@@ -20,6 +20,7 @@ import javax.swing.border.EmptyBorder;
 import controller.Controller;
 import model.usuarios.CargoEntrenador;
 import model.usuarios.Entrenador;
+import model.usuarios.Jugador;
 
 public class SearchEntrenador extends JFrame implements ActionListener {
 
