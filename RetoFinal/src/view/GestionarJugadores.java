@@ -318,6 +318,10 @@ public class GestionarJugadores extends JFrame implements ActionListener {
 		} else if (e.getSource() == btnLogOut) {
 			this.dispose();
 			controller.logOut();
+		}else if(e.getSource() == btnCambiarCont) {
+			CambiarContra cambiarContra = new CambiarContra(controller,userName,userType);
+			cambiarContra.setVisible(true);
+			this.dispose();
 		}
 
 		if (e.getSource() == btnOK) {

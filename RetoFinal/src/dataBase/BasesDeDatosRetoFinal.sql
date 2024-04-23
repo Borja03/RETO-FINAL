@@ -46,10 +46,12 @@ nombreEquipo varchar(30),
 foreign key (nombreEquipo) references equipo(nombreEquipo) on delete cascade,
 icon blob
 );
-
-insert into equipo values('Athletic de Bilbao',100,'San Mames');
+INSERT INTO entrenador (user, password, tipo, tipoEntrenador, nombreEquipo) VALUES ('borja', '1234', '1', 'Primer_entrenador', 'Athletic de Bilbao');
+select * from equipo;
+insert into equipo (nombreEquipo,titulos,nombreEstadio) values('Athletic de Bilbao',100,'San Mames');
 insert into entrenador values('entrenador','1234','1','PrimerEntrenador','Athletic de Bilbao');
-insert into jugador values('jugador','1234','1',9,99,500,'Athletic de Bilbao');
+insert into jugador (user,password ,tipo ,dorsal ,numeroGoles ,numeroAsistencias  ,nombreEquipo) values('jugador','1234jugador','1',9,99,500,'Athletic de Bilbao');
 INSERT INTO equipo (nombreEquipo, titulos, nombreEstadio) VALUES ('Barsa', 1000, 'Camp Nou');
 INSERT INTO jugador (user, password, tipo, dorsal, numeroGoles, numeroAsistencias, nombreEquipo)
 VALUES ('alder', 'alder', 'jugador', 10, 0, 0, 'Barsa');
+select * from entrenador;

@@ -48,6 +48,7 @@ public class ConsultarPartidos extends JFrame implements ActionListener {
 	private JLabel lblEstadio;
 	private JPanel cardsPanel;
 	private String userType;
+	private JButton btnCambiarContrasena;
 
 	public ConsultarPartidos(Controller cont, String entrConnected,String userType) {
 		this.controller = cont;
@@ -130,7 +131,7 @@ public class ConsultarPartidos extends JFrame implements ActionListener {
         btnLogOut.addActionListener(this);
         btnLogOut.setFont(new Font("Tahoma", Font.BOLD, 14));
 
-        JButton btnCambiarContrasena = new JButton("     Cambiar contraseña");
+        btnCambiarContrasena = new JButton("     Cambiar contraseña");
         btnCambiarContrasena.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
             }
@@ -142,6 +143,7 @@ public class ConsultarPartidos extends JFrame implements ActionListener {
         btnCambiarContrasena.setFocusable(false);
         btnCambiarContrasena.setBorder(null);
         btnCambiarContrasena.setBackground(new Color(128, 128, 0));
+        btnCambiarContrasena.addActionListener(this);
 		
         
 
@@ -242,6 +244,10 @@ public class ConsultarPartidos extends JFrame implements ActionListener {
 		} else if (e.getSource() == btnConsultarEquipo) {
 			MenuEntrenador menuEntrenador = new MenuEntrenador(controller, userName,userType);
 			menuEntrenador.setVisible(true);
+			this.dispose();
+		}else if(e.getSource() == btnCambiarContrasena) {
+			CambiarContra cambiarContra = new CambiarContra(controller,userName,userType);
+			cambiarContra.setVisible(true);
 			this.dispose();
 		}
 
