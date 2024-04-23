@@ -4,6 +4,8 @@ import java.awt.Color;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.sql.Timestamp;
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -62,65 +64,148 @@ class CrearPartido extends JFrame implements ActionListener {
 		contentPane.setLayout(null);
 
 		JPanel panelLeft = new JPanel();
-		panelLeft.setBounds(0, 0, 329, 680);
+		panelLeft.setBounds(0, 0, 312, 680);
 		panelLeft.setBackground(new Color(242, 45, 45));
 		getContentPane().add(panelLeft);
 		panelLeft.setLayout(null);
 
-		btnLogOut = new JButton("Log Out");
+		btnLogOut = new JButton("   Log Out");
+		btnLogOut.setForeground(new Color(255, 255, 255));
 		btnLogOut.setHorizontalAlignment(SwingConstants.LEFT);
 		btnLogOut.setBackground(new Color(242, 45, 45));
-		btnLogOut.setBounds(57, 550, 200, 49);
+		btnLogOut.setBounds(0, 595, 310, 49);
 		btnLogOut.setFocusable(false);
 		btnLogOut.setBorder(null);
 		panelLeft.add(btnLogOut);
 		btnLogOut.addActionListener(this);
 		btnLogOut.setFont(new Font("Tahoma", Font.BOLD, 14));
+		btnLogOut.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseEntered(MouseEvent e) {
+				btnLogOut.setBackground(new Color(220, 3, 9));
+			}
 
-		btnGestEquipo = new JButton("Gestionar equipo");
+			@Override
+			public void mouseExited(MouseEvent e) {
+				btnLogOut.setBackground(new Color(242, 45, 45));
+			}
+
+			@Override
+			public void mousePressed(MouseEvent e) {
+				btnLogOut.setBackground(new Color(242, 45, 45));
+			}
+		});
+
+		btnGestEquipo = new JButton("     Gestionar equipo");
+		btnGestEquipo.setForeground(new Color(255, 255, 255));
 		btnGestEquipo.addActionListener(this);
 		btnGestEquipo.setHorizontalAlignment(SwingConstants.LEFT);
 		btnGestEquipo.setFont(new Font("Tahoma", Font.BOLD, 14));
 		btnGestEquipo.setFocusable(false);
 		btnGestEquipo.setBorder(null);
 		btnGestEquipo.setBackground(new Color(242, 45, 45));
-		btnGestEquipo.setBounds(57, 370, 200, 49);
+		btnGestEquipo.setBounds(0, 386, 310, 49);
 		panelLeft.add(btnGestEquipo);
+		btnGestEquipo.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseEntered(MouseEvent e) {
+				btnGestEquipo.setBackground(new Color(220, 3, 9));
+			}
 
-		lblWelcome = new JLabel("Welcome Admin");
-		lblWelcome.setForeground(new Color(255, 255, 0));
-		lblWelcome.setFont(new Font("Tahoma", Font.BOLD, 14));
-		lblWelcome.setBounds(64, 180, 217, 34);
+			@Override
+			public void mouseExited(MouseEvent e) {
+				btnGestEquipo.setBackground(new Color(242, 45, 45));
+			}
+
+			@Override
+			public void mousePressed(MouseEvent e) {
+				btnGestEquipo.setBackground(new Color(242, 45, 45));
+			}
+		});
+
+		lblWelcome = new JLabel("   Welcome Admin");
+		lblWelcome.setForeground(new Color(0, 0, 0));
+		lblWelcome.setFont(new Font("Tahoma", Font.BOLD, 20));
+		lblWelcome.setBounds(37, 180, 217, 34);
 		panelLeft.add(lblWelcome);
 
-		btnGestionarEntrenador = new JButton("Gestionar entrenador");
+		btnGestionarEntrenador = new JButton("     Gestionar entrenador");
+		btnGestionarEntrenador.setForeground(new Color(255, 255, 255));
 		btnGestionarEntrenador.setHorizontalAlignment(SwingConstants.LEFT);
 		btnGestionarEntrenador.setFont(new Font("Tahoma", Font.BOLD, 14));
 		btnGestionarEntrenador.setFocusable(false);
 		btnGestionarEntrenador.setBorder(null);
 		btnGestionarEntrenador.setBackground(new Color(242, 45, 45));
-		btnGestionarEntrenador.setBounds(57, 250, 200, 49);
+		btnGestionarEntrenador.setBounds(0, 275, 310, 49);
+		btnGestionarEntrenador.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseEntered(MouseEvent e) {
+				btnGestionarEntrenador.setBackground(new Color(220, 3, 9));
+			}
+
+			@Override
+			public void mouseExited(MouseEvent e) {
+				btnGestionarEntrenador.setBackground(new Color(242, 45, 45));
+			}
+
+			@Override
+			public void mousePressed(MouseEvent e) {
+				btnGestionarEntrenador.setBackground(new Color(242, 45, 45));
+			}
+		});
 		panelLeft.add(btnGestionarEntrenador);
 
-		btnCrearPartido = new JButton("Crear partido");
-		btnCrearPartido.setForeground(new Color(0, 0, 0));
-		btnCrearPartido.setEnabled(false);
+		btnCrearPartido = new JButton("     Crear partido");
+		btnCrearPartido.setForeground(new Color(255, 255, 255));
 		btnCrearPartido.setHorizontalAlignment(SwingConstants.LEFT);
 		btnCrearPartido.setFont(new Font("Tahoma", Font.BOLD, 14));
 		btnCrearPartido.setFocusable(false);
 		btnCrearPartido.setBorder(null);
-		btnCrearPartido.setBackground(new Color(255, 128, 64));
-		btnCrearPartido.setBounds(57, 310, 200, 49);
+		btnCrearPartido.setBackground(new Color(220, 3, 9));
+		btnCrearPartido.setBounds(0, 327, 310, 49);
+		btnCrearPartido.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseEntered(MouseEvent e) {
+				btnCrearPartido.setBackground(new Color(220, 3, 9));
+			}
+
+			@Override
+			public void mouseExited(MouseEvent e) {
+				btnCrearPartido.setBackground(new Color(242, 45, 45));
+			}
+
+			@Override
+			public void mousePressed(MouseEvent e) {
+				btnCrearPartido.setBackground(new Color(242, 45, 45));
+			}
+		});
 		panelLeft.add(btnCrearPartido);
 
 		// Botón Modificar partido
-		btnModificarPartido = new JButton("Modificar partido");
+		btnModificarPartido = new JButton("     Modificar partido");
+		btnModificarPartido.setForeground(new Color(255, 255, 255));
 		btnModificarPartido.setHorizontalAlignment(SwingConstants.LEFT);
 		btnModificarPartido.setFont(new Font("Tahoma", Font.BOLD, 14));
 		btnModificarPartido.setFocusable(false);
 		btnModificarPartido.setBorder(null);
 		btnModificarPartido.setBackground(new Color(242, 45, 45));
-		btnModificarPartido.setBounds(57, 430, 200, 49);
+		btnModificarPartido.setBounds(0, 445, 310, 49);
+		btnModificarPartido.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseEntered(MouseEvent e) {
+				btnModificarPartido.setBackground(new Color(220, 3, 9));
+			}
+
+			@Override
+			public void mouseExited(MouseEvent e) {
+				btnModificarPartido.setBackground(new Color(242, 45, 45));
+			}
+
+			@Override
+			public void mousePressed(MouseEvent e) {
+				btnModificarPartido.setBackground(new Color(242, 45, 45));
+			}
+		});
 		panelLeft.add(btnModificarPartido);
 		btnModificarPartido.addActionListener(this); // Agregar ActionListener
 

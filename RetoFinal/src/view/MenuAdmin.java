@@ -21,6 +21,8 @@ import javax.swing.border.EmptyBorder;
 import java.sql.Blob;
 import java.sql.SQLException;
 import controller.Controller;
+import view.Login.ImagePanel;
+
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.event.MouseAdapter;
@@ -71,31 +73,32 @@ public class MenuAdmin extends JFrame implements ActionListener {
 		rightPanelAddEd.setLayout(null);
 
 		JPanel panelLeft = new JPanel();
-		panelLeft.setBackground(new Color(128, 128, 0));
-		panelLeft.setBounds(0, 0, 300, 680);
-		contentPane.add(panelLeft);
+		panelLeft.setBounds(0, 0, 312, 680);
+		panelLeft.setBackground(new Color(242, 45, 45));
+		getContentPane().add(panelLeft);
 		panelLeft.setLayout(null);
 
-		btnLogOut = new JButton("     Log Out");
+		btnLogOut = new JButton("      Log Out");
+		btnLogOut.setForeground(new Color(255, 255, 255));
 		btnLogOut.setHorizontalAlignment(SwingConstants.LEFT);
 		btnLogOut.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseEntered(MouseEvent e) {
-				btnLogOut.setBackground(new Color(90, 70, 50));
+				btnLogOut.setBackground(new Color(220, 3, 9));
 			}
 
 			@Override
 			public void mouseExited(MouseEvent e) {
-				btnLogOut.setBackground(new Color(128, 128, 0));
+				btnLogOut.setBackground(new Color(242, 45, 45));
 			}
 
 			@Override
 			public void mousePressed(MouseEvent e) {
-				btnLogOut.setBackground(new Color(50, 70, 90));
+				btnLogOut.setBackground(new Color(242, 45, 45));
 			}
 		});
-		btnLogOut.setBackground(new Color(128, 128, 0));
-		btnLogOut.setBounds(37, 595, 200, 49);
+		btnLogOut.setBackground(new Color(242, 45, 45));
+		btnLogOut.setBounds(0, 595, 310, 49);
 		btnLogOut.setFocusable(false);
 		btnLogOut.setBorder(null);
 		panelLeft.add(btnLogOut);
@@ -103,114 +106,137 @@ public class MenuAdmin extends JFrame implements ActionListener {
 		btnLogOut.setFont(new Font("Tahoma", Font.BOLD, 14));
 
 		btnModificarPartido = new JButton("     Modificar partido");
+		btnModificarPartido.setForeground(new Color(255, 255, 255));
 		btnModificarPartido.addActionListener(this);
 		btnModificarPartido.setHorizontalAlignment(SwingConstants.LEFT);
 		btnModificarPartido.setFont(new Font("Tahoma", Font.BOLD, 14));
 		btnModificarPartido.setFocusable(false);
 		btnModificarPartido.setBorder(null);
-		btnModificarPartido.setBackground(new Color(128, 128, 0));
-		btnModificarPartido.setBounds(37, 445, 200, 49);
-		btnModificarPartido.addActionListener(this);
+		btnModificarPartido.setBackground(new Color(242, 45, 45));
+		btnModificarPartido.setBounds(0, 445, 310, 49);
 		btnModificarPartido.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseEntered(MouseEvent e) {
-				btnModificarPartido.setBackground(new Color(90, 70, 50));
+				btnModificarPartido.setBackground(new Color(220, 3, 9));
 			}
 
 			@Override
 			public void mouseExited(MouseEvent e) {
-				btnModificarPartido.setBackground(new Color(128, 128, 0));
+				btnModificarPartido.setBackground(new Color(242, 45, 45));
 			}
 
 			@Override
 			public void mousePressed(MouseEvent e) {
-				btnModificarPartido.setBackground(new Color(50, 70, 90));
+				btnModificarPartido.setBackground(new Color(242, 45, 45));
 			}
 		});
 		panelLeft.add(btnModificarPartido);
 
-		lblWelcome = new JLabel("Welcome Admin" +  "");
-		lblWelcome.setForeground(new Color(255, 255, 0));
-		lblWelcome.setFont(new Font("Tahoma", Font.BOLD, 14));
-		lblWelcome.setBounds(64, 180, 217, 34);
+		lblWelcome = new JLabel("   Welcome Admin");
+		lblWelcome.setBackground(new Color(0, 0, 0));
+		lblWelcome.setForeground(new Color(0, 0, 0));
+		lblWelcome.setFont(new Font("Tahoma", Font.BOLD, 20));
+		lblWelcome.setBounds(37, 180, 217, 34);
 		panelLeft.add(lblWelcome);
 
 		btnConsultarPartidos = new JButton("     Gestionar equipo");
+		btnConsultarPartidos.setForeground(new Color(255, 255, 255));
 		btnConsultarPartidos.setHorizontalAlignment(SwingConstants.LEFT);
 		btnConsultarPartidos.setFont(new Font("Tahoma", Font.BOLD, 14));
 		btnConsultarPartidos.setFocusable(false);
 		btnConsultarPartidos.setBorder(null);
-		btnConsultarPartidos.setBackground(new Color(255, 128, 64));
-		btnConsultarPartidos.setBounds(37, 386, 200, 49);
+		btnConsultarPartidos.setBackground(new Color(220, 3, 9));
+		btnConsultarPartidos.setBounds(0, 386, 310, 49);
 		btnConsultarPartidos.addActionListener(this);
 		btnConsultarPartidos.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseEntered(MouseEvent e) {
-				btnConsultarPartidos.setBackground(new Color(90, 70, 50));
+				btnConsultarPartidos.setBackground(new Color(220, 3, 9));
 			}
 
 			@Override
 			public void mouseExited(MouseEvent e) {
-				btnConsultarPartidos.setBackground(new Color(128, 128, 0));
+				btnConsultarPartidos.setBackground(new Color(242, 45, 45));
 			}
 
 			@Override
 			public void mousePressed(MouseEvent e) {
-				btnConsultarPartidos.setBackground(new Color(50, 70, 90));
+				btnConsultarPartidos.setBackground(new Color(242, 45, 45));
 			}
 		});
 		panelLeft.add(btnConsultarPartidos);
 
 		btnCrearPartido = new JButton("     Crear partido");
+		btnCrearPartido.setForeground(new Color(255, 255, 255));
 		btnCrearPartido.addActionListener(this);
 		btnCrearPartido.setHorizontalAlignment(SwingConstants.LEFT);
 		btnCrearPartido.setFont(new Font("Tahoma", Font.BOLD, 14));
 		btnCrearPartido.setFocusable(false);
 		btnCrearPartido.setBorder(null);
-		btnCrearPartido.setBackground(new Color(128, 128, 0));
-		btnCrearPartido.setBounds(37, 327, 200, 49);
+		btnCrearPartido.setBackground(new Color(242, 45, 45));
+		btnCrearPartido.setBounds(0, 327, 310, 49);
 		btnCrearPartido.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseEntered(MouseEvent e) {
-				btnCrearPartido.setBackground(new Color(90, 70, 50));
+				btnCrearPartido.setBackground(new Color(220, 3, 9));
 			}
 
 			@Override
 			public void mouseExited(MouseEvent e) {
-				btnCrearPartido.setBackground(new Color(128, 128, 0));
+				btnCrearPartido.setBackground(new Color(242, 45, 45));
 			}
 
 			@Override
 			public void mousePressed(MouseEvent e) {
-				btnCrearPartido.setBackground(new Color(50, 70, 90));
+				btnCrearPartido.setBackground(new Color(242, 45, 45));
 			}
 		});
 		panelLeft.add(btnCrearPartido);
 
 		btnGestionarEntrenador = new JButton("     Gestionar entrenador");
+		btnGestionarEntrenador.setForeground(new Color(255, 255, 255));
 		btnGestionarEntrenador.setHorizontalAlignment(SwingConstants.LEFT);
 		btnGestionarEntrenador.setFont(new Font("Tahoma", Font.BOLD, 14));
 		btnGestionarEntrenador.setFocusable(false);
 		btnGestionarEntrenador.setBorder(null);
-		btnGestionarEntrenador.setBackground(new Color(128, 128, 0));
-		btnGestionarEntrenador.setBounds(37, 275, 200, 49);
+		btnGestionarEntrenador.setBackground(new Color(242, 45, 45));
+		btnGestionarEntrenador.setBounds(0, 275, 310, 49);
 		btnGestionarEntrenador.addActionListener(this);
+		btnGestionarEntrenador.addMouseListener(new MouseAdapter() {
+		    @Override
+		    public void mouseEntered(MouseEvent e) {
+		        btnGestionarEntrenador.setBackground(new Color(220, 3, 9));
+		    }
+
+		    @Override
+		    public void mouseExited(MouseEvent e) {
+		        btnGestionarEntrenador.setBackground(new Color(242, 45, 45));
+		    }
+
+		    @Override
+		    public void mousePressed(MouseEvent e) {
+		        btnGestionarEntrenador.setBackground(new Color(242, 45, 45));
+		    }
+		});
 		panelLeft.add(btnGestionarEntrenador);
 
 		// top menu buttons
 		topMenuPanelAddEq = new JPanel();
-		topMenuPanelAddEq.setBounds(310, 10, 674, 58);
+		topMenuPanelAddEq.setBounds(310, 11, 674, 57);
 		contentPane.add(topMenuPanelAddEq);
 		topMenuPanelAddEq.setLayout(null);
 
 		btnAddEquipo = new JButton("Añadir equipo");
-		btnAddEquipo.setBackground(new Color(255, 128, 64));
+		btnAddEquipo.setForeground(new Color(0, 0, 0));
+		btnAddEquipo.setFont(new Font("Tahoma", Font.BOLD, 14));
+		btnAddEquipo.setBackground(new Color(220, 3, 9));
 		btnAddEquipo.setFocusable(false);
 		btnAddEquipo.setBorder(null);
 		btnAddEquipo.setBounds(74, 10, 150, 34);
 		topMenuPanelAddEq.add(btnAddEquipo);
 
-		btnModificar = new JButton("Modifacar  equipo");
+		btnModificar = new JButton("Modificar  equipo");
+		btnModificar.setFont(new Font("Tahoma", Font.BOLD, 14));
 		btnModificar.setBackground(SystemColor.menu);
 		btnModificar.addActionListener(this);
 		btnModificar.setFocusable(false);
