@@ -1,4 +1,5 @@
 
+
 package view;
 
 import java.awt.event.ActionEvent;
@@ -203,20 +204,20 @@ public class MenuAdmin extends JFrame implements ActionListener {
 		btnGestionarEntrenador.setBounds(0, 275, 310, 49);
 		btnGestionarEntrenador.addActionListener(this);
 		btnGestionarEntrenador.addMouseListener(new MouseAdapter() {
-		    @Override
-		    public void mouseEntered(MouseEvent e) {
-		        btnGestionarEntrenador.setBackground(new Color(220, 3, 9));
-		    }
+			@Override
+			public void mouseEntered(MouseEvent e) {
+				btnGestionarEntrenador.setBackground(new Color(220, 3, 9));
+			}
 
-		    @Override
-		    public void mouseExited(MouseEvent e) {
-		        btnGestionarEntrenador.setBackground(new Color(242, 45, 45));
-		    }
+			@Override
+			public void mouseExited(MouseEvent e) {
+				btnGestionarEntrenador.setBackground(new Color(242, 45, 45));
+			}
 
-		    @Override
-		    public void mousePressed(MouseEvent e) {
-		        btnGestionarEntrenador.setBackground(new Color(242, 45, 45));
-		    }
+			@Override
+			public void mousePressed(MouseEvent e) {
+				btnGestionarEntrenador.setBackground(new Color(242, 45, 45));
+			}
 		});
 		panelLeft.add(btnGestionarEntrenador);
 
@@ -232,7 +233,7 @@ public class MenuAdmin extends JFrame implements ActionListener {
 		btnAddEquipo.setBackground(new Color(220, 3, 9));
 		btnAddEquipo.setFocusable(false);
 		btnAddEquipo.setBorder(null);
-		btnAddEquipo.setBounds(74, 10, 150, 34);
+		btnAddEquipo.setBounds(74, 10, 176, 34);
 		topMenuPanelAddEq.add(btnAddEquipo);
 
 		btnModificar = new JButton("Modificar  equipo");
@@ -241,7 +242,7 @@ public class MenuAdmin extends JFrame implements ActionListener {
 		btnModificar.addActionListener(this);
 		btnModificar.setFocusable(false);
 		btnModificar.setBorder(null);
-		btnModificar.setBounds(248, 10, 150, 34);
+		btnModificar.setBounds(275, 10, 176, 34);
 		topMenuPanelAddEq.add(btnModificar);
 
 		// right panel
@@ -321,7 +322,7 @@ public class MenuAdmin extends JFrame implements ActionListener {
 			controller.logOut();
 		} else if (e.getSource() == btnModificar) {
 			this.dispose();
-			MenuAdmin modificarEquipos = new MenuAdmin(controller);
+			ModificarEquipos modificarEquipos = new ModificarEquipos(controller, userName, userType);
 			modificarEquipos.setVisible(true);
 		}
 		// right panel buttons
@@ -369,6 +370,4 @@ public class MenuAdmin extends JFrame implements ActionListener {
 			}
 		}
 	}
-}
-
 }
