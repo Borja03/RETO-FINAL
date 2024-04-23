@@ -55,3 +55,5 @@ INSERT INTO equipo (nombreEquipo, titulos, nombreEstadio) VALUES ('Barsa', 1000,
 INSERT INTO jugador (user, password, tipo, dorsal, numeroGoles, numeroAsistencias, nombreEquipo)
 VALUES ('alder', 'alder', 'jugador', 10, 0, 0, 'Barsa');
 select * from entrenador;
+
+VALUES ('alder', 'alder', 'jugador', 10, 0, 0, 'Barsa');

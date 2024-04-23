@@ -3,10 +3,12 @@ package controller;
 
 import java.security.Timestamp;
 import java.sql.Blob;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Date;
 
 import model.equipos.Equipo;
+import model.partido.Juegan;
 import model.usuarios.CargoEntrenador;
 import model.usuarios.Jugador;
 import model.usuarios.Usuarios;
@@ -60,7 +62,9 @@ public interface IController {
 	public String getUsuarioPassword(String userName,String userType);
 	public boolean updateUsrIcon(String user, Blob userIcon,String userType); 
 
+	public ArrayList<Juegan> listaPartidos();
 
-	boolean modificarPartido(String nombrePartido, String nuevoResultado);
+
+	public void modificarPartido(Juegan juegan, LocalDateTime fecha);
 
 }

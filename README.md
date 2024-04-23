@@ -1,4 +1,3 @@
-
 #Fixing errors : not opening with windowsBuilder
 if you can not  see design button in java classes classes that has interface(Button ,labels..) ,follow this steps:
 try open with --> windowsBuilder Editor
@@ -6,7 +5,7 @@ if it's not working
 find classpath in your project and add this line
 
 <classpath>
-<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-17">
+<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-20">
 		<attributes>
 			<attribute name="module" value="true"/>
 		</attributes>

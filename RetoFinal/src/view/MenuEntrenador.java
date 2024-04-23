@@ -50,6 +50,7 @@ public class MenuEntrenador extends JFrame implements ActionListener {
     private JLabel lblJugadoresLista;
     private JButton[] leftPanelButtons;
 
+
     public MenuEntrenador(Controller cont, String entrConnected, String userType) {
         this.controller = cont;
         this.userName = entrConnected;
@@ -113,28 +114,13 @@ public class MenuEntrenador extends JFrame implements ActionListener {
         btnLogOut.setBounds(0, 586, 250, 49);
         panelLeft.add(btnLogOut);
         btnLogOut.setHorizontalAlignment(SwingConstants.LEFT);
-        btnLogOut.addMouseListener(new MouseAdapter() {
-            @Override
-            public void mouseEntered(MouseEvent e) {
-            	
-                btnLogOut.setBackground(new Color(90, 70, 50));
-            }
-
-            @Override
-            public void mouseExited(MouseEvent e) {
-                btnLogOut.setBackground(new Color(128, 128, 0));
-            }
-
-            @Override
-            public void mousePressed(MouseEvent e) {
-                btnLogOut.setBackground(new Color(50, 70, 90));
-            }
-        });
+     
         btnLogOut.setBackground(new Color(86, 82, 252));
         btnLogOut.setFocusable(false);
         btnLogOut.setBorder(null);
         btnLogOut.addActionListener(this);
         btnLogOut.setFont(new Font("Tahoma", Font.BOLD, 14));
+
 
         btnCambiarContrasena = new JButton("     Cambiar contraseña");
         btnCambiarContrasena.setForeground(new Color(255, 255, 255));
@@ -266,6 +252,7 @@ public class MenuEntrenador extends JFrame implements ActionListener {
         lblJugadoresLista.setFont(new Font("Tahoma", Font.BOLD, 18));
         lblJugadoresLista.setBounds(547, 188, 191, 22);
         contentPane.add(lblJugadoresLista);
+
 
         // Crear un array que contenga los botones del panel izquierdo
      // Crear un array que contenga los botones del panel izquierdo

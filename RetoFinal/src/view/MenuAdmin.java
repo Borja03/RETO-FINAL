@@ -1,3 +1,4 @@
+
 package view;
 
 import java.awt.event.ActionEvent;
@@ -43,7 +44,7 @@ public class MenuAdmin extends JFrame implements ActionListener {
 	private JTextField txttitulosField;
 	private JButton bntAnadirEq;
 	private JButton btnAddEquipo;
-	private JButton btnModificarEquipo;
+	private JButton btnModificar;
 	private JButton btnUpload;
 	private JLabel lblEquipoLogo;
 	private ImageIcon imageIcon;
@@ -203,21 +204,19 @@ public class MenuAdmin extends JFrame implements ActionListener {
 		topMenuPanelAddEq.setLayout(null);
 
 		btnAddEquipo = new JButton("Añadir equipo");
-		btnAddEquipo.setFont(new Font("Tahoma", Font.BOLD, 14));
 		btnAddEquipo.setBackground(new Color(255, 128, 64));
 		btnAddEquipo.setFocusable(false);
 		btnAddEquipo.setBorder(null);
 		btnAddEquipo.setBounds(74, 10, 150, 34);
 		topMenuPanelAddEq.add(btnAddEquipo);
 
-		btnModificarEquipo = new JButton("Modifacar  equipo");
-		btnModificarEquipo.setFont(new Font("Tahoma", Font.BOLD, 14));
-		btnModificarEquipo.setBackground(SystemColor.menu);
-		btnModificarEquipo.addActionListener(this);
-		btnModificarEquipo.setFocusable(false);
-		btnModificarEquipo.setBorder(null);
-		btnModificarEquipo.setBounds(248, 10, 150, 34);
-		topMenuPanelAddEq.add(btnModificarEquipo);
+		btnModificar = new JButton("Modifacar  equipo");
+		btnModificar.setBackground(SystemColor.menu);
+		btnModificar.addActionListener(this);
+		btnModificar.setFocusable(false);
+		btnModificar.setBorder(null);
+		btnModificar.setBounds(248, 10, 150, 34);
+		topMenuPanelAddEq.add(btnModificar);
 
 		// right panel
 		JLabel lblNombreEquipo = new JLabel("Nombre del Equipo:");
@@ -294,9 +293,9 @@ public class MenuAdmin extends JFrame implements ActionListener {
 		} else if (e.getSource() == btnLogOut) {
 			this.dispose();
 			controller.logOut();
-		} else if (e.getSource() == btnModificarEquipo) {
+		} else if (e.getSource() == btnModificar) {
 			this.dispose();
-			ModificarEquipos modificarEquipos = new ModificarEquipos(controller);
+			MenuAdmin modificarEquipos = new MenuAdmin(controller);
 			modificarEquipos.setVisible(true);
 		}
 		// right panel buttons
