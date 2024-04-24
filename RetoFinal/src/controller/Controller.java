@@ -389,28 +389,48 @@ public class Controller implements IController {
 		return partidosProgramados;
 	}
 
-	@Override
-	public void modificarPartido(Juegan juegan, LocalDateTime fecha) {
-		this.openConnection("admin", "admin");
-		Timestamp fechaCambiada = Timestamp.valueOf(juegan.getFechaInicio());
-		Timestamp fechaAntigua = Timestamp.valueOf(fecha);
+	public void modificarPartido(Juegan partidoModificado, LocalDateTime fechaAntigua) {
 		try {
-			if (fechaCambiada != fechaAntigua) {
-				System.out.println("mondongo");
-				statement = connection.prepareStatement(modificarPartidoResultado);
-				statement.setString(1, juegan.getResultado());
-				statement.setTimestamp(2, fechaAntigua);
-				statement.executeUpdate();
-			} else {
-				statement = connection.prepareStatement(modificarPartidoFecha);
-				statement.setTimestamp(1, fechaCambiada);
-				statement.setTimestamp(2, fechaAntigua);
-				statement.executeUpdate();
+			this.openConnection("admin", "admin"); // Abre la conexión
+
+			// Modificar el resultado del partido
+			PreparedStatement stmtResultado = connection.prepareStatement(modificarPartidoResultado);
+			stmtResultado.setString(1, partidoModificado.getResultado());
+			stmtResultado.setObject(2, fechaAntigua);
+			stmtResultado.executeUpdate();
+			stmtResultado.close();
+
+			// Modificar la fecha de inicio del partido
+			PreparedStatement stmtFecha = connection.prepareStatement(modificarPartidoFecha);
+			stmtFecha.setObject(1, partidoModificado.getFechaInicio());
+			stmtFecha.setObject(2, fechaAntigua);
+			stmtFecha.executeUpdate();
+			stmtFecha.close();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			this.closeConnection(); // Cierra la conexión
+		}
+	}
+
+	public boolean verificarFechaUnica(LocalDateTime fecha) {
+		boolean fechaUnica = false;
+		try {
+			this.openConnection("admin", "admin"); // Abre la conexión
+			PreparedStatement statement = connection
+					.prepareStatement("SELECT COUNT(*) FROM juegan WHERE fechaInicio = ?");
+			statement.setObject(1, fecha);
+			ResultSet resultSet = statement.executeQuery();
+			if (resultSet.next()) {
+				int count = resultSet.getInt(1);
+				fechaUnica = (count == 0);
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
+		} finally {
+			this.closeConnection(); // Cierra la conexión
 		}
-		this.closeConnection();
+		return fechaUnica;
 	}
 
 	@Override

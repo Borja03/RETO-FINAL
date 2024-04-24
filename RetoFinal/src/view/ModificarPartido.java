@@ -6,10 +6,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.time.Instant;
 import java.time.LocalDateTime;
-import java.time.ZoneId;
-import java.time.ZonedDateTime;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -322,7 +319,7 @@ public class ModificarPartido extends JFrame implements ActionListener {
 		Object o = e.getSource();
 		if (o == editarPartidoButton) {
 			Juegan juegan = obtenerPartidoSeleccionado();
-
+			LocalDateTime date = juegan.getFechaInicio();
 			if (juegan != null) {
 				mostrarComponentes = !mostrarComponentes;
 				setComponentesVisibles(mostrarComponentes);
@@ -364,25 +361,56 @@ public class ModificarPartido extends JFrame implements ActionListener {
 						JOptionPane.ERROR_MESSAGE);
 			}
 		} else if (o == okButton) {
-			String local = equipoLocalLabel.getText();
-			String visitante = equipoVisitanteLabel.getText();
-			Date selectedDate = datePicker.getDate();
-			Instant instant = selectedDate.toInstant();
-			ZonedDateTime zdt = instant.atZone(ZoneId.systemDefault());
-			LocalDateTime fecha = zdt.toLocalDateTime();
-			Date selectedTime = (Date) timeSpinner.getValue();
-			Calendar calendar = Calendar.getInstance();
-			calendar.setTime(selectedTime);
-			int hour = calendar.get(Calendar.HOUR_OF_DAY);
-			int minute = calendar.get(Calendar.MINUTE);
-			int second = calendar.get(Calendar.SECOND);
-			fecha = fecha.withHour(hour).withMinute(minute).withSecond(second);
-			String resultado = resultado1.getText() + label.getText() + resultado2.getText();
-			Juegan juegan = new Juegan(local, visitante, fecha, resultado);
-			controller.modificarPartido(juegan, date);
-			MenuAdmin menuAdmin = new MenuAdmin(controller);
-			menuAdmin.setVisible(true);
-			this.dispose();
+			Juegan juegan = obtenerPartidoSeleccionado();
+			if (juegan != null) {
+				LocalDateTime fecha = juegan.getFechaInicio();
+				if (fecha.isBefore(LocalDateTime.now())) {
+					// Si la fecha del partido es antes de la fecha actual, solo se pueden modificar
+					// los resultados
+					String resultado = resultado1.getText() + label.getText() + resultado2.getText();
+					Juegan partidoModificado = new Juegan(juegan.getNombreEquipoLocal(),
+							juegan.getNombreEquipoVisitante(), fecha, resultado);
+					controller.modificarPartido(partidoModificado, fecha);
+					MenuAdmin menuAdmin = new MenuAdmin(controller);
+					menuAdmin.setVisible(true);
+					this.dispose();
+				} else {
+					// Si la fecha del partido es después de la fecha actual, solo se puede
+					// modificar la fecha
+					Date selectedDate = datePicker.getDate();
+					Calendar calendar = Calendar.getInstance();
+					calendar.setTime(selectedDate);
+					int year = calendar.get(Calendar.YEAR);
+					int month = calendar.get(Calendar.MONTH) + 1;
+					int dayOfMonth = calendar.get(Calendar.DAY_OF_MONTH);
+					LocalDateTime nuevaFecha = LocalDateTime.of(year, month, dayOfMonth, 0, 0);
+					Date selectedTime = (Date) timeSpinner.getValue();
+					calendar.setTime(selectedTime);
+					int hour = calendar.get(Calendar.HOUR_OF_DAY);
+					int minute = calendar.get(Calendar.MINUTE);
+					int second = calendar.get(Calendar.SECOND);
+					nuevaFecha = nuevaFecha.withHour(hour).withMinute(minute).withSecond(second);
+
+					// Verificar si la nueva fecha ya existe en la base de datos
+					boolean fechaUnica = controller.verificarFechaUnica(nuevaFecha);
+					if (!fechaUnica) {
+						JOptionPane.showMessageDialog(this, "La fecha seleccionada ya está ocupada por otro partido.",
+								"Error", JOptionPane.ERROR_MESSAGE);
+						return;
+					}
+
+					// Actualizar la fecha del partido
+					Juegan partidoModificado = new Juegan(juegan.getNombreEquipoLocal(),
+							juegan.getNombreEquipoVisitante(), nuevaFecha, juegan.getResultado());
+					controller.modificarPartido(partidoModificado, fecha);
+					MenuAdmin menuAdmin = new MenuAdmin(controller);
+					menuAdmin.setVisible(true);
+					this.dispose();
+				}
+			} else {
+				JOptionPane.showMessageDialog(this, "Seleccione un partido válido.", "Error",
+						JOptionPane.ERROR_MESSAGE);
+			}
 		} else if (o == btnCrearPartido) {
 			CrearPartido crearPartido = new CrearPartido(controller);
 			crearPartido.setVisible(true);
@@ -408,5 +436,4 @@ public class ModificarPartido extends JFrame implements ActionListener {
 		}
 		return null;
 	}
-
 }
