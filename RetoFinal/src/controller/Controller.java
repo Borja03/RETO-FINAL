@@ -60,7 +60,8 @@ public class Controller implements IController {
 	final String MODIFICARuserIcon = "UPDATE jugador SET icon=?  WHERE user = ?";
 	final String NOMBREquipoE = "Select nombreEquipo FROM entrenador WHERE user = ?";
 	final String nombreEstadio = "SELECT nombreEstadio from EQUIPO where nombreEquipo = ?";
-	final String modificarPartido = "UPDATE juegan SET fechaInicio = ?, resultado = ? WHERE fechaInicio = ?";
+	final String modificarPartidoResultado = "UPDATE juegan SET resultado = ? WHERE fechaInicio = ?";
+	final String modificarPartidoFecha = "UPDATE juegan SET fechaInicio = ? WHERE fechaInicio = ?";
 
 	public boolean checkUserExist(String user) {
 		boolean exist = false;
@@ -394,11 +395,17 @@ public class Controller implements IController {
 		Timestamp fechaCambiada = Timestamp.valueOf(juegan.getFechaInicio());
 		Timestamp fechaAntigua = Timestamp.valueOf(fecha);
 		try {
-			statement = connection.prepareStatement(modificarPartido);
-			statement.setTimestamp(1, fechaCambiada);
-			statement.setString(2, juegan.getResultado());
-			statement.setTimestamp(3, fechaAntigua);
-			statement.executeUpdate();
+			if (fechaCambiada != fechaAntigua) {
+				statement = connection.prepareStatement(modificarPartidoResultado);
+				statement.setString(1, juegan.getResultado());
+				statement.setTimestamp(2, fechaAntigua);
+				statement.executeUpdate();
+			} else {
+				statement = connection.prepareStatement(modificarPartidoFecha);
+				statement.setTimestamp(1, fechaCambiada);
+				statement.setTimestamp(2, fechaAntigua);
+				statement.executeUpdate();
+			}
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}

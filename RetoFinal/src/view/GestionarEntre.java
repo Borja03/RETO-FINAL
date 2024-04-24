@@ -326,24 +326,11 @@ public class GestionarEntre extends JFrame implements ActionListener {
 		} else if (o == btnLogOut) {
 			this.dispose();
 			controller.logOut();
-		}
 
-		if (controller.crearEntrenador(usr, password, myTeam, tipo)) {
-			opcion = JOptionPane.showConfirmDialog(this, (String) "",
-					"El entrenador ha sido introducido correctamente\n¿Desea añadir otro jugador?",
-					JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE, null);
-
-			if (opcion == JOptionPane.NO_OPTION) {
-				this.dispose();
-				MenuAdmin g1 = new MenuAdmin(controller);
-				g1.setVisible(true);
-			} else {
-				GestionarEntre gestionarEntre = new GestionarEntre(controller);
-				this.dispose();
-			}
+	
 		} else if (e.getSource() == btnAnadir) {
 
-			if (controller.crearEntrenador(usr, password, myTeam, tipo)) {
+			if (controller.crearEntrenador(myTeam, usr, password, tipo)) {
 				opcion = JOptionPane.showConfirmDialog(this, (String) "",
 						"El entrenador ha sido introducido correctamente\n¿Desea añadir otro jugador?",
 						JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE, null);
@@ -354,6 +341,7 @@ public class GestionarEntre extends JFrame implements ActionListener {
 					g1.setVisible(true);
 				} else {
 					GestionarEntre gestionarEntre = new GestionarEntre(controller);
+					gestionarEntre.setVisible(true);
 					this.dispose();
 				}
 			}
