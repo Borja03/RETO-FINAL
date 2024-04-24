@@ -396,6 +396,7 @@ public class Controller implements IController {
 		Timestamp fechaAntigua = Timestamp.valueOf(fecha);
 		try {
 			if (fechaCambiada != fechaAntigua) {
+				System.out.println("mondongo");
 				statement = connection.prepareStatement(modificarPartidoResultado);
 				statement.setString(1, juegan.getResultado());
 				statement.setTimestamp(2, fechaAntigua);
