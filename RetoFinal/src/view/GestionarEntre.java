@@ -1,4 +1,3 @@
-
 package view;
 
 import java.awt.Color;
@@ -31,7 +30,7 @@ public class GestionarEntre extends JFrame implements ActionListener {
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
 	private JButton btnCrear;
-	private JButton btnDeleteMod;
+	private JButton btnDeleteEntrenador;
 	private Controller controller;
 	private JButton btnLogOut;
 	private JButton btnModPartidos;
@@ -69,12 +68,12 @@ public class GestionarEntre extends JFrame implements ActionListener {
 		btnCrear.setBorder(null);
 		contentPane.add(btnCrear);
 
-		btnDeleteMod = new JButton("Eliminar/Modificar entrenadores");
-		btnDeleteMod.setBounds(564, 40, 176, 35);
-		btnDeleteMod.addActionListener(this);
-		btnDeleteMod.setFocusable(false);
-		btnDeleteMod.setBorder(null);
-		contentPane.add(btnDeleteMod);
+		btnDeleteEntrenador = new JButton("Eliminar/Modificar entrenadores");
+		btnDeleteEntrenador.setBounds(564, 40, 176, 35);
+		btnDeleteEntrenador.addActionListener(this);
+		btnDeleteEntrenador.setFocusable(false);
+		btnDeleteEntrenador.setBorder(null);
+		contentPane.add(btnDeleteEntrenador);
 
 		JPanel panelLeft = new JPanel();
 		panelLeft.setBounds(0, 0, 300, 680);
@@ -261,7 +260,7 @@ public class GestionarEntre extends JFrame implements ActionListener {
 	@Override
 	public void actionPerformed(ActionEvent e) {
 
-		if (e.getSource() == btnDeleteMod) {
+		if (e.getSource() == btnDeleteEntrenador) {
 			SearchEntrenador eliminarJugadores = new SearchEntrenador(controller);
 			this.dispose();
 			eliminarJugadores.setVisible(true);
@@ -279,7 +278,7 @@ public class GestionarEntre extends JFrame implements ActionListener {
 			modificarPartido.setVisible(true);
 		} else if (e.getSource() == btnLogOut) {
 			Object o = e.getSource();
-			if (o == btnDeleteMod) {
+			if (o == btnDeleteEntrenador) {
 				SearchEntrenador searchEntrenador = new SearchEntrenador(controller);
 				this.dispose();
 				searchEntrenador.setVisible(true);
