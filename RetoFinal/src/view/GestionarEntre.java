@@ -251,9 +251,6 @@ public class GestionarEntre extends JFrame implements ActionListener {
 		textFieldContrasena.setColumns(10);
 
 		textFieldCargo = new JComboBox<String>();
-
-		textFieldCargo.setBounds(250, 187, 225, 22);
-
 		textFieldCargo.setBounds(515, 340, 250, 34);
 		textFieldCargo.addItem("");
 		textFieldCargo.addItem("Primer_entrenador");
@@ -284,7 +281,8 @@ public class GestionarEntre extends JFrame implements ActionListener {
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
-
+		
+		Object o = e.getSource();
 		
 		String usr = textFieldUSer.getText();
 		String password = textFieldContrasena.getText();
@@ -297,28 +295,25 @@ public class GestionarEntre extends JFrame implements ActionListener {
 			tipo = CargoEntrenador.SEGUNDO_ENTRENADOR;
 		}
 
-		if (e.getSource() == btnDeleteMod) {
+		if (o == btnDeleteMod) {
+
 			SearchEntrenador eliminarJugadores = new SearchEntrenador(controller);
 			this.dispose();
 			eliminarJugadores.setVisible(true);
-		} else if (e.getSource() == btnCrearPartido) {
+		} else if (o == btnCrearPartido) {
 			CrearPartido cPartidos = new CrearPartido(controller);
 			this.dispose();
 			cPartidos.setVisible(true);
-		} else if (e.getSource() == btnGestionarEquipo) {
+		} else if (o == btnGestionarEquipo) {
 			MenuAdmin cPartidos = new MenuAdmin(controller);
 			this.dispose();
 			cPartidos.setVisible(true);
-
-		} else if (e.getSource() == btnLogOut) {
 
 		} else if (e.getSource() == btnModPartidos) {
 			ModificarPartido modificarPartido = new ModificarPartido(controller);
 			this.dispose();
 			modificarPartido.setVisible(true);
-		} else if (e.getSource() == btnLogOut) {
-			Object o = e.getSource();
-			if (o == btnDeleteMod) {
+		}else if (o == btnDeleteMod) {
 				SearchEntrenador searchEntrenador = new SearchEntrenador(controller);
 				this.dispose();
 				searchEntrenador.setVisible(true);
@@ -333,6 +328,7 @@ public class GestionarEntre extends JFrame implements ActionListener {
 				controller.logOut();
 			}
 
+
 			if (controller.crearEntrenador(usr, password, myTeam, tipo)) {
 				int opcion = JOptionPane.showConfirmDialog(this, (String) "",
 						"El entrenador ha sido introducido correctamente\n¿Desea añadir otro jugador?",
@@ -346,8 +342,8 @@ public class GestionarEntre extends JFrame implements ActionListener {
 					GestionarEntre gestionarEntre = new GestionarEntre(controller);
 					this.dispose();
 				}
-
-				if (e.getSource() == btnAnadir) {
+			}
+			else if (e.getSource() == btnAnadir) {
 					
 					if (controller.crearEntrenador(usr, password, myTeam, tipo)) {
 						 opcion = JOptionPane.showConfirmDialog(this, (String) "",
@@ -368,4 +364,3 @@ public class GestionarEntre extends JFrame implements ActionListener {
 			}
 		}
 	}
-}

@@ -22,6 +22,9 @@ import javax.swing.border.EmptyBorder;
 import controller.Controller;
 import model.usuarios.CargoEntrenador;
 import model.usuarios.Entrenador;
+import model.usuarios.Jugador;
+import javax.swing.border.TitledBorder;
+import javax.swing.border.EtchedBorder;
 
 public class SearchEntrenador extends JFrame implements ActionListener {
 
@@ -60,7 +63,7 @@ public class SearchEntrenador extends JFrame implements ActionListener {
 		contentPane.setSize(1366, 768);
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
-		
+
 		btnAddEntrenador = new JButton("Añadir Entrenadores");
 		btnAddEntrenador.setFont(new Font("Tahoma", Font.BOLD, 14));
 		btnAddEntrenador.addActionListener(this);
@@ -142,10 +145,12 @@ public class SearchEntrenador extends JFrame implements ActionListener {
 		panelLeft.add(btnModPartidos);
 
 		lblWelcome = new JLabel("   Welcome Admin");
-
 		lblWelcome.setForeground(new Color(0, 0, 0));
 		lblWelcome.setFont(new Font("Tahoma", Font.BOLD, 20));
 		lblWelcome.setBounds(37, 180, 217, 34);
+		lblWelcome.setForeground(new Color(255, 255, 0));
+		lblWelcome.setFont(new Font("Tahoma", Font.BOLD, 14));
+		lblWelcome.setBounds(64, 180, 217, 34);
 		panelLeft.add(lblWelcome);
 
 		btnGestionarEquipo = new JButton("     Gestionar Equipo");
@@ -232,13 +237,20 @@ public class SearchEntrenador extends JFrame implements ActionListener {
 		panelLeft.add(btnGestionarEntrenador);
 
 		JPanel topPanel = new JPanel();
+		topPanel.setBorder(
+				new TitledBorder(
+						new TitledBorder(
+								new EtchedBorder(EtchedBorder.LOWERED, new Color(255, 255, 255),
+										new Color(160, 160, 160)),
+								"", TitledBorder.LEADING, TitledBorder.TOP, null, new Color(0, 0, 0)),
+						"", TitledBorder.TRAILING, TitledBorder.TOP, null, new Color(128, 0, 64)));
 		topPanel.setBounds(310, 85, 676, 154);
 		contentPane.add(topPanel);
 		topPanel.setLayout(null);
 
 		JLabel lblEquipo = new JLabel("Equipo");
 		lblEquipo.setFont(new Font("Tahoma", Font.BOLD, 14));
-		lblEquipo.setBounds(63, 42, 49, 17);
+		lblEquipo.setBounds(63, 27, 84, 34);
 		topPanel.add(lblEquipo);
 
 		txtEquiponame = new JComboBox<String>();
@@ -249,7 +261,7 @@ public class SearchEntrenador extends JFrame implements ActionListener {
 
 		lblUser = new JLabel("Usuario");
 		lblUser.setFont(new Font("Tahoma", Font.BOLD, 14));
-		lblUser.setBounds(63, 85, 55, 17);
+		lblUser.setBounds(63, 81, 68, 34);
 		topPanel.add(lblUser);
 
 		textFieldUSer = new JComboBox<String>();
@@ -269,6 +281,8 @@ public class SearchEntrenador extends JFrame implements ActionListener {
 		contentPane.add(lblMsgError);
 
 		bottomPanel = new JPanel();
+		bottomPanel.setBorder(
+				new TitledBorder(null, "", TitledBorder.LEADING, TitledBorder.TOP, null, new Color(0, 0, 255)));
 		bottomPanel.setBounds(310, 253, 674, 417);
 		contentPane.add(bottomPanel);
 		bottomPanel.setLayout(null);
@@ -285,7 +299,7 @@ public class SearchEntrenador extends JFrame implements ActionListener {
 
 		textFieldContrasena = new JTextField();
 		textFieldContrasena.setFont(new Font("Tahoma", Font.BOLD, 14));
-		textFieldContrasena.setBounds(245, 53, 250, 34);
+		textFieldContrasena.setBounds(245, 47, 250, 34);
 		bottomPanel.add(textFieldContrasena);
 		textFieldContrasena.setColumns(10);
 
@@ -305,7 +319,11 @@ public class SearchEntrenador extends JFrame implements ActionListener {
 		btnModificarEntrenador.setFont(new Font("Tahoma", Font.BOLD, 14));
 		btnModificarEntrenador.setBounds(204, 308, 200, 35);
 		bottomPanel.add(btnModificarEntrenador);
+
 		bottomPanel.setVisible(false);
+
+		fillEquiposNames();
+
 	}
 
 	public void fillEquiposNames() {
@@ -353,7 +371,6 @@ public class SearchEntrenador extends JFrame implements ActionListener {
 		}
 	}
 
-
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		if (e.getSource() == btnCrearPartido) {
@@ -383,19 +400,19 @@ public class SearchEntrenador extends JFrame implements ActionListener {
 				String nombreEquipo = (String) selectedItem;
 				if (!nombreEquipo.isEmpty()) {
 					fillEntrenadoresEquipo(nombreEquipo);
+
+				} else if (e.getSource() == textFieldUSer) {
+					Object selectedItem = textFieldUSer.getSelectedItem();
 				}
-			}
+				if (selectedItem instanceof String) {
+					String usr = (String) selectedItem;
+					if (!usr.isEmpty()) {
+						fillUserData(usr);
+						bottomPanel.setVisible(true);
 
-		} else if (e.getSource() == textFieldUSer) {
-			Object selectedItem = textFieldUSer.getSelectedItem();
-
-			if (selectedItem instanceof String) {
-				String usr = (String) selectedItem;
-				if (!usr.isEmpty()) {
-					fillUserData(usr);
-					bottomPanel.setVisible(true);
-
+					}
 				}
+
 			}
 
 		} else if (e.getSource() == btnEliminarEntrenador) {

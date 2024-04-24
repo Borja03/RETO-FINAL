@@ -113,28 +113,13 @@ public class MenuEntrenador extends JFrame implements ActionListener {
         btnLogOut.setBounds(0, 586, 250, 49);
         panelLeft.add(btnLogOut);
         btnLogOut.setHorizontalAlignment(SwingConstants.LEFT);
-        btnLogOut.addMouseListener(new MouseAdapter() {
-            @Override
-            public void mouseEntered(MouseEvent e) {
-            	
-                btnLogOut.setBackground(new Color(90, 70, 50));
-            }
-
-            @Override
-            public void mouseExited(MouseEvent e) {
-                btnLogOut.setBackground(new Color(128, 128, 0));
-            }
-
-            @Override
-            public void mousePressed(MouseEvent e) {
-                btnLogOut.setBackground(new Color(50, 70, 90));
-            }
-        });
+     
         btnLogOut.setBackground(new Color(86, 82, 252));
         btnLogOut.setFocusable(false);
         btnLogOut.setBorder(null);
         btnLogOut.addActionListener(this);
         btnLogOut.setFont(new Font("Tahoma", Font.BOLD, 14));
+
 
         btnCambiarContrasena = new JButton("     Cambiar contraseña");
         btnCambiarContrasena.setForeground(new Color(255, 255, 255));

@@ -288,4 +288,8 @@ public class ConsultarPartidos extends JFrame implements ActionListener {
     }
 
    
+<<<<<<< HEAD
 }
+=======
+}
+>>>>>>> omar

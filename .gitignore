@@ -1,7 +1,8 @@
 <<<<<<< HEAD
 /.metadata/
+
 =======
->>>>>>> 65370bc16cd339d32025f7de0002d0f93b7e7adc
+>>>>>>> origin/Alder
 .metadata
 bin/
 tmp/
@@ -13,6 +14,9 @@ local.properties
 .settings/
 .loadpath
 .recommenders
+.classpath
+.project
+.gitignore
 
 # External tool builders
 .externalToolBuilders/
@@ -62,3 +66,7 @@ local.properties
 # Uncomment this line if you wish to ignore the project description file.
 # Typically, this file would be tracked if it contains build/dependency configurations:
 #.project
+<<<<<<< HEAD
+=======
+
+>>>>>>> origin/Alder

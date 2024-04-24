@@ -1,15 +1,16 @@
 package view;
 
 import java.awt.Color;
-import java.awt.Component;
 import java.awt.Font;
-import java.awt.Point;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.sql.Timestamp;
+import java.time.Instant;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.time.ZonedDateTime;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
-import java.util.HashMap;
 
 import javax.swing.JButton;
 import javax.swing.JComboBox;
@@ -26,7 +27,7 @@ import javax.swing.border.EmptyBorder;
 import com.toedter.calendar.JCalendar;
 
 import controller.Controller;
-import model.equipos.Equipo;
+import model.partido.Juegan;
 
 public class ModificarPartido extends JFrame implements ActionListener {
 
@@ -34,20 +35,15 @@ public class ModificarPartido extends JFrame implements ActionListener {
 	private JPanel contentPane;
 	private JLabel equipoLocalLabel;
 	private JLabel equipoVisitanteLabel;
-	private JComboBox<String> equipoLocalComboBox;
-	private JComboBox<String> equipoVisitanteComboBox;
 	private JTextField estadioField;
 	private JCalendar datePicker;
 	private JSpinner timeSpinner;
 	private Controller controller;
-	private HashMap<String, String> estadiosEquipos = new HashMap<>();
-	private ArrayList<String> equiposDisponibles = new ArrayList<>();
 	private JButton okButton;
 	private JTextField resultado1;
 	private JTextField resultado2;
 	private JComboBox<String> partidosComboBox;
 	private JButton editarPartidoButton;
-	private boolean mostrarComponentes = false;
 	private JLabel lblResultado1;
 	private JLabel lblNewLabel;
 	private JLabel lblNewLabel_1;
@@ -55,22 +51,20 @@ public class ModificarPartido extends JFrame implements ActionListener {
 	private JLabel lblNewLabel_3;
 	private JLabel lblNewLabel_4;
 	private JLabel label;
-
-	private JLabel lblWelcome;
+	private ArrayList<Juegan> partidos;
+	private JPanel panelLeft;
+	private boolean mostrarComponentes;
 	private JButton btnLogOut;
 	private JButton btnGesEquipo;
+	private JLabel lblWelcome;
 	private JButton btnGestionarEntrenador;
 	private JButton btnCrearPartido;
 	private JButton btnModificarPartido;
-	private JPanel panelLeft;
-	private JPanel panelRight;
-	private String user;
-	private String userType;
+	private LocalDateTime date;
 
-	
 	public ModificarPartido(Controller controlador) {
 		this.controller = controlador;
-		
+
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 1008, 717);
 		contentPane = new JPanel();
@@ -159,10 +153,6 @@ public class ModificarPartido extends JFrame implements ActionListener {
 		getContentPane().add(panelLeft);
 		panelLeft.setLayout(null);
 
-		panelRight = new JPanel();
-		getContentPane().add(panelLeft);
-		panelLeft.setLayout(null);
-
 		btnLogOut = new JButton("Log Out");
 		btnLogOut.setHorizontalAlignment(SwingConstants.LEFT);
 		btnLogOut.setBackground(new Color(128, 128, 0));
@@ -209,7 +199,6 @@ public class ModificarPartido extends JFrame implements ActionListener {
 		btnCrearPartido.setBounds(57, 310, 200, 49);
 		panelLeft.add(btnCrearPartido);
 
-		// Botón Modificar partido
 		btnModificarPartido = new JButton("Modificar partido");
 		btnModificarPartido.setForeground(new Color(128, 128, 0));
 		btnModificarPartido.setEnabled(false);
@@ -220,7 +209,7 @@ public class ModificarPartido extends JFrame implements ActionListener {
 		btnModificarPartido.setBackground(new Color(255, 128, 64));
 		btnModificarPartido.setBounds(57, 430, 200, 49);
 		panelLeft.add(btnModificarPartido);
-		btnModificarPartido.addActionListener(this); // Agregar ActionListener
+		btnModificarPartido.addActionListener(this);
 
 		setComponentesVisibles(false);
 
@@ -238,92 +227,115 @@ public class ModificarPartido extends JFrame implements ActionListener {
 		okButton.setVisible(visible);
 		resultado1.setVisible(visible);
 		resultado2.setVisible(visible);
-		// Ocultar textos a la derecha
+
 		JLabel[] labels = { lblResultado1, label, lblNewLabel, lblNewLabel_1, lblNewLabel_2, lblNewLabel_3,
-				lblNewLabel_4
-				};
+				lblNewLabel_4 };
 		for (JLabel label : labels) {
 			label.setVisible(visible);
 		}
 	}
 
 	private void llenarComboBoxPartidos() {
-		ArrayList<String> partidos = controller.listaPartidos();
-
-		partidosComboBox.addItem("");
-
-		for (int i = 0; i < partidos.size(); i++) {
-			partidosComboBox.addItem(partidos.get(i));
+		partidos = controller.listaPartidos();
+		for (Juegan juegan : partidos) {
+			String local = juegan.getNombreEquipoLocal();
+			String visitante = juegan.getNombreEquipoVisitante();
+			date = juegan.getFechaInicio();
+			String resultado = juegan.getResultado();
+			String partido = local + " vs " + visitante + " fecha: " + date + " Resultado: " + resultado;
+			partidosComboBox.addItem(partido);
 		}
 	}
 
 	public void actionPerformed(ActionEvent e) {
-		MenuAdmin menuAdmin = new MenuAdmin(controller);
 		Object o = e.getSource();
 		if (o == editarPartidoButton) {
-			mostrarComponentes = !mostrarComponentes;
-			setComponentesVisibles(mostrarComponentes);
-			editarPartidoButton.setText("Editar este partido");
-			editarPartidoButton.setVisible(false);
-			okButton.setVisible(true);
-			partidosComboBox.setVisible(false);
-		} else if (o == equipoLocalComboBox) {
-			String nombreEquipoLocal = (String) equipoLocalComboBox.getSelectedItem();
-			String estadioEquipoLocal = estadiosEquipos.get(nombreEquipoLocal);
-			estadioField.setText(estadioEquipoLocal);
+			Juegan juegan = obtenerPartidoSeleccionado();
 
-			equipoVisitanteComboBox.removeAllItems();
-			for (String equipo : equiposDisponibles) {
-				if (!equipo.equals(nombreEquipoLocal)) {
-					equipoVisitanteComboBox.addItem(equipo);
+			if (juegan != null) {
+				mostrarComponentes = !mostrarComponentes;
+				setComponentesVisibles(mostrarComponentes);
+				editarPartidoButton.setVisible(false);
+				okButton.setVisible(true);
+				partidosComboBox.setVisible(false);
+				if (date.isBefore(LocalDateTime.now())) {
+					datePicker.setEnabled(false);
+					timeSpinner.setEnabled(false);
+					resultado1.setEnabled(true);
+					resultado2.setEnabled(true);
+				} else {
+					datePicker.setEnabled(true);
+					timeSpinner.setEnabled(true);
+					resultado1.setEnabled(false);
+					resultado2.setEnabled(false);
 				}
+				equipoLocalLabel.setText(juegan.getNombreEquipoLocal());
+				equipoVisitanteLabel.setText(juegan.getNombreEquipoVisitante());
+				estadioField.setText(controller.getNombreEstadio(juegan));
+				char res1 = juegan.getResultado().charAt(0);
+				resultado1.setText(String.valueOf(res1));
+				char res2 = juegan.getResultado().charAt(2);
+				resultado2.setText(String.valueOf(res2));
+				LocalDateTime fecha = juegan.getFechaInicio();
+				Calendar calendar = Calendar.getInstance();
+				calendar.set(Calendar.YEAR, fecha.getYear());
+				calendar.set(Calendar.MONTH, fecha.getMonthValue() - 1);
+				calendar.set(Calendar.DAY_OF_MONTH, fecha.getDayOfMonth());
+				datePicker.setDate(calendar.getTime());
+				calendar.set(Calendar.HOUR_OF_DAY, fecha.getHour());
+				calendar.set(Calendar.MINUTE, fecha.getMinute());
+				calendar.set(Calendar.SECOND, fecha.getSecond());
+				Date horaActual = calendar.getTime();
+				timeSpinner.setValue(horaActual);
+
+			} else {
+				JOptionPane.showMessageDialog(this, "Seleccione un partido válido.", "Error",
+						JOptionPane.ERROR_MESSAGE);
 			}
 		} else if (o == okButton) {
-			String equipoLocal = (String) equipoLocalComboBox.getSelectedItem();
-			String equipoVisitante = (String) equipoVisitanteComboBox.getSelectedItem();
-			Timestamp fechaInicio = new Timestamp(datePicker.getDate().getTime());
-			java.util.Date horaSeleccionada = (java.util.Date) timeSpinner.getValue();
-			Timestamp horaInicio = new Timestamp(horaSeleccionada.getTime());
-
-			if (equipoLocal != null && equipoVisitante != null && fechaInicio != null && horaInicio != null) {
-				fechaInicio.setHours(horaInicio.getHours());
-				fechaInicio.setMinutes(horaInicio.getMinutes());
-				fechaInicio.setSeconds(horaInicio.getSeconds());
-
-				boolean partidoCreado = controller.crearPartido(equipoLocal, equipoVisitante, fechaInicio);
-				if (partidoCreado) {
-					JOptionPane.showMessageDialog(this, "Partido creado exitosamente.");
-					menuAdmin.setVisible(true);
-					dispose();
-				} else {
-					JOptionPane.showMessageDialog(this, "Error al crear el partido.");
-				}
-			} else {
-				if (estadioField.getText().isEmpty()) {
-					JOptionPane.showMessageDialog(this, "Por favor, complete el campo del estadio.");
-				} else {
-					JOptionPane.showMessageDialog(this, "Por favor, complete todos los campos.");
-				}
-			}
+			String local = equipoLocalLabel.getText();
+			String visitante = equipoVisitanteLabel.getText();
+			Date selectedDate = datePicker.getDate();
+			Instant instant = selectedDate.toInstant();
+			ZonedDateTime zdt = instant.atZone(ZoneId.systemDefault());
+			LocalDateTime fecha = zdt.toLocalDateTime();
+			Date selectedTime = (Date) timeSpinner.getValue();
+			Calendar calendar = Calendar.getInstance();
+			calendar.setTime(selectedTime);
+			int hour = calendar.get(Calendar.HOUR_OF_DAY);
+			int minute = calendar.get(Calendar.MINUTE);
+			int second = calendar.get(Calendar.SECOND);
+			fecha = fecha.withHour(hour).withMinute(minute).withSecond(second);
+			String resultado = resultado1.getText() + label.getText() + resultado2.getText();
+			Juegan juegan = new Juegan(local, visitante, fecha, resultado);
+			controller.modificarPartido(juegan, date);
+			MenuAdmin menuAdmin = new MenuAdmin(controller);
+			menuAdmin.setVisible(true);
+			this.dispose();
 		} else if (o == btnCrearPartido) {
 			CrearPartido crearPartido = new CrearPartido(controller);
 			crearPartido.setVisible(true);
 			this.dispose();
-		}  else if (o == btnGesEquipo) {
-			MenuAdmin menusAdmin= new MenuAdmin(controller);
+		} else if (o == btnGesEquipo) {
+			MenuAdmin menusAdmin = new MenuAdmin(controller);
 			menusAdmin.setVisible(true);
 			this.dispose();
-		
-		}else if (o == btnGestionarEntrenador) {
-			GestionarEntre gestionarEntre= new GestionarEntre(controller);
+		} else if (o == btnGestionarEntrenador) {
+			GestionarEntre gestionarEntre = new GestionarEntre(controller);
 			gestionarEntre.setVisible(true);
 			this.dispose();
-			
-		}  else if (o == btnLogOut) {
+		} else if (o == btnLogOut) {
 			Login frame = new Login(controller);
 			frame.setVisible(true);
 			this.dispose();
 		}
 	}
-}
 
+	private Juegan obtenerPartidoSeleccionado() {
+		if (partidosComboBox.getSelectedIndex() != -1) {
+			return partidos.get(partidosComboBox.getSelectedIndex());
+		}
+		return null;
+	}
+
+}

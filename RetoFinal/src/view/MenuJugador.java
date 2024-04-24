@@ -66,8 +66,10 @@ public class MenuJugador extends JFrame implements ActionListener {
 	private ImageIcon imageIcon;
 	private Blob usrBlobIcon;
 	private JButton btnUpload;
+	
+	
+	public MenuJugador(Controller cont, String userConnected,String userType) {
 
-	public MenuJugador(Controller cont, String userConnected, String userType) {
 		this.controller = cont;
 		this.userName = userConnected;
 		this.userType = userType;
@@ -381,9 +383,21 @@ public class MenuJugador extends JFrame implements ActionListener {
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		Object o = e.getSource();
-
 		if (o == btnLogOut) {
-			;
+			controller.logOut();
+			this.dispose();
+		} else if (o == btnCambiarDorsal) {
+			CambiarDorsal ventanaDorsal = new CambiarDorsal(controller, userName);
+			ventanaDorsal.setVisible(true);
+			this.setVisible(false);
+		}else if(o==btnConsultarPartidos) {
+			ConsultarPartidos consultarPartidos = new ConsultarPartidos(controller,userName,userType);
+			consultarPartidos.setVisible(true);
+			this.dispose();
+			
+		}else if (o == btnCambiarCont ) {
+			CambiarContra ventanaCont = new CambiarContra(controller, userName,userType);
+		    ventanaCont.setVisible(true);
 			this.dispose();
 
 			if (o == btnLogOut) {
