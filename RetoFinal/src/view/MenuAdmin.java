@@ -1,3 +1,4 @@
+
 package view;
 
 import java.awt.event.ActionEvent;
@@ -343,3 +344,4 @@ public class MenuAdmin extends JFrame implements ActionListener {
 		}
 	}
 }
+
