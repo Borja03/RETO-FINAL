@@ -1,6 +1,6 @@
 package view;
 
-import java.awt.Color;
+import java.awt.Color; 
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -22,7 +22,6 @@ import javax.swing.border.EmptyBorder;
 import controller.Controller;
 import model.usuarios.CargoEntrenador;
 import model.usuarios.Entrenador;
-import model.usuarios.Jugador;
 import javax.swing.border.TitledBorder;
 import javax.swing.border.EtchedBorder;
 

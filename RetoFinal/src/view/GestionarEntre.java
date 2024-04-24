@@ -299,7 +299,7 @@ public class GestionarEntre extends JFrame implements ActionListener {
 				tipo = CargoEntrenador.SEGUNDO_ENTRENADOR;
 			}
 
-			if (controller.crearEntrenador(user, password, myTeam, tipo)) {
+			if (controller.crearEntrenador(myTeam, usr, password, tipo)) {
 				int opcion = JOptionPane.showConfirmDialog(this, (String) "",
 						"El entrenador ha sido introducido correctamente\n¿Desea añadir otro jugador?",
 						JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE, null);
