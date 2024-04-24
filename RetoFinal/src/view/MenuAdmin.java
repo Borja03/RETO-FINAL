@@ -74,7 +74,7 @@ public class MenuAdmin extends JFrame implements ActionListener {
 		rightPanelAddEd.setLayout(null);
 
 		JPanel panelLeft = new JPanel();
-		panelLeft.setBounds(0, 0, 312, 680);
+		panelLeft.setBounds(0, 0, 250, 680);
 		panelLeft.setBackground(new Color(242, 45, 45));
 		getContentPane().add(panelLeft);
 		panelLeft.setLayout(null);
