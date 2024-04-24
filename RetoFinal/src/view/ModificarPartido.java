@@ -253,14 +253,12 @@ public class ModificarPartido extends JFrame implements ActionListener {
 			Juegan juegan = obtenerPartidoSeleccionado();
 
 			if (juegan != null) {
-				System.out.println("Juegaan is diff de null ");
 				mostrarComponentes = !mostrarComponentes;
 				setComponentesVisibles(mostrarComponentes);
 				editarPartidoButton.setVisible(false);
 				okButton.setVisible(true);
 				partidosComboBox.setVisible(false);
 				if (date.isBefore(LocalDateTime.now())) {
-					System.out.println("I m here ...");
 					datePicker.setEnabled(false);
 					timeSpinner.setEnabled(false);
 					resultado1.setEnabled(true);
