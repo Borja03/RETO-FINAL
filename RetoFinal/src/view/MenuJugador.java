@@ -58,7 +58,6 @@ public class MenuJugador extends JFrame implements ActionListener {
 	private String nombreEquipo;
 	private Blob teamLogo;
 	private String userType;
-
 	private JLabel lblJugadoresLista;
 	private JLabel lblUserPic;
 	private JLabel lblBtnAddPic;
@@ -395,11 +394,7 @@ public class MenuJugador extends JFrame implements ActionListener {
 			consultarPartidos.setVisible(true);
 			this.dispose();
 			
-		}else if (o == btnCambiarCont ) {
-			CambiarContra ventanaCont = new CambiarContra(controller, userName,userType);
-		    ventanaCont.setVisible(true);
-			this.dispose();
-
+		}
 			if (o == btnLogOut) {
 				controller.logOut();
 				this.dispose();
@@ -420,4 +415,3 @@ public class MenuJugador extends JFrame implements ActionListener {
 
 		}
 	}
-}

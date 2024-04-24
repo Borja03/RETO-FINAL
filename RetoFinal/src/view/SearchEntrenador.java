@@ -238,12 +238,12 @@ public class SearchEntrenador extends JFrame implements ActionListener {
 
 		JPanel topPanel = new JPanel();
 		topPanel.setBorder(
-				new TitledBorder(
-						new TitledBorder(
-								new EtchedBorder(EtchedBorder.LOWERED, new Color(255, 255, 255),
-										new Color(160, 160, 160)),
-								"", TitledBorder.LEADING, TitledBorder.TOP, null, new Color(0, 0, 0)),
-						"", TitledBorder.TRAILING, TitledBorder.TOP, null, new Color(128, 0, 64)));
+		new TitledBorder(
+		new TitledBorder(
+		new EtchedBorder(EtchedBorder.LOWERED, new Color(255, 255, 255),
+		new Color(160, 160, 160)),
+		"", TitledBorder.LEADING, TitledBorder.TOP, null, new Color(0, 0, 0)),
+		"", TitledBorder.TRAILING, TitledBorder.TOP, null, new Color(128, 0, 64)));
 		topPanel.setBounds(310, 85, 676, 154);
 		contentPane.add(topPanel);
 		topPanel.setLayout(null);
@@ -305,6 +305,7 @@ public class SearchEntrenador extends JFrame implements ActionListener {
 
 		textFieldCargo = new JComboBox<String>();
 		textFieldCargo.setBounds(245, 105, 250, 34);
+		textFieldCargo.addItem("");
 		textFieldCargo.addItem("Primer_entrenador");
 		textFieldCargo.addItem("Segundo_entrenador");
 		bottomPanel.add(textFieldCargo);
@@ -358,9 +359,7 @@ public class SearchEntrenador extends JFrame implements ActionListener {
 			textFieldUSer.addItem(usr.getUser());
 			textFieldContrasena.setText(usr.getContrasenia());
 			txtEquiponame.addItem(usr.getNombreEquipo());
-
 			CargoEntrenador cargo = usr.getCargo();
-
 			if (cargo == CargoEntrenador.PRIMER_ENTRENADOR) {
 				textFieldCargo.setSelectedItem("Primer_entrenador");
 			} else if (cargo == CargoEntrenador.SEGUNDO_ENTRENADOR) {
@@ -378,7 +377,6 @@ public class SearchEntrenador extends JFrame implements ActionListener {
 			this.dispose();
 			cPartido.setVisible(true);
 		} else if (e.getSource() == btnAddEntrenador) {
-
 			GestionarEntre gestionarEntre = new GestionarEntre(controller);
 			this.dispose();
 			gestionarEntre.setVisible(true);
@@ -402,7 +400,7 @@ public class SearchEntrenador extends JFrame implements ActionListener {
 					fillEntrenadoresEquipo(nombreEquipo);
 
 				} else if (e.getSource() == textFieldUSer) {
-					Object selectedItem = textFieldUSer.getSelectedItem();
+					Object selectedItem1 = textFieldUSer.getSelectedItem();
 				}
 				if (selectedItem instanceof String) {
 					String usr = (String) selectedItem;

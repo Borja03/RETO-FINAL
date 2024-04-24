@@ -321,7 +321,7 @@ public class MenuAdmin extends JFrame implements ActionListener {
 			controller.logOut();
 		} else if (e.getSource() == btnModificar) {
 			this.dispose();
-			ModificarEquipos modificarEquipos = new ModificarEquipos(controller, userName, userType);
+			ModificarEquipos modificarEquipos = new ModificarEquipos(controller);
 			modificarEquipos.setVisible(true);
 		}
 		// right panel buttons

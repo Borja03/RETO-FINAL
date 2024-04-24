@@ -197,9 +197,9 @@ public class ModificarEquipos extends JFrame implements ActionListener {
 			}
 		});
 		panelLeft.add(btnCrearPartido);
-		
-		 btnGestionarEntrenador = new JButton("     Gestionar entrenador");
-		 btnGestionarEntrenador.addActionListener(this);
+
+		btnGestionarEntrenador = new JButton("     Gestionar entrenador");
+		btnGestionarEntrenador.addActionListener(this);
 		btnGestionarEntrenador.setHorizontalAlignment(SwingConstants.LEFT);
 		btnGestionarEntrenador.setFont(new Font("Tahoma", Font.BOLD, 14));
 		btnGestionarEntrenador.setFocusable(false);
@@ -317,61 +317,60 @@ public class ModificarEquipos extends JFrame implements ActionListener {
 			cBoxEquipos.addItem(eqName);
 		}
 	}
+
 	public void fillDataEquipo(String selectedEquipo) {
-	    Equipo eq = controller.getEquipo(selectedEquipo);
-	    nombreEquipoField.setText(eq.getNombreEquipo());
-	    nombreEstadioField.setText(eq.getEstadio());
-	    txttitulosField.setText(eq.getTitulos() + "");
+		Equipo eq = controller.getEquipo(selectedEquipo);
+		nombreEquipoField.setText(eq.getNombreEquipo());
+		nombreEstadioField.setText(eq.getEstadio());
+		txttitulosField.setText(eq.getTitulos() + "");
 
-	    Blob imgB = eq.getLogo();
-	    if (imgB != null) {
-	        try {
-	            byte[] imageData = imgB.getBytes(1, (int) imgB.length());
-	            if (imageData != null && imageData.length > 0) {
-	                ImageIcon icon = new ImageIcon(imageData);
-	                Image image = icon.getImage().getScaledInstance(200, 200, Image.SCALE_SMOOTH);
-	                ImageIcon scaledIcon = new ImageIcon(image);
-	                lblEqLogo.setIcon(scaledIcon);
-	            } 
-	        } catch (SQLException e) {
-	            System.err.println("Error reading image data from Blob: " + e.getMessage());
-	            e.printStackTrace();
-	        }
-	    }   
+		Blob imgB = eq.getLogo();
+		if (imgB != null) {
+			try {
+				byte[] imageData = imgB.getBytes(1, (int) imgB.length());
+				if (imageData != null && imageData.length > 0) {
+					ImageIcon icon = new ImageIcon(imageData);
+					Image image = icon.getImage().getScaledInstance(200, 200, Image.SCALE_SMOOTH);
+					ImageIcon scaledIcon = new ImageIcon(image);
+					lblEqLogo.setIcon(scaledIcon);
+				}
+			} catch (SQLException e) {
+				System.err.println("Error reading image data from Blob: " + e.getMessage());
+				e.printStackTrace();
+			}
+		}
 	}
-
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		Object o = e.getSource();
-		
-		// left menu 
+
+		// left menu
 		if (o == btnModificarPartido) {
 			ModificarPartido modificarPartido = new ModificarPartido(controller);
 			this.dispose();
 			modificarPartido.setVisible(true);
-		}else if(e.getSource() == btnCrearPartido) {
+		} else if (e.getSource() == btnCrearPartido) {
 			CrearPartido crearPartido = new CrearPartido(controller);
 			this.dispose();
 			crearPartido.setVisible(true);
-		}else if(e.getSource() == btnGestionarEntrenador) {
+		} else if (e.getSource() == btnGestionarEntrenador) {
 			GestionarEntre gestionarEntre = new GestionarEntre(controller);
 			this.dispose();
 			gestionarEntre.setVisible(true);
-		}else if(e.getSource() == btnLogOut) {
+		} else if (e.getSource() == btnLogOut) {
 			this.dispose();
 			controller.logOut();
 		}
-		
-		
+
 		// right panel buttons
 		if (o == cBoxEquipos) {
 
 			fillDataEquipo((String) cBoxEquipos.getSelectedItem());
 			rightPanelAddEd.setVisible(true);
 		}
-		if(o==btnBorrarEquipo) {
-			if(controller.borrarEquipo(nombreEquipoField.getText())) {
+		if (o == btnBorrarEquipo) {
+			if (controller.borrarEquipo(nombreEquipoField.getText())) {
 				this.dispose();
 				ModificarEquipos modificarEquipos = new ModificarEquipos(controller);
 				modificarEquipos.setVisible(true);
@@ -380,7 +379,7 @@ public class ModificarEquipos extends JFrame implements ActionListener {
 
 		// top paenel buttons
 		if (o == btnAddEquipo) {
-			
+
 			MenuAdmin menuAdmin = new MenuAdmin(controller);
 			this.dispose();
 
@@ -429,5 +428,6 @@ public class ModificarEquipos extends JFrame implements ActionListener {
 				}
 
 			}
+		}
 	}
 }
