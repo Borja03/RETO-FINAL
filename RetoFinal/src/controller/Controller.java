@@ -820,8 +820,7 @@ public class Controller implements IController {
 				System.out.println("Failed!");
 			}
 		} catch (SQLException e) {
-			System.out.println("Error de SQL");
-			e.printStackTrace();
+			return false;
 		} finally {
 			this.closeConnection();
 		}

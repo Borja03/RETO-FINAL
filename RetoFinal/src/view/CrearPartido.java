@@ -237,12 +237,12 @@ class CrearPartido extends JFrame implements ActionListener {
 		// Etiqueta para "Equipo Visitante"
 		JLabel lblNewLabel_1 = new JLabel("Equipo Visitante:");
 		lblNewLabel_1.setFont(new Font("Tahoma", Font.BOLD, 14));
-		lblNewLabel_1.setBounds(380, 154, 135, 34);
+		lblNewLabel_1.setBounds(380, 138, 135, 34);
 		getContentPane().add(lblNewLabel_1);
 
 		// ComboBox para seleccionar el equipo visitante
 		equipoVisitanteComboBox = new JComboBox<>();
-		equipoVisitanteComboBox.setBounds(532, 156, 250, 34);
+		equipoVisitanteComboBox.setBounds(532, 140, 250, 34);
 		getContentPane().add(equipoVisitanteComboBox);
 
 		// Etiqueta para "Estadio"
