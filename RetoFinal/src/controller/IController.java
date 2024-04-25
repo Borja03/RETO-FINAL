@@ -1,9 +1,7 @@
-
 package controller;
 
 import java.security.Timestamp;
 import java.sql.Blob;
-import java.sql.Connection;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Date;
@@ -70,14 +68,9 @@ public interface IController {
 
 	public String getUsuarioPassword(String userName, String userType);
 
-
-	boolean modificarPartido(String nombrePartido, String nuevoResultado);
-	public boolean existePartidoEnFecha(java.sql.Timestamp fecha);
-
 	public boolean updateUsrIcon(String user, Blob userIcon, String userType);
 
 	public void modificarPartido(Juegan juegan, LocalDateTime fecha);
-	
-
 
 }
+

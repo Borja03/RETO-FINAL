@@ -1,6 +1,7 @@
+
 package view;
 
-import java.awt.BorderLayout;
+import java.awt.BorderLayout; 
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Dimension;
@@ -45,7 +46,7 @@ public class ConsultarPartidos extends JFrame implements ActionListener {
         this.userType = userType;
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setBounds(100, 100, 1008, 717);
-        contentPane = new JPanel(); 
+        contentPane = new JPanel();
         contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
         contentPane.setSize(1366, 768);
         setContentPane(contentPane);
@@ -218,7 +219,7 @@ public class ConsultarPartidos extends JFrame implements ActionListener {
         JPanel partidoPanel = new JPanel(new BorderLayout());
         partidoPanel.setBackground(new Color(192, 192, 192));
         partidoPanel.setBounds(10, high, 718, 150);
-        partidoPanel.setBorder(new LineBorder(Color.BLUE, 3));
+        partidoPanel.setBorder(new LineBorder(Color.RED, 3));
         partidoPanel.setPreferredSize(new Dimension(710, 170));
         partidoPanel.setMaximumSize(new Dimension(710, 170));
         partidoPanel.setAlignmentX(Component.LEFT_ALIGNMENT);
