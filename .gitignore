@@ -1,7 +1,4 @@
-<<<<<<< HEAD
-/.metadata/
-=======
->>>>>>> 65370bc16cd339d32025f7de0002d0f93b7e7adc
+
 .metadata
 bin/
 tmp/
@@ -13,6 +10,9 @@ local.properties
 .settings/
 .loadpath
 .recommenders
+.classpath
+.project
+.gitignore
 
 # External tool builders
 .externalToolBuilders/
