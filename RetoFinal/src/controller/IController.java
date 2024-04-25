@@ -38,7 +38,7 @@ public interface IController {
 
 	public void modificarDorsal();
 
-	public void consultarPartido();
+	public ArrayList<Juegan> consultarPartidoEquipo(String equipoName);
 
 	public ArrayList<String> getEquipos();
 

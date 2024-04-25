@@ -21,6 +21,7 @@ import model.usuarios.Usuarios;
 import view.CambiarDorsal;
 import view.Login;
 
+
 public class Controller implements IController {
 
 	private static final String DB_URL = "jdbc:mysql://localhost:3306/laliga?serverTimezone=Europe/Madrid&allowPublicKeyRetrieval=true&useSSL=false";
@@ -61,6 +62,8 @@ public class Controller implements IController {
 	final String NOMBREquipoE = "Select nombreEquipo FROM entrenador WHERE user = ?";
 	final String nombreEstadio = "SELECT nombreEstadio from EQUIPO where nombreEquipo = ?";
 	final String modificarPartido = "UPDATE juegan SET fechaInicio = ?, resultado = ? WHERE fechaInicio = ?";
+	final String CONSULTARequipo = "SELECT * from juegan where nombreEquipoLocal = ?";
+
 
 	public boolean checkUserExist(String user) {
 		boolean exist = false;
@@ -871,11 +874,7 @@ public class Controller implements IController {
 		return modified;
 	}
 
-	@Override
-	public void consultarPartido() {
-		// TODO Auto-generated method stub
 
-	}
 
 	@Override
 	public String getUsuarioPassword(String userName, String userType) {
@@ -950,4 +949,37 @@ public class Controller implements IController {
 		return estadio;
 
 	}
+	
+	  // nombreEquipoLocal varchar(30) 
+     //  nombreEquipoVisitante varchar(30) 
+     //  fechaInicio datetime PK 
+     //  resultado
+	@Override
+	public ArrayList<Juegan> consultarPartidoEquipo(String equipoName) {
+		ArrayList<Juegan> partidosLista = new ArrayList<>();
+		
+		this.openConnection("entrenador", "entrenador");
+		try {
+			statement = connection.prepareStatement(CONSULTARequipo);
+			statement.setString(1, equipoName);
+
+			resultSet = statement.executeQuery();
+			while (resultSet.next()) {
+				String local = resultSet.getString("nombreEquipoLocal");
+				String visitante = resultSet.getString("nombreEquipoVisitante");
+				java.sql.Timestamp timestamp = resultSet.getTimestamp("fechaInicio");
+				LocalDateTime fecha = timestamp.toLocalDateTime();
+				String resultado = resultSet.getString("resultado");
+				Juegan partido = new Juegan(local, visitante, fecha, resultado);
+				partidosLista.add(partido);
+			}
+		} catch (SQLException e) {
+			System.out.println("Error de SQL");
+			e.printStackTrace();
+		} finally {
+			this.closeConnection();
+		}
+		return partidosLista;
+	}
+	
 }
