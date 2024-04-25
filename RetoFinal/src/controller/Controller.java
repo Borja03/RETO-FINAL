@@ -1,4 +1,3 @@
-
 package controller;
 
 import java.time.LocalDateTime;
@@ -63,6 +62,7 @@ public class Controller implements IController {
 	final String NOMBREequipoE = "Select nombreEquipo FROM entrenador WHERE user = ?";
 	final String nombreEstadio = "SELECT nombreEstadio from EQUIPO where nombreEquipo = ?";
 	final String Partidos = "SELECT nombreEquipoLocal, nombreEquipoVisitante, fechaInicio, resultado FROM juegan";
+	final String CONSULTARequipo = "SELECT * from juegan where nombreEquipoLocal = ?";
 
 	public boolean checkUserExist(String user) {
 		boolean exist = false;
@@ -880,11 +880,6 @@ public class Controller implements IController {
 	}
 
 
-	@Override
-	public void consultarPartido() {
-		// TODO Auto-generated method stub
-
-	}
 
 	@Override
 	public String getUsuarioPassword(String userName, String userType) {
@@ -1000,6 +995,34 @@ public class Controller implements IController {
 		this.closeConnection();
 		return estadio;
 
+	}
+	
+	@Override
+	public ArrayList<Juegan> consultarPartidoEquipo(String equipoName) {
+		ArrayList<Juegan> partidosLista = new ArrayList<>();
+		
+		this.openConnection("entrenador", "entrenador");
+		try {
+			statement = connection.prepareStatement(CONSULTARequipo);
+			statement.setString(1, equipoName);
+
+			resultSet = statement.executeQuery();
+			while (resultSet.next()) {
+				String local = resultSet.getString("nombreEquipoLocal");
+				String visitante = resultSet.getString("nombreEquipoVisitante");
+				java.sql.Timestamp timestamp = resultSet.getTimestamp("fechaInicio");
+				LocalDateTime fecha = timestamp.toLocalDateTime();
+				String resultado = resultSet.getString("resultado");
+				Juegan partido = new Juegan(local, visitante, fecha, resultado);
+				partidosLista.add(partido);
+			}
+		} catch (SQLException e) {
+			System.out.println("Error de SQL");
+			e.printStackTrace();
+		} finally {
+			this.closeConnection();
+		}
+		return partidosLista;
 	}
 	
 
