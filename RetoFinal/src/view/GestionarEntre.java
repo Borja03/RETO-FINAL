@@ -50,6 +50,7 @@ public class GestionarEntre extends JFrame implements ActionListener {
 	private String userType;
 	private JButton btnGestionarEntrenador;
 
+
 	public GestionarEntre(Controller controller) {
 		this.controller = controller;
 
@@ -253,8 +254,8 @@ public class GestionarEntre extends JFrame implements ActionListener {
 		textFieldContrasena.setColumns(10);
 
 		textFieldCargo = new JComboBox<String>();
-
 		textFieldCargo.setBounds(250, 187, 225, 22);
+
 
 		textFieldCargo.setBounds(515, 340, 250, 34);
 		textFieldCargo.addItem("");
@@ -314,7 +315,9 @@ public class GestionarEntre extends JFrame implements ActionListener {
 			this.dispose();
 			cPartidos.setVisible(true);
 
-		} else if (e.getSource() == btnLogOut) {
+
+
+
 
 		} else if (e.getSource() == btnModPartidos) {
 			ModificarPartido modificarPartido = new ModificarPartido(controller);

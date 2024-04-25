@@ -63,10 +63,9 @@ public class ModificarEquipos extends JFrame implements ActionListener {
 	private JComboBox<String> cBoxEquipos;
 	private String userType;
 
-	public ModificarEquipos(Controller controller,String user,String userType) {
+	public ModificarEquipos(Controller controller) {
 		this.controller = controller;
-		this.userName = user;
-		this.userType=userType;
+		
 
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 1008, 717);
@@ -397,7 +396,7 @@ public class ModificarEquipos extends JFrame implements ActionListener {
 		if(o==btnBorrarEquipo) {
 			if(controller.borrarEquipo(nombreEquipoField.getText())) {
 				this.dispose();
-				ModificarEquipos modificarEquipos = new ModificarEquipos(controller,userName,userType);
+				ModificarEquipos modificarEquipos = new ModificarEquipos(controller);
 				modificarEquipos.setVisible(true);
 			}
 		}

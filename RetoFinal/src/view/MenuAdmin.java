@@ -1,13 +1,19 @@
-
-
 package view;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.sql.Blob;
+import java.sql.SQLException;
+import java.awt.Color;
+import java.awt.Font;
+import java.awt.SystemColor;
+
 import javax.sql.rowset.serial.SerialException;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -19,16 +25,8 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
-import java.sql.Blob;
-import java.sql.SQLException;
-import controller.Controller;
-import view.Login.ImagePanel;
 
-import java.awt.Color;
-import java.awt.Font;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
-import java.awt.SystemColor;
+import controller.Controller;
 
 public class MenuAdmin extends JFrame implements ActionListener {
 
@@ -54,8 +52,8 @@ public class MenuAdmin extends JFrame implements ActionListener {
 	private Blob imageBlob;
 	private JLabel lblNombreDelEstadio;
 	private JPanel topMenuPanelAddEq;
-	private String userType;
 	private JButton btnGestionarEntrenador;
+	private JLabel labelError;
 
 	public MenuAdmin(Controller controller) {
 		this.controller = controller;
@@ -74,18 +72,17 @@ public class MenuAdmin extends JFrame implements ActionListener {
 		rightPanelAddEd.setLayout(null);
 
 		JPanel panelLeft = new JPanel();
-		panelLeft.setBounds(0, 0, 250, 680);
 		panelLeft.setBackground(new Color(242, 45, 45));
-		getContentPane().add(panelLeft);
+		panelLeft.setBounds(0, 0, 300, 680);
+		contentPane.add(panelLeft);
 		panelLeft.setLayout(null);
 
-		btnLogOut = new JButton("      Log Out");
-		btnLogOut.setForeground(new Color(255, 255, 255));
+		btnLogOut = new JButton("     Log Out");
 		btnLogOut.setHorizontalAlignment(SwingConstants.LEFT);
 		btnLogOut.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseEntered(MouseEvent e) {
-				btnLogOut.setBackground(new Color(220, 3, 9));
+				btnLogOut.setBackground(new Color(90, 70, 50));
 			}
 
 			@Override
@@ -95,30 +92,30 @@ public class MenuAdmin extends JFrame implements ActionListener {
 
 			@Override
 			public void mousePressed(MouseEvent e) {
-				btnLogOut.setBackground(new Color(242, 45, 45));
+				btnLogOut.setBackground(new Color(50, 70, 90));
 			}
 		});
 		btnLogOut.setBackground(new Color(242, 45, 45));
-		btnLogOut.setBounds(0, 595, 310, 49);
+		btnLogOut.setBounds(37, 595, 200, 49);
 		btnLogOut.setFocusable(false);
 		btnLogOut.setBorder(null);
 		panelLeft.add(btnLogOut);
 		btnLogOut.addActionListener(this);
 		btnLogOut.setFont(new Font("Tahoma", Font.BOLD, 14));
+		btnLogOut.setForeground(Color.WHITE);
 
 		btnModificarPartido = new JButton("     Modificar partido");
-		btnModificarPartido.setForeground(new Color(255, 255, 255));
-		btnModificarPartido.addActionListener(this);
 		btnModificarPartido.setHorizontalAlignment(SwingConstants.LEFT);
 		btnModificarPartido.setFont(new Font("Tahoma", Font.BOLD, 14));
 		btnModificarPartido.setFocusable(false);
 		btnModificarPartido.setBorder(null);
 		btnModificarPartido.setBackground(new Color(242, 45, 45));
-		btnModificarPartido.setBounds(0, 445, 310, 49);
+		btnModificarPartido.setBounds(37, 440, 200, 49);
+		btnModificarPartido.addActionListener(this);
 		btnModificarPartido.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseEntered(MouseEvent e) {
-				btnModificarPartido.setBackground(new Color(220, 3, 9));
+				btnModificarPartido.setBackground(new Color(90, 70, 50));
 			}
 
 			@Override
@@ -128,10 +125,11 @@ public class MenuAdmin extends JFrame implements ActionListener {
 
 			@Override
 			public void mousePressed(MouseEvent e) {
-				btnModificarPartido.setBackground(new Color(242, 45, 45));
+				btnModificarPartido.setBackground(new Color(50, 70, 90));
 			}
 		});
 		panelLeft.add(btnModificarPartido);
+		btnModificarPartido.setForeground(Color.WHITE);
 
 		lblWelcome = new JLabel("   Welcome Admin");
 		lblWelcome.setBackground(new Color(0, 0, 0));
@@ -141,18 +139,18 @@ public class MenuAdmin extends JFrame implements ActionListener {
 		panelLeft.add(lblWelcome);
 
 		btnConsultarPartidos = new JButton("     Gestionar equipo");
-		btnConsultarPartidos.setForeground(new Color(255, 255, 255));
+		btnConsultarPartidos.setEnabled(false);
 		btnConsultarPartidos.setHorizontalAlignment(SwingConstants.LEFT);
 		btnConsultarPartidos.setFont(new Font("Tahoma", Font.BOLD, 14));
 		btnConsultarPartidos.setFocusable(false);
 		btnConsultarPartidos.setBorder(null);
-		btnConsultarPartidos.setBackground(new Color(220, 3, 9));
-		btnConsultarPartidos.setBounds(0, 386, 310, 49);
+		btnConsultarPartidos.setBackground(new Color(255, 128, 64));
+		btnConsultarPartidos.setBounds(37, 385, 200, 49);
 		btnConsultarPartidos.addActionListener(this);
 		btnConsultarPartidos.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseEntered(MouseEvent e) {
-				btnConsultarPartidos.setBackground(new Color(220, 3, 9));
+				btnConsultarPartidos.setBackground(new Color(90, 70, 50));
 			}
 
 			@Override
@@ -162,24 +160,24 @@ public class MenuAdmin extends JFrame implements ActionListener {
 
 			@Override
 			public void mousePressed(MouseEvent e) {
-				btnConsultarPartidos.setBackground(new Color(242, 45, 45));
+				btnConsultarPartidos.setBackground(new Color(50, 70, 90));
 			}
 		});
 		panelLeft.add(btnConsultarPartidos);
+		btnConsultarPartidos.setForeground(Color.BLACK);
 
 		btnCrearPartido = new JButton("     Crear partido");
-		btnCrearPartido.setForeground(new Color(255, 255, 255));
 		btnCrearPartido.addActionListener(this);
 		btnCrearPartido.setHorizontalAlignment(SwingConstants.LEFT);
 		btnCrearPartido.setFont(new Font("Tahoma", Font.BOLD, 14));
 		btnCrearPartido.setFocusable(false);
 		btnCrearPartido.setBorder(null);
 		btnCrearPartido.setBackground(new Color(242, 45, 45));
-		btnCrearPartido.setBounds(0, 327, 310, 49);
+		btnCrearPartido.setBounds(37, 330, 200, 49);
 		btnCrearPartido.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseEntered(MouseEvent e) {
-				btnCrearPartido.setBackground(new Color(220, 3, 9));
+				btnCrearPartido.setBackground(new Color(90, 70, 50));
 			}
 
 			@Override
@@ -189,24 +187,24 @@ public class MenuAdmin extends JFrame implements ActionListener {
 
 			@Override
 			public void mousePressed(MouseEvent e) {
-				btnCrearPartido.setBackground(new Color(242, 45, 45));
+				btnCrearPartido.setBackground(new Color(50, 70, 90));
 			}
 		});
 		panelLeft.add(btnCrearPartido);
+		btnCrearPartido.setForeground(Color.WHITE);
 
 		btnGestionarEntrenador = new JButton("     Gestionar entrenador");
-		btnGestionarEntrenador.setForeground(new Color(255, 255, 255));
 		btnGestionarEntrenador.setHorizontalAlignment(SwingConstants.LEFT);
 		btnGestionarEntrenador.setFont(new Font("Tahoma", Font.BOLD, 14));
 		btnGestionarEntrenador.setFocusable(false);
 		btnGestionarEntrenador.setBorder(null);
 		btnGestionarEntrenador.setBackground(new Color(242, 45, 45));
-		btnGestionarEntrenador.setBounds(0, 275, 310, 49);
+		btnGestionarEntrenador.setBounds(37, 275, 200, 49);
 		btnGestionarEntrenador.addActionListener(this);
 		btnGestionarEntrenador.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseEntered(MouseEvent e) {
-				btnGestionarEntrenador.setBackground(new Color(220, 3, 9));
+				btnGestionarEntrenador.setBackground(new Color(90, 70, 50));
 			}
 
 			@Override
@@ -216,33 +214,30 @@ public class MenuAdmin extends JFrame implements ActionListener {
 
 			@Override
 			public void mousePressed(MouseEvent e) {
-				btnGestionarEntrenador.setBackground(new Color(242, 45, 45));
+				btnGestionarEntrenador.setBackground(new Color(50, 70, 90));
 			}
 		});
 		panelLeft.add(btnGestionarEntrenador);
+		btnGestionarEntrenador.setForeground(Color.WHITE);
 
-		// top menu buttons
 		topMenuPanelAddEq = new JPanel();
-		topMenuPanelAddEq.setBounds(310, 11, 674, 57);
+		topMenuPanelAddEq.setBounds(310, 10, 674, 58);
 		contentPane.add(topMenuPanelAddEq);
 		topMenuPanelAddEq.setLayout(null);
 
 		btnAddEquipo = new JButton("Añadir equipo");
-		btnAddEquipo.setForeground(new Color(0, 0, 0));
-		btnAddEquipo.setFont(new Font("Tahoma", Font.BOLD, 14));
-		btnAddEquipo.setBackground(new Color(220, 3, 9));
+		btnAddEquipo.setBackground(new Color(255, 128, 64));
 		btnAddEquipo.setFocusable(false);
 		btnAddEquipo.setBorder(null);
-		btnAddEquipo.setBounds(74, 10, 176, 34);
+		btnAddEquipo.setBounds(74, 10, 150, 34);
 		topMenuPanelAddEq.add(btnAddEquipo);
 
 		btnModificar = new JButton("Modificar  equipo");
-		btnModificar.setFont(new Font("Tahoma", Font.BOLD, 14));
 		btnModificar.setBackground(SystemColor.menu);
 		btnModificar.addActionListener(this);
 		btnModificar.setFocusable(false);
 		btnModificar.setBorder(null);
-		btnModificar.setBounds(275, 10, 176, 34);
+		btnModificar.setBounds(248, 10, 150, 34);
 		topMenuPanelAddEq.add(btnModificar);
 
 		// right panel
@@ -297,6 +292,9 @@ public class MenuAdmin extends JFrame implements ActionListener {
 		lblNombreDelEstadio.setBounds(53, 153, 160, 34);
 		rightPanelAddEd.add(lblNombreDelEstadio);
 
+		labelError=new JLabel("");
+		labelError.setVisible(false);
+		rightPanelAddEd.add(labelError);
 	}
 
 	@Override
@@ -322,10 +320,9 @@ public class MenuAdmin extends JFrame implements ActionListener {
 			controller.logOut();
 		} else if (e.getSource() == btnModificar) {
 			this.dispose();
-			ModificarEquipos modificarEquipos = new ModificarEquipos(controller, userName, userType);
+			ModificarEquipos modificarEquipos = new ModificarEquipos(controller);
 			modificarEquipos.setVisible(true);
 		}
-		// right panel buttons
 
 		if (o == btnUpload) {
 
@@ -356,18 +353,38 @@ public class MenuAdmin extends JFrame implements ActionListener {
 			}
 
 		} else if (o == bntAnadirEq) {
-			if (controller.crearEquipo(nombreEquipoField.getText(), Integer.valueOf(txttitulosField.getText()),
-					nombreEstadioField.getText(), imageBlob)) {
-				int opcion = JOptionPane.showConfirmDialog(this,
-						(String) "El equipo ha sido introducido correctamente\n¿Desea añadir otro equipo?", "",
-						JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE, null);
-				if (opcion == JOptionPane.NO_OPTION) {
-					this.dispose();
-					MenuAdmin ma = new MenuAdmin(controller);
-					ma.setVisible(true);
-				}
+			try {
 
+				if (controller.crearEquipo(nombreEquipoField.getText(), Integer.valueOf(txttitulosField.getText()),
+						nombreEstadioField.getText(), imageBlob)) {
+					int opcion = JOptionPane.showConfirmDialog(this,
+							"El equipo ha sido introducido correctamente\n¿Desea añadir otro equipo?", "",
+							JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE, null);
+					if (opcion == JOptionPane.NO_OPTION) {
+						this.dispose();
+						MenuAdmin ma = new MenuAdmin(controller);
+						ma.setVisible(true);
+					}
+				} else {
+					labelError.setVisible(true);
+					labelError.setText("Error! El equipo introducido ya existe");
+					labelError.setFont(new Font("Tahoma", Font.BOLD, 14));
+					labelError.setBounds(200, 400, 550, 30);
+					labelError.setForeground(Color.RED);
+					rightPanelAddEd.revalidate();
+					rightPanelAddEd.repaint();
+				}
+			} catch (NumberFormatException e1) {
+				labelError.setVisible(true);
+				labelError.setText("Error! Tienes que llenar todos los parámetros");
+				labelError.setFont(new Font("Tahoma", Font.BOLD, 14));
+				labelError.setBounds(200, 400, 550, 30);
+				labelError.setForeground(Color.RED);
+
+				rightPanelAddEd.revalidate();
+				rightPanelAddEd.repaint();
 			}
+
 		}
 	}
 }

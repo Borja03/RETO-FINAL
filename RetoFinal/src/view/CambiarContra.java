@@ -12,12 +12,15 @@ import java.sql.Blob;
 
 public class CambiarContra extends JFrame implements ActionListener {
 
-	private static final long serialVersionUID = 1L;
-	private JPanel contentPane;
-	private Controller controller;
-	private String userType;
 
-	private String userName;
+
+    private static final long serialVersionUID = 1L;
+    private JPanel contentPane;
+    private Controller controller;
+    private String userType;
+
+    private String userName;
+
 	private JButton btnLogOut;
 	private JButton btnCambiarCont;
 	private JButton btnCambiarDorsal;
@@ -342,7 +345,9 @@ public class CambiarContra extends JFrame implements ActionListener {
 		btnCambiarDorsal.setBounds(40, 406, 200, 49);
 		panelLeft.add(btnCambiarDorsal);
 
-		lblWelcome = new JLabel("Welcome " + userName);
+
+		lblWelcome = new JLabel("Welcome " +userName);
+
 		lblWelcome.setForeground(new Color(255, 255, 0));
 		lblWelcome.setFont(new Font("Tahoma", Font.BOLD, 14));
 		lblWelcome.setBounds(64, 180, 217, 34);
@@ -367,6 +372,7 @@ public class CambiarContra extends JFrame implements ActionListener {
 		btnConsultarEquipo.setBounds(40, 271, 200, 49);
 		panelLeft.add(btnConsultarEquipo);
 		JLabel lblEqLogo = new JLabel();
+
 
 	}
 
@@ -405,6 +411,8 @@ public class CambiarContra extends JFrame implements ActionListener {
 			this.setVisible(false);
 		}
 
+       
+       
 		if (e.getSource() == btnSave) {
 			System.out.println("btn saved clicked ");
 
