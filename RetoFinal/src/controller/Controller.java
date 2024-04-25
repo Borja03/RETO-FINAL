@@ -21,7 +21,6 @@ import model.usuarios.Usuarios;
 import view.CambiarDorsal;
 import view.Login;
 
-
 public class Controller implements IController {
 
 	private static final String DB_URL = "jdbc:mysql://localhost:3306/laliga?serverTimezone=Europe/Madrid&allowPublicKeyRetrieval=true&useSSL=false";
@@ -32,38 +31,38 @@ public class Controller implements IController {
 	private PreparedStatement statement;
 	private ResultSet resultSet;
 
-	final String INNSERTentrenador = "INSERT INTO entrenador (user,password,tipoEntrenador,nombreEquipo) VALUES (?,?,?,?)";
-	final String DELETEentrenador = "DELETE FROM entrenador WHERE user =?";
-
-	final String INSERTjugador = "INSERT INTO jugador (user,password,dorsal,numeroGoles,numeroAsistencias,nombreEquipo) VALUES (?,?,?,?,?,?)";
-	final String GETjugador = "SELECT * FROM jugador WHERE user = ?";
-	final String GETentrenador = "SELECT * FROM entrenador WHERE user = ?";
-	final String GETjugadorEquipo = "SELECT * FROM jugador WHERE user = ? AND nombreEquipo= ?";
-	final String DELETEjugador = "DELETE FROM jugador WHERE user =?";
-	final String MODIFICARjugador = "UPDATE jugador SET password=?, dorsal=?,numeroGoles=?, numeroAsistencias=? WHERE user=?";
-	final String MODIFICARentrenador = "UPDATE entrenador SET password=?, user=?,tipoEntrenador=? WHERE user=?";
-
-	final String ConnectUser = "SELECT * FROM  laliga WHERE user_name =? AND password=?";
-	final String nombreEquipo = "Select nombreEquipo FROM laliga WHERE user=?";
 	final String ALLequipos = "SELECT nombreEquipo FROM  equipo";
-	final String ENTRENADORequipo = "SELECT nombreEquipo FROM  entrenador where user=?";
-	final String JUGADORDORequipo = "SELECT nombreEquipo FROM  jugador where user=?";
-	final String NOMBREequipo = "SELECT * FROM  equipo where nombreEquipo=?";
-	final String Partidos = "SELECT nombreEquipoLocal, nombreEquipoVisitante, fechaInicio, resultado FROM juegan";
-	final String ENTRENADORnombre = "SELECT user FROM  entrenador where nombreEquipo=? and tipoEntrenador=?";
-	final String JUGADORESequipo = "SELECT * FROM  jugador where nombreEquipo=?";
-	final String DORSALlLista = "SELECT dorsal FROM  jugador where nombreEquipo=?";
-	final String INSERTequipo = "INSERT INTO equipo (nombreEquipo, titulos, nombreEstadio ,logo) VALUES (?, ?, ?, ?)";
+	final String ConnectUser = "SELECT * FROM  laliga WHERE user_name =? AND password=?";
+	final String DELETEentrenador = "DELETE FROM entrenador WHERE user =?";
 	final String DELETEequipo = "DELETE FROM equipo WHERE nombreEquipo =?";
-	final String MODIFICARequipo = "UPDATE equipo SET titulos=?, nombreEstadio=? , logo=? WHERE nombreEquipo=?";
-	final String GETJugadorPassword = "SELECT password FROM  jugador where user=?";
+	final String DELETEjugador = "DELETE FROM jugador WHERE user =?";
+	final String DORSALlLista = "SELECT dorsal FROM  jugador where nombreEquipo=?";
+	final String ENTRENADORequipo = "SELECT nombreEquipo FROM  entrenador where user=?";
+	final String ENTRENADORnombre = "SELECT user FROM  entrenador where nombreEquipo=? and tipoEntrenador=?";
+	final String GETentrenador = "SELECT * FROM entrenador WHERE user = ?";
 	final String GETEntrenadorPassword = "SELECT password FROM  entrenador where user=?";
+	final String GETjugador = "SELECT * FROM jugador WHERE user = ?";
+	final String GETJugadorPassword = "SELECT password FROM  jugador where user=?";
+	final String GETjugadorEquipo = "SELECT * FROM jugador WHERE user = ? AND nombreEquipo= ?";
+	final String INSERTequipo = "INSERT INTO equipo (nombreEquipo, titulos, nombreEstadio ,logo) VALUES (?, ?, ?, ?)";
+	final String INSERTjugador = "INSERT INTO jugador (user,password,dorsal,numeroGoles,numeroAsistencias,nombreEquipo) VALUES (?,?,?,?,?,?)";
+	final String INNSERTentrenador = "INSERT INTO entrenador (user,password,tipoEntrenador,nombreEquipo) VALUES (?,?,?,?)";
+	final String JUGADORDORequipo = "SELECT nombreEquipo FROM  jugador where user=?";
+	final String JUGADORESequipo = "SELECT * FROM  jugador where nombreEquipo=?";
+	final String MODIFICARentrenador = "UPDATE entrenador SET password=?, user=?,tipoEntrenador=? WHERE user=?";
+	final String MODIFICARjugador = "UPDATE jugador SET password=?, dorsal=?,numeroGoles=?, numeroAsistencias=? WHERE user=?";
+	final String MODIFICARpartidoFecha = "UPDATE juegan SET fechaInicio = ? WHERE fechaInicio = ?";
+	final String MODIFICARpartidoResultado = "UPDATE juegan SET resultado = ? WHERE fechaInicio = ?";
+	final String MODIFICARequipo = "UPDATE equipo SET titulos=?, nombreEstadio=? , logo=? WHERE nombreEquipo=?";
+	final String modificarPartidoFecha = "UPDATE juegan SET fechaInicio = ? WHERE fechaInicio = ?";
+	final String modificarPartidoResultado = "UPDATE juegan SET resultado = ? WHERE fechaInicio = ?";
 	final String MODIFICARuserIcon = "UPDATE jugador SET icon=?  WHERE user = ?";
-	final String NOMBREquipoE = "Select nombreEquipo FROM entrenador WHERE user = ?";
+	final String NOMBREequipo = "SELECT * FROM  equipo where nombreEquipo=?";
+	final String nombreEquipo = "Select nombreEquipo FROM laliga WHERE user=?";
+	final String NOMBREequipoE = "Select nombreEquipo FROM entrenador WHERE user = ?";
 	final String nombreEstadio = "SELECT nombreEstadio from EQUIPO where nombreEquipo = ?";
-	final String modificarPartido = "UPDATE juegan SET fechaInicio = ?, resultado = ? WHERE fechaInicio = ?";
+	final String Partidos = "SELECT nombreEquipoLocal, nombreEquipoVisitante, fechaInicio, resultado FROM juegan";
 	final String CONSULTARequipo = "SELECT * from juegan where nombreEquipoLocal = ?";
-
 
 	public boolean checkUserExist(String user) {
 		boolean exist = false;
@@ -390,23 +389,31 @@ public class Controller implements IController {
 		}
 		return partidosProgramados;
 	}
-
 	@Override
-	public void modificarPartido(Juegan juegan, LocalDateTime fecha) {
-		this.openConnection("admin", "admin");
-		Timestamp fechaCambiada = Timestamp.valueOf(juegan.getFechaInicio());
-		Timestamp fechaAntigua = Timestamp.valueOf(fecha);
+	public void modificarPartido(Juegan partidoModificado, LocalDateTime fechaAntigua) {
 		try {
-			statement = connection.prepareStatement(modificarPartido);
-			statement.setTimestamp(1, fechaCambiada);
-			statement.setString(2, juegan.getResultado());
-			statement.setTimestamp(3, fechaAntigua);
-			statement.executeUpdate();
+			this.openConnection("admin", "admin"); // Abre la conexión
+
+			// Modificar el resultado del partido
+			PreparedStatement stmtResultado = connection.prepareStatement(modificarPartidoResultado);
+			stmtResultado.setString(1, partidoModificado.getResultado());
+			stmtResultado.setObject(2, fechaAntigua);
+			stmtResultado.executeUpdate();
+			stmtResultado.close();
+
+			// Modificar la fecha de inicio del partido
+			PreparedStatement stmtFecha = connection.prepareStatement(modificarPartidoFecha);
+			stmtFecha.setObject(1, partidoModificado.getFechaInicio());
+			stmtFecha.setObject(2, fechaAntigua);
+			stmtFecha.executeUpdate();
+			stmtFecha.close();
 		} catch (SQLException e) {
 			e.printStackTrace();
+		} finally {
+			this.closeConnection(); // Cierra la conexión
 		}
-		this.closeConnection();
 	}
+
 
 	@Override
 	public void consultarEquipo() {
@@ -813,8 +820,7 @@ public class Controller implements IController {
 				System.out.println("Failed!");
 			}
 		} catch (SQLException e) {
-			System.out.println("Error de SQL");
-			e.printStackTrace();
+			return false;
 		} finally {
 			this.closeConnection();
 		}
@@ -866,8 +872,7 @@ public class Controller implements IController {
 			}
 
 		} catch (SQLException e) {
-			System.out.println("Error de SQL");
-			e.printStackTrace();
+			return false;
 		} finally {
 			this.closeConnection();
 		}
@@ -932,6 +937,48 @@ public class Controller implements IController {
 		return modified;
 	}
 
+	
+	public boolean existePartidoEnFecha(java.sql.Timestamp fecha) {
+	    String query = "SELECT COUNT(*) AS count FROM juegan WHERE fechaInicio = ?";
+	    try (PreparedStatement statement = connection.prepareStatement(query)) {
+	        statement.setTimestamp(1, fecha);
+	        try (ResultSet resultSet = statement.executeQuery()) {
+	            if (resultSet.next()) {
+	                int count = resultSet.getInt("count");
+	                return count > 0;
+	            }
+	        }
+	    } catch (SQLException e) {
+	        e.printStackTrace();
+	    }
+	    return false;
+	}
+	
+	public boolean verificarFechaUnica(LocalDateTime fecha) {
+		boolean fechaUnica = false;
+		try {
+			this.openConnection("admin", "admin"); // Abre la conexión
+			PreparedStatement statement = connection
+					.prepareStatement("SELECT COUNT(*) FROM juegan WHERE fechaInicio = ?");
+			statement.setObject(1, fecha);
+			ResultSet resultSet = statement.executeQuery();
+			if (resultSet.next()) {
+				int count = resultSet.getInt(1);
+				fechaUnica = (count == 0);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			this.closeConnection(); // Cierra la conexión
+		}
+		return fechaUnica;
+	}
+
+
+	  
+	  
+
+
 	public String getNombreEstadio(Juegan juegan) {
 		String estadio = "";
 		this.openConnection("admin", "admin");
@@ -950,10 +997,6 @@ public class Controller implements IController {
 
 	}
 	
-	  // nombreEquipoLocal varchar(30) 
-     //  nombreEquipoVisitante varchar(30) 
-     //  fechaInicio datetime PK 
-     //  resultado
 	@Override
 	public ArrayList<Juegan> consultarPartidoEquipo(String equipoName) {
 		ArrayList<Juegan> partidosLista = new ArrayList<>();
@@ -982,4 +1025,5 @@ public class Controller implements IController {
 		return partidosLista;
 	}
 	
+
 }

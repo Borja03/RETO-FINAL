@@ -1,6 +1,7 @@
+
 package view;
 
-import java.awt.BorderLayout;
+import java.awt.BorderLayout; 
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Dimension;
@@ -245,6 +246,7 @@ public class ConsultarPartidos extends JFrame implements ActionListener {
 		partidoPanel.setMaximumSize(new Dimension(710, 170));
 		partidoPanel.setAlignmentX(Component.LEFT_ALIGNMENT);
 		partidoPanel.setLayout(null);
+
 
 		JLabel lblEqLocal = new JLabel(eqLocal);
 		lblEqLocal.setFont(new Font("Tahoma", Font.BOLD, 14));
