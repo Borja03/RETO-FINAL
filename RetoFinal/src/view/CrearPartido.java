@@ -1,6 +1,7 @@
 package view;
 
 import java.awt.Color;
+
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -30,6 +31,17 @@ import com.toedter.calendar.JCalendar;
 
 import controller.Controller;
 import model.equipos.Equipo;
+
+import java.awt.Color;
+import java.awt.Font;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.sql.Connection;
+import java.sql.Timestamp;
+import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.HashMap;
+import javax.swing.*;
 
 class CrearPartido extends JFrame implements ActionListener {
 
@@ -227,26 +239,23 @@ class CrearPartido extends JFrame implements ActionListener {
 			frame.setVisible(true);
 			// dispose();
 		} else if (o == okButton) {
-			// Obtener la hora actual
-	        LocalTime horaActual = LocalTime.now();
+		
 	        // Obtener la hora seleccionada para el partido
 	        java.util.Date horaSeleccionada = (java.util.Date) timeSpinner.getValue();
-	        LocalTime horaPartido = horaSeleccionada.toInstant().atZone(ZoneId.systemDefault()).toLocalTime();
+	    
 
-	        // Calcular la diferencia en horas
-	        long horasDiferencia = ChronoUnit.HOURS.between(horaActual, horaPartido);
-
-	        // Verificar si la diferencia es menor que dos horas
-	        if (horasDiferencia < 2) {
-	            JOptionPane.showMessageDialog(this, "Debe haber al menos dos horas de diferencia entre la hora actual y la hora del partido.");
-	            return; // No permite continuar
-	        }
+	        
 			LocalDate currentDate = LocalDate.now();
 
 	        String equipoLocal = (String) equipoLocalComboBox.getSelectedItem();
 	        String equipoVisitante = (String) equipoVisitanteComboBox.getSelectedItem();
 	        Timestamp fechaInicio = new Timestamp(datePicker.getDate().getTime());
 	        Timestamp horaInicio = new Timestamp(horaSeleccionada.getTime());
+	        
+	        if (controller.existePartidoEnFecha(fechaInicio)) {
+	            JOptionPane.showMessageDialog(this, "Ya existe un partido programado para la fecha seleccionada.");
+	            return; // No permite continuar
+	        }
 
 	        // Verificar si la fecha seleccionada es anterior a la fecha actual
 	        if (fechaInicio.toLocalDateTime().toLocalDate().isBefore(currentDate)) {
