@@ -79,3 +79,4 @@ public class Splash extends JFrame {
 	        return darkModeEnabled;
 	    }
 }
+
