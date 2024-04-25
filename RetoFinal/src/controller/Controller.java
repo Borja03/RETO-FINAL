@@ -388,7 +388,7 @@ public class Controller implements IController {
 		}
 		return partidosProgramados;
 	}
-
+	@Override
 	public void modificarPartido(Juegan partidoModificado, LocalDateTime fechaAntigua) {
 		try {
 			this.openConnection("admin", "admin"); // Abre la conexión
@@ -413,25 +413,6 @@ public class Controller implements IController {
 		}
 	}
 
-	public boolean verificarFechaUnica(LocalDateTime fecha) {
-		boolean fechaUnica = false;
-		try {
-			this.openConnection("admin", "admin"); // Abre la conexión
-			PreparedStatement statement = connection
-					.prepareStatement("SELECT COUNT(*) FROM juegan WHERE fechaInicio = ?");
-			statement.setObject(1, fecha);
-			ResultSet resultSet = statement.executeQuery();
-			if (resultSet.next()) {
-				int count = resultSet.getInt(1);
-				fechaUnica = (count == 0);
-			}
-		} catch (SQLException e) {
-			e.printStackTrace();
-		} finally {
-			this.closeConnection(); // Cierra la conexión
-		}
-		return fechaUnica;
-	}
 
 	@Override
 	public void consultarEquipo() {
@@ -627,6 +608,7 @@ public class Controller implements IController {
 				String userN = resultSet.getString("user");
 				String password = resultSet.getString("password");
 				String nombreEquipo = resultSet.getString("nombreEquipo");
+				String cargoStr = resultSet.getString("tipoEntrenador");
 				String cargoStr1 = resultSet.getString("tipoEntrenador");
 				CargoEntrenador cargo = null;
 				try {
@@ -836,8 +818,9 @@ public class Controller implements IController {
 			} else {
 				System.out.println("Failed!");
 			}
-		} catch (Exception e) {
-			return false;
+		} catch (SQLException e) {
+			System.out.println("Error de SQL");
+			e.printStackTrace();
 		} finally {
 			this.closeConnection();
 		}
@@ -895,6 +878,7 @@ public class Controller implements IController {
 		}
 		return modified;
 	}
+
 
 	@Override
 	public void consultarPartido() {
@@ -958,6 +942,48 @@ public class Controller implements IController {
 		return modified;
 	}
 
+	
+	public boolean existePartidoEnFecha(java.sql.Timestamp fecha) {
+	    String query = "SELECT COUNT(*) AS count FROM juegan WHERE fechaInicio = ?";
+	    try (PreparedStatement statement = connection.prepareStatement(query)) {
+	        statement.setTimestamp(1, fecha);
+	        try (ResultSet resultSet = statement.executeQuery()) {
+	            if (resultSet.next()) {
+	                int count = resultSet.getInt("count");
+	                return count > 0;
+	            }
+	        }
+	    } catch (SQLException e) {
+	        e.printStackTrace();
+	    }
+	    return false;
+	}
+	
+	public boolean verificarFechaUnica(LocalDateTime fecha) {
+		boolean fechaUnica = false;
+		try {
+			this.openConnection("admin", "admin"); // Abre la conexión
+			PreparedStatement statement = connection
+					.prepareStatement("SELECT COUNT(*) FROM juegan WHERE fechaInicio = ?");
+			statement.setObject(1, fecha);
+			ResultSet resultSet = statement.executeQuery();
+			if (resultSet.next()) {
+				int count = resultSet.getInt(1);
+				fechaUnica = (count == 0);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			this.closeConnection(); // Cierra la conexión
+		}
+		return fechaUnica;
+	}
+
+
+	  
+	  
+
+
 	public String getNombreEstadio(Juegan juegan) {
 		String estadio = "";
 		this.openConnection("admin", "admin");
@@ -975,4 +1001,6 @@ public class Controller implements IController {
 		return estadio;
 
 	}
+	
+
 }

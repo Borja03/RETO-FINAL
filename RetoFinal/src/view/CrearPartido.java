@@ -1,6 +1,7 @@
 package view;
 
-import java.awt.Color;
+import java.awt.Color; 
+
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -30,6 +31,17 @@ import com.toedter.calendar.JCalendar;
 import controller.Controller;
 import model.equipos.Equipo;
 
+import java.awt.Color;
+import java.awt.Font;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.sql.Connection;
+import java.sql.Timestamp;
+import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.HashMap;
+import javax.swing.*;
+
 class CrearPartido extends JFrame implements ActionListener {
 
 	private static final long serialVersionUID = 1L;
@@ -48,9 +60,7 @@ class CrearPartido extends JFrame implements ActionListener {
 	private HashMap<String, String> estadiosEquipos = new HashMap<>();
 	private ArrayList<String> equiposDisponibles = new ArrayList<>();
 	private JButton okButton;
-	private JButton btnModificarPartido; // Botón Modificar partido
-	private String user;
-	private String userType;
+	private JButton btnModificarPartido; 
 
 	public CrearPartido(Controller cont) {
 		this.controller = cont;
@@ -295,11 +305,35 @@ class CrearPartido extends JFrame implements ActionListener {
 			frame.setVisible(true);
 			// dispose();
 		} else if (o == okButton) {
-			String equipoLocal = (String) equipoLocalComboBox.getSelectedItem();
-			String equipoVisitante = (String) equipoVisitanteComboBox.getSelectedItem();
-			Timestamp fechaInicio = new Timestamp(datePicker.getDate().getTime());
-			java.util.Date horaSeleccionada = (java.util.Date) timeSpinner.getValue();
-			Timestamp horaInicio = new Timestamp(horaSeleccionada.getTime());
+		
+	        // Obtener la hora seleccionada para el partido
+	        java.util.Date horaSeleccionada = (java.util.Date) timeSpinner.getValue();
+	    
+
+	        
+			LocalDate currentDate = LocalDate.now();
+
+	        String equipoLocal = (String) equipoLocalComboBox.getSelectedItem();
+	        String equipoVisitante = (String) equipoVisitanteComboBox.getSelectedItem();
+	        Timestamp fechaInicio = new Timestamp(datePicker.getDate().getTime());
+	        Timestamp horaInicio = new Timestamp(horaSeleccionada.getTime());
+	        
+	        if (controller.existePartidoEnFecha(fechaInicio)) {
+	            JOptionPane.showMessageDialog(this, "Ya existe un partido programado para la fecha seleccionada.");
+	            return; // No permite continuar
+	        }
+
+	        // Verificar si la fecha seleccionada es anterior a la fecha actual
+	        if (fechaInicio.toLocalDateTime().toLocalDate().isBefore(currentDate)) {
+	            JOptionPane.showMessageDialog(this, "La fecha seleccionada es anterior a la fecha actual.");
+	            return; // No permite continuar
+	        }
+
+	        // Verificar si la fecha seleccionada ya tiene un partido programado
+	        if (controller.existePartidoEnFecha(fechaInicio)) {
+	            JOptionPane.showMessageDialog(this, "Ya existe un partido programado para la fecha seleccionada.");
+	            return; // No permite continuar
+	        }
 
 			if (equipoLocal != null && equipoVisitante != null && fechaInicio != null && horaInicio != null) {
 				fechaInicio.setHours(horaInicio.getHours());

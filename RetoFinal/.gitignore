@@ -12,10 +12,7 @@ local.properties
 .classpath
 .project
 .gitignore
-<<<<<<< HEAD
 preferences.txt
-=======
->>>>>>> 976d4b00f42537ad76a7ec119ce8de95760a896e
 
 # External tool builders
 .externalToolBuilders/
@@ -65,10 +62,3 @@ preferences.txt
 # Uncomment this line if you wish to ignore the project description file.
 # Typically, this file would be tracked if it contains build/dependency configurations:
 #.project
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
-
->>>>>>> origin/Alder
-=======
->>>>>>> 976d4b00f42537ad76a7ec119ce8de95760a896e
