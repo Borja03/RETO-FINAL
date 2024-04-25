@@ -31,37 +31,37 @@ public class Controller implements IController {
 	private PreparedStatement statement;
 	private ResultSet resultSet;
 
-	final String INNSERTentrenador = "INSERT INTO entrenador (user,password,tipoEntrenador,nombreEquipo) VALUES (?,?,?,?)";
-	final String DELETEentrenador = "DELETE FROM entrenador WHERE user =?";
-
-	final String INSERTjugador = "INSERT INTO jugador (user,password,dorsal,numeroGoles,numeroAsistencias,nombreEquipo) VALUES (?,?,?,?,?,?)";
-	final String GETjugador = "SELECT * FROM jugador WHERE user = ?";
-	final String GETentrenador = "SELECT * FROM entrenador WHERE user = ?";
-	final String GETjugadorEquipo = "SELECT * FROM jugador WHERE user = ? AND nombreEquipo= ?";
-	final String DELETEjugador = "DELETE FROM jugador WHERE user =?";
-	final String MODIFICARjugador = "UPDATE jugador SET password=?, dorsal=?,numeroGoles=?, numeroAsistencias=? WHERE user=?";
-	final String MODIFICARentrenador = "UPDATE entrenador SET password=?, user=?,tipoEntrenador=? WHERE user=?";
-
-	final String ConnectUser = "SELECT * FROM  laliga WHERE user_name =? AND password=?";
-	final String nombreEquipo = "Select nombreEquipo FROM laliga WHERE user=?";
 	final String ALLequipos = "SELECT nombreEquipo FROM  equipo";
-	final String ENTRENADORequipo = "SELECT nombreEquipo FROM  entrenador where user=?";
-	final String JUGADORDORequipo = "SELECT nombreEquipo FROM  jugador where user=?";
-	final String NOMBREequipo = "SELECT * FROM  equipo where nombreEquipo=?";
-	final String Partidos = "SELECT nombreEquipoLocal, nombreEquipoVisitante, fechaInicio, resultado FROM juegan";
-	final String ENTRENADORnombre = "SELECT user FROM  entrenador where nombreEquipo=? and tipoEntrenador=?";
-	final String JUGADORESequipo = "SELECT * FROM  jugador where nombreEquipo=?";
-	final String DORSALlLista = "SELECT dorsal FROM  jugador where nombreEquipo=?";
-	final String INSERTequipo = "INSERT INTO equipo (nombreEquipo, titulos, nombreEstadio ,logo) VALUES (?, ?, ?, ?)";
+	final String ConnectUser = "SELECT * FROM  laliga WHERE user_name =? AND password=?";
+	final String DELETEentrenador = "DELETE FROM entrenador WHERE user =?";
 	final String DELETEequipo = "DELETE FROM equipo WHERE nombreEquipo =?";
-	final String MODIFICARequipo = "UPDATE equipo SET titulos=?, nombreEstadio=? , logo=? WHERE nombreEquipo=?";
-	final String GETJugadorPassword = "SELECT password FROM  jugador where user=?";
+	final String DELETEjugador = "DELETE FROM jugador WHERE user =?";
+	final String DORSALlLista = "SELECT dorsal FROM  jugador where nombreEquipo=?";
+	final String ENTRENADORequipo = "SELECT nombreEquipo FROM  entrenador where user=?";
+	final String ENTRENADORnombre = "SELECT user FROM  entrenador where nombreEquipo=? and tipoEntrenador=?";
+	final String GETentrenador = "SELECT * FROM entrenador WHERE user = ?";
 	final String GETEntrenadorPassword = "SELECT password FROM  entrenador where user=?";
-	final String MODIFICARuserIcon = "UPDATE jugador SET icon=?  WHERE user = ?";
-	final String NOMBREquipoE = "Select nombreEquipo FROM entrenador WHERE user = ?";
-	final String nombreEstadio = "SELECT nombreEstadio from EQUIPO where nombreEquipo = ?";
-	final String modificarPartidoResultado = "UPDATE juegan SET resultado = ? WHERE fechaInicio = ?";
+	final String GETjugador = "SELECT * FROM jugador WHERE user = ?";
+	final String GETJugadorPassword = "SELECT password FROM  jugador where user=?";
+	final String GETjugadorEquipo = "SELECT * FROM jugador WHERE user = ? AND nombreEquipo= ?";
+	final String INSERTequipo = "INSERT INTO equipo (nombreEquipo, titulos, nombreEstadio ,logo) VALUES (?, ?, ?, ?)";
+	final String INSERTjugador = "INSERT INTO jugador (user,password,dorsal,numeroGoles,numeroAsistencias,nombreEquipo) VALUES (?,?,?,?,?,?)";
+	final String INNSERTentrenador = "INSERT INTO entrenador (user,password,tipoEntrenador,nombreEquipo) VALUES (?,?,?,?)";
+	final String JUGADORDORequipo = "SELECT nombreEquipo FROM  jugador where user=?";
+	final String JUGADORESequipo = "SELECT * FROM  jugador where nombreEquipo=?";
+	final String MODIFICARentrenador = "UPDATE entrenador SET password=?, user=?,tipoEntrenador=? WHERE user=?";
+	final String MODIFICARjugador = "UPDATE jugador SET password=?, dorsal=?,numeroGoles=?, numeroAsistencias=? WHERE user=?";
+	final String MODIFICARpartidoFecha = "UPDATE juegan SET fechaInicio = ? WHERE fechaInicio = ?";
+	final String MODIFICARpartidoResultado = "UPDATE juegan SET resultado = ? WHERE fechaInicio = ?";
+	final String MODIFICARequipo = "UPDATE equipo SET titulos=?, nombreEstadio=? , logo=? WHERE nombreEquipo=?";
 	final String modificarPartidoFecha = "UPDATE juegan SET fechaInicio = ? WHERE fechaInicio = ?";
+	final String modificarPartidoResultado = "UPDATE juegan SET resultado = ? WHERE fechaInicio = ?";
+	final String MODIFICARuserIcon = "UPDATE jugador SET icon=?  WHERE user = ?";
+	final String NOMBREequipo = "SELECT * FROM  equipo where nombreEquipo=?";
+	final String nombreEquipo = "Select nombreEquipo FROM laliga WHERE user=?";
+	final String NOMBREequipoE = "Select nombreEquipo FROM entrenador WHERE user = ?";
+	final String nombreEstadio = "SELECT nombreEstadio from EQUIPO where nombreEquipo = ?";
+	final String Partidos = "SELECT nombreEquipoLocal, nombreEquipoVisitante, fechaInicio, resultado FROM juegan";
 
 	public boolean checkUserExist(String user) {
 		boolean exist = false;
@@ -627,7 +627,6 @@ public class Controller implements IController {
 				String userN = resultSet.getString("user");
 				String password = resultSet.getString("password");
 				String nombreEquipo = resultSet.getString("nombreEquipo");
-				String cargoStr = resultSet.getString("tipoEntrenador");
 				String cargoStr1 = resultSet.getString("tipoEntrenador");
 				CargoEntrenador cargo = null;
 				try {
@@ -837,9 +836,8 @@ public class Controller implements IController {
 			} else {
 				System.out.println("Failed!");
 			}
-		} catch (SQLException e) {
-			System.out.println("Error de SQL");
-			e.printStackTrace();
+		} catch (Exception e) {
+			return false;
 		} finally {
 			this.closeConnection();
 		}
@@ -891,8 +889,7 @@ public class Controller implements IController {
 			}
 
 		} catch (SQLException e) {
-			System.out.println("Error de SQL");
-			e.printStackTrace();
+			return false;
 		} finally {
 			this.closeConnection();
 		}

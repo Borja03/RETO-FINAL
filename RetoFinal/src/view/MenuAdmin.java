@@ -53,6 +53,7 @@ public class MenuAdmin extends JFrame implements ActionListener {
 	private JLabel lblNombreDelEstadio;
 	private JPanel topMenuPanelAddEq;
 	private JButton btnGestionarEntrenador;
+	private JLabel labelError;
 
 	public MenuAdmin(Controller controller) {
 		this.controller = controller;
@@ -109,7 +110,7 @@ public class MenuAdmin extends JFrame implements ActionListener {
 		btnModificarPartido.setFocusable(false);
 		btnModificarPartido.setBorder(null);
 		btnModificarPartido.setBackground(new Color(242, 45, 45));
-		btnModificarPartido.setBounds(37, 445, 200, 49);
+		btnModificarPartido.setBounds(37, 440, 200, 49);
 		btnModificarPartido.addActionListener(this);
 		btnModificarPartido.addMouseListener(new MouseAdapter() {
 			@Override
@@ -144,7 +145,7 @@ public class MenuAdmin extends JFrame implements ActionListener {
 		btnConsultarPartidos.setFocusable(false);
 		btnConsultarPartidos.setBorder(null);
 		btnConsultarPartidos.setBackground(new Color(255, 128, 64));
-		btnConsultarPartidos.setBounds(37, 386, 200, 49);
+		btnConsultarPartidos.setBounds(37, 385, 200, 49);
 		btnConsultarPartidos.addActionListener(this);
 		btnConsultarPartidos.addMouseListener(new MouseAdapter() {
 			@Override
@@ -172,7 +173,7 @@ public class MenuAdmin extends JFrame implements ActionListener {
 		btnCrearPartido.setFocusable(false);
 		btnCrearPartido.setBorder(null);
 		btnCrearPartido.setBackground(new Color(242, 45, 45));
-		btnCrearPartido.setBounds(37, 327, 200, 49);
+		btnCrearPartido.setBounds(37, 330, 200, 49);
 		btnCrearPartido.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseEntered(MouseEvent e) {
@@ -291,6 +292,9 @@ public class MenuAdmin extends JFrame implements ActionListener {
 		lblNombreDelEstadio.setBounds(53, 153, 160, 34);
 		rightPanelAddEd.add(lblNombreDelEstadio);
 
+		labelError=new JLabel("");
+		labelError.setVisible(false);
+		rightPanelAddEd.add(labelError);
 	}
 
 	@Override
@@ -316,10 +320,9 @@ public class MenuAdmin extends JFrame implements ActionListener {
 			controller.logOut();
 		} else if (e.getSource() == btnModificar) {
 			this.dispose();
-			MenuAdmin modificarEquipos = new MenuAdmin(controller);
+			ModificarEquipos modificarEquipos = new ModificarEquipos(controller);
 			modificarEquipos.setVisible(true);
 		}
-		// right panel buttons
 
 		if (o == btnUpload) {
 
@@ -350,18 +353,38 @@ public class MenuAdmin extends JFrame implements ActionListener {
 			}
 
 		} else if (o == bntAnadirEq) {
-			if (controller.crearEquipo(nombreEquipoField.getText(), Integer.valueOf(txttitulosField.getText()),
-					nombreEstadioField.getText(), imageBlob)) {
-				int opcion = JOptionPane.showConfirmDialog(this,
-						(String) "El equipo ha sido introducido correctamente\n¿Desea añadir otro equipo?", "",
-						JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE, null);
-				if (opcion == JOptionPane.NO_OPTION) {
-					this.dispose();
-					MenuAdmin ma = new MenuAdmin(controller);
-					ma.setVisible(true);
-				}
+			try {
 
+				if (controller.crearEquipo(nombreEquipoField.getText(), Integer.valueOf(txttitulosField.getText()),
+						nombreEstadioField.getText(), imageBlob)) {
+					int opcion = JOptionPane.showConfirmDialog(this,
+							"El equipo ha sido introducido correctamente\n¿Desea añadir otro equipo?", "",
+							JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE, null);
+					if (opcion == JOptionPane.NO_OPTION) {
+						this.dispose();
+						MenuAdmin ma = new MenuAdmin(controller);
+						ma.setVisible(true);
+					}
+				} else {
+					labelError.setVisible(true);
+					labelError.setText("Error! El equipo introducido ya existe");
+					labelError.setFont(new Font("Tahoma", Font.BOLD, 14));
+					labelError.setBounds(200, 400, 550, 30);
+					labelError.setForeground(Color.RED);
+					rightPanelAddEd.revalidate();
+					rightPanelAddEd.repaint();
+				}
+			} catch (NumberFormatException e1) {
+				labelError.setVisible(true);
+				labelError.setText("Error! Tienes que llenar todos los parámetros");
+				labelError.setFont(new Font("Tahoma", Font.BOLD, 14));
+				labelError.setBounds(200, 400, 550, 30);
+				labelError.setForeground(Color.RED);
+
+				rightPanelAddEd.revalidate();
+				rightPanelAddEd.repaint();
 			}
+
 		}
 	}
 }

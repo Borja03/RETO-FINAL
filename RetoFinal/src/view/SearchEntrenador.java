@@ -22,7 +22,6 @@ import javax.swing.border.EmptyBorder;
 import controller.Controller;
 import model.usuarios.CargoEntrenador;
 import model.usuarios.Entrenador;
-import model.usuarios.Jugador;
 import javax.swing.border.TitledBorder;
 import javax.swing.border.EtchedBorder;
 
@@ -47,7 +46,6 @@ public class SearchEntrenador extends JFrame implements ActionListener {
 	private JButton btnEliminarEntrenador;
 	private JComboBox<String> txtEquiponame;
 	private JPanel bottomPanel;
-	private String user;
 	private JButton btnModificarEntrenador;
 	private String userType;
 
@@ -302,7 +300,6 @@ public class SearchEntrenador extends JFrame implements ActionListener {
 		ArrayList<String> equiListaBox = new ArrayList<>();
 		equiListaBox.removeAll(equiListaBox);
 		equiListaBox.clear();
-		equiListaBox.add("");
 		equiListaBox = controller.getEquipos();
 
 		for (String equipo : equiListaBox) {
