@@ -113,7 +113,7 @@ public class MenuEntrenador extends JFrame implements ActionListener {
 		btnLogOut.setBounds(0, 586, 250, 49);
 		panelLeft.add(btnLogOut);
 		btnLogOut.setHorizontalAlignment(SwingConstants.LEFT);
-	
+
 		btnLogOut.setBackground(new Color(86, 82, 252));
 		btnLogOut.setFocusable(false);
 		btnLogOut.setBorder(null);
@@ -323,8 +323,4 @@ public class MenuEntrenador extends JFrame implements ActionListener {
 
 	}
 
-<<<<<<< HEAD
 }
-=======
-}
->>>>>>> c027c9284a54636c2c83b8c9c4e557de6dbb2f7d

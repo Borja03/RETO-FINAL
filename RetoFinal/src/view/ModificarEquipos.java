@@ -67,13 +67,8 @@ public class ModificarEquipos extends JFrame implements ActionListener {
 		contentPane.add(rightPanelAddEd);
 		rightPanelAddEd.setLayout(null);
 		JPanel panelLeft = new JPanel();
-<<<<<<< HEAD
 		panelLeft.setBackground(new Color(242, 35, 35));
 		panelLeft.setBounds(0, 0, 312, 680);
-=======
-		panelLeft.setBackground(new Color(242, 42, 42));
-		panelLeft.setBounds(0, 0, 300, 680);
->>>>>>> 5f874265d3927ca7dc0c016fb5a437529f44328e
 		contentPane.add(panelLeft);
 		panelLeft.setLayout(null);
 
@@ -88,11 +83,7 @@ public class ModificarEquipos extends JFrame implements ActionListener {
 
 			@Override
 			public void mouseExited(MouseEvent e) {
-<<<<<<< HEAD
-				btnLogOut.setBackground(new Color(242, 35, 35));
-=======
 				btnLogOut.setBackground(new Color(242, 45, 45));
->>>>>>> 5f874265d3927ca7dc0c016fb5a437529f44328e
 			}
 
 			@Override
@@ -100,13 +91,9 @@ public class ModificarEquipos extends JFrame implements ActionListener {
 				btnLogOut.setBackground(new Color(242, 35, 35));
 			}
 		});
-<<<<<<< HEAD
+
 		btnLogOut.setBackground(new Color(242, 35, 35));
 		btnLogOut.setBounds(0, 595, 310, 49);
-=======
-		btnLogOut.setBackground(new Color(242, 42, 42));
-		btnLogOut.setBounds(37, 595, 200, 49);
->>>>>>> 5f874265d3927ca7dc0c016fb5a437529f44328e
 		btnLogOut.setFocusable(false);
 		btnLogOut.setBorder(null);
 		panelLeft.add(btnLogOut);
@@ -120,13 +107,8 @@ public class ModificarEquipos extends JFrame implements ActionListener {
 		btnModificarPartido.setFont(new Font("Tahoma", Font.BOLD, 14));
 		btnModificarPartido.setFocusable(false);
 		btnModificarPartido.setBorder(null);
-<<<<<<< HEAD
 		btnModificarPartido.setBackground(new Color(242, 35, 35));
 		btnModificarPartido.setBounds(0, 445, 310, 49);
-=======
-		btnModificarPartido.setBackground(new Color(242, 42, 42));
-		btnModificarPartido.setBounds(37, 440, 200, 49);
->>>>>>> 5f874265d3927ca7dc0c016fb5a437529f44328e
 		btnModificarPartido.addActionListener(this);
 		btnModificarPartido.addMouseListener(new MouseAdapter() {
 			@Override
@@ -136,11 +118,7 @@ public class ModificarEquipos extends JFrame implements ActionListener {
 
 			@Override
 			public void mouseExited(MouseEvent e) {
-<<<<<<< HEAD
-				btnModificarPartido.setBackground(new Color(242, 35, 35));
-=======
 				btnModificarPartido.setBackground(new Color(242, 45, 45));
->>>>>>> 5f874265d3927ca7dc0c016fb5a437529f44328e
 			}
 
 			@Override
@@ -151,10 +129,7 @@ public class ModificarEquipos extends JFrame implements ActionListener {
 		panelLeft.add(btnModificarPartido);
 
 		lblWelcome = new JLabel("   Welcome Admin");
-<<<<<<< HEAD
-=======
 		lblWelcome.setBackground(new Color(0, 0, 0));
->>>>>>> 5f874265d3927ca7dc0c016fb5a437529f44328e
 		lblWelcome.setForeground(new Color(0, 0, 0));
 		lblWelcome.setFont(new Font("Tahoma", Font.BOLD, 20));
 		lblWelcome.setBounds(37, 180, 217, 34);
@@ -166,13 +141,8 @@ public class ModificarEquipos extends JFrame implements ActionListener {
 		btnConsultarPartidos.setFont(new Font("Tahoma", Font.BOLD, 14));
 		btnConsultarPartidos.setFocusable(false);
 		btnConsultarPartidos.setBorder(null);
-<<<<<<< HEAD
 		btnConsultarPartidos.setBackground(new Color(220, 3, 9));
 		btnConsultarPartidos.setBounds(0, 386, 310, 49);
-=======
-		btnConsultarPartidos.setBackground(new Color(255, 128, 64));
-		btnConsultarPartidos.setBounds(37, 385, 200, 49);
->>>>>>> 5f874265d3927ca7dc0c016fb5a437529f44328e
 		btnConsultarPartidos.addActionListener(this);
 		btnConsultarPartidos.addMouseListener(new MouseAdapter() {
 			@Override
@@ -182,11 +152,7 @@ public class ModificarEquipos extends JFrame implements ActionListener {
 
 			@Override
 			public void mouseExited(MouseEvent e) {
-<<<<<<< HEAD
-				btnConsultarPartidos.setBackground(new Color(242, 35, 35));
-=======
 				btnConsultarPartidos.setBackground(new Color(242, 45, 45));
->>>>>>> 5f874265d3927ca7dc0c016fb5a437529f44328e
 			}
 
 			@Override
@@ -203,13 +169,8 @@ public class ModificarEquipos extends JFrame implements ActionListener {
 		btnCrearPartido.setFont(new Font("Tahoma", Font.BOLD, 14));
 		btnCrearPartido.setFocusable(false);
 		btnCrearPartido.setBorder(null);
-<<<<<<< HEAD
 		btnCrearPartido.setBackground(new Color(242, 35, 35));
 		btnCrearPartido.setBounds(0, 327, 310, 49);
-=======
-		btnCrearPartido.setBackground(new Color(242, 42, 42));
-		btnCrearPartido.setBounds(37, 330, 200, 49);
->>>>>>> 5f874265d3927ca7dc0c016fb5a437529f44328e
 		btnCrearPartido.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseEntered(MouseEvent e) {
@@ -218,11 +179,7 @@ public class ModificarEquipos extends JFrame implements ActionListener {
 
 			@Override
 			public void mouseExited(MouseEvent e) {
-<<<<<<< HEAD
-				btnCrearPartido.setBackground(new Color(242, 35, 35));
-=======
 				btnCrearPartido.setBackground(new Color(242, 45, 45));
->>>>>>> 5f874265d3927ca7dc0c016fb5a437529f44328e
 			}
 
 			@Override
@@ -239,9 +196,6 @@ public class ModificarEquipos extends JFrame implements ActionListener {
 		btnGestionarEntrenador.setFont(new Font("Tahoma", Font.BOLD, 14));
 		btnGestionarEntrenador.setFocusable(false);
 		btnGestionarEntrenador.setBorder(null);
-<<<<<<< HEAD
-		btnGestionarEntrenador.setBackground(new Color(242, 35, 35));
-		btnGestionarEntrenador.setBounds(0, 275, 310, 49);
 		btnGestionarEntrenador.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseEntered(MouseEvent e) {
@@ -258,10 +212,8 @@ public class ModificarEquipos extends JFrame implements ActionListener {
 				btnGestionarEntrenador.setBackground(new Color(242, 35, 35));
 			}
 		});
-=======
 		btnGestionarEntrenador.setBackground(new Color(242, 42, 42));
 		btnGestionarEntrenador.setBounds(37, 275, 200, 49);
->>>>>>> 5f874265d3927ca7dc0c016fb5a437529f44328e
 		panelLeft.add(btnGestionarEntrenador);
 
 		// top menu buttons
@@ -362,8 +314,8 @@ public class ModificarEquipos extends JFrame implements ActionListener {
 		cBoxEquipos.addActionListener(this);
 		cBoxEquipos.setBounds(219, 13, 250, 34);
 		panelSearch.add(cBoxEquipos);
-		
-		labelError=new JLabel("");
+
+		labelError = new JLabel("");
 		labelError.setVisible(false);
 		rightPanelAddEd.add(labelError);
 
