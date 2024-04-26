@@ -1,28 +1,42 @@
-
 package view;
 
-import javax.swing.*;
+import javax.swing.JFrame;
+import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
-import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import javax.sql.rowset.serial.SerialException;
+import javax.swing.Icon;
+import javax.swing.ImageIcon;
+import javax.swing.JButton;
+import javax.swing.JFileChooser;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+import javax.swing.JTextField;
+import javax.swing.SwingConstants;
 import java.sql.Blob;
 import java.sql.SQLException;
-
 import controller.Controller;
 import model.equipos.Equipo;
+
+import java.awt.Color;
+import java.awt.Font;
+import java.awt.Image;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.awt.SystemColor;
+import javax.swing.JComboBox;
 
 public class ModificarEquipos extends JFrame implements ActionListener {
 
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
 	private Controller controller;
+	private String userName;
 	private JPanel rightPanelAddEd;
 	private JTextField nombreEquipoField;
 	private JTextField nombreEstadioField;
@@ -45,11 +59,12 @@ public class ModificarEquipos extends JFrame implements ActionListener {
 	private JLabel lblWelcome;
 	private JButton btnConsultarPartidos;
 	private JButton btnCrearPartido;
+
 	private JButton bntAnadirEq;
 	private JButton btnModificarEquipo;
 	private JLabel lblEquipoLogo;
+	private String userType;
 	private JButton btnGestionarEntrenador;
-	private JLabel labelError;
 
 	public ModificarEquipos(Controller controller) {
 		this.controller = controller;
@@ -83,7 +98,7 @@ public class ModificarEquipos extends JFrame implements ActionListener {
 
 			@Override
 			public void mouseExited(MouseEvent e) {
-				btnLogOut.setBackground(new Color(242, 45, 45));
+				btnLogOut.setBackground(new Color(242, 35, 35));
 			}
 
 			@Override
@@ -91,7 +106,6 @@ public class ModificarEquipos extends JFrame implements ActionListener {
 				btnLogOut.setBackground(new Color(242, 35, 35));
 			}
 		});
-
 		btnLogOut.setBackground(new Color(242, 35, 35));
 		btnLogOut.setBounds(0, 595, 310, 49);
 		btnLogOut.setFocusable(false);
@@ -118,7 +132,7 @@ public class ModificarEquipos extends JFrame implements ActionListener {
 
 			@Override
 			public void mouseExited(MouseEvent e) {
-				btnModificarPartido.setBackground(new Color(242, 45, 45));
+				btnModificarPartido.setBackground(new Color(242, 35, 35));
 			}
 
 			@Override
@@ -129,7 +143,6 @@ public class ModificarEquipos extends JFrame implements ActionListener {
 		panelLeft.add(btnModificarPartido);
 
 		lblWelcome = new JLabel("   Welcome Admin");
-		lblWelcome.setBackground(new Color(0, 0, 0));
 		lblWelcome.setForeground(new Color(0, 0, 0));
 		lblWelcome.setFont(new Font("Tahoma", Font.BOLD, 20));
 		lblWelcome.setBounds(37, 180, 217, 34);
@@ -152,7 +165,7 @@ public class ModificarEquipos extends JFrame implements ActionListener {
 
 			@Override
 			public void mouseExited(MouseEvent e) {
-				btnConsultarPartidos.setBackground(new Color(242, 45, 45));
+				btnConsultarPartidos.setBackground(new Color(242, 35, 35));
 			}
 
 			@Override
@@ -179,7 +192,7 @@ public class ModificarEquipos extends JFrame implements ActionListener {
 
 			@Override
 			public void mouseExited(MouseEvent e) {
-				btnCrearPartido.setBackground(new Color(242, 45, 45));
+				btnCrearPartido.setBackground(new Color(242, 35, 35));
 			}
 
 			@Override
@@ -196,6 +209,8 @@ public class ModificarEquipos extends JFrame implements ActionListener {
 		btnGestionarEntrenador.setFont(new Font("Tahoma", Font.BOLD, 14));
 		btnGestionarEntrenador.setFocusable(false);
 		btnGestionarEntrenador.setBorder(null);
+		btnGestionarEntrenador.setBackground(new Color(242, 35, 35));
+		btnGestionarEntrenador.setBounds(0, 275, 310, 49);
 		btnGestionarEntrenador.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseEntered(MouseEvent e) {
@@ -212,8 +227,6 @@ public class ModificarEquipos extends JFrame implements ActionListener {
 				btnGestionarEntrenador.setBackground(new Color(242, 35, 35));
 			}
 		});
-		btnGestionarEntrenador.setBackground(new Color(242, 42, 42));
-		btnGestionarEntrenador.setBounds(37, 275, 200, 49);
 		panelLeft.add(btnGestionarEntrenador);
 
 		// top menu buttons
@@ -315,10 +328,6 @@ public class ModificarEquipos extends JFrame implements ActionListener {
 		cBoxEquipos.setBounds(219, 13, 250, 34);
 		panelSearch.add(cBoxEquipos);
 
-		labelError = new JLabel("");
-		labelError.setVisible(false);
-		rightPanelAddEd.add(labelError);
-
 		fillBoxEqName();
 		rightPanelAddEd.setVisible(false);
 
@@ -362,21 +371,17 @@ public class ModificarEquipos extends JFrame implements ActionListener {
 			ModificarPartido modificarPartido = new ModificarPartido(controller);
 			this.dispose();
 			modificarPartido.setVisible(true);
-		} else if (o == btnCrearPartido) {
+		} else if (e.getSource() == btnCrearPartido) {
 			CrearPartido crearPartido = new CrearPartido(controller);
 			this.dispose();
 			crearPartido.setVisible(true);
-		} else if (o == btnGestionarEntrenador) {
+		} else if (e.getSource() == btnGestionarEntrenador) {
 			GestionarEntre gestionarEntre = new GestionarEntre(controller);
 			this.dispose();
 			gestionarEntre.setVisible(true);
-		} else if (o == btnLogOut) {
+		} else if (e.getSource() == btnLogOut) {
 			this.dispose();
 			controller.logOut();
-		} else if (o == bntAnadirEq) {
-			MenuAdmin menuAdmin = new MenuAdmin(controller);
-			this.dispose();
-			menuAdmin.setVisible(true);
 		}
 
 		// right panel buttons
@@ -393,8 +398,9 @@ public class ModificarEquipos extends JFrame implements ActionListener {
 			}
 		}
 
-		// top panel buttons
+		// top paenel buttons
 		if (o == btnAddEquipo) {
+
 			MenuAdmin menuAdmin = new MenuAdmin(controller);
 			this.dispose();
 
@@ -418,7 +424,11 @@ public class ModificarEquipos extends JFrame implements ActionListener {
 
 					} catch (IOException ex) {
 						ex.printStackTrace();
+					} catch (SerialException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
 					} catch (SQLException e1) {
+						// TODO Auto-generated catch block
 						e1.printStackTrace();
 					}
 				} else {
@@ -427,38 +437,18 @@ public class ModificarEquipos extends JFrame implements ActionListener {
 			}
 
 		} else if (o == bntModificarEq) {
-			try {
-
-				if (controller.crearEquipo(nombreEquipoField.getText(), Integer.valueOf(txttitulosField.getText()),
-						nombreEstadioField.getText(), imageBlob)) {
-					int opcion = JOptionPane.showConfirmDialog(this,
-							"El equipo ha sido introducido correctamente\n¿Desea añadir otro equipo?", "",
-							JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE, null);
-					if (opcion == JOptionPane.NO_OPTION) {
-						this.dispose();
-						MenuAdmin ma = new MenuAdmin(controller);
-						ma.setVisible(true);
-					}
-				} else {
-					labelError.setVisible(true);
-					labelError.setText("Error! El equipo introducido ya existe");
-					labelError.setFont(new Font("Tahoma", Font.BOLD, 14));
-					labelError.setBounds(200, 400, 550, 30);
-					labelError.setForeground(Color.RED);
-					rightPanelAddEd.revalidate();
-					rightPanelAddEd.repaint();
+			if (controller.modificarEquipo(nombreEquipoField.getText(), Integer.valueOf(txttitulosField.getText()),
+					nombreEstadioField.getText(), imageBlob)) {
+				int opcion = JOptionPane.showConfirmDialog(this,
+						(String) "El equipo ha sido introducido correctamente\n¿Desea añadir otro equipo?", "",
+						JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE, null);
+				if (opcion == JOptionPane.NO_OPTION) {
+					this.dispose();
+					MenuAdmin ma = new MenuAdmin(controller);
+					ma.setVisible(true);
 				}
-			} catch (NumberFormatException e1) {
-				labelError.setVisible(true);
-				labelError.setText("Error! Tienes que llenar todos los parámetros");
-				labelError.setFont(new Font("Tahoma", Font.BOLD, 14));
-				labelError.setBounds(200, 400, 550, 30);
-				labelError.setForeground(Color.RED);
 
-				rightPanelAddEd.revalidate();
-				rightPanelAddEd.repaint();
 			}
-
 		}
 	}
 }
