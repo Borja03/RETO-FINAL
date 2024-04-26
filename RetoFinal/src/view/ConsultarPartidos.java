@@ -1,6 +1,7 @@
+
 package view;
 
-import java.awt.BorderLayout;
+import java.awt.BorderLayout; 
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Dimension;
@@ -9,6 +10,9 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.sql.Blob;
+import java.time.LocalDateTime;
+import java.util.ArrayList;
 
 import javax.swing.BoxLayout;
 import javax.swing.ImageIcon;
@@ -20,8 +24,11 @@ import javax.swing.JScrollPane;
 import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.LineBorder;
+import javax.swing.border.TitledBorder;
 
 import controller.Controller;
+import model.partido.Juegan;
+import utlidades.Util;
 
 public class ConsultarPartidos extends JFrame implements ActionListener {
 
@@ -193,9 +200,6 @@ public class ConsultarPartidos extends JFrame implements ActionListener {
 
 		contentPane.add(rightPanel);
 
-		String logo1 = "/images/equiposLogo/athletic-bilbao.png";
-		String logo2 = "/images/equiposLogo/real-madrid.png";
-
 		cardsPanel = new JPanel();
 		cardsPanel.setLayout(new BoxLayout(cardsPanel, BoxLayout.Y_AXIS));
 
@@ -204,61 +208,83 @@ public class ConsultarPartidos extends JFrame implements ActionListener {
 		rightPanel.add(scrollPane, BorderLayout.CENTER);
 		rightPanel.add(scrollPane); // Add scroll pane to right panel
 
-		for (int i = 0; i < 20; i++) {
-			miCard("Team 1" + i, logo1, "Team 2" + (i + 1), logo2, "17-04-2024 16:15", "Estadio Name",
-					(20 + (180 * i)));
+		// String logo1 = "/images/equiposLogo/athletic-bilbao.png";
+		// String logo2 = "/images/equiposLogo/real-madrid.png";
+		System.out.println(userName);
+		String miEquipo = controller.getMyTeam(userName, userType);
+		System.out.println(miEquipo);
+		ArrayList<Juegan> misPartidos = controller.consultarPartidoEquipo(miEquipo);
+		ImageIcon logo1;
+		ImageIcon logo2;
+		String estadio;
+		for (int i = 0; i < misPartidos.size(); i++) {
+			Blob logo1Blob = controller.getEquipo(misPartidos.get(i).getNombreEquipoLocal()).getLogo();
+			Blob logo2Blob = controller.getEquipo(misPartidos.get(i).getNombreEquipoVisitante()).getLogo();
+			estadio = controller.getNombreEstadio(misPartidos.get(i));
+			logo1 = Util.blobToImgIcon(logo1Blob);
+			logo2 = Util.blobToImgIcon(logo2Blob);
+			if (misPartidos.get(i).getFechaInicio().isAfter(LocalDateTime.now())) {
+				System.out.println("Herrrre");
+				miCard(misPartidos.get(i).getNombreEquipoLocal(), logo1, misPartidos.get(i).getNombreEquipoVisitante(),
+						logo2, misPartidos.get(i).getFechaInicio().toString(), estadio, (20 + (180 * i)));
+			}
+
 		}
 
 		setVisible(true);
 	}
 
-	public void miCard(String eqLocal, String linkLogo1, String EqVisitante, String linkLogo2, String dateTime,
+	public void miCard(String eqLocal, ImageIcon logo1, String EqVisitante, ImageIcon logo2, String dateTime,
 			String estadio, int high) {
 
 		JPanel partidoPanel = new JPanel(new BorderLayout());
-		partidoPanel.setBackground(new Color(192, 192, 192));
+		partidoPanel.setBorder(
+				new TitledBorder(null, "", TitledBorder.LEADING, TitledBorder.TOP, null, new Color(0, 0, 255)));
 		partidoPanel.setBounds(10, high, 718, 150);
-		partidoPanel.setBorder(new LineBorder(Color.RED, 3));
+		partidoPanel.setBorder(new LineBorder(Color.blue, 3));
 		partidoPanel.setPreferredSize(new Dimension(710, 170));
 		partidoPanel.setMaximumSize(new Dimension(710, 170));
 		partidoPanel.setAlignmentX(Component.LEFT_ALIGNMENT);
 		partidoPanel.setLayout(null);
 
+
 		JLabel lblEqLocal = new JLabel(eqLocal);
 		lblEqLocal.setFont(new Font("Tahoma", Font.BOLD, 14));
-		lblEqLocal.setBounds(175, 58, 150, 22);
+		lblEqLocal.setBounds(150, 58, 150, 22);
 		partidoPanel.add(lblEqLocal);
 
 		JLabel lblEqLogo = new JLabel();
-		ImageIcon imgIcon = new ImageIcon(getClass().getResource(linkLogo1));
+		// ImageIcon imgIcon = new ImageIcon(getClass().getResource(logo1));
+		ImageIcon imgIcon = logo1;
 		lblEqLogo.setIcon(imgIcon);
 		lblEqLogo.setBounds(15, 15, 150, 150);
 		partidoPanel.add(lblEqLogo);
 
 		JLabel lblVs = new JLabel("VS");
 		lblVs.setFont(new Font("Tahoma", Font.BOLD, 14));
-		lblVs.setBounds(335, 58, 40, 22);
+		lblVs.setBounds(350, 58, 40, 22);
 		partidoPanel.add(lblVs);
 
 		JLabel lblEqVistante = new JLabel(EqVisitante);
 		lblEqVistante.setFont(new Font("Tahoma", Font.BOLD, 14));
-		lblEqVistante.setBounds(385, 58, 173, 22);
+		lblEqVistante.setBounds(450, 58, 173, 22);
 		partidoPanel.add(lblEqVistante);
 
 		JLabel lblEqLogo1 = new JLabel();
-		ImageIcon imgIcon2 = new ImageIcon(getClass().getResource(linkLogo2));
+		// ImageIcon imgIcon2 = new ImageIcon(getClass().getResource(logo2));
+		ImageIcon imgIcon2 = logo2;
 		lblEqLogo1.setIcon(imgIcon2);
 		lblEqLogo1.setBounds(547, 15, 150, 150);
 		partidoPanel.add(lblEqLogo1);
 
 		JLabel lblFechaYHora = new JLabel(dateTime);
 		lblFechaYHora.setFont(new Font("Tahoma", Font.BOLD, 12));
-		lblFechaYHora.setBounds(300, 111, 132, 22);
+		lblFechaYHora.setBounds(300, 111, 150, 22);
 		partidoPanel.add(lblFechaYHora);
 
-		JLabel lblEstadio = new JLabel("Estadio :" + estadio);
+		JLabel lblEstadio = new JLabel("Estadio : " + estadio);
 		lblEstadio.setFont(new Font("Tahoma", Font.BOLD, 12));
-		lblEstadio.setBounds(290, 143, 108, 22);
+		lblEstadio.setBounds(300, 143, 300, 22);
 		partidoPanel.add(lblEstadio);
 
 		cardsPanel.add(partidoPanel);
@@ -284,7 +310,14 @@ public class ConsultarPartidos extends JFrame implements ActionListener {
 			cambiarContra.setVisible(true);
 			this.dispose();
 		}
+<<<<<<< HEAD
 
 	}
 
 }
+=======
+
+	}
+
+}
+>>>>>>> c027c9284a54636c2c83b8c9c4e557de6dbb2f7d
