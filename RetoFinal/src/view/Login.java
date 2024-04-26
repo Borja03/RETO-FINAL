@@ -70,6 +70,7 @@ public class Login extends JFrame implements ActionListener {
     private JCheckBox chckbxShowPassword;
     private JToggleButton tglBtnDark;
     private boolean darkModeState;
+    
 
    
     public Login(Controller cont) {
