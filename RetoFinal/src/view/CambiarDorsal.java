@@ -28,6 +28,7 @@ public class CambiarDorsal extends JFrame implements ActionListener {
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		contentPane.setSize(1366, 768);
+		contentPane.setBackground(Color.WHITE);
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 
@@ -68,7 +69,7 @@ public class CambiarDorsal extends JFrame implements ActionListener {
 		lblWelcome.setFont(new Font("Tahoma", Font.BOLD, 14));
 		lblWelcome.setBounds(64, 180, 217, 34);
 		panelLeft.add(lblWelcome);
-		
+
 		JButton btnConsultarEquipo_1 = new JButton("     Consultar Equipo");
 		btnConsultarEquipo_1.setHorizontalAlignment(SwingConstants.LEFT);
 		btnConsultarEquipo_1.setFont(new Font("Tahoma", Font.BOLD, 14));
@@ -77,7 +78,7 @@ public class CambiarDorsal extends JFrame implements ActionListener {
 		btnConsultarEquipo_1.setBackground(new Color(128, 128, 0));
 		btnConsultarEquipo_1.setBounds(37, 297, 200, 49);
 		panelLeft.add(btnConsultarEquipo_1);
-		
+
 		JButton btnConsultarPartidos_1 = new JButton("     Consultar Partidos");
 		btnConsultarPartidos_1.setHorizontalAlignment(SwingConstants.LEFT);
 		btnConsultarPartidos_1.setFont(new Font("Tahoma", Font.BOLD, 14));
@@ -86,7 +87,7 @@ public class CambiarDorsal extends JFrame implements ActionListener {
 		btnConsultarPartidos_1.setBackground(new Color(128, 128, 0));
 		btnConsultarPartidos_1.setBounds(37, 364, 200, 49);
 		panelLeft.add(btnConsultarPartidos_1);
-		
+
 		JButton btnCambiarDorsal_1 = new JButton("     Cambiar Dorsal");
 		btnCambiarDorsal_1.setHorizontalAlignment(SwingConstants.LEFT);
 		btnCambiarDorsal_1.setFont(new Font("Tahoma", Font.BOLD, 14));
@@ -95,7 +96,7 @@ public class CambiarDorsal extends JFrame implements ActionListener {
 		btnCambiarDorsal_1.setBackground(new Color(255, 128, 64));
 		btnCambiarDorsal_1.setBounds(37, 432, 200, 49);
 		panelLeft.add(btnCambiarDorsal_1);
-		
+
 		JButton btnCambiarContrasea = new JButton("     Cambiar Contraseña");
 		btnCambiarContrasea.setHorizontalAlignment(SwingConstants.LEFT);
 		btnCambiarContrasea.setFont(new Font("Tahoma", Font.BOLD, 14));
@@ -104,16 +105,20 @@ public class CambiarDorsal extends JFrame implements ActionListener {
 		btnCambiarContrasea.setBackground(new Color(128, 128, 0));
 		btnCambiarContrasea.setBounds(37, 502, 200, 49);
 		panelLeft.add(btnCambiarContrasea);
-
-
-
 		JPanel buttonsPanel = new JPanel(new GridLayout(5, 5, 10, 10));
-		buttonsPanel.setBounds(310, 10, 674, 660);
+		buttonsPanel.setBounds(320, 10, 650, 650); // Ajusta la posición del panel y su tamaño
+		buttonsPanel.setBackground(Color.WHITE);
 
 		for (int i = 1; i <= 25; i++) {
-			JButton button = new JButton(Integer.toString(i));
+			ImageIcon icon = new ImageIcon("src/images/camisetaBoton.png");
+			Image scaledImage = icon.getImage().getScaledInstance(110, 110, Image.SCALE_SMOOTH);
+			icon = new ImageIcon(scaledImage);
+			JButton button = new JButton(icon);
+			button.setText(Integer.toString(i));
+			button.setHorizontalTextPosition(JButton.CENTER);
+			button.setVerticalTextPosition(JButton.CENTER);
 			button.setFont(new Font("Tahoma", Font.BOLD, 24));
-
+			button.setBorder(null);
 			button.setEnabled(true);
 			button.addActionListener(this);
 			if (cont.existeDorsal(i, userC)) {
@@ -136,7 +141,6 @@ public class CambiarDorsal extends JFrame implements ActionListener {
 		String buttonText = clickedButton.getText();
 
 		int dorsal = Integer.parseInt(buttonText);
-		
 
 		int dialogResult = JOptionPane.showConfirmDialog(null, " Est s seguro que deseas cambiar el dorsal?",
 				"Confirmar", JOptionPane.YES_NO_OPTION);
@@ -147,7 +151,7 @@ public class CambiarDorsal extends JFrame implements ActionListener {
 				JOptionPane.showMessageDialog(null, "El dorsal se ha cambiado con  xito a " + buttonText);
 			} else {
 				JOptionPane.showMessageDialog(null, "Error al cambiar el dorsal");
-				
+
 			}
 		} else {
 			JOptionPane.showMessageDialog(null, "No has confirmado cambiar el dorsal");
@@ -157,7 +161,7 @@ public class CambiarDorsal extends JFrame implements ActionListener {
 		clickedButton.setEnabled(false);
 
 		// Volver a la ventana anterior
-		CambiarDorsal cambiarDorsal= new CambiarDorsal(controller, userName);
+		CambiarDorsal cambiarDorsal = new CambiarDorsal(controller, userName);
 		this.dispose();
 		cambiarDorsal.setVisible(true);
 	}
