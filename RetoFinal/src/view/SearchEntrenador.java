@@ -289,6 +289,7 @@ public class SearchEntrenador extends JFrame implements ActionListener {
         btnModificarEntrenador = new JButton("Modificar Entrenador");
         btnModificarEntrenador.setFont(new Font("Tahoma", Font.BOLD, 14));
         btnModificarEntrenador.setBounds(204, 308, 200, 35);
+        btnModificarEntrenador.addActionListener(this);
         bottomPanel.add(btnModificarEntrenador);
 
         bottomPanel.setVisible(false);
@@ -401,7 +402,6 @@ public class SearchEntrenador extends JFrame implements ActionListener {
         } else if (o == btnModificarEntrenador) {
             String usr = textFieldUSer.getSelectedItem().toString();
             String password = textFieldContrasena.getText();
-            String myTeam = controller.getMyTeam(textFieldUSer.getSelectedItem().toString(), userType);
             String tipoString = (String) textFieldCargo.getSelectedItem();
             CargoEntrenador tipo = null;
             if (tipoString.equals("Primer_entrenador")) {
