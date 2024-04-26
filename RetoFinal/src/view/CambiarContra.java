@@ -143,7 +143,7 @@ public class CambiarContra extends JFrame implements ActionListener {
 		bottomPanel.setVisible(false);
 
 		if (userType.equalsIgnoreCase("jugador")) {
-			showMenuJugador();
+			showMenuJugador(userName);
 		} else if (userType.equalsIgnoreCase("entrenador")) {
 			showMenuEntre(userName);
 		}
@@ -292,7 +292,7 @@ public class CambiarContra extends JFrame implements ActionListener {
 
 	}
 
-	public void showMenuJugador() {
+	public void showMenuJugador(String userName) {
 		JPanel panelLeft = new JPanel();
 		panelLeft.setBounds(0, 0, 300, 680);
 		panelLeft.setBackground(new Color(128, 128, 0));
@@ -388,7 +388,7 @@ public class CambiarContra extends JFrame implements ActionListener {
 
 			}
 		} else if (o == btnCambiarDorsal) {
-			CambiarDorsal ventanaDorsal = new CambiarDorsal(controller, userName);
+			CambiarDorsal ventanaDorsal = new CambiarDorsal(controller, userName, userType);
 			ventanaDorsal.setVisible(true);
 			this.setVisible(false);
 		} else if (o == btnConsultarPartidos) {

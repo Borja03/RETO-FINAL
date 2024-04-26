@@ -392,11 +392,11 @@ public class ModificarJugadores extends JFrame implements ActionListener {
 			MenuEntrenador menuEntrenador = new MenuEntrenador(controller, userName,userType);
 			this.dispose();
 			menuEntrenador.setVisible(true);
-		} else if (e.getSource() == btnCambiarDorsal) {
-			CambiarDorsal cambiarDorsal = new CambiarDorsal(controller, userName);
+		/*} else if (e.getSource() == btnCambiarDorsal) {
+			CambiarDorsal cambiarDorsal = new CambiarDorsal(controller, userName, userType);
 			this.dispose();
 			cambiarDorsal.setVisible(true);
-			controller.logOut();
+			controller.logOut();*/
 		} else if (e.getSource() == btnConsultarPartidos) {
 			ConsultarPartidos consultarPartidos = new ConsultarPartidos(controller, userName,userType);
 			this.dispose();
