@@ -310,7 +310,14 @@ public class ConsultarPartidos extends JFrame implements ActionListener {
 			cambiarContra.setVisible(true);
 			this.dispose();
 		}
+<<<<<<< HEAD
 
 	}
 
 }
+=======
+
+	}
+
+}
+>>>>>>> c027c9284a54636c2c83b8c9c4e557de6dbb2f7d

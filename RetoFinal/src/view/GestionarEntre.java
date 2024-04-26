@@ -28,8 +28,12 @@ public class GestionarJugadores extends JFrame implements ActionListener {
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
 	private JButton btnCrear;
+<<<<<<< HEAD
 	private JButton btnDeleteJugador;
 	private JButton btnModificar;
+=======
+	private JButton btnDeleteMod;
+>>>>>>> c027c9284a54636c2c83b8c9c4e557de6dbb2f7d
 	private Controller controller;
 	private JButton btnLogOut;
 	private JButton btnCambiarCont;
@@ -53,7 +57,12 @@ public class GestionarJugadores extends JFrame implements ActionListener {
 	private String userType;
 	private JButton btnGestJugadores;
 
+<<<<<<< HEAD
 	public GestionarJugadores(Controller controller, String user,String userType, String team) {
+=======
+
+	public GestionarEntre(Controller controller) {
+>>>>>>> c027c9284a54636c2c83b8c9c4e557de6dbb2f7d
 		this.controller = controller;
 		this.userName = user;
 		this.userType=userType;
@@ -81,12 +90,16 @@ public class GestionarJugadores extends JFrame implements ActionListener {
 		btnDeleteJugador.setBounds(564, 40, 176, 35);
 		contentPane.add(btnDeleteJugador);
 
+<<<<<<< HEAD
 		btnModificar = new JButton("Modificar Jugadores");
 		btnModificar.setBounds(787, 40, 176, 35);
 		btnModificar.setFocusable(false);
 		btnModificar.setBorder(null);
 		contentPane.add(btnModificar);
 		btnModificar.addActionListener(this);
+=======
+		
+>>>>>>> c027c9284a54636c2c83b8c9c4e557de6dbb2f7d
 
 		JPanel panelLeft = new JPanel();
         panelLeft.setBackground(new Color(86, 82, 252));
@@ -278,6 +291,7 @@ public class GestionarJugadores extends JFrame implements ActionListener {
 		contentPane.add(textFieldContrasena);
 		textFieldContrasena.setColumns(10);
 
+<<<<<<< HEAD
 		textFieldDorsal = new JComboBox<>();
 		textFieldDorsal.setFont(new Font("Tahoma", Font.BOLD, 14));
 		textFieldDorsal.setBounds(515, 333, 250, 35);
@@ -289,6 +303,11 @@ public class GestionarJugadores extends JFrame implements ActionListener {
 		textFieldGoles.setBounds(515, 399, 250, 35);
 		contentPane.add(textFieldGoles);
 		textFieldGoles.setColumns(10);
+=======
+		textFieldCargo = new JComboBox<String>();
+		textFieldCargo.setBounds(250, 187, 225, 22);
+
+>>>>>>> c027c9284a54636c2c83b8c9c4e557de6dbb2f7d
 
 		textFieldAsist = new JTextField();
 		textFieldAsist.setFont(new Font("Tahoma", Font.BOLD, 14));
@@ -329,8 +348,27 @@ public class GestionarJugadores extends JFrame implements ActionListener {
 	@Override
 	public void actionPerformed(ActionEvent e) {
 
+<<<<<<< HEAD
 		if (e.getSource() == btnDeleteJugador) {
 			SearchJugadore eliminarJugadores = new SearchJugadore (controller,userName,userType,miEquipo);
+=======
+		
+		String usr = textFieldUSer.getText();
+		String password = textFieldContrasena.getText();
+		String myTeam = (String) textFieldEquipo.getSelectedItem();
+		String tipoString = (String) textFieldCargo.getSelectedItem();
+		CargoEntrenador tipo = null;
+		if (tipoString.equals("Primer_entrenador")) {
+			tipo = CargoEntrenador.PRIMER_ENTRENADOR;
+		} else if (tipoString.equals("Segundo_entrenador")) {
+			tipo = CargoEntrenador.SEGUNDO_ENTRENADOR;
+		}
+
+		
+
+		if (e.getSource() == btnDeleteMod) {
+			SearchEntrenador eliminarJugadores = new SearchEntrenador(controller);
+>>>>>>> c027c9284a54636c2c83b8c9c4e557de6dbb2f7d
 			this.dispose();
 			eliminarJugadores.setVisible(true);
 		} else if (e.getSource() == btnModificar) {
@@ -344,6 +382,7 @@ public class GestionarJugadores extends JFrame implements ActionListener {
 		} else if (e.getSource() == btnConsultarPartidos) {
 			ConsultarPartidos consultarPartidos = new ConsultarPartidos(controller, userName,userType);
 			this.dispose();
+<<<<<<< HEAD
 			consultarPartidos.setVisible(true);
 		} else if (e.getSource() == btnLogOut) {
 			this.dispose();
@@ -361,6 +400,34 @@ public class GestionarJugadores extends JFrame implements ActionListener {
 			int dorsal = (int) textFieldDorsal.getSelectedItem();
 			int numGoles = Integer.valueOf(textFieldGoles.getText());
 			int numAsist = Integer.valueOf(textFieldAsist.getText());
+=======
+			cPartidos.setVisible(true);
+
+
+
+
+
+		} else if (e.getSource() == btnModPartidos) {
+			ModificarPartido modificarPartido = new ModificarPartido(controller);
+			this.dispose();
+			modificarPartido.setVisible(true);
+		} else if (e.getSource() == btnLogOut) {
+			Object o = e.getSource();
+			if (o == btnDeleteMod) {
+				SearchEntrenador searchEntrenador = new SearchEntrenador(controller);
+				this.dispose();
+				searchEntrenador.setVisible(true);
+			} else if (o == btnCrearPartido) {
+				CrearPartido crearPartido = new CrearPartido(controller);
+				this.dispose();
+				crearPartido.setVisible(true);
+			} else if (o == btnGestionarEquipo) {
+
+			} else if (o == btnLogOut) {
+				this.dispose();
+				controller.logOut();
+			}
+>>>>>>> c027c9284a54636c2c83b8c9c4e557de6dbb2f7d
 
 			// Object o = e.getSource();
 			if (controller.crearJugador(user, password, dorsal, numGoles, numAsist, myTeam)) {
@@ -379,6 +446,31 @@ public class GestionarJugadores extends JFrame implements ActionListener {
 					this.dispose();
 					GestionarJugadores g1 = new GestionarJugadores(controller, user,userType, myTeam);
 					g1.setVisible(true);
+<<<<<<< HEAD
+=======
+				} else {
+					GestionarEntre gestionarEntre = new GestionarEntre(controller);
+					this.dispose();
+				}
+
+				if (e.getSource() == btnAnadir) {
+					
+					if (controller.crearEntrenador(usr, password, myTeam, tipo)) {
+						 opcion = JOptionPane.showConfirmDialog(this, (String) "",
+								"El entrenador ha sido introducido correctamente\n¿Desea añadir otro jugador?",
+								JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE, null);
+
+						if (opcion == JOptionPane.NO_OPTION) {
+							this.dispose();
+							MenuAdmin g1 = new MenuAdmin(controller);
+							g1.setVisible(true);
+						} else {
+							GestionarEntre gestionarEntre = new GestionarEntre(controller);
+							this.dispose();
+						}
+					}
+
+>>>>>>> c027c9284a54636c2c83b8c9c4e557de6dbb2f7d
 				}
 			}
 		}
