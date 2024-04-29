@@ -196,8 +196,7 @@ public class Controller implements IController {
 				added = true;
 			}
 		} catch (SQLException e) {
-			System.out.println("Error de SQL");
-			e.printStackTrace();
+			return false;
 		} finally {
 			this.closeConnection();
 		}
@@ -388,6 +387,7 @@ public class Controller implements IController {
 		}
 		return partidosProgramados;
 	}
+
 	@Override
 	public void modificarPartido(Juegan partidoModificado, LocalDateTime fechaAntigua) {
 		try {
@@ -412,7 +412,6 @@ public class Controller implements IController {
 			this.closeConnection(); // Cierra la conexión
 		}
 	}
-
 
 	@Override
 	public void consultarEquipo() {
@@ -878,7 +877,6 @@ public class Controller implements IController {
 		return modified;
 	}
 
-
 	@Override
 	public void consultarPartido() {
 		// TODO Auto-generated method stub
@@ -941,23 +939,22 @@ public class Controller implements IController {
 		return modified;
 	}
 
-	
 	public boolean existePartidoEnFecha(java.sql.Timestamp fecha) {
-	    String query = "SELECT COUNT(*) AS count FROM juegan WHERE fechaInicio = ?";
-	    try (PreparedStatement statement = connection.prepareStatement(query)) {
-	        statement.setTimestamp(1, fecha);
-	        try (ResultSet resultSet = statement.executeQuery()) {
-	            if (resultSet.next()) {
-	                int count = resultSet.getInt("count");
-	                return count > 0;
-	            }
-	        }
-	    } catch (SQLException e) {
-	        e.printStackTrace();
-	    }
-	    return false;
+		String query = "SELECT COUNT(*) AS count FROM juegan WHERE fechaInicio = ?";
+		try (PreparedStatement statement = connection.prepareStatement(query)) {
+			statement.setTimestamp(1, fecha);
+			try (ResultSet resultSet = statement.executeQuery()) {
+				if (resultSet.next()) {
+					int count = resultSet.getInt("count");
+					return count > 0;
+				}
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return false;
 	}
-	
+
 	public boolean verificarFechaUnica(LocalDateTime fecha) {
 		boolean fechaUnica = false;
 		try {
@@ -978,11 +975,6 @@ public class Controller implements IController {
 		return fechaUnica;
 	}
 
-
-	  
-	  
-
-
 	public String getNombreEstadio(Juegan juegan) {
 		String estadio = "";
 		this.openConnection("admin", "admin");
@@ -1000,6 +992,5 @@ public class Controller implements IController {
 		return estadio;
 
 	}
-	
 
 }
