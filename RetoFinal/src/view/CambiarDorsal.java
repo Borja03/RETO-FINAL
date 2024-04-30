@@ -24,7 +24,7 @@ public class CambiarDorsal extends JFrame implements ActionListener {
 		getContentPane().setLayout(new BorderLayout());
 
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 1008, 717);
+		setBounds(100, 100, 200, 717);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		contentPane.setSize(1366, 768);
