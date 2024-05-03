@@ -1,13 +1,15 @@
-
 package view;
 
 import java.awt.Color;
 import java.awt.Font;
+import java.awt.FontFormatException;
+import java.awt.GraphicsEnvironment;
 import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.io.IOException;
 import java.sql.Blob;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -73,7 +75,7 @@ public class MenuEntrenador extends JFrame implements ActionListener {
 		btnConsultarEquipo.setForeground(new Color(255, 255, 255));
 		btnConsultarEquipo.addActionListener(this);
 		btnConsultarEquipo.setHorizontalAlignment(SwingConstants.LEFT);
-		btnConsultarEquipo.setFont(new Font("Tahoma", Font.BOLD, 14));
+		btnConsultarEquipo.setFont(loadFont("../fonts/tilt.ttf", Font.PLAIN, 14));
 		btnConsultarEquipo.setFocusable(false);
 		btnConsultarEquipo.setBorder(null);
 		btnConsultarEquipo.setBackground(new Color(100, 100, 100));
@@ -84,7 +86,7 @@ public class MenuEntrenador extends JFrame implements ActionListener {
 		btnGestJugadores.setForeground(new Color(255, 255, 255));
 		btnGestJugadores.addActionListener(this);
 		btnGestJugadores.setHorizontalAlignment(SwingConstants.LEFT);
-		btnGestJugadores.setFont(new Font("Tahoma", Font.BOLD, 14));
+		btnGestJugadores.setFont(loadFont("../fonts/tilt.ttf", Font.PLAIN, 14));
 		btnGestJugadores.setFocusable(false);
 		btnGestJugadores.setBorder(null);
 		btnGestJugadores.setBackground(new Color(86, 82, 252));
@@ -93,7 +95,7 @@ public class MenuEntrenador extends JFrame implements ActionListener {
 
 		lblWelcome = new JLabel("Welcome " + entrConnected);
 		lblWelcome.setForeground(new Color(255, 255, 255));
-		lblWelcome.setFont(new Font("Tahoma", Font.BOLD, 14));
+		lblWelcome.setFont(loadFont("../fonts/tilt.ttf", Font.PLAIN, 14));
 		lblWelcome.setBounds(20, 182, 217, 34);
 		panelLeft.add(lblWelcome);
 
@@ -101,7 +103,7 @@ public class MenuEntrenador extends JFrame implements ActionListener {
 		btnConsultarPartidos.setForeground(new Color(255, 255, 255));
 		btnConsultarPartidos.addActionListener(this);
 		btnConsultarPartidos.setHorizontalAlignment(SwingConstants.LEFT);
-		btnConsultarPartidos.setFont(new Font("Tahoma", Font.BOLD, 14));
+		btnConsultarPartidos.setFont(loadFont("../fonts/tilt.ttf", Font.PLAIN, 14));
 		btnConsultarPartidos.setFocusable(false);
 		btnConsultarPartidos.setBorder(null);
 		btnConsultarPartidos.setBackground(new Color(86, 82, 252));
@@ -118,7 +120,7 @@ public class MenuEntrenador extends JFrame implements ActionListener {
 		btnLogOut.setFocusable(false);
 		btnLogOut.setBorder(null);
 		btnLogOut.addActionListener(this);
-		btnLogOut.setFont(new Font("Tahoma", Font.BOLD, 14));
+		btnLogOut.setFont(loadFont("../fonts/tilt.ttf", Font.PLAIN, 14));
 
 		btnCambiarContrasena = new JButton("     Cambiar contraseña");
 		btnCambiarContrasena.setForeground(new Color(255, 255, 255));
@@ -126,7 +128,7 @@ public class MenuEntrenador extends JFrame implements ActionListener {
 		btnCambiarContrasena.setBounds(0, 513, 250, 49);
 		panelLeft.add(btnCambiarContrasena);
 		btnCambiarContrasena.setHorizontalAlignment(SwingConstants.LEFT);
-		btnCambiarContrasena.setFont(new Font("Tahoma", Font.BOLD, 14));
+		btnCambiarContrasena.setFont(loadFont("../fonts/tilt.ttf", Font.PLAIN, 14));
 		btnCambiarContrasena.setFocusable(false);
 		btnCambiarContrasena.setBorder(null);
 		btnCambiarContrasena.setBackground(new Color(86, 82, 252));
@@ -139,32 +141,32 @@ public class MenuEntrenador extends JFrame implements ActionListener {
 		panel.setLayout(null);
 
 		JLabel lblNombre = new JLabel("Nombre :");
-		lblNombre.setFont(new Font("Tahoma", Font.BOLD, 14));
+		lblNombre.setFont(loadFont("../fonts/tilt.ttf", Font.PLAIN, 14));
 		lblNombre.setBounds(204, 39, 82, 22);
 		panel.add(lblNombre);
 
 		JLabel lblNewLabel = new JLabel("Equipo info");
 		lblNewLabel.setBounds(286, 10, 104, 22);
-		lblNewLabel.setFont(new Font("Tahoma", Font.BOLD, 18));
+		lblNewLabel.setFont(loadFont("../fonts/tilt.ttf", Font.PLAIN, 14));
 		panel.add(lblNewLabel);
 
 		JLabel lblEqEstadio = new JLabel("Estadio :");
-		lblEqEstadio.setFont(new Font("Tahoma", Font.BOLD, 14));
+		lblEqEstadio.setFont(loadFont("../fonts/tilt.ttf", Font.PLAIN, 14));
 		lblEqEstadio.setBounds(204, 67, 82, 22);
 		panel.add(lblEqEstadio);
 
 		JLabel lblTitulos = new JLabel("Titulos :");
-		lblTitulos.setFont(new Font("Tahoma", Font.BOLD, 14));
+		lblTitulos.setFont(loadFont("../fonts/tilt.ttf", Font.PLAIN, 14));
 		lblTitulos.setBounds(204, 93, 82, 22);
 		panel.add(lblTitulos);
 
 		JLabel lblPrimerEntrenador = new JLabel("Primer entrenador :");
-		lblPrimerEntrenador.setFont(new Font("Tahoma", Font.BOLD, 14));
+		lblPrimerEntrenador.setFont(loadFont("../fonts/tilt.ttf", Font.PLAIN, 14));
 		lblPrimerEntrenador.setBounds(204, 116, 162, 22);
 		panel.add(lblPrimerEntrenador);
 
 		JLabel lblSegundoEntrenador = new JLabel("Segundo entrenador :");
-		lblSegundoEntrenador.setFont(new Font("Tahoma", Font.BOLD, 14));
+		lblSegundoEntrenador.setFont(loadFont("../fonts/tilt.ttf", Font.PLAIN, 14));
 		lblSegundoEntrenador.setBounds(204, 145, 162, 22);
 		panel.add(lblSegundoEntrenador);
 
@@ -222,14 +224,16 @@ public class MenuEntrenador extends JFrame implements ActionListener {
 
 		ArrayList<Jugador> dataList = controller.getJugadoresPorEquipo(nombreEquipo);
 
-		String[] columnNames = { "Nombre", "Dorsal", "Goles" };
-		Object[][] data = new Object[dataList.size()][3];
+		String[] columnNames = { "Nombre", "Dorsal", "Goles", "Asistencias" };
+		Object[][] data = new Object[dataList.size()][4];
 
 		for (int i = 0; i < dataList.size(); i++) {
 			Jugador obj = dataList.get(i);
 			data[i][0] = obj.getUser();
 			data[i][1] = obj.getDorsal();
-			data[i][2] = obj.getAsistencias();
+			data[i][2] = obj.getGoles();
+			data[i][3] = obj.getAsistencias();
+			
 		}
 
 		DefaultTableModel model = new DefaultTableModel(data, columnNames);
@@ -298,6 +302,19 @@ public class MenuEntrenador extends JFrame implements ActionListener {
 		txtEqPrimerEntre.setText(primEntrenador);
 		txtEqSegundoEntre.setText(segEntrenador);
 	}
+	
+	  private Font loadFont(String fontPath, int style, float size) {
+	        try {
+	            Font customFont = Font.createFont(Font.TRUETYPE_FONT, getClass().getResourceAsStream(fontPath)).deriveFont(style, size);
+	            GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
+	            ge.registerFont(customFont);
+	            return customFont;
+	        } catch (IOException | FontFormatException e) {
+	            e.printStackTrace();
+	            return null;
+	        }
+	    }
+
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
@@ -322,5 +339,4 @@ public class MenuEntrenador extends JFrame implements ActionListener {
 		}
 
 	}
-
 }

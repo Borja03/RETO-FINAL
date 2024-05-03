@@ -224,7 +224,6 @@ public class ConsultarPartidos extends JFrame implements ActionListener {
 			logo1 = Util.blobToImgIcon(logo1Blob);
 			logo2 = Util.blobToImgIcon(logo2Blob);
 			if (misPartidos.get(i).getFechaInicio().isAfter(LocalDateTime.now())) {
-				System.out.println("Herrrre");
 				miCard(misPartidos.get(i).getNombreEquipoLocal(), logo1, misPartidos.get(i).getNombreEquipoVisitante(),
 						logo2, misPartidos.get(i).getFechaInicio().toString(), estadio, (20 + (180 * i)));
 			}

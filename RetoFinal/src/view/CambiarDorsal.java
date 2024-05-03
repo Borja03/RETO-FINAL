@@ -16,10 +16,15 @@ public class CambiarDorsal extends JFrame implements ActionListener {
 	private JPanel contentPane;
 	private JButton btnLogOut;
 	private JLabel lblWelcome;
+	private JButton btnConsultarEquipo_1;
+	private JButton btnConsultarPartidos_1;
+	private JButton btnCambiarContrasea;
+	private String userType;
 
-	public CambiarDorsal(Controller cont, String userC) {
+	public CambiarDorsal(Controller cont, String userC, String userType) {
 		this.controller = cont;
 		this.userName = userC;
+		this.userType = userType; 
 
 		getContentPane().setLayout(new BorderLayout());
 
@@ -70,7 +75,7 @@ public class CambiarDorsal extends JFrame implements ActionListener {
 		lblWelcome.setBounds(64, 180, 217, 34);
 		panelLeft.add(lblWelcome);
 
-		JButton btnConsultarEquipo_1 = new JButton("     Consultar Equipo");
+		btnConsultarEquipo_1 = new JButton("     Consultar Equipo");
 		btnConsultarEquipo_1.setHorizontalAlignment(SwingConstants.LEFT);
 		btnConsultarEquipo_1.setFont(new Font("Tahoma", Font.BOLD, 14));
 		btnConsultarEquipo_1.setFocusable(false);
@@ -78,8 +83,9 @@ public class CambiarDorsal extends JFrame implements ActionListener {
 		btnConsultarEquipo_1.setBackground(new Color(128, 128, 0));
 		btnConsultarEquipo_1.setBounds(37, 297, 200, 49);
 		panelLeft.add(btnConsultarEquipo_1);
+		btnConsultarEquipo_1.addActionListener(this);
 
-		JButton btnConsultarPartidos_1 = new JButton("     Consultar Partidos");
+		btnConsultarPartidos_1 = new JButton("     Consultar Partidos");
 		btnConsultarPartidos_1.setHorizontalAlignment(SwingConstants.LEFT);
 		btnConsultarPartidos_1.setFont(new Font("Tahoma", Font.BOLD, 14));
 		btnConsultarPartidos_1.setFocusable(false);
@@ -97,7 +103,7 @@ public class CambiarDorsal extends JFrame implements ActionListener {
 		btnCambiarDorsal_1.setBounds(37, 432, 200, 49);
 		panelLeft.add(btnCambiarDorsal_1);
 
-		JButton btnCambiarContrasea = new JButton("     Cambiar Contraseña");
+		btnCambiarContrasea = new JButton("     Cambiar Contraseña");
 		btnCambiarContrasea.setHorizontalAlignment(SwingConstants.LEFT);
 		btnCambiarContrasea.setFont(new Font("Tahoma", Font.BOLD, 14));
 		btnCambiarContrasea.setFocusable(false);
@@ -161,8 +167,22 @@ public class CambiarDorsal extends JFrame implements ActionListener {
 		clickedButton.setEnabled(false);
 
 		// Volver a la ventana anterior
-		CambiarDorsal cambiarDorsal = new CambiarDorsal(controller, userName);
+		CambiarDorsal cambiarDorsal = new CambiarDorsal(controller, userName, userType);
 		this.dispose();
 		cambiarDorsal.setVisible(true);
+		
+		if (o == btnConsultarEquipo_1 ) {
+			MenuJugador menuJugador = new MenuJugador(controller,userName,userType.toLowerCase());
+			menuJugador.setVisible(true);
+			this.setVisible(false);
+		}else if (o == btnConsultarPartidos_1) {
+			ConsultarPartidos consultarPartidos = new ConsultarPartidos(controller, userName, userType);
+			consultarPartidos.setVisible(true);
+			this.dispose();
+		}else if (o == btnCambiarContrasea) {
+			CambiarContra ventanaCont = new CambiarContra(controller, userName, userType);
+			ventanaCont.setVisible(true);
+			this.dispose();
+		}
 	}
 }
