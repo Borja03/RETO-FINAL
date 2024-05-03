@@ -44,16 +44,4 @@ public class Entrenador extends Usuarios {
 	public void setCargo(CargoEntrenador cargo) {
 		this.cargo = cargo;
 	}
-
-//	//
-//	public boolean comprobar(File fichEquipos, String nombreEquipo) {
-//		ArrayList<Equipo> equiposLista = new ArrayList<>();
-//
-//		for (Equipo miEqui : equiposLista) {
-//			if (miEqui.getNombreEquipo().equalsIgnoreCase(nombreEquipo)) {
-//				return true;
-//			}
-//		}
-//		return false;
-//	}
 }

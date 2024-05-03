@@ -1,7 +1,5 @@
 use laLiga;
 
-
-
 GRANT ALL PRIVILEGES ON laLiga.equipo TO admin_role;
 GRANT ALL PRIVILEGES ON laLiga.entrenador TO admin_role;
 GRANT ALL PRIVILEGES ON laLiga.juegan TO admin_role;
