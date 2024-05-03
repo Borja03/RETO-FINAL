@@ -157,7 +157,7 @@ public class ModificarPartido extends JFrame implements ActionListener {
 		contentPane.add(editarPartidoButton);
 
 		panelLeft = new JPanel();
-		panelLeft.setBounds(0, 0, 312, 680);
+		panelLeft.setBounds(0, 0, 250, 680);
 		panelLeft.setBackground(new Color(242, 45, 45));
 		getContentPane().add(panelLeft);
 		panelLeft.setLayout(null);
@@ -166,7 +166,7 @@ public class ModificarPartido extends JFrame implements ActionListener {
 		btnLogOut.setForeground(new Color(255, 255, 255));
 		btnLogOut.setHorizontalAlignment(SwingConstants.LEFT);
 		btnLogOut.setBackground(new Color(242, 45, 45));
-		btnLogOut.setBounds(0, 595, 310, 49);
+		btnLogOut.setBounds(0, 595, 250, 49);
 		btnLogOut.setFocusable(false);
 		btnLogOut.setBorder(null);
 		btnLogOut.addMouseListener(new MouseAdapter() {
@@ -213,13 +213,13 @@ public class ModificarPartido extends JFrame implements ActionListener {
 			}
 		});
 		btnGesEquipo.setBackground(new Color(242, 45, 45));
-		btnGesEquipo.setBounds(0, 386, 310, 49);
+		btnGesEquipo.setBounds(0, 386, 250, 49);
 		panelLeft.add(btnGesEquipo);
 
 		lblWelcome = new JLabel("   Welcome Admin");
 		lblWelcome.setForeground(new Color(0, 0, 0));
 		lblWelcome.setFont(new Font("Tahoma", Font.BOLD, 20));
-		lblWelcome.setBounds(37, 180, 217, 34);
+		lblWelcome.setBounds(10, 179, 217, 34);
 		panelLeft.add(lblWelcome);
 
 		btnGestionarEntrenador = new JButton("     Gestionar entrenador");
@@ -246,7 +246,7 @@ public class ModificarPartido extends JFrame implements ActionListener {
 			}
 		});
 		btnGestionarEntrenador.setBackground(new Color(242, 45, 45));
-		btnGestionarEntrenador.setBounds(0, 275, 310, 49);
+		btnGestionarEntrenador.setBounds(0, 275, 250, 49);
 		panelLeft.add(btnGestionarEntrenador);
 
 		btnCrearPartido = new JButton("     Crear partido");
@@ -273,7 +273,7 @@ public class ModificarPartido extends JFrame implements ActionListener {
 		});
 		btnCrearPartido.setBorder(null);
 		btnCrearPartido.setBackground(new Color(242, 45, 45));
-		btnCrearPartido.setBounds(0, 327, 310, 49);
+		btnCrearPartido.setBounds(0, 327, 250, 49);
 		panelLeft.add(btnCrearPartido);
 
 		btnModificarPartido = new JButton("     Modificar partido");
@@ -299,7 +299,7 @@ public class ModificarPartido extends JFrame implements ActionListener {
 				btnModificarPartido.setBackground(new Color(242, 45, 45));
 			}
 		});
-		btnModificarPartido.setBounds(0, 445, 310, 49);
+		btnModificarPartido.setBounds(0, 445, 250, 49);
 		panelLeft.add(btnModificarPartido);
 		btnModificarPartido.addActionListener(this);
 

@@ -7,23 +7,7 @@ import java.sql.SQLException;
 import javax.swing.ImageIcon;
 
 public class Util {
-//to  add 	
-//	Blob imgB = eq.getLogo();
-//    if (imgB != null) {
-//        try {
-//            byte[] imageData = imgB.getBytes(1, (int) imgB.length());
-//            if (imageData != null && imageData.length > 0) {
-//                ImageIcon icon = new ImageIcon(imageData);
-//                Image image = icon.getImage().getScaledInstance(200, 200, Image.SCALE_SMOOTH);
-//                ImageIcon scaledIcon = new ImageIcon(image);
-//                lblEqLogo.setIcon(scaledIcon);
-//            } 
-//        } catch (SQLException e) {
-//            System.err.println("Error reading image data from Blob: " + e.getMessage());
-//            e.printStackTrace();
-//        }
-//    }   
-	
+
 	public static  ImageIcon blobToImgIcon (Blob miImgBlob) {
 		  ImageIcon scaledIcon = null;
 		
@@ -42,5 +26,7 @@ public class Util {
     }  
     return scaledIcon;
 	}
+	
+	
 
 }

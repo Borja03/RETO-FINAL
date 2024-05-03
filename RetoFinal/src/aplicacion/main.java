@@ -12,7 +12,7 @@ public class main {
 		Controller controller = new Controller();
 		Splash splash = new Splash(controller);
 		splash.setVisible(true);
-		// Login login = new Login(controller);
+		 //Login login = new Login(controller);
 		// login.setVisible(true);
 	}
 

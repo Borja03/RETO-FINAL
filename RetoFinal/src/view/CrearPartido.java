@@ -64,7 +64,7 @@ class CrearPartido extends JFrame implements ActionListener {
 		contentPane.setLayout(null);
 
 		JPanel panelLeft = new JPanel();
-		panelLeft.setBounds(0, 0, 312, 680);
+		panelLeft.setBounds(0, 0, 250, 680);
 		panelLeft.setBackground(new Color(242, 45, 45));
 		getContentPane().add(panelLeft);
 		panelLeft.setLayout(null);
@@ -73,7 +73,7 @@ class CrearPartido extends JFrame implements ActionListener {
 		btnLogOut.setForeground(new Color(255, 255, 255));
 		btnLogOut.setHorizontalAlignment(SwingConstants.LEFT);
 		btnLogOut.setBackground(new Color(242, 45, 45));
-		btnLogOut.setBounds(0, 595, 310, 49);
+		btnLogOut.setBounds(0, 595, 250, 49);
 		btnLogOut.setFocusable(false);
 		btnLogOut.setBorder(null);
 		panelLeft.add(btnLogOut);
@@ -104,7 +104,7 @@ class CrearPartido extends JFrame implements ActionListener {
 		btnGestEquipo.setFocusable(false);
 		btnGestEquipo.setBorder(null);
 		btnGestEquipo.setBackground(new Color(242, 45, 45));
-		btnGestEquipo.setBounds(0, 386, 310, 49);
+		btnGestEquipo.setBounds(0, 386, 250, 49);
 		panelLeft.add(btnGestEquipo);
 		btnGestEquipo.addMouseListener(new MouseAdapter() {
 			@Override
@@ -126,7 +126,7 @@ class CrearPartido extends JFrame implements ActionListener {
 		lblWelcome = new JLabel("   Welcome Admin");
 		lblWelcome.setForeground(new Color(0, 0, 0));
 		lblWelcome.setFont(new Font("Tahoma", Font.BOLD, 20));
-		lblWelcome.setBounds(37, 180, 217, 34);
+		lblWelcome.setBounds(10, 180, 217, 34);
 		panelLeft.add(lblWelcome);
 
 		btnGestionarEntrenador = new JButton("     Gestionar entrenador");
@@ -136,7 +136,7 @@ class CrearPartido extends JFrame implements ActionListener {
 		btnGestionarEntrenador.setFocusable(false);
 		btnGestionarEntrenador.setBorder(null);
 		btnGestionarEntrenador.setBackground(new Color(242, 45, 45));
-		btnGestionarEntrenador.setBounds(0, 275, 310, 49);
+		btnGestionarEntrenador.setBounds(0, 275, 250, 49);
 		btnGestionarEntrenador.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseEntered(MouseEvent e) {
@@ -162,7 +162,7 @@ class CrearPartido extends JFrame implements ActionListener {
 		btnCrearPartido.setFocusable(false);
 		btnCrearPartido.setBorder(null);
 		btnCrearPartido.setBackground(new Color(220, 3, 9));
-		btnCrearPartido.setBounds(0, 327, 310, 49);
+		btnCrearPartido.setBounds(0, 327, 250, 49);
 		btnCrearPartido.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseEntered(MouseEvent e) {
@@ -189,7 +189,7 @@ class CrearPartido extends JFrame implements ActionListener {
 		btnModificarPartido.setFocusable(false);
 		btnModificarPartido.setBorder(null);
 		btnModificarPartido.setBackground(new Color(242, 45, 45));
-		btnModificarPartido.setBounds(0, 445, 310, 49);
+		btnModificarPartido.setBounds(0, 445, 250, 49);
 		btnModificarPartido.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseEntered(MouseEvent e) {

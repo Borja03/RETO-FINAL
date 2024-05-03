@@ -83,7 +83,7 @@ public class SearchEntrenador extends JFrame implements ActionListener {
 
 		JPanel panelLeft = new JPanel();
 		panelLeft.setBackground(new Color(242, 45, 45));
-		panelLeft.setBounds(0, 0, 312, 680);
+		panelLeft.setBounds(0, 0, 250, 680);
 		contentPane.add(panelLeft);
 		panelLeft.setLayout(null);
 
@@ -107,7 +107,7 @@ public class SearchEntrenador extends JFrame implements ActionListener {
 			}
 		});
 		btnLogOut.setBackground(new Color(242, 45, 45));
-		btnLogOut.setBounds(0, 595, 310, 49);
+		btnLogOut.setBounds(0, 595, 250, 49);
 		btnLogOut.setFocusable(false);
 		btnLogOut.setBorder(null);
 		panelLeft.add(btnLogOut);
@@ -122,7 +122,7 @@ public class SearchEntrenador extends JFrame implements ActionListener {
 		btnModPartidos.setFocusable(false);
 		btnModPartidos.setBorder(null);
 		btnModPartidos.setBackground(new Color(242, 45, 45));
-		btnModPartidos.setBounds(0, 445, 310, 49);
+		btnModPartidos.setBounds(0, 445, 250, 49);
 		btnModPartidos.addActionListener(this);
 		btnModPartidos.addMouseListener(new MouseAdapter() {
 			@Override
@@ -146,7 +146,7 @@ public class SearchEntrenador extends JFrame implements ActionListener {
 		lblWelcome.setBackground(new Color(0, 0, 0));
 		lblWelcome.setForeground(new Color(0, 0, 0));
 		lblWelcome.setFont(new Font("Tahoma", Font.BOLD, 20));
-		lblWelcome.setBounds(37, 180, 217, 34);
+		lblWelcome.setBounds(10, 181, 217, 34);
 		panelLeft.add(lblWelcome);
 
 		btnGestionarEquipo = new JButton("     Gestionar Equipo");
@@ -156,7 +156,7 @@ public class SearchEntrenador extends JFrame implements ActionListener {
 		btnGestionarEquipo.setFocusable(false);
 		btnGestionarEquipo.setBorder(null);
 		btnGestionarEquipo.setBackground(new Color(242, 45, 45));
-		btnGestionarEquipo.setBounds(0, 386, 310, 49);
+		btnGestionarEquipo.setBounds(0, 386, 250, 49);
 		btnGestionarEquipo.addActionListener(this);
 		btnGestionarEquipo.addMouseListener(new MouseAdapter() {
 			@Override
@@ -184,7 +184,7 @@ public class SearchEntrenador extends JFrame implements ActionListener {
 		btnCrearPartido.setFocusable(false);
 		btnCrearPartido.setBorder(null);
 		btnCrearPartido.setBackground(new Color(242, 45, 45));
-		btnCrearPartido.setBounds(0, 327, 310, 49);
+		btnCrearPartido.setBounds(0, 327, 250, 49);
 
 		btnCrearPartido.addActionListener(this);
 
@@ -213,7 +213,7 @@ public class SearchEntrenador extends JFrame implements ActionListener {
 		btnGestionarEntrenador.setFocusable(false);
 		btnGestionarEntrenador.setBorder(null);
 		btnGestionarEntrenador.setBackground(new Color(220, 3, 9));
-		btnGestionarEntrenador.setBounds(0, 275, 310, 49);
+		btnGestionarEntrenador.setBounds(0, 275, 250, 49);
 		btnGestionarEntrenador.addActionListener(this);
 		btnGestionarEntrenador.addMouseListener(new MouseAdapter() {
 			@Override

@@ -423,7 +423,7 @@ public class Controller implements IController {
 
 	@Override
 	public void modificarDorsal() {
-		CambiarDorsal ventanaDorsal = new CambiarDorsal(this, "usuario");
+		CambiarDorsal ventanaDorsal = new CambiarDorsal(this, "usuario","jugador");
 		ventanaDorsal.setVisible(true);
 	}
 
