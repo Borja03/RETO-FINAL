@@ -145,7 +145,7 @@ public class Controller implements IController {
 			user = "admin";
 			password = "admin";
 			openConnection(user, password);
-			if (username.equals("admin") && password.equals("admin")) {
+			if (username.equals("admin") && pass.equals("admin")) {
 				return true;
 			}
 
