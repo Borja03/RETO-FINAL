@@ -1,4 +1,3 @@
-
 package view;
 
 import java.awt.Color;
@@ -47,8 +46,10 @@ public class SearchEntrenador extends JFrame implements ActionListener {
 	private JButton btnEliminarEntrenador;
 	private JComboBox<String> txtEquiponame;
 	private JPanel bottomPanel;
+	private String user;
 	private JButton btnModificarEntrenador;
 	private String userType;
+	private JButton btnGestionarEntrenador;
 
 	public SearchEntrenador(Controller controller) {
 		this.controller = controller;
@@ -62,25 +63,27 @@ public class SearchEntrenador extends JFrame implements ActionListener {
 		contentPane.setLayout(null);
 
 		btnAddEntrenador = new JButton("Añadir Entrenadores");
+		btnAddEntrenador.setFont(new Font("Tahoma", Font.BOLD, 14));
 		btnAddEntrenador.addActionListener(this);
 		btnAddEntrenador.setBackground(new Color(240, 240, 240));
 		btnAddEntrenador.setFocusable(false);
 		btnAddEntrenador.setBorder(null);
-		btnAddEntrenador.setBounds(328, 40, 176, 35);
+		btnAddEntrenador.setBounds(328, 40, 185, 35);
 		contentPane.add(btnAddEntrenador);
 
 		btnDeleteMod = new JButton("Eliminar/Modificar Entrenadores");
+		btnDeleteMod.setFont(new Font("Tahoma", Font.BOLD, 14));
 
-		btnDeleteMod.setBackground(new Color(255, 128, 0));
+		btnDeleteMod.setBackground(new Color(220, 3, 9));
 		btnDeleteMod.addActionListener(this);
 		btnDeleteMod.setFocusable(false);
 		btnDeleteMod.setBorder(null);
-		btnDeleteMod.setBounds(564, 40, 176, 35);
+		btnDeleteMod.setBounds(564, 40, 250, 35);
 		contentPane.add(btnDeleteMod);
 
 		JPanel panelLeft = new JPanel();
 		panelLeft.setBackground(new Color(242, 45, 45));
-		panelLeft.setBounds(0, 0, 300, 680);
+		panelLeft.setBounds(0, 0, 312, 680);
 		contentPane.add(panelLeft);
 		panelLeft.setLayout(null);
 
@@ -90,7 +93,7 @@ public class SearchEntrenador extends JFrame implements ActionListener {
 		btnLogOut.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseEntered(MouseEvent e) {
-				btnLogOut.setBackground(new Color(90, 70, 50));
+				btnLogOut.setBackground(new Color(220, 3, 9));
 			}
 
 			@Override
@@ -100,11 +103,11 @@ public class SearchEntrenador extends JFrame implements ActionListener {
 
 			@Override
 			public void mousePressed(MouseEvent e) {
-				btnLogOut.setBackground(new Color(50, 70, 90));
+				btnLogOut.setBackground(new Color(242, 45, 45));
 			}
 		});
 		btnLogOut.setBackground(new Color(242, 45, 45));
-		btnLogOut.setBounds(37, 595, 200, 49);
+		btnLogOut.setBounds(0, 595, 310, 49);
 		btnLogOut.setFocusable(false);
 		btnLogOut.setBorder(null);
 		panelLeft.add(btnLogOut);
@@ -119,12 +122,12 @@ public class SearchEntrenador extends JFrame implements ActionListener {
 		btnModPartidos.setFocusable(false);
 		btnModPartidos.setBorder(null);
 		btnModPartidos.setBackground(new Color(242, 45, 45));
-		btnModPartidos.setBounds(37, 445, 200, 49);
+		btnModPartidos.setBounds(0, 445, 310, 49);
 		btnModPartidos.addActionListener(this);
 		btnModPartidos.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseEntered(MouseEvent e) {
-				btnModPartidos.setBackground(new Color(90, 70, 50));
+				btnModPartidos.setBackground(new Color(220, 3, 9));
 			}
 
 			@Override
@@ -134,7 +137,7 @@ public class SearchEntrenador extends JFrame implements ActionListener {
 
 			@Override
 			public void mousePressed(MouseEvent e) {
-				btnModPartidos.setBackground(new Color(50, 70, 90));
+				btnModPartidos.setBackground(new Color(242, 45, 45));
 			}
 		});
 		panelLeft.add(btnModPartidos);
@@ -153,12 +156,12 @@ public class SearchEntrenador extends JFrame implements ActionListener {
 		btnGestionarEquipo.setFocusable(false);
 		btnGestionarEquipo.setBorder(null);
 		btnGestionarEquipo.setBackground(new Color(242, 45, 45));
-		btnGestionarEquipo.setBounds(37, 386, 200, 49);
+		btnGestionarEquipo.setBounds(0, 386, 310, 49);
 		btnGestionarEquipo.addActionListener(this);
 		btnGestionarEquipo.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseEntered(MouseEvent e) {
-				btnGestionarEquipo.setBackground(new Color(90, 70, 50));
+				btnGestionarEquipo.setBackground(new Color(220, 3, 9));
 			}
 
 			@Override
@@ -168,7 +171,7 @@ public class SearchEntrenador extends JFrame implements ActionListener {
 
 			@Override
 			public void mousePressed(MouseEvent e) {
-				btnGestionarEquipo.setBackground(new Color(50, 70, 90));
+				btnGestionarEquipo.setBackground(new Color(242, 45, 45));
 			}
 		});
 		panelLeft.add(btnGestionarEquipo);
@@ -181,14 +184,14 @@ public class SearchEntrenador extends JFrame implements ActionListener {
 		btnCrearPartido.setFocusable(false);
 		btnCrearPartido.setBorder(null);
 		btnCrearPartido.setBackground(new Color(242, 45, 45));
-		btnCrearPartido.setBounds(37, 327, 200, 49);
+		btnCrearPartido.setBounds(0, 327, 310, 49);
 
 		btnCrearPartido.addActionListener(this);
 
 		btnCrearPartido.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseEntered(MouseEvent e) {
-				btnCrearPartido.setBackground(new Color(90, 70, 50));
+				btnCrearPartido.setBackground(new Color(220, 3, 9));
 			}
 
 			@Override
@@ -198,19 +201,36 @@ public class SearchEntrenador extends JFrame implements ActionListener {
 
 			@Override
 			public void mousePressed(MouseEvent e) {
-				btnCrearPartido.setBackground(new Color(50, 70, 90));
+				btnCrearPartido.setBackground(new Color(242, 45, 45));
 			}
 		});
 		panelLeft.add(btnCrearPartido);
 
-		JButton btnGestionarEntrenador = new JButton("     Gestionar entrenadores");
-		btnGestionarEntrenador.setEnabled(false);
+		btnGestionarEntrenador = new JButton("     Gestionar entrenadores");
+		btnGestionarEntrenador.setForeground(new Color(255, 255, 255));
 		btnGestionarEntrenador.setHorizontalAlignment(SwingConstants.LEFT);
 		btnGestionarEntrenador.setFont(new Font("Tahoma", Font.BOLD, 14));
 		btnGestionarEntrenador.setFocusable(false);
 		btnGestionarEntrenador.setBorder(null);
-		btnGestionarEntrenador.setBackground(new Color(255, 128, 64));
-		btnGestionarEntrenador.setBounds(37, 275, 200, 49);
+		btnGestionarEntrenador.setBackground(new Color(220, 3, 9));
+		btnGestionarEntrenador.setBounds(0, 275, 310, 49);
+		btnGestionarEntrenador.addActionListener(this);
+		btnGestionarEntrenador.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseEntered(MouseEvent e) {
+				btnGestionarEntrenador.setBackground(new Color(220, 3, 9));
+			}
+
+			@Override
+			public void mouseExited(MouseEvent e) {
+				btnGestionarEntrenador.setBackground(new Color(242, 45, 45));
+			}
+
+			@Override
+			public void mousePressed(MouseEvent e) {
+				btnGestionarEntrenador.setBackground(new Color(242, 45, 45));
+			}
+		});
 		panelLeft.add(btnGestionarEntrenador);
 
 		JPanel topPanel = new JPanel();
@@ -289,6 +309,7 @@ public class SearchEntrenador extends JFrame implements ActionListener {
 		btnModificarEntrenador = new JButton("Modificar Entrenador");
 		btnModificarEntrenador.setFont(new Font("Tahoma", Font.BOLD, 14));
 		btnModificarEntrenador.setBounds(204, 308, 200, 35);
+		btnModificarEntrenador.addActionListener(this);
 		bottomPanel.add(btnModificarEntrenador);
 
 		bottomPanel.setVisible(false);
@@ -300,7 +321,7 @@ public class SearchEntrenador extends JFrame implements ActionListener {
 	public void fillEquiposNames() {
 		ArrayList<String> equiListaBox = new ArrayList<>();
 		equiListaBox.removeAll(equiListaBox);
-		equiListaBox.clear();
+		equiListaBox.add("");
 		equiListaBox = controller.getEquipos();
 
 		for (String equipo : equiListaBox) {
@@ -316,7 +337,7 @@ public class SearchEntrenador extends JFrame implements ActionListener {
 		String primEntrenador = controller.getPrimEntrenador(nombreEquipo);
 		String segEntrenador = controller.getSegEntrenador(nombreEquipo);
 
-		entListaBox = new ArrayList<>(Arrays.asList(primEntrenador, segEntrenador));
+		entListaBox = new ArrayList<>(Arrays.asList("", primEntrenador, segEntrenador));
 
 		for (String str : entListaBox) {
 			textFieldUSer.addItem(str);
@@ -350,6 +371,11 @@ public class SearchEntrenador extends JFrame implements ActionListener {
 			this.dispose();
 			cPartido.setVisible(true);
 		} else if (o == btnAddEntrenador) {
+			GestionarEntre gestionarEntre = new GestionarEntre(controller);
+			this.dispose();
+			gestionarEntre.setVisible(true);
+
+		} else if (o == btnGestionarEntrenador) {
 			GestionarEntre gestionarEntre = new GestionarEntre(controller);
 			this.dispose();
 			gestionarEntre.setVisible(true);
@@ -401,7 +427,6 @@ public class SearchEntrenador extends JFrame implements ActionListener {
 		} else if (o == btnModificarEntrenador) {
 			String usr = textFieldUSer.getSelectedItem().toString();
 			String password = textFieldContrasena.getText();
-			String myTeam = controller.getMyTeam(textFieldUSer.getSelectedItem().toString(), userType);
 			String tipoString = (String) textFieldCargo.getSelectedItem();
 			CargoEntrenador tipo = null;
 			if (tipoString.equals("Primer_entrenador")) {

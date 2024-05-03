@@ -1,7 +1,7 @@
+
 package controller;
 
 import java.security.Timestamp;
-
 import java.sql.Blob;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -39,7 +39,7 @@ public interface IController {
 
 	public void modificarDorsal();
 
-	public ArrayList<Juegan> consultarPartidoEquipo(String equipoName);
+	public void consultarPartido();
 
 	public ArrayList<String> getEquipos();
 
@@ -72,6 +72,8 @@ public interface IController {
 	public boolean updateUsrIcon(String user, Blob userIcon, String userType);
 
 	public void modificarPartido(Juegan juegan, LocalDateTime fecha);
+
+	ArrayList<Juegan> consultarPartidoEquipo(String equipoName);
 
 }
 

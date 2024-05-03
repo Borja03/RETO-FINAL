@@ -1,4 +1,3 @@
-
 package view;
 
 import java.awt.Color;
@@ -59,7 +58,6 @@ public class MenuJugador extends JFrame implements ActionListener {
 	private String nombreEquipo;
 	private Blob teamLogo;
 	private String userType;
-
 	private JLabel lblJugadoresLista;
 	private JLabel lblUserPic;
 	private JLabel lblBtnAddPic;
@@ -83,12 +81,12 @@ public class MenuJugador extends JFrame implements ActionListener {
 		contentPane.setLayout(null);
 
 		JPanel panelLeft = new JPanel();
-		panelLeft.setBounds(0, 0, 250, 680);
-		panelLeft.setBackground(new Color(32, 206, 36));
+		panelLeft.setBounds(0, 0, 300, 680);
+		panelLeft.setBackground(new Color(128, 128, 0));
 		contentPane.add(panelLeft);
+		panelLeft.setLayout(null);
 
 		btnLogOut = new JButton("     Log Out");
-		btnLogOut.setBounds(0, 546, 250, 49);
 		btnLogOut.setHorizontalAlignment(SwingConstants.LEFT);
 		btnLogOut.addMouseListener(new MouseAdapter() {
 			@Override
@@ -108,7 +106,6 @@ public class MenuJugador extends JFrame implements ActionListener {
 		});
 
 		lblBtnAddPic = new JLabel();
-		lblBtnAddPic.setBounds(191, 158, 50, 50);
 		lblBtnAddPic.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
@@ -119,17 +116,18 @@ public class MenuJugador extends JFrame implements ActionListener {
 
 		ImageIcon imgIcon = new ImageIcon(getClass().getResource("/images/icons/add.png"));
 		Image imageUser = imgIcon.getImage().getScaledInstance(50, 50, Image.SCALE_SMOOTH);
-		panelLeft.setLayout(null);
 		lblBtnAddPic.setForeground(SystemColor.activeCaption);
+		lblBtnAddPic.setBounds(191, 158, 50, 50);
 		panelLeft.add(lblBtnAddPic);
 		lblBtnAddPic.setIcon(new ImageIcon(imageUser));
 
 		lblUserPic = new JLabel();
-		lblUserPic.setBounds(54, 33, 150, 150);
 		lblUserPic.setBackground(SystemColor.activeCaption);
 		lblUserPic.setForeground(SystemColor.activeCaption);
+		lblUserPic.setBounds(54, 33, 150, 150);
 		panelLeft.add(lblUserPic);
-		btnLogOut.setBackground(new Color(32, 206, 36));
+		btnLogOut.setBackground(new Color(128, 128, 0));
+		btnLogOut.setBounds(40, 546, 200, 49);
 		btnLogOut.setFocusable(false);
 		btnLogOut.setBorder(null);
 		panelLeft.add(btnLogOut);
@@ -137,49 +135,49 @@ public class MenuJugador extends JFrame implements ActionListener {
 		btnLogOut.setFont(new Font("Tahoma", Font.BOLD, 14));
 
 		btnCambiarCont = new JButton("     Cambiar Contraseña");
-		btnCambiarCont.setBounds(0, 476, 250, 49);
 		btnCambiarCont.addActionListener(this);
 		btnCambiarCont.setHorizontalAlignment(SwingConstants.LEFT);
 		btnCambiarCont.setFont(new Font("Tahoma", Font.BOLD, 14));
 		btnCambiarCont.setFocusable(false);
 		btnCambiarCont.setBorder(null);
-		btnCambiarCont.setBackground(new Color(32, 206, 36));
+		btnCambiarCont.setBackground(new Color(128, 128, 0));
+		btnCambiarCont.setBounds(40, 476, 200, 49);
 		panelLeft.add(btnCambiarCont);
 
 		btnCambiarDorsal = new JButton("     Cambiar Dorsal");
-		btnCambiarDorsal.setBounds(0, 406, 250, 49);
 		btnCambiarDorsal.addActionListener(this);
 		btnCambiarDorsal.setHorizontalAlignment(SwingConstants.LEFT);
 		btnCambiarDorsal.setFont(new Font("Tahoma", Font.BOLD, 14));
 		btnCambiarDorsal.setFocusable(false);
 		btnCambiarDorsal.setBorder(null);
-		btnCambiarDorsal.setBackground(new Color(32, 206, 36));
+		btnCambiarDorsal.setBackground(new Color(128, 128, 0));
+		btnCambiarDorsal.setBounds(40, 406, 200, 49);
 		panelLeft.add(btnCambiarDorsal);
 		
 
 		lblWelcome = new JLabel("     Welcome " + userName);
-		lblWelcome.setBounds(40, 227, 217, 34);
 		lblWelcome.setForeground(new Color(255, 255, 0));
 		lblWelcome.setFont(new Font("Tahoma", Font.BOLD, 14));
+		lblWelcome.setBounds(40, 227, 217, 34);
 		panelLeft.add(lblWelcome);
 
 		btnConsultarPartidos = new JButton("     Consultar Partidos");
-		btnConsultarPartidos.setBounds(0, 338, 250, 49);
 		btnConsultarPartidos.addActionListener(this);
 		btnConsultarPartidos.setHorizontalAlignment(SwingConstants.LEFT);
 		btnConsultarPartidos.setFont(new Font("Tahoma", Font.BOLD, 14));
 		btnConsultarPartidos.setFocusable(false);
 		btnConsultarPartidos.setBorder(null);
-		btnConsultarPartidos.setBackground(new Color(32, 206, 36));
+		btnConsultarPartidos.setBackground(new Color(128, 128, 0));
+		btnConsultarPartidos.setBounds(40, 338, 200, 49);
 		panelLeft.add(btnConsultarPartidos);
 
 		btnConsultarEquipo = new JButton("     Consultar Equipo");
-		btnConsultarEquipo.setBounds(0, 271, 250, 49);
 		btnConsultarEquipo.setHorizontalAlignment(SwingConstants.LEFT);
 		btnConsultarEquipo.setFont(new Font("Tahoma", Font.BOLD, 14));
 		btnConsultarEquipo.setFocusable(false);
 		btnConsultarEquipo.setBorder(null);
 		btnConsultarEquipo.setBackground(new Color(255, 128, 64));
+		btnConsultarEquipo.setBounds(40, 271, 200, 49);
 		panelLeft.add(btnConsultarEquipo);
 
 		JPanel panel = new JPanel();
@@ -385,8 +383,7 @@ public class MenuJugador extends JFrame implements ActionListener {
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		Object o = e.getSource();
-
-
+    
 			if (o == btnLogOut) {
 				controller.logOut();
 				this.dispose();
@@ -406,5 +403,6 @@ public class MenuJugador extends JFrame implements ActionListener {
 			}
 
 		}
+	}
 	
 }
