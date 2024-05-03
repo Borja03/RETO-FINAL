@@ -207,6 +207,25 @@ public class ConsultarPartidos extends JFrame implements ActionListener {
 		for (int i = 0; i < 20; i++) {
 			miCard("Team 1" + i, logo1, "Team 2" + (i + 1), logo2, "17-04-2024 16:15", "Estadio Name",
 					(20 + (180 * i)));
+		// String logo1 = "/images/equiposLogo/athletic-bilbao.png";
+		// String logo2 = "/images/equiposLogo/real-madrid.png";
+		System.out.println(userName);
+		String miEquipo = controller.getMyTeam(userName, userType);
+		System.out.println(miEquipo);
+		ArrayList<Juegan> misPartidos = controller.consultarPartidoEquipo(miEquipo);
+		ImageIcon logo1;
+		ImageIcon logo2;
+		String estadio;
+		for (int i = 0; i < misPartidos.size(); i++) {
+			Blob logo1Blob = controller.getEquipo(misPartidos.get(i).getNombreEquipoLocal()).getLogo();
+			Blob logo2Blob = controller.getEquipo(misPartidos.get(i).getNombreEquipoVisitante()).getLogo();
+			estadio = controller.getNombreEstadio(misPartidos.get(i));
+			logo1 = Util.blobToImgIcon(logo1Blob);
+			logo2 = Util.blobToImgIcon(logo2Blob);
+			if (misPartidos.get(i).getFechaInicio().isAfter(LocalDateTime.now())) {
+				miCard(misPartidos.get(i).getNombreEquipoLocal(), logo1, misPartidos.get(i).getNombreEquipoVisitante(),
+						logo2, misPartidos.get(i).getFechaInicio().toString(), estadio, (20 + (180 * i)));
+			}
 		}
 
 		setVisible(true);

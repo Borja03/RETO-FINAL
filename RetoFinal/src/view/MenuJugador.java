@@ -153,6 +153,7 @@ public class MenuJugador extends JFrame implements ActionListener {
 		btnCambiarDorsal.setBackground(new Color(128, 128, 0));
 		btnCambiarDorsal.setBounds(40, 406, 200, 49);
 		panelLeft.add(btnCambiarDorsal);
+		
 
 		lblWelcome = new JLabel("     Welcome " + userName);
 		lblWelcome.setForeground(new Color(255, 255, 0));
@@ -382,24 +383,12 @@ public class MenuJugador extends JFrame implements ActionListener {
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		Object o = e.getSource();
-		if (o == btnLogOut) {
-			controller.logOut();
-			this.dispose();
-		} else if (o == btnCambiarDorsal) {
-			CambiarDorsal ventanaDorsal = new CambiarDorsal(controller, userName);
-			ventanaDorsal.setVisible(true);
-			this.setVisible(false);
-		}else if(o==btnConsultarPartidos) {
-			ConsultarPartidos consultarPartidos = new ConsultarPartidos(controller,userName,userType);
-			consultarPartidos.setVisible(true);
-			this.dispose();
-			
-		}
+    
 			if (o == btnLogOut) {
 				controller.logOut();
 				this.dispose();
 			} else if (o == btnCambiarDorsal) {
-				CambiarDorsal ventanaDorsal = new CambiarDorsal(controller, userName);
+				CambiarDorsal ventanaDorsal = new CambiarDorsal(controller, userName, userType);
 				ventanaDorsal.setVisible(true);
 				this.setVisible(false);
 			} else if (o == btnConsultarPartidos) {
@@ -415,3 +404,5 @@ public class MenuJugador extends JFrame implements ActionListener {
 
 		}
 	}
+	
+}

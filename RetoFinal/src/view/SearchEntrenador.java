@@ -332,8 +332,8 @@ public class SearchEntrenador extends JFrame implements ActionListener {
 
 	public void fillEntrenadoresEquipo(String nombreEquipo) {
 		ArrayList<String> entListaBox = new ArrayList<>();
-		// textFieldUSer.removeAllItems();
-		entListaBox.removeAll(entListaBox);
+		textFieldUSer.removeAllItems();
+		entListaBox.clear();
 		String primEntrenador = controller.getPrimEntrenador(nombreEquipo);
 		String segEntrenador = controller.getSegEntrenador(nombreEquipo);
 
