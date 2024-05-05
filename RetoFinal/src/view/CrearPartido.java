@@ -9,6 +9,7 @@ import java.awt.event.MouseEvent;
 import java.sql.Timestamp;
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.HashMap;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -216,7 +217,8 @@ class CrearPartido extends JFrame implements ActionListener {
 
 		// Configuración del timeSpinner
 		timeSpinner = new JSpinner(new SpinnerDateModel());
-		JSpinner.DateEditor timeEditor = new JSpinner.DateEditor(timeSpinner, "HH:mm:ss");
+		timeSpinner.setFont(new Font("Tahoma", Font.BOLD, 14));
+		JSpinner.DateEditor timeEditor = new JSpinner.DateEditor(timeSpinner, "HH:mm");
 		timeSpinner.setEditor(timeEditor);
 		timeSpinner.setBounds(532, 514, 100, 34);
 		getContentPane().add(timeSpinner);
@@ -264,6 +266,8 @@ class CrearPartido extends JFrame implements ActionListener {
 
 		// Calendario para seleccionar la fecha del partido
 		datePicker = new JCalendar();
+		datePicker.getYearChooser().getSpinner().setFont(new Font("Tahoma", Font.BOLD, 14));
+		datePicker.getMonthChooser().getComboBox().setFont(new Font("Tahoma", Font.BOLD, 14));
 		datePicker.setBounds(532, 273, 400, 200);
 		getContentPane().add(datePicker);
 
@@ -299,6 +303,7 @@ class CrearPartido extends JFrame implements ActionListener {
 		}
 	}
 
+	@SuppressWarnings("deprecation")
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		Object o = e.getSource();
@@ -311,14 +316,16 @@ class CrearPartido extends JFrame implements ActionListener {
 		} else if (o == okButton) {
 			String equipoLocal = (String) equipoLocalComboBox.getSelectedItem();
 			String equipoVisitante = (String) equipoVisitanteComboBox.getSelectedItem();
+			
 			Timestamp fechaInicio = new Timestamp(datePicker.getDate().getTime());
 			java.util.Date horaSeleccionada = (java.util.Date) timeSpinner.getValue();
+			Calendar calendar = Calendar.getInstance();
+			calendar.setTime(horaSeleccionada);
 			Timestamp horaInicio = new Timestamp(horaSeleccionada.getTime());
 
 			if (equipoLocal != null && equipoVisitante != null && fechaInicio != null && horaInicio != null) {
-				fechaInicio.setHours(horaInicio.getHours());
-				fechaInicio.setMinutes(horaInicio.getMinutes());
-				fechaInicio.setSeconds(horaInicio.getSeconds());
+				fechaInicio.setHours(calendar.get(Calendar.HOUR_OF_DAY));
+				fechaInicio.setMinutes(calendar.get(Calendar.MINUTE));
 
 				boolean partidoCreado = controller.crearPartido(equipoLocal, equipoVisitante, fechaInicio);
 				if (partidoCreado) {

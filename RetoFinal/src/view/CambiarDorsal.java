@@ -110,7 +110,7 @@ public class CambiarDorsal extends JFrame implements ActionListener {
 		btnCambiarDorsal.setBounds(0, 406, 250, 49);
 		panelLeft.add(btnCambiarDorsal);
 		
-		JLabel lblWelcome = new JLabel("     Welcome <dynamic>");
+		JLabel lblWelcome = new JLabel("     Welcome " +userName);
 		lblWelcome.setForeground(Color.YELLOW);
 		lblWelcome.setFont(new Font("Tahoma", Font.BOLD, 14));
 		lblWelcome.setBounds(40, 227, 217, 34);

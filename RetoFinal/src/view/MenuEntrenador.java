@@ -5,18 +5,26 @@ import java.awt.Font;
 import java.awt.FontFormatException;
 import java.awt.GraphicsEnvironment;
 import java.awt.Image;
+import java.awt.SystemColor;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.io.File;
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.sql.Blob;
 import java.sql.SQLException;
 import java.util.ArrayList;
+
+import javax.sql.rowset.serial.SerialException;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
+import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
@@ -26,6 +34,7 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.table.DefaultTableModel;
 import controller.Controller;
 import model.equipos.Equipo;
+import model.usuarios.Entrenador;
 import model.usuarios.Jugador;
 
 public class MenuEntrenador extends JFrame implements ActionListener {
@@ -39,6 +48,8 @@ public class MenuEntrenador extends JFrame implements ActionListener {
 	private JButton btnCambiarContrasena;
 	private Controller controller;
 	private JLabel lblWelcome;
+	private JLabel lblUserPic;
+	private JLabel lblBtnAddPic;
 	private String userName;
 	private String userType;
 	private JTextField txtEqNombre;
@@ -52,6 +63,11 @@ public class MenuEntrenador extends JFrame implements ActionListener {
 	private Blob teamLogo;
 	private JLabel lblJugadoresLista;
 	private JButton[] leftPanelButtons;
+	
+	
+	private ImageIcon imageIcon;
+	private Blob usrBlobIcon;
+	private JButton btnUpload;
 
 	public MenuEntrenador(Controller cont, String entrConnected, String userType) {
 		this.controller = cont;
@@ -281,7 +297,49 @@ public class MenuEntrenador extends JFrame implements ActionListener {
 				});
 			}
 		}
+		
+		lblBtnAddPic = new JLabel();
+		lblBtnAddPic.setBounds(160, 140, 50, 50);
+		lblBtnAddPic.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				userUploadImgDialog();
 
+			}
+		});
+		lblUserPic = new JLabel();
+		lblUserPic.setBackground(SystemColor.activeCaption);
+		lblUserPic.setForeground(SystemColor.activeCaption);
+		lblUserPic.setBounds(50, 33, 150, 150);
+		panelLeft.add(lblUserPic);
+		Entrenador enttrenador = controller.getUsuario2(entrConnected);
+		if (enttrenador.getPicProfile() != null) {
+		    try {
+		        byte[] imageData = enttrenador.getPicProfile().getBytes(1, (int) enttrenador.getPicProfile().length());
+		        if (imageData != null && imageData.length > 0) {
+		            ImageIcon icon2 = new ImageIcon(imageData);
+		            Image image2 = icon2.getImage().getScaledInstance(150, 150, Image.SCALE_SMOOTH);
+		            ImageIcon scaledIcon2 = new ImageIcon(image2);
+		            lblUserPic.setIcon(scaledIcon2);
+		        } else {
+		            // If imageData is null or empty, set a default image
+		            ImageIcon defaultIcon = new ImageIcon("src/images/icons/default.png");
+		            lblUserPic.setIcon(defaultIcon);
+		        }
+		    } catch (SQLException e) {
+		        System.err.println("Error reading image data from Blob: " + e.getMessage());
+		        e.printStackTrace();
+		    }
+		} else {
+		    // If the player's profile picture is null, set a default image
+		    ImageIcon defaultIcon = new ImageIcon("src/images/icons/default.png");
+		    lblUserPic.setIcon(defaultIcon);
+		}
+
+	
+		
+		
+		
 		fillEquipoInfo();
 		fillEntrenadoresInfo();
 		this.setVisible(true);
@@ -314,7 +372,47 @@ public class MenuEntrenador extends JFrame implements ActionListener {
 	            return null;
 	        }
 	    }
+	  private void userUploadImgDialog() {
+			btnUpload = new JButton("Upload Image");
+			btnUpload.addActionListener(new ActionListener() {
+				@Override
+				public void actionPerformed(ActionEvent e) {
+					JFileChooser fileChooser = new JFileChooser();
+					int result = fileChooser.showOpenDialog(null);
 
+					if (result == JFileChooser.APPROVE_OPTION) {
+						File selectedFile = fileChooser.getSelectedFile();
+						if (selectedFile != null) {
+							try {
+								Path imagePath = selectedFile.toPath();
+								byte[] imageData = Files.readAllBytes(imagePath);
+								usrBlobIcon = new javax.sql.rowset.serial.SerialBlob(imageData);
+								imageIcon = new ImageIcon(imageData);
+								lblUserPic.setIcon(imageIcon);
+
+								if (controller.updateUsrIcon(userName, usrBlobIcon, userType)) {
+									JOptionPane.showMessageDialog(MenuEntrenador.this, "Image uploaded to database!",
+											"Success", JOptionPane.INFORMATION_MESSAGE);
+								} else {
+									JOptionPane.showMessageDialog(MenuEntrenador.this, "Failed to upload image to database!",
+											"Error", JOptionPane.ERROR_MESSAGE);
+								}
+							} catch (IOException ex) {
+								ex.printStackTrace();
+							} catch (SerialException e1) {
+								e1.printStackTrace();
+							} catch (SQLException e1) {
+								e1.printStackTrace();
+							}
+						} else {
+							//
+						}
+					}
+				}
+			});
+
+			JOptionPane.showMessageDialog(this, btnUpload, "Upload Image", JOptionPane.PLAIN_MESSAGE);
+		}
 
 	@Override
 	public void actionPerformed(ActionEvent e) {

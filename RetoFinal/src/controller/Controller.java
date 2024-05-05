@@ -64,6 +64,8 @@ public class Controller implements IController {
 	final String Partidos = "SELECT nombreEquipoLocal, nombreEquipoVisitante, fechaInicio, resultado FROM juegan";
 	final String CONSULTARequipo = "SELECT * from juegan where nombreEquipoLocal = ?";
 
+	
+	@Override
 	public boolean checkUserExist(String user) {
 		boolean exist = false;
 		this.openConnection("entrenador", "entrenador");
@@ -84,7 +86,8 @@ public class Controller implements IController {
 		}
 		return exist;
 	}
-
+	
+	@Override
 	public boolean checkUserExist2(String user) {
 		boolean exist = false;
 		this.openConnection("admin", "admin");
@@ -365,7 +368,8 @@ public class Controller implements IController {
 		}
 		return modified;
 	}
-
+	
+	@Override
 	public ArrayList<Juegan> listaPartidos() {
 		this.openConnection("admin", "admin");
 		ArrayList<Juegan> partidosProgramados = new ArrayList<>();
@@ -427,6 +431,7 @@ public class Controller implements IController {
 		ventanaDorsal.setVisible(true);
 	}
 
+	@Override
 	public boolean modificarJugadorConDorsal(String user, int dorsal) {
 
 		boolean modified = false;

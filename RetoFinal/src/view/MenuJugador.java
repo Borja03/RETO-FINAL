@@ -112,7 +112,7 @@ public class MenuJugador extends JFrame implements ActionListener {
 		});
 
 		lblBtnAddPic = new JLabel();
-		lblBtnAddPic.setBounds(191, 158, 50, 50);
+		lblBtnAddPic.setBounds(160, 140, 50, 50);
 		lblBtnAddPic.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
@@ -127,12 +127,6 @@ public class MenuJugador extends JFrame implements ActionListener {
 		lblBtnAddPic.setForeground(SystemColor.activeCaption);
 		panelLefts.add(lblBtnAddPic);
 		lblBtnAddPic.setIcon(new ImageIcon(imageUser));
-
-		lblUserPic = new JLabel();
-		lblUserPic.setBounds(54, 33, 150, 150);
-		lblUserPic.setBackground(SystemColor.activeCaption);
-		lblUserPic.setForeground(SystemColor.activeCaption);
-		panelLefts.add(lblUserPic);
 		btnLogOut.setBackground(new Color(32, 206, 36));
 		btnLogOut.setFocusable(false);
 		btnLogOut.setBorder(null);
@@ -185,6 +179,12 @@ public class MenuJugador extends JFrame implements ActionListener {
 		btnConsultarEquipo.setBorder(null);
 		btnConsultarEquipo.setBackground(new Color(255, 128, 64));
 		panelLefts.add(btnConsultarEquipo);
+		
+				lblUserPic = new JLabel();
+				lblUserPic.setBounds(50, 33, 150, 150);
+				lblUserPic.setBackground(SystemColor.activeCaption);
+				lblUserPic.setForeground(new Color(0, 64, 128));
+				panelLefts.add(lblUserPic);
 
 		JPanel panel = new JPanel();
 		panel.setBorder(new SoftBevelBorder(BevelBorder.RAISED, null, null, null, null));
@@ -294,22 +294,29 @@ public class MenuJugador extends JFrame implements ActionListener {
 			if (userName.equals(jug.getUser())) {
 				if (jug.getPicProfile() != null) {
 					try {
-						byte[] imageData = jug.getPicProfile().getBytes(1, (int) jug.getPicProfile().length());
-						if (imageData != null && imageData.length > 0) {
-							ImageIcon icon2 = new ImageIcon(imageData);
-							Image image2 = icon2.getImage().getScaledInstance(150, 150, Image.SCALE_SMOOTH);
-							ImageIcon scaledIcon2 = new ImageIcon(image2);
-							lblUserPic.setIcon(scaledIcon2);
-						}
-					} catch (SQLException e) {
-						System.err.println("Error reading image data from Blob: " + e.getMessage());
-						e.printStackTrace();
-					}
+				        byte[] imageData = jug.getPicProfile().getBytes(1, (int) jug.getPicProfile().length());
+				        if (imageData != null && imageData.length > 0) {
+				            ImageIcon icon2 = new ImageIcon(imageData);
+				            Image image2 = icon2.getImage().getScaledInstance(150, 150, Image.SCALE_SMOOTH);
+				            ImageIcon scaledIcon2 = new ImageIcon(image2);
+				            lblUserPic.setIcon(scaledIcon2);
+				        } else {
+				            // if image is null in data base or empty, show a default image
+				            ImageIcon defaultIcon = new ImageIcon("src/images/icons/default.png");
+				            lblUserPic.setIcon(defaultIcon);
+				        }
+				    } catch (SQLException e) {
+				        System.err.println("Error reading image data from Blob: " + e.getMessage());
+				        e.printStackTrace();
+				    }
+				} else {
+		            // if image is null in data base or empty, show a default image
+				    ImageIcon defaultIcon = new ImageIcon("src/images/icons/default.png");
+				    lblUserPic.setIcon(defaultIcon);
 				}
+
 			}
-
 		}
-
 		DefaultTableModel model = new DefaultTableModel(data, columnNames);
 
 		scrollPane_1 = new JScrollPane();

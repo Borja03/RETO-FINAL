@@ -123,7 +123,6 @@ public class SearchEntrenador extends JFrame implements ActionListener {
 		btnModPartidos.setBorder(null);
 		btnModPartidos.setBackground(new Color(242, 45, 45));
 		btnModPartidos.setBounds(0, 445, 250, 49);
-		btnModPartidos.addActionListener(this);
 		btnModPartidos.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseEntered(MouseEvent e) {
@@ -186,7 +185,6 @@ public class SearchEntrenador extends JFrame implements ActionListener {
 		btnCrearPartido.setBackground(new Color(242, 45, 45));
 		btnCrearPartido.setBounds(0, 327, 250, 49);
 
-		btnCrearPartido.addActionListener(this);
 
 		btnCrearPartido.addMouseListener(new MouseAdapter() {
 			@Override
@@ -320,8 +318,7 @@ public class SearchEntrenador extends JFrame implements ActionListener {
 
 	public void fillEquiposNames() {
 		ArrayList<String> equiListaBox = new ArrayList<>();
-		equiListaBox.removeAll(equiListaBox);
-		equiListaBox.add("");
+		txtEquiponame.removeAllItems();
 		equiListaBox = controller.getEquipos();
 
 		for (String equipo : equiListaBox) {
@@ -391,26 +388,21 @@ public class SearchEntrenador extends JFrame implements ActionListener {
 			ModificarPartido modPartido = new ModificarPartido(controller);
 			this.dispose();
 			modPartido.setVisible(true);
-		} else if (o == txtEquiponame) {
-			Object selectedItem = txtEquiponame.getSelectedItem();
-			if (selectedItem instanceof String) {
-				String nombreEquipo = (String) selectedItem;
-				if (!nombreEquipo.isEmpty()) {
-					fillEntrenadoresEquipo(nombreEquipo);
-				}
-			}
+		} else  if (o == txtEquiponame && e.getActionCommand().equals("comboBoxChanged")) {
+	        // User selected a team name
+	        if (txtEquiponame.getSelectedItem() != null) {
+	            String selectedTeam = (String) txtEquiponame.getSelectedItem();
+	            fillEntrenadoresEquipo(selectedTeam); // Update userTextField with team's players
+	        }
+	    } else if (o == textFieldUSer && e.getActionCommand().equals("comboBoxChanged")) {
+	        // User selected a player
+	        if (textFieldUSer.getSelectedItem() != null) {
+	            String selectedUser = (String) textFieldUSer.getSelectedItem();
+	            fillUserData(selectedUser); // Display selected user's information
+				bottomPanel.setVisible(true);
 
-		} else if (o == textFieldUSer) {
-			Object selectedItem = textFieldUSer.getSelectedItem();
-
-			if (selectedItem instanceof String) {
-				String usr = (String) selectedItem;
-				if (!usr.isEmpty()) {
-					fillUserData(usr);
-					bottomPanel.setVisible(true);
-
-				}
-			}
+	        }
+		
 
 		} else if (o == btnEliminarEntrenador) {
 			if (controller.borrarEntrenador(textFieldUSer.getSelectedItem().toString())) {
