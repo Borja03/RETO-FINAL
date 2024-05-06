@@ -64,6 +64,8 @@ public class Controller implements IController {
 	final String Partidos = "SELECT nombreEquipoLocal, nombreEquipoVisitante, fechaInicio, resultado FROM juegan";
 	final String CONSULTARequipo = "SELECT * from juegan where nombreEquipoLocal = ?";
 
+	
+	@Override
 	public boolean checkUserExist(String user) {
 		boolean exist = false;
 		this.openConnection("entrenador", "entrenador");
@@ -84,7 +86,8 @@ public class Controller implements IController {
 		}
 		return exist;
 	}
-
+	
+	@Override
 	public boolean checkUserExist2(String user) {
 		boolean exist = false;
 		this.openConnection("admin", "admin");
@@ -145,7 +148,7 @@ public class Controller implements IController {
 			user = "admin";
 			password = "admin";
 			openConnection(user, password);
-			if (username.equals("admin") && password.equals("admin")) {
+			if (username.equals("admin") && pass.equals("admin")) {
 				return true;
 			}
 
@@ -365,7 +368,8 @@ public class Controller implements IController {
 		}
 		return modified;
 	}
-
+	
+	@Override
 	public ArrayList<Juegan> listaPartidos() {
 		this.openConnection("admin", "admin");
 		ArrayList<Juegan> partidosProgramados = new ArrayList<>();
@@ -389,6 +393,7 @@ public class Controller implements IController {
 		}
 		return partidosProgramados;
 	}
+
 	@Override
 	public void modificarPartido(Juegan partidoModificado, LocalDateTime fechaAntigua) {
 		try {
@@ -414,7 +419,6 @@ public class Controller implements IController {
 		}
 	}
 
-
 	@Override
 	public void consultarEquipo() {
 		// TODO Auto-generated method stub
@@ -423,10 +427,11 @@ public class Controller implements IController {
 
 	@Override
 	public void modificarDorsal() {
-		CambiarDorsal ventanaDorsal = new CambiarDorsal(this, "usuario");
+		CambiarDorsal ventanaDorsal = new CambiarDorsal(this, "usuario","jugador");
 		ventanaDorsal.setVisible(true);
 	}
 
+	@Override
 	public boolean modificarJugadorConDorsal(String user, int dorsal) {
 
 		boolean modified = false;
@@ -879,8 +884,6 @@ public class Controller implements IController {
 		return modified;
 	}
 
-
-
 	@Override
 	public String getUsuarioPassword(String userName, String userType) {
 
@@ -937,23 +940,22 @@ public class Controller implements IController {
 		return modified;
 	}
 
-	
 	public boolean existePartidoEnFecha(java.sql.Timestamp fecha) {
-	    String query = "SELECT COUNT(*) AS count FROM juegan WHERE fechaInicio = ?";
-	    try (PreparedStatement statement = connection.prepareStatement(query)) {
-	        statement.setTimestamp(1, fecha);
-	        try (ResultSet resultSet = statement.executeQuery()) {
-	            if (resultSet.next()) {
-	                int count = resultSet.getInt("count");
-	                return count > 0;
-	            }
-	        }
-	    } catch (SQLException e) {
-	        e.printStackTrace();
-	    }
-	    return false;
+		String query = "SELECT COUNT(*) AS count FROM juegan WHERE fechaInicio = ?";
+		try (PreparedStatement statement = connection.prepareStatement(query)) {
+			statement.setTimestamp(1, fecha);
+			try (ResultSet resultSet = statement.executeQuery()) {
+				if (resultSet.next()) {
+					int count = resultSet.getInt("count");
+					return count > 0;
+				}
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return false;
 	}
-	
+
 	public boolean verificarFechaUnica(LocalDateTime fecha) {
 		boolean fechaUnica = false;
 		try {
@@ -974,11 +976,6 @@ public class Controller implements IController {
 		return fechaUnica;
 	}
 
-
-	  
-	  
-
-
 	public String getNombreEstadio(Juegan juegan) {
 		String estadio = "";
 		this.openConnection("admin", "admin");
@@ -996,11 +993,11 @@ public class Controller implements IController {
 		return estadio;
 
 	}
-	
+
 	@Override
 	public ArrayList<Juegan> consultarPartidoEquipo(String equipoName) {
 		ArrayList<Juegan> partidosLista = new ArrayList<>();
-		
+
 		this.openConnection("entrenador", "entrenador");
 		try {
 			statement = connection.prepareStatement(CONSULTARequipo);
@@ -1024,6 +1021,11 @@ public class Controller implements IController {
 		}
 		return partidosLista;
 	}
-	
+
+	@Override
+	public void consultarPartido() {
+		// TODO Auto-generated method stub
+		
+	}
 
 }

@@ -1,4 +1,3 @@
-
 package view;
 
 import java.awt.Color;
@@ -51,7 +50,6 @@ public class GestionarEntre extends JFrame implements ActionListener {
 	private String userType;
 	private JButton btnGestionarEntrenador;
 
-
 	public GestionarEntre(Controller controller) {
 		this.controller = controller;
 
@@ -79,10 +77,8 @@ public class GestionarEntre extends JFrame implements ActionListener {
 		btnDeleteMod.setBorder(null);
 		contentPane.add(btnDeleteMod);
 
-		
-
 		JPanel panelLeft = new JPanel();
-		panelLeft.setBounds(0, 0, 312, 680);
+		panelLeft.setBounds(0, 0, 250, 680);
 		panelLeft.setBackground(new Color(242, 45, 45));
 		contentPane.add(panelLeft);
 
@@ -116,7 +112,7 @@ public class GestionarEntre extends JFrame implements ActionListener {
 
 		btnModPartidos = new JButton("     Modificar partidos");
 		btnModPartidos.setForeground(new Color(255, 255, 255));
-		btnModPartidos.setBounds(0, 446, 310, 49);
+		btnModPartidos.setBounds(0, 446, 250, 49);
 		btnModPartidos.addActionListener(this);
 		btnModPartidos.setHorizontalAlignment(SwingConstants.LEFT);
 		btnModPartidos.setFont(new Font("Tahoma", Font.BOLD, 14));
@@ -142,14 +138,14 @@ public class GestionarEntre extends JFrame implements ActionListener {
 		});
 
 		lblWelcome = new JLabel("   Welcome Admin");
-		lblWelcome.setBounds(37, 180, 217, 34);
+		lblWelcome.setBounds(10, 180, 217, 34);
 		lblWelcome.setForeground(new Color(0, 0, 0));
 		lblWelcome.setFont(new Font("Tahoma", Font.BOLD, 20));
 		panelLeft.add(lblWelcome);
 
 		btnGestionarEquipo = new JButton("     Gestionar Equipo");
 		btnGestionarEquipo.setForeground(new Color(255, 255, 255));
-		btnGestionarEquipo.setBounds(0, 386, 310, 49);
+		btnGestionarEquipo.setBounds(0, 386, 250, 49);
 		btnGestionarEquipo.setHorizontalAlignment(SwingConstants.LEFT);
 		btnGestionarEquipo.setFont(new Font("Tahoma", Font.BOLD, 14));
 		btnGestionarEquipo.setFocusable(false);
@@ -176,7 +172,7 @@ public class GestionarEntre extends JFrame implements ActionListener {
 
 		btnCrearPartido = new JButton("     Crear partido");
 		btnCrearPartido.setForeground(new Color(255, 255, 255));
-		btnCrearPartido.setBounds(0, 327, 310, 49);
+		btnCrearPartido.setBounds(0, 327, 250, 49);
 		btnCrearPartido.setHorizontalAlignment(SwingConstants.LEFT);
 		btnCrearPartido.addActionListener(this);
 		btnCrearPartido.setFont(new Font("Tahoma", Font.BOLD, 14));
@@ -203,7 +199,7 @@ public class GestionarEntre extends JFrame implements ActionListener {
 
 		btnGestionarEntrenador = new JButton("     Gestionar entrenadores");
 		btnGestionarEntrenador.setForeground(new Color(255, 255, 255));
-		btnGestionarEntrenador.setBounds(0, 275, 310, 49);
+		btnGestionarEntrenador.setBounds(0, 275, 250, 49);
 		btnGestionarEntrenador.setHorizontalAlignment(SwingConstants.LEFT);
 		btnGestionarEntrenador.setFont(new Font("Tahoma", Font.BOLD, 14));
 		btnGestionarEntrenador.setFocusable(false);
@@ -255,9 +251,6 @@ public class GestionarEntre extends JFrame implements ActionListener {
 		textFieldContrasena.setColumns(10);
 
 		textFieldCargo = new JComboBox<String>();
-		textFieldCargo.setBounds(250, 187, 225, 22);
-
-
 		textFieldCargo.setBounds(515, 340, 250, 34);
 		textFieldCargo.addItem("");
 		textFieldCargo.addItem("Primer_entrenador");
@@ -289,7 +282,8 @@ public class GestionarEntre extends JFrame implements ActionListener {
 	@Override
 	public void actionPerformed(ActionEvent e) {
 
-		
+		Object o = e.getSource();
+		int opcion = 0;
 		String usr = textFieldUSer.getText();
 		String password = textFieldContrasena.getText();
 		String myTeam = (String) textFieldEquipo.getSelectedItem();
@@ -301,48 +295,43 @@ public class GestionarEntre extends JFrame implements ActionListener {
 			tipo = CargoEntrenador.SEGUNDO_ENTRENADOR;
 		}
 
-		
+		if (o == btnDeleteMod) {
 
-		if (e.getSource() == btnDeleteMod) {
 			SearchEntrenador eliminarJugadores = new SearchEntrenador(controller);
 			this.dispose();
 			eliminarJugadores.setVisible(true);
-		} else if (e.getSource() == btnCrearPartido) {
+		} else if (o == btnCrearPartido) {
 			CrearPartido cPartidos = new CrearPartido(controller);
 			this.dispose();
 			cPartidos.setVisible(true);
-		} else if (e.getSource() == btnGestionarEquipo) {
+		} else if (o == btnGestionarEquipo) {
 			MenuAdmin cPartidos = new MenuAdmin(controller);
 			this.dispose();
 			cPartidos.setVisible(true);
-
-
-
-
 
 		} else if (e.getSource() == btnModPartidos) {
 			ModificarPartido modificarPartido = new ModificarPartido(controller);
 			this.dispose();
 			modificarPartido.setVisible(true);
-		} else if (e.getSource() == btnLogOut) {
-			Object o = e.getSource();
-			if (o == btnDeleteMod) {
-				SearchEntrenador searchEntrenador = new SearchEntrenador(controller);
-				this.dispose();
-				searchEntrenador.setVisible(true);
-			} else if (o == btnCrearPartido) {
-				CrearPartido crearPartido = new CrearPartido(controller);
-				this.dispose();
-				crearPartido.setVisible(true);
-			} else if (o == btnGestionarEquipo) {
+		} else if (o == btnDeleteMod) {
+			SearchEntrenador searchEntrenador = new SearchEntrenador(controller);
+			this.dispose();
+			searchEntrenador.setVisible(true);
+		} else if (o == btnCrearPartido) {
+			CrearPartido crearPartido = new CrearPartido(controller);
+			this.dispose();
+			crearPartido.setVisible(true);
+		} else if (o == btnGestionarEquipo) {
 
-			} else if (o == btnLogOut) {
-				this.dispose();
-				controller.logOut();
-			}
+		} else if (o == btnLogOut) {
+			this.dispose();
+			controller.logOut();
 
-			if (controller.crearEntrenador(usr, password, myTeam, tipo)) {
-				int opcion = JOptionPane.showConfirmDialog(this, (String) "",
+	
+		} else if (e.getSource() == btnAnadir) {
+
+			if (controller.crearEntrenador(myTeam, usr, password, tipo)) {
+				opcion = JOptionPane.showConfirmDialog(this, (String) "",
 						"El entrenador ha sido introducido correctamente\n¿Desea añadir otro jugador?",
 						JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE, null);
 
@@ -352,28 +341,11 @@ public class GestionarEntre extends JFrame implements ActionListener {
 					g1.setVisible(true);
 				} else {
 					GestionarEntre gestionarEntre = new GestionarEntre(controller);
+					gestionarEntre.setVisible(true);
 					this.dispose();
 				}
-
-				if (e.getSource() == btnAnadir) {
-					
-					if (controller.crearEntrenador(usr, password, myTeam, tipo)) {
-						 opcion = JOptionPane.showConfirmDialog(this, (String) "",
-								"El entrenador ha sido introducido correctamente\n¿Desea añadir otro jugador?",
-								JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE, null);
-
-						if (opcion == JOptionPane.NO_OPTION) {
-							this.dispose();
-							MenuAdmin g1 = new MenuAdmin(controller);
-							g1.setVisible(true);
-						} else {
-							GestionarEntre gestionarEntre = new GestionarEntre(controller);
-							this.dispose();
-						}
-					}
-
-				}
 			}
+
 		}
 	}
 }

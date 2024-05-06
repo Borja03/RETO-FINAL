@@ -1,11 +1,12 @@
 
 package view;
 
-import java.awt.BorderLayout; 
+import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.Font;
+import java.awt.SystemColor;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
@@ -39,12 +40,14 @@ public class ConsultarPartidos extends JFrame implements ActionListener {
 	private JButton btnConsultarEquipo;
 	private JButton btnGestJugadores;
 	private JLabel lblWelcome;
+	private JLabel lblUserPic;
 	private JButton btnConsultarPartidos;
 	private String userName;
 	private JScrollPane scrollPane;
 	private JPanel cardsPanel;
 	private String userType;
 	private JButton btnCambiarContrasena;
+	private JButton btnConsultarEquipoj, btnConsultarPartidosj, btnCambiarDorsalj, btnCambiarContj, btnLogOutj;
 
 	public ConsultarPartidos(Controller cont, String entrConnected, String userType) {
 		this.controller = cont;
@@ -59,6 +62,122 @@ public class ConsultarPartidos extends JFrame implements ActionListener {
 		contentPane.setLayout(null);
 
 		// Left panel
+		// Right panel
+		JPanel rightPanel = new JPanel();
+		rightPanel.setBounds(256, 10, 728, 660);
+		rightPanel.setLayout(new BoxLayout(rightPanel, BoxLayout.Y_AXIS));
+
+		contentPane.add(rightPanel);
+
+		cardsPanel = new JPanel();
+		cardsPanel.setLayout(new BoxLayout(cardsPanel, BoxLayout.Y_AXIS));
+
+		JScrollPane scrollPane = new JScrollPane(cardsPanel);
+		scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
+		rightPanel.add(scrollPane, BorderLayout.CENTER);
+		rightPanel.add(scrollPane); // Add scroll pane to right panel
+
+		// String logo1 = "/images/equiposLogo/athletic-bilbao.png";
+		// String logo2 = "/images/equiposLogo/real-madrid.png";
+		System.out.println(userName);
+		String miEquipo = controller.getMyTeam(userName, userType);
+		System.out.println(miEquipo);
+		ArrayList<Juegan> misPartidos = controller.consultarPartidoEquipo(miEquipo);
+		ImageIcon logo1;
+		ImageIcon logo2;
+		String estadio;
+		for (int i = 0; i < misPartidos.size(); i++) {
+			Blob logo1Blob = controller.getEquipo(misPartidos.get(i).getNombreEquipoLocal()).getLogo();
+			Blob logo2Blob = controller.getEquipo(misPartidos.get(i).getNombreEquipoVisitante()).getLogo();
+			estadio = controller.getNombreEstadio(misPartidos.get(i));
+			logo1 = Util.blobToImgIcon(logo1Blob);
+			logo2 = Util.blobToImgIcon(logo2Blob);
+			if (misPartidos.get(i).getFechaInicio().isAfter(LocalDateTime.now())) {
+				System.out.println("Herrrre");
+				miCard(misPartidos.get(i).getNombreEquipoLocal(), logo1, misPartidos.get(i).getNombreEquipoVisitante(),
+						logo2, misPartidos.get(i).getFechaInicio().toString(), estadio, (20 + (180 * i)));
+			}
+
+		}
+
+		setVisible(true);
+		//chosing  mleft menu based on user type
+		if (userType.equalsIgnoreCase("jugador")) {
+			showMenuJugador();
+		} else if (userType.equalsIgnoreCase("entrenador")) {
+			showMenuEntrenador();
+		}
+	}
+
+	public void showMenuJugador() {
+		JPanel panelLeft = new JPanel();
+		panelLeft.setLayout(null);
+		panelLeft.setBackground(new Color(32, 206, 36));
+		panelLeft.setBounds(0, 0, 250, 680);
+		contentPane.add(panelLeft);
+
+		lblUserPic = new JLabel();
+		lblUserPic.setForeground(SystemColor.activeCaption);
+		lblUserPic.setBackground(SystemColor.activeCaption);
+		lblUserPic.setBounds(54, 33, 150, 150);
+		panelLeft.add(lblUserPic);
+
+		btnLogOutj = new JButton("     Log Out");
+		btnLogOutj.addActionListener(this);
+		btnLogOutj.setHorizontalAlignment(SwingConstants.LEFT);
+		btnLogOutj.setFont(new Font("Tahoma", Font.BOLD, 14));
+		btnLogOutj.setFocusable(false);
+		btnLogOutj.setBorder(null);
+		btnLogOutj.setBackground(new Color(32, 206, 36));
+		btnLogOutj.setBounds(0, 546, 250, 49);
+		panelLeft.add(btnLogOutj);
+
+		btnCambiarContj = new JButton("     Cambiar Contraseña");
+		btnCambiarContj.setHorizontalAlignment(SwingConstants.LEFT);
+		btnCambiarContj.setFont(new Font("Tahoma", Font.BOLD, 14));
+		btnCambiarContj.setFocusable(false);
+		btnCambiarContj.setBorder(null);
+		btnCambiarContj.setBackground(new Color(32, 206, 36));
+		btnCambiarContj.setBounds(0, 476, 250, 49);
+		panelLeft.add(btnCambiarContj);
+
+		btnCambiarDorsalj = new JButton("     Cambiar Dorsal");
+		btnCambiarDorsalj.addActionListener(this);
+		btnCambiarDorsalj.setHorizontalAlignment(SwingConstants.LEFT);
+		btnCambiarDorsalj.setFont(new Font("Tahoma", Font.BOLD, 14));
+		btnCambiarDorsalj.setFocusable(false);
+		btnCambiarDorsalj.setBorder(null);
+		btnCambiarDorsalj.setBackground(new Color(32, 206, 36));
+		btnCambiarDorsalj.setBounds(0, 406, 250, 49);
+		panelLeft.add(btnCambiarDorsalj);
+
+		lblWelcome = new JLabel("     Welcome " + userName);
+		lblWelcome.setForeground(Color.YELLOW);
+		lblWelcome.setFont(new Font("Tahoma", Font.BOLD, 14));
+		lblWelcome.setBounds(20, 200, 217, 34);
+		panelLeft.add(lblWelcome);
+
+		btnConsultarPartidosj = new JButton("     Consultar Partidos");
+		btnConsultarPartidosj.addActionListener(this);
+		btnConsultarPartidosj.setHorizontalAlignment(SwingConstants.LEFT);
+		btnConsultarPartidosj.setFont(new Font("Tahoma", Font.BOLD, 14));
+		btnConsultarPartidosj.setFocusable(false);
+		btnConsultarPartidosj.setBorder(null);
+		btnConsultarPartidosj.setBackground(new Color(255, 128, 64));
+		btnConsultarPartidosj.setBounds(0, 338, 250, 49);
+		panelLeft.add(btnConsultarPartidosj);
+		btnConsultarEquipoj = new JButton("     Consultar Equipo");
+		btnConsultarEquipoj.addActionListener(this);
+		btnConsultarEquipoj.setHorizontalAlignment(SwingConstants.LEFT);
+		btnConsultarEquipoj.setFont(new Font("Tahoma", Font.BOLD, 14));
+		btnConsultarEquipoj.setFocusable(false);
+		btnConsultarEquipoj.setBorder(null);
+		btnConsultarEquipoj.setBackground(new Color(32, 206, 36));
+		btnConsultarEquipoj.setBounds(0, 271, 250, 49);
+		panelLeft.add(btnConsultarEquipoj);
+	}
+
+	public void showMenuEntrenador() {
 		JPanel panelLeft = new JPanel();
 		panelLeft.setBackground(new Color(86, 82, 252));
 		panelLeft.setBounds(0, 0, 250, 680);
@@ -121,7 +240,7 @@ public class ConsultarPartidos extends JFrame implements ActionListener {
 			}
 		});
 
-		lblWelcome = new JLabel("Welcome " + entrConnected + "");
+		lblWelcome = new JLabel("Welcome " + userName);
 		lblWelcome.setForeground(new Color(255, 255, 255));
 		lblWelcome.setFont(new Font("Tahoma", Font.BOLD, 14));
 		lblWelcome.setBounds(20, 182, 217, 34);
@@ -193,44 +312,6 @@ public class ConsultarPartidos extends JFrame implements ActionListener {
 			}
 		});
 
-		// Right panel
-		JPanel rightPanel = new JPanel();
-		rightPanel.setBounds(256, 10, 728, 660);
-		rightPanel.setLayout(new BoxLayout(rightPanel, BoxLayout.Y_AXIS));
-
-		contentPane.add(rightPanel);
-
-		cardsPanel = new JPanel();
-		cardsPanel.setLayout(new BoxLayout(cardsPanel, BoxLayout.Y_AXIS));
-
-		JScrollPane scrollPane = new JScrollPane(cardsPanel);
-		scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
-		rightPanel.add(scrollPane, BorderLayout.CENTER);
-		rightPanel.add(scrollPane); // Add scroll pane to right panel
-
-		// String logo1 = "/images/equiposLogo/athletic-bilbao.png";
-		// String logo2 = "/images/equiposLogo/real-madrid.png";
-		System.out.println(userName);
-		String miEquipo = controller.getMyTeam(userName, userType);
-		System.out.println(miEquipo);
-		ArrayList<Juegan> misPartidos = controller.consultarPartidoEquipo(miEquipo);
-		ImageIcon logo1;
-		ImageIcon logo2;
-		String estadio;
-		for (int i = 0; i < misPartidos.size(); i++) {
-			Blob logo1Blob = controller.getEquipo(misPartidos.get(i).getNombreEquipoLocal()).getLogo();
-			Blob logo2Blob = controller.getEquipo(misPartidos.get(i).getNombreEquipoVisitante()).getLogo();
-			estadio = controller.getNombreEstadio(misPartidos.get(i));
-			logo1 = Util.blobToImgIcon(logo1Blob);
-			logo2 = Util.blobToImgIcon(logo2Blob);
-			if (misPartidos.get(i).getFechaInicio().isAfter(LocalDateTime.now())) {
-				miCard(misPartidos.get(i).getNombreEquipoLocal(), logo1, misPartidos.get(i).getNombreEquipoVisitante(),
-						logo2, misPartidos.get(i).getFechaInicio().toString(), estadio, (20 + (180 * i)));
-			}
-
-		}
-
-		setVisible(true);
 	}
 
 	public void miCard(String eqLocal, ImageIcon logo1, String EqVisitante, ImageIcon logo2, String dateTime,
@@ -245,7 +326,6 @@ public class ConsultarPartidos extends JFrame implements ActionListener {
 		partidoPanel.setMaximumSize(new Dimension(710, 170));
 		partidoPanel.setAlignmentX(Component.LEFT_ALIGNMENT);
 		partidoPanel.setLayout(null);
-
 
 		JLabel lblEqLocal = new JLabel(eqLocal);
 		lblEqLocal.setFont(new Font("Tahoma", Font.BOLD, 14));
@@ -310,6 +390,25 @@ public class ConsultarPartidos extends JFrame implements ActionListener {
 			this.dispose();
 		}
 
+		// for jugador menu
+
+		if (e.getSource() == btnLogOutj) {
+			controller.logOut();
+			this.dispose();
+		} else if (e.getSource() == btnCambiarDorsalj) {
+			CambiarDorsal ventanaDorsal = new CambiarDorsal(controller, userName, userType);
+			ventanaDorsal.setVisible(true);
+			this.dispose();
+		} else if (e.getSource() == btnConsultarPartidosj) {
+			ConsultarPartidos consultarPartidos = new ConsultarPartidos(controller, userName, userType);
+			consultarPartidos.setVisible(true);
+			this.dispose();
+
+		} else if (e.getSource() == btnConsultarEquipoj) {
+			MenuJugador menuJugador = new MenuJugador(controller, userName, userType);
+			menuJugador.setVisible(true);
+			this.dispose();
+		}
 	}
 
 }
