@@ -90,6 +90,17 @@ public class MenuEntrenador extends JFrame implements ActionListener {
 		btnConsultarEquipo = new JButton("     Consultar Equipo");
 		btnConsultarEquipo.setForeground(new Color(255, 255, 255));
 		btnConsultarEquipo.addActionListener(this);
+		
+		lblBtnAddPic = new JLabel();
+		lblBtnAddPic.setBounds(160, 140, 50, 50);
+		lblBtnAddPic.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				userUploadImgDialog();
+
+			}
+		});
+		panelLeft.add(lblBtnAddPic);
 		btnConsultarEquipo.setHorizontalAlignment(SwingConstants.LEFT);
 		btnConsultarEquipo.setFont(loadFont("../fonts/tilt.ttf", Font.PLAIN, 14));
 		btnConsultarEquipo.setFocusable(false);
@@ -141,6 +152,11 @@ public class MenuEntrenador extends JFrame implements ActionListener {
 		btnCambiarContrasena = new JButton("     Cambiar contraseña");
 		btnCambiarContrasena.setForeground(new Color(255, 255, 255));
 		btnCambiarContrasena.addActionListener(this);
+		lblUserPic = new JLabel();
+		lblUserPic.setBackground(SystemColor.activeCaption);
+		lblUserPic.setForeground(SystemColor.activeCaption);
+		lblUserPic.setBounds(50, 33, 150, 150);
+		panelLeft.add(lblUserPic);
 		btnCambiarContrasena.setBounds(0, 513, 250, 49);
 		panelLeft.add(btnCambiarContrasena);
 		btnCambiarContrasena.setHorizontalAlignment(SwingConstants.LEFT);
@@ -297,21 +313,9 @@ public class MenuEntrenador extends JFrame implements ActionListener {
 				});
 			}
 		}
-		
-		lblBtnAddPic = new JLabel();
-		lblBtnAddPic.setBounds(160, 140, 50, 50);
-		lblBtnAddPic.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseClicked(MouseEvent e) {
-				userUploadImgDialog();
 
-			}
-		});
-		lblUserPic = new JLabel();
-		lblUserPic.setBackground(SystemColor.activeCaption);
-		lblUserPic.setForeground(SystemColor.activeCaption);
-		lblUserPic.setBounds(50, 33, 150, 150);
-		panelLeft.add(lblUserPic);
+		ImageIcon imgIcon = new ImageIcon(getClass().getResource("/images/icons/add.png"));
+		Image imageUser = imgIcon.getImage().getScaledInstance(50, 50, Image.SCALE_SMOOTH);
 		Entrenador enttrenador = controller.getUsuario2(entrConnected);
 		if (enttrenador.getPicProfile() != null) {
 		    try {
