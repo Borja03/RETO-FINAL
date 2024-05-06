@@ -1,6 +1,7 @@
+
 package controller;
 
-import java.security.Timestamp; 
+import java.security.Timestamp;
 import java.sql.Blob;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -72,4 +73,13 @@ public interface IController {
 
 	public void modificarPartido(Juegan juegan, LocalDateTime fecha);
 
+	ArrayList<Juegan> consultarPartidoEquipo(String equipoName);
+
+	boolean checkUserExist2(String user);
+
+	ArrayList<Juegan> listaPartidos();
+
+	boolean modificarJugadorConDorsal(String user, int dorsal);
+
 }
+

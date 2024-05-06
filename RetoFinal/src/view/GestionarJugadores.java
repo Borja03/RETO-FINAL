@@ -1,3 +1,4 @@
+
 package view;
 
 import java.awt.Color; 
@@ -28,7 +29,6 @@ public class GestionarJugadores extends JFrame implements ActionListener {
 	private JPanel contentPane;
 	private JButton btnCrear;
 	private JButton btnDeleteJugador;
-	private JButton btnModificar;
 	private Controller controller;
 	private JButton btnLogOut;
 	private JButton btnCambiarCont;
@@ -67,29 +67,22 @@ public class GestionarJugadores extends JFrame implements ActionListener {
 		contentPane.setLayout(null);
 
 		btnCrear = new JButton("Añadir Jugadores");
+		btnCrear.setBounds(463, 40, 176, 35);
 		btnCrear.setBackground(new Color(255, 128, 0));
 		btnCrear.setFocusable(false);
 		btnCrear.setBorder(null);
-		btnCrear.setBounds(328, 40, 176, 35);
 		contentPane.add(btnCrear);
 
-		btnDeleteJugador = new JButton("Eliminar Jugadores");
+		btnDeleteJugador = new JButton("Eliminar / modificar Jugadores");
+		btnDeleteJugador.setBounds(677, 40, 176, 35);
 		btnDeleteJugador.addActionListener(this);
 		btnDeleteJugador.setFocusable(false);
 		btnDeleteJugador.setBorder(null);
-		btnDeleteJugador.setBounds(564, 40, 176, 35);
 		contentPane.add(btnDeleteJugador);
 
-		btnModificar = new JButton("Modificar Jugadores");
-		btnModificar.setBounds(787, 40, 176, 35);
-		btnModificar.setFocusable(false);
-		btnModificar.setBorder(null);
-		contentPane.add(btnModificar);
-		btnModificar.addActionListener(this);
-
 		JPanel panelLeft = new JPanel();
+		panelLeft.setBounds(0, 0, 250, 680);
         panelLeft.setBackground(new Color(86, 82, 252));
-        panelLeft.setBounds(0, 0, 250, 680);
         contentPane.add(panelLeft);
         panelLeft.setLayout(null);
 
@@ -241,76 +234,76 @@ public class GestionarJugadores extends JFrame implements ActionListener {
 		
 		// formulario
 		lblUser = new JLabel("Usuario");
-		lblUser.setFont(new Font("Tahoma", Font.BOLD, 14));
 		lblUser.setBounds(350, 207, 90, 35);
+		lblUser.setFont(new Font("Tahoma", Font.BOLD, 14));
 		contentPane.add(lblUser);
 
 		lblContrasena = new JLabel("Contraseña");
-		lblContrasena.setFont(new Font("Tahoma", Font.BOLD, 14));
 		lblContrasena.setBounds(350, 267, 90, 35);
+		lblContrasena.setFont(new Font("Tahoma", Font.BOLD, 14));
 		contentPane.add(lblContrasena);
 
 		lblDorsal = new JLabel("Dorsal");
-		lblDorsal.setFont(new Font("Tahoma", Font.BOLD, 14));
 		lblDorsal.setBounds(350, 332, 90, 35);
+		lblDorsal.setFont(new Font("Tahoma", Font.BOLD, 14));
 		contentPane.add(lblDorsal);
 
 		lblGoles = new JLabel("Goles");
-		lblGoles.setFont(new Font("Tahoma", Font.BOLD, 14));
 		lblGoles.setBounds(350, 399, 90, 35);
+		lblGoles.setFont(new Font("Tahoma", Font.BOLD, 14));
 		contentPane.add(lblGoles);
 
 		lblAsistencias = new JLabel("Asistencias");
-		lblAsistencias.setFont(new Font("Tahoma", Font.BOLD, 14));
 		lblAsistencias.setBounds(350, 460, 90, 35);
+		lblAsistencias.setFont(new Font("Tahoma", Font.BOLD, 14));
 		contentPane.add(lblAsistencias);
 
 		textFieldUSer = new JTextField();
-		textFieldUSer.setFont(new Font("Tahoma", Font.BOLD, 14));
 		textFieldUSer.setBounds(515, 208, 250, 34);
+		textFieldUSer.setFont(new Font("Tahoma", Font.BOLD, 14));
 		contentPane.add(textFieldUSer);
 		textFieldUSer.setColumns(10);
 
 		textFieldContrasena = new JTextField();
-		textFieldContrasena.setFont(new Font("Tahoma", Font.BOLD, 14));
 		textFieldContrasena.setBounds(515, 274, 250, 35);
+		textFieldContrasena.setFont(new Font("Tahoma", Font.BOLD, 14));
 		contentPane.add(textFieldContrasena);
 		textFieldContrasena.setColumns(10);
 
 		textFieldDorsal = new JComboBox<>();
-		textFieldDorsal.setFont(new Font("Tahoma", Font.BOLD, 14));
 		textFieldDorsal.setBounds(515, 333, 250, 35);
+		textFieldDorsal.setFont(new Font("Tahoma", Font.BOLD, 14));
 		fillDorsalBox ();
 		contentPane.add(textFieldDorsal);
 
 		textFieldGoles = new JTextField();
-		textFieldGoles.setFont(new Font("Tahoma", Font.BOLD, 14));
 		textFieldGoles.setBounds(515, 399, 250, 35);
+		textFieldGoles.setFont(new Font("Tahoma", Font.BOLD, 14));
 		contentPane.add(textFieldGoles);
 		textFieldGoles.setColumns(10);
 
 		textFieldAsist = new JTextField();
-		textFieldAsist.setFont(new Font("Tahoma", Font.BOLD, 14));
 		textFieldAsist.setBounds(515, 460, 250, 35);
+		textFieldAsist.setFont(new Font("Tahoma", Font.BOLD, 14));
 		contentPane.add(textFieldAsist);
 		textFieldAsist.setColumns(10);
 
 		btnOK = new JButton("Añadir jugador");
-		btnOK.setFont(new Font("Tahoma", Font.BOLD, 14));
 		btnOK.setBounds(751, 562, 150, 35);
+		btnOK.setFont(new Font("Tahoma", Font.BOLD, 14));
 		contentPane.add(btnOK);
 
 		txtEquiponame = new JTextField();
-		txtEquiponame.setFont(new Font("Tahoma", Font.BOLD, 14));
 		txtEquiponame.setBounds(515, 148, 250, 35);
+		txtEquiponame.setFont(new Font("Tahoma", Font.BOLD, 14));
 		txtEquiponame.setColumns(10);
 		txtEquiponame.setText(miEquipo);
 		txtEquiponame.setEditable(false);
 		contentPane.add(txtEquiponame);
 
 		JLabel lblEquipo = new JLabel("Equipo");
-		lblEquipo.setFont(new Font("Tahoma", Font.BOLD, 14));
 		lblEquipo.setBounds(350, 150, 90, 35);
+		lblEquipo.setFont(new Font("Tahoma", Font.BOLD, 14));
 		contentPane.add(lblEquipo);
 		btnOK.addActionListener(this);
 
@@ -329,13 +322,9 @@ public class GestionarJugadores extends JFrame implements ActionListener {
 	public void actionPerformed(ActionEvent e) {
 
 		if (e.getSource() == btnDeleteJugador) {
-			SearchJugadore eliminarJugadores = new SearchJugadore (controller,userName,userType,miEquipo);
+			ModificarJugadores eliminarJugadores = new ModificarJugadores (controller,userName,miEquipo,userType);
 			this.dispose();
 			eliminarJugadores.setVisible(true);
-		} else if (e.getSource() == btnModificar) {
-			//ModificarJugadores m1 = new ModificarJugadores(controller);
-			//m1.setVisible(true);
-			//this.dispose();
 		} else if (e.getSource() == btnConsultarEquipo) {
 			MenuEntrenador menuEntrenador = new MenuEntrenador(controller, userName,userType);
 			this.dispose();

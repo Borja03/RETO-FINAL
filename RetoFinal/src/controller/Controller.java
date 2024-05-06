@@ -62,7 +62,10 @@ public class Controller implements IController {
 	final String NOMBREequipoE = "Select nombreEquipo FROM entrenador WHERE user = ?";
 	final String nombreEstadio = "SELECT nombreEstadio from EQUIPO where nombreEquipo = ?";
 	final String Partidos = "SELECT nombreEquipoLocal, nombreEquipoVisitante, fechaInicio, resultado FROM juegan";
+	final String CONSULTARequipo = "SELECT * from juegan where nombreEquipoLocal = ?";
 
+	
+	@Override
 	public boolean checkUserExist(String user) {
 		boolean exist = false;
 		this.openConnection("entrenador", "entrenador");
@@ -83,7 +86,8 @@ public class Controller implements IController {
 		}
 		return exist;
 	}
-
+	
+	@Override
 	public boolean checkUserExist2(String user) {
 		boolean exist = false;
 		this.openConnection("admin", "admin");
@@ -144,7 +148,7 @@ public class Controller implements IController {
 			user = "admin";
 			password = "admin";
 			openConnection(user, password);
-			if (username.equals("admin") && password.equals("admin")) {
+			if (username.equals("admin") && pass.equals("admin")) {
 				return true;
 			}
 
@@ -196,7 +200,8 @@ public class Controller implements IController {
 				added = true;
 			}
 		} catch (SQLException e) {
-			return false;
+			System.out.println("Error de SQL");
+			e.printStackTrace();
 		} finally {
 			this.closeConnection();
 		}
@@ -363,7 +368,8 @@ public class Controller implements IController {
 		}
 		return modified;
 	}
-
+	
+	@Override
 	public ArrayList<Juegan> listaPartidos() {
 		this.openConnection("admin", "admin");
 		ArrayList<Juegan> partidosProgramados = new ArrayList<>();
@@ -421,10 +427,11 @@ public class Controller implements IController {
 
 	@Override
 	public void modificarDorsal() {
-		CambiarDorsal ventanaDorsal = new CambiarDorsal(this, "usuario");
+		CambiarDorsal ventanaDorsal = new CambiarDorsal(this, "usuario","jugador");
 		ventanaDorsal.setVisible(true);
 	}
 
+	@Override
 	public boolean modificarJugadorConDorsal(String user, int dorsal) {
 
 		boolean modified = false;
@@ -878,12 +885,6 @@ public class Controller implements IController {
 	}
 
 	@Override
-	public void consultarPartido() {
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
 	public String getUsuarioPassword(String userName, String userType) {
 
 		String pass = "";
@@ -991,6 +992,40 @@ public class Controller implements IController {
 		this.closeConnection();
 		return estadio;
 
+	}
+
+	@Override
+	public ArrayList<Juegan> consultarPartidoEquipo(String equipoName) {
+		ArrayList<Juegan> partidosLista = new ArrayList<>();
+
+		this.openConnection("entrenador", "entrenador");
+		try {
+			statement = connection.prepareStatement(CONSULTARequipo);
+			statement.setString(1, equipoName);
+
+			resultSet = statement.executeQuery();
+			while (resultSet.next()) {
+				String local = resultSet.getString("nombreEquipoLocal");
+				String visitante = resultSet.getString("nombreEquipoVisitante");
+				java.sql.Timestamp timestamp = resultSet.getTimestamp("fechaInicio");
+				LocalDateTime fecha = timestamp.toLocalDateTime();
+				String resultado = resultSet.getString("resultado");
+				Juegan partido = new Juegan(local, visitante, fecha, resultado);
+				partidosLista.add(partido);
+			}
+		} catch (SQLException e) {
+			System.out.println("Error de SQL");
+			e.printStackTrace();
+		} finally {
+			this.closeConnection();
+		}
+		return partidosLista;
+	}
+
+	@Override
+	public void consultarPartido() {
+		// TODO Auto-generated method stub
+		
 	}
 
 }

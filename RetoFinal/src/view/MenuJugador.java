@@ -36,6 +36,10 @@ import controller.Controller;
 import model.equipos.Equipo;
 import model.usuarios.Jugador;
 import java.awt.SystemColor;
+import javax.swing.border.BevelBorder;
+import javax.swing.border.CompoundBorder;
+import javax.swing.border.EtchedBorder;
+import javax.swing.border.SoftBevelBorder;
 
 public class MenuJugador extends JFrame implements ActionListener {
 
@@ -82,13 +86,13 @@ public class MenuJugador extends JFrame implements ActionListener {
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 
-		JPanel panelLeft = new JPanel();
-		panelLeft.setBounds(0, 0, 300, 680);
-		panelLeft.setBackground(new Color(128, 128, 0));
-		contentPane.add(panelLeft);
-		panelLeft.setLayout(null);
+		JPanel panelLefts = new JPanel();
+		panelLefts.setBounds(0, 0, 250, 680);
+		panelLefts.setBackground(new Color(32, 206, 36));
+		contentPane.add(panelLefts);
 
 		btnLogOut = new JButton("     Log Out");
+		btnLogOut.setBounds(0, 546, 250, 49);
 		btnLogOut.setHorizontalAlignment(SwingConstants.LEFT);
 		btnLogOut.addMouseListener(new MouseAdapter() {
 			@Override
@@ -108,6 +112,7 @@ public class MenuJugador extends JFrame implements ActionListener {
 		});
 
 		lblBtnAddPic = new JLabel();
+		lblBtnAddPic.setBounds(160, 140, 50, 50);
 		lblBtnAddPic.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
@@ -118,73 +123,74 @@ public class MenuJugador extends JFrame implements ActionListener {
 
 		ImageIcon imgIcon = new ImageIcon(getClass().getResource("/images/icons/add.png"));
 		Image imageUser = imgIcon.getImage().getScaledInstance(50, 50, Image.SCALE_SMOOTH);
+		panelLefts.setLayout(null);
 		lblBtnAddPic.setForeground(SystemColor.activeCaption);
-		lblBtnAddPic.setBounds(191, 158, 50, 50);
-		panelLeft.add(lblBtnAddPic);
+		panelLefts.add(lblBtnAddPic);
 		lblBtnAddPic.setIcon(new ImageIcon(imageUser));
-
-		lblUserPic = new JLabel();
-		lblUserPic.setBackground(SystemColor.activeCaption);
-		lblUserPic.setForeground(SystemColor.activeCaption);
-		lblUserPic.setBounds(54, 33, 150, 150);
-		panelLeft.add(lblUserPic);
-		btnLogOut.setBackground(new Color(128, 128, 0));
-		btnLogOut.setBounds(40, 546, 200, 49);
+		btnLogOut.setBackground(new Color(32, 206, 36));
 		btnLogOut.setFocusable(false);
 		btnLogOut.setBorder(null);
-		panelLeft.add(btnLogOut);
+		panelLefts.add(btnLogOut);
 		btnLogOut.addActionListener(this);
 		btnLogOut.setFont(new Font("Tahoma", Font.BOLD, 14));
 
 		btnCambiarCont = new JButton("     Cambiar Contraseña");
+		btnCambiarCont.setBounds(0, 476, 250, 49);
 		btnCambiarCont.addActionListener(this);
 		btnCambiarCont.setHorizontalAlignment(SwingConstants.LEFT);
 		btnCambiarCont.setFont(new Font("Tahoma", Font.BOLD, 14));
 		btnCambiarCont.setFocusable(false);
 		btnCambiarCont.setBorder(null);
-		btnCambiarCont.setBackground(new Color(128, 128, 0));
-		btnCambiarCont.setBounds(40, 476, 200, 49);
-		panelLeft.add(btnCambiarCont);
+		btnCambiarCont.setBackground(new Color(32, 206, 36));
+		panelLefts.add(btnCambiarCont);
 
 		btnCambiarDorsal = new JButton("     Cambiar Dorsal");
+		btnCambiarDorsal.setBounds(0, 406, 250, 49);
 		btnCambiarDorsal.addActionListener(this);
 		btnCambiarDorsal.setHorizontalAlignment(SwingConstants.LEFT);
 		btnCambiarDorsal.setFont(new Font("Tahoma", Font.BOLD, 14));
 		btnCambiarDorsal.setFocusable(false);
 		btnCambiarDorsal.setBorder(null);
-		btnCambiarDorsal.setBackground(new Color(128, 128, 0));
-		btnCambiarDorsal.setBounds(40, 406, 200, 49);
-		panelLeft.add(btnCambiarDorsal);
+		btnCambiarDorsal.setBackground(new Color(32, 206, 36));
+		panelLefts.add(btnCambiarDorsal);
+		
 
 		lblWelcome = new JLabel("     Welcome " + userName);
+		lblWelcome.setBounds(10, 228, 217, 34);
 		lblWelcome.setForeground(new Color(255, 255, 0));
 		lblWelcome.setFont(new Font("Tahoma", Font.BOLD, 14));
-		lblWelcome.setBounds(40, 227, 217, 34);
-		panelLeft.add(lblWelcome);
+		panelLefts.add(lblWelcome);
 
 		btnConsultarPartidos = new JButton("     Consultar Partidos");
+		btnConsultarPartidos.setBounds(0, 338, 250, 49);
 		btnConsultarPartidos.addActionListener(this);
 		btnConsultarPartidos.setHorizontalAlignment(SwingConstants.LEFT);
 		btnConsultarPartidos.setFont(new Font("Tahoma", Font.BOLD, 14));
 		btnConsultarPartidos.setFocusable(false);
 		btnConsultarPartidos.setBorder(null);
-		btnConsultarPartidos.setBackground(new Color(128, 128, 0));
-		btnConsultarPartidos.setBounds(40, 338, 200, 49);
-		panelLeft.add(btnConsultarPartidos);
+		btnConsultarPartidos.setBackground(new Color(32, 206, 36));
+		panelLefts.add(btnConsultarPartidos);
 
 		btnConsultarEquipo = new JButton("     Consultar Equipo");
+		btnConsultarEquipo.setBounds(0, 271, 250, 49);
 		btnConsultarEquipo.setHorizontalAlignment(SwingConstants.LEFT);
 		btnConsultarEquipo.setFont(new Font("Tahoma", Font.BOLD, 14));
 		btnConsultarEquipo.setFocusable(false);
 		btnConsultarEquipo.setBorder(null);
 		btnConsultarEquipo.setBackground(new Color(255, 128, 64));
-		btnConsultarEquipo.setBounds(40, 271, 200, 49);
-		panelLeft.add(btnConsultarEquipo);
+		panelLefts.add(btnConsultarEquipo);
+		
+				lblUserPic = new JLabel();
+				lblUserPic.setBounds(50, 33, 150, 150);
+				lblUserPic.setBackground(SystemColor.activeCaption);
+				lblUserPic.setForeground(new Color(0, 64, 128));
+				panelLefts.add(lblUserPic);
 
 		JPanel panel = new JPanel();
-		panel.setBounds(308, 10, 676, 178);
+		panel.setBorder(new SoftBevelBorder(BevelBorder.RAISED, null, null, null, null));
+		panel.setBounds(281, 10, 703, 178);
 		panel.setForeground(new Color(255, 128, 64));
-		panel.setBackground(new Color(192, 192, 192));
+		panel.setBackground(SystemColor.menu);
 		contentPane.add(panel);
 		panel.setLayout(null);
 
@@ -269,41 +275,52 @@ public class MenuJugador extends JFrame implements ActionListener {
 		lblEqLogo.setBounds(22, 10, 150, 150);
 		panel.add(lblEqLogo);
 
+
 		ArrayList<Jugador> dataList = controller.getJugadoresPorEquipo(nombreEquipo);
 
-		String[] columnNames = { "Nombre", "Dorsal", "Goles" };
-		Object[][] data = new Object[dataList.size()][3];
+		String[] columnNames = { "Nombre", "Dorsal", "Goles", "Asistencias" };
+		Object[][] data = new Object[dataList.size()][4];
 
 		for (int i = 0; i < dataList.size(); i++) {
 			Jugador obj = dataList.get(i);
 			data[i][0] = obj.getUser();
 			data[i][1] = obj.getDorsal();
-			data[i][2] = obj.getAsistencias();
+			data[i][2] = obj.getGoles();
+			data[i][3] = obj.getAsistencias();
+			
 		}
+
 		for (Jugador jug : dataList) {
 			if (userName.equals(jug.getUser())) {
 				if (jug.getPicProfile() != null) {
 					try {
-						byte[] imageData = jug.getPicProfile().getBytes(1, (int) jug.getPicProfile().length());
-						if (imageData != null && imageData.length > 0) {
-							ImageIcon icon2 = new ImageIcon(imageData);
-							Image image2 = icon2.getImage().getScaledInstance(150, 150, Image.SCALE_SMOOTH);
-							ImageIcon scaledIcon2 = new ImageIcon(image2);
-							lblUserPic.setIcon(scaledIcon2);
-						}
-					} catch (SQLException e) {
-						System.err.println("Error reading image data from Blob: " + e.getMessage());
-						e.printStackTrace();
-					}
+				        byte[] imageData = jug.getPicProfile().getBytes(1, (int) jug.getPicProfile().length());
+				        if (imageData != null && imageData.length > 0) {
+				            ImageIcon icon2 = new ImageIcon(imageData);
+				            Image image2 = icon2.getImage().getScaledInstance(150, 150, Image.SCALE_SMOOTH);
+				            ImageIcon scaledIcon2 = new ImageIcon(image2);
+				            lblUserPic.setIcon(scaledIcon2);
+				        } else {
+				            // if image is null in data base or empty, show a default image
+				            ImageIcon defaultIcon = new ImageIcon("src/images/icons/default.png");
+				            lblUserPic.setIcon(defaultIcon);
+				        }
+				    } catch (SQLException e) {
+				        System.err.println("Error reading image data from Blob: " + e.getMessage());
+				        e.printStackTrace();
+				    }
+				} else {
+		            // if image is null in data base or empty, show a default image
+				    ImageIcon defaultIcon = new ImageIcon("src/images/icons/default.png");
+				    lblUserPic.setIcon(defaultIcon);
 				}
+
 			}
-
 		}
-
 		DefaultTableModel model = new DefaultTableModel(data, columnNames);
 
 		scrollPane_1 = new JScrollPane();
-		scrollPane_1.setBounds(310, 220, 674, 450);
+		scrollPane_1.setBounds(281, 235, 703, 435);
 		contentPane.add(scrollPane_1);
 
 		table = new JTable(model);
@@ -313,7 +330,7 @@ public class MenuJugador extends JFrame implements ActionListener {
 		scrollPane_1.setColumnHeaderView(scrollPane);
 
 		lblJugadoresLista = new JLabel("Jugadores lista :");
-		lblJugadoresLista.setBounds(547, 188, 191, 22);
+		lblJugadoresLista.setBounds(535, 203, 191, 22);
 		lblJugadoresLista.setFont(new Font("Tahoma", Font.BOLD, 18));
 		contentPane.add(lblJugadoresLista);
 
@@ -385,15 +402,12 @@ public class MenuJugador extends JFrame implements ActionListener {
 	public void actionPerformed(ActionEvent e) {
 		Object o = e.getSource();
 
-		if (o == btnLogOut) {
-			;
-			this.dispose();
 
 			if (o == btnLogOut) {
 				controller.logOut();
 				this.dispose();
 			} else if (o == btnCambiarDorsal) {
-				CambiarDorsal ventanaDorsal = new CambiarDorsal(controller, userName);
+				CambiarDorsal ventanaDorsal = new CambiarDorsal(controller, userName,userType);
 				ventanaDorsal.setVisible(true);
 				this.setVisible(false);
 			} else if (o == btnConsultarPartidos) {
@@ -408,5 +422,5 @@ public class MenuJugador extends JFrame implements ActionListener {
 			}
 
 		}
-	}
+	
 }

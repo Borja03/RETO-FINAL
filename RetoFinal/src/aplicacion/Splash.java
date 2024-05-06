@@ -1,6 +1,6 @@
 package aplicacion;
 
-import javax.swing.ImageIcon; 
+import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -36,15 +36,19 @@ public class Splash extends JFrame {
 		contentPane.setLayout(null);
 
 		JLabel imgTitle = new JLabel();
-		ImageIcon imgIcon = new ImageIcon(getClass().getResource("/images/titlelogo.png"));
-		imgTitle.setIcon(imgIcon);
+	//	ImageIcon imgIcon = new ImageIcon(getClass().getResource("./images/titlelogo.png"));
+		//imgTitle.setIcon(imgIcon);
 		imgTitle.setBounds(277, 74, 463, 149);
+		imgTitle.setIcon(new javax.swing.ImageIcon(System.getProperty("user.dir")+"\\src\\images\\titlelogo.png"));
+
 		contentPane.add(imgTitle);
 
 		JLabel imageLabel = new JLabel();
-		ImageIcon imageIcon = new ImageIcon(getClass().getResource("/images/logo.gif"));
-		imageLabel.setIcon(imageIcon);
+		//ImageIcon imageIcon = new ImageIcon(getClass().getResource("./images/logo.gif"));
+		//imageLabel.setIcon(imageIcon);
 		imageLabel.setBounds(305, 143, 403, 403);
+		imageLabel.setIcon(new javax.swing.ImageIcon(System.getProperty("user.dir")+"\\src\\images\\logo.gif"));
+
 		contentPane.add(imageLabel);
 
 		Label label = new Label("Made in Tartanga 2023/2024");
@@ -79,3 +83,4 @@ public class Splash extends JFrame {
 	        return darkModeEnabled;
 	    }
 }
+

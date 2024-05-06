@@ -2,18 +2,29 @@ package view;
 
 import java.awt.Color;
 import java.awt.Font;
+import java.awt.FontFormatException;
+import java.awt.GraphicsEnvironment;
 import java.awt.Image;
+import java.awt.SystemColor;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.sql.Blob;
 import java.sql.SQLException;
 import java.util.ArrayList;
+
+import javax.sql.rowset.serial.SerialException;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
+import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
@@ -23,6 +34,7 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.table.DefaultTableModel;
 import controller.Controller;
 import model.equipos.Equipo;
+import model.usuarios.Entrenador;
 import model.usuarios.Jugador;
 
 public class MenuEntrenador extends JFrame implements ActionListener {
@@ -36,6 +48,8 @@ public class MenuEntrenador extends JFrame implements ActionListener {
 	private JButton btnCambiarContrasena;
 	private Controller controller;
 	private JLabel lblWelcome;
+	private JLabel lblUserPic;
+	private JLabel lblBtnAddPic;
 	private String userName;
 	private String userType;
 	private JTextField txtEqNombre;
@@ -49,6 +63,11 @@ public class MenuEntrenador extends JFrame implements ActionListener {
 	private Blob teamLogo;
 	private JLabel lblJugadoresLista;
 	private JButton[] leftPanelButtons;
+	
+	
+	private ImageIcon imageIcon;
+	private Blob usrBlobIcon;
+	private JButton btnUpload;
 
 	public MenuEntrenador(Controller cont, String entrConnected, String userType) {
 		this.controller = cont;
@@ -71,8 +90,19 @@ public class MenuEntrenador extends JFrame implements ActionListener {
 		btnConsultarEquipo = new JButton("     Consultar Equipo");
 		btnConsultarEquipo.setForeground(new Color(255, 255, 255));
 		btnConsultarEquipo.addActionListener(this);
+		
+		lblBtnAddPic = new JLabel();
+		lblBtnAddPic.setBounds(160, 140, 50, 50);
+		lblBtnAddPic.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				userUploadImgDialog();
+
+			}
+		});
+		panelLeft.add(lblBtnAddPic);
 		btnConsultarEquipo.setHorizontalAlignment(SwingConstants.LEFT);
-		btnConsultarEquipo.setFont(new Font("Tahoma", Font.BOLD, 14));
+		btnConsultarEquipo.setFont(loadFont("../fonts/tilt.ttf", Font.PLAIN, 14));
 		btnConsultarEquipo.setFocusable(false);
 		btnConsultarEquipo.setBorder(null);
 		btnConsultarEquipo.setBackground(new Color(100, 100, 100));
@@ -83,7 +113,7 @@ public class MenuEntrenador extends JFrame implements ActionListener {
 		btnGestJugadores.setForeground(new Color(255, 255, 255));
 		btnGestJugadores.addActionListener(this);
 		btnGestJugadores.setHorizontalAlignment(SwingConstants.LEFT);
-		btnGestJugadores.setFont(new Font("Tahoma", Font.BOLD, 14));
+		btnGestJugadores.setFont(loadFont("../fonts/tilt.ttf", Font.PLAIN, 14));
 		btnGestJugadores.setFocusable(false);
 		btnGestJugadores.setBorder(null);
 		btnGestJugadores.setBackground(new Color(86, 82, 252));
@@ -92,7 +122,7 @@ public class MenuEntrenador extends JFrame implements ActionListener {
 
 		lblWelcome = new JLabel("Welcome " + entrConnected);
 		lblWelcome.setForeground(new Color(255, 255, 255));
-		lblWelcome.setFont(new Font("Tahoma", Font.BOLD, 14));
+		lblWelcome.setFont(loadFont("../fonts/tilt.ttf", Font.PLAIN, 14));
 		lblWelcome.setBounds(20, 182, 217, 34);
 		panelLeft.add(lblWelcome);
 
@@ -100,7 +130,7 @@ public class MenuEntrenador extends JFrame implements ActionListener {
 		btnConsultarPartidos.setForeground(new Color(255, 255, 255));
 		btnConsultarPartidos.addActionListener(this);
 		btnConsultarPartidos.setHorizontalAlignment(SwingConstants.LEFT);
-		btnConsultarPartidos.setFont(new Font("Tahoma", Font.BOLD, 14));
+		btnConsultarPartidos.setFont(loadFont("../fonts/tilt.ttf", Font.PLAIN, 14));
 		btnConsultarPartidos.setFocusable(false);
 		btnConsultarPartidos.setBorder(null);
 		btnConsultarPartidos.setBackground(new Color(86, 82, 252));
@@ -117,15 +147,20 @@ public class MenuEntrenador extends JFrame implements ActionListener {
 		btnLogOut.setFocusable(false);
 		btnLogOut.setBorder(null);
 		btnLogOut.addActionListener(this);
-		btnLogOut.setFont(new Font("Tahoma", Font.BOLD, 14));
+		btnLogOut.setFont(loadFont("../fonts/tilt.ttf", Font.PLAIN, 14));
 
 		btnCambiarContrasena = new JButton("     Cambiar contraseña");
 		btnCambiarContrasena.setForeground(new Color(255, 255, 255));
 		btnCambiarContrasena.addActionListener(this);
+		lblUserPic = new JLabel();
+		lblUserPic.setBackground(SystemColor.activeCaption);
+		lblUserPic.setForeground(SystemColor.activeCaption);
+		lblUserPic.setBounds(50, 33, 150, 150);
+		panelLeft.add(lblUserPic);
 		btnCambiarContrasena.setBounds(0, 513, 250, 49);
 		panelLeft.add(btnCambiarContrasena);
 		btnCambiarContrasena.setHorizontalAlignment(SwingConstants.LEFT);
-		btnCambiarContrasena.setFont(new Font("Tahoma", Font.BOLD, 14));
+		btnCambiarContrasena.setFont(loadFont("../fonts/tilt.ttf", Font.PLAIN, 14));
 		btnCambiarContrasena.setFocusable(false);
 		btnCambiarContrasena.setBorder(null);
 		btnCambiarContrasena.setBackground(new Color(86, 82, 252));
@@ -138,32 +173,32 @@ public class MenuEntrenador extends JFrame implements ActionListener {
 		panel.setLayout(null);
 
 		JLabel lblNombre = new JLabel("Nombre :");
-		lblNombre.setFont(new Font("Tahoma", Font.BOLD, 14));
+		lblNombre.setFont(loadFont("../fonts/tilt.ttf", Font.PLAIN, 14));
 		lblNombre.setBounds(204, 39, 82, 22);
 		panel.add(lblNombre);
 
 		JLabel lblNewLabel = new JLabel("Equipo info");
 		lblNewLabel.setBounds(286, 10, 104, 22);
-		lblNewLabel.setFont(new Font("Tahoma", Font.BOLD, 18));
+		lblNewLabel.setFont(loadFont("../fonts/tilt.ttf", Font.PLAIN, 14));
 		panel.add(lblNewLabel);
 
 		JLabel lblEqEstadio = new JLabel("Estadio :");
-		lblEqEstadio.setFont(new Font("Tahoma", Font.BOLD, 14));
+		lblEqEstadio.setFont(loadFont("../fonts/tilt.ttf", Font.PLAIN, 14));
 		lblEqEstadio.setBounds(204, 67, 82, 22);
 		panel.add(lblEqEstadio);
 
 		JLabel lblTitulos = new JLabel("Titulos :");
-		lblTitulos.setFont(new Font("Tahoma", Font.BOLD, 14));
+		lblTitulos.setFont(loadFont("../fonts/tilt.ttf", Font.PLAIN, 14));
 		lblTitulos.setBounds(204, 93, 82, 22);
 		panel.add(lblTitulos);
 
 		JLabel lblPrimerEntrenador = new JLabel("Primer entrenador :");
-		lblPrimerEntrenador.setFont(new Font("Tahoma", Font.BOLD, 14));
+		lblPrimerEntrenador.setFont(loadFont("../fonts/tilt.ttf", Font.PLAIN, 14));
 		lblPrimerEntrenador.setBounds(204, 116, 162, 22);
 		panel.add(lblPrimerEntrenador);
 
 		JLabel lblSegundoEntrenador = new JLabel("Segundo entrenador :");
-		lblSegundoEntrenador.setFont(new Font("Tahoma", Font.BOLD, 14));
+		lblSegundoEntrenador.setFont(loadFont("../fonts/tilt.ttf", Font.PLAIN, 14));
 		lblSegundoEntrenador.setBounds(204, 145, 162, 22);
 		panel.add(lblSegundoEntrenador);
 
@@ -221,14 +256,16 @@ public class MenuEntrenador extends JFrame implements ActionListener {
 
 		ArrayList<Jugador> dataList = controller.getJugadoresPorEquipo(nombreEquipo);
 
-		String[] columnNames = { "Nombre", "Dorsal", "Goles" };
-		Object[][] data = new Object[dataList.size()][3];
+		String[] columnNames = { "Nombre", "Dorsal", "Goles", "Asistencias" };
+		Object[][] data = new Object[dataList.size()][4];
 
 		for (int i = 0; i < dataList.size(); i++) {
 			Jugador obj = dataList.get(i);
 			data[i][0] = obj.getUser();
 			data[i][1] = obj.getDorsal();
-			data[i][2] = obj.getAsistencias();
+			data[i][2] = obj.getGoles();
+			data[i][3] = obj.getAsistencias();
+			
 		}
 
 		DefaultTableModel model = new DefaultTableModel(data, columnNames);
@@ -277,6 +314,36 @@ public class MenuEntrenador extends JFrame implements ActionListener {
 			}
 		}
 
+		ImageIcon imgIcon = new ImageIcon(getClass().getResource("/images/icons/add.png"));
+		Image imageUser = imgIcon.getImage().getScaledInstance(50, 50, Image.SCALE_SMOOTH);
+		Entrenador enttrenador = controller.getUsuario2(entrConnected);
+		if (enttrenador.getPicProfile() != null) {
+		    try {
+		        byte[] imageData = enttrenador.getPicProfile().getBytes(1, (int) enttrenador.getPicProfile().length());
+		        if (imageData != null && imageData.length > 0) {
+		            ImageIcon icon2 = new ImageIcon(imageData);
+		            Image image2 = icon2.getImage().getScaledInstance(150, 150, Image.SCALE_SMOOTH);
+		            ImageIcon scaledIcon2 = new ImageIcon(image2);
+		            lblUserPic.setIcon(scaledIcon2);
+		        } else {
+		            // If imageData is null or empty, set a default image
+		            ImageIcon defaultIcon = new ImageIcon("src/images/icons/default.png");
+		            lblUserPic.setIcon(defaultIcon);
+		        }
+		    } catch (SQLException e) {
+		        System.err.println("Error reading image data from Blob: " + e.getMessage());
+		        e.printStackTrace();
+		    }
+		} else {
+		    // If the player's profile picture is null, set a default image
+		    ImageIcon defaultIcon = new ImageIcon("src/images/icons/default.png");
+		    lblUserPic.setIcon(defaultIcon);
+		}
+
+	
+		
+		
+		
 		fillEquipoInfo();
 		fillEntrenadoresInfo();
 		this.setVisible(true);
@@ -297,6 +364,59 @@ public class MenuEntrenador extends JFrame implements ActionListener {
 		txtEqPrimerEntre.setText(primEntrenador);
 		txtEqSegundoEntre.setText(segEntrenador);
 	}
+	
+	  private Font loadFont(String fontPath, int style, float size) {
+	        try {
+	            Font customFont = Font.createFont(Font.TRUETYPE_FONT, getClass().getResourceAsStream(fontPath)).deriveFont(style, size);
+	            GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
+	            ge.registerFont(customFont);
+	            return customFont;
+	        } catch (IOException | FontFormatException e) {
+	            e.printStackTrace();
+	            return null;
+	        }
+	    }
+	  private void userUploadImgDialog() {
+			btnUpload = new JButton("Upload Image");
+			btnUpload.addActionListener(new ActionListener() {
+				@Override
+				public void actionPerformed(ActionEvent e) {
+					JFileChooser fileChooser = new JFileChooser();
+					int result = fileChooser.showOpenDialog(null);
+
+					if (result == JFileChooser.APPROVE_OPTION) {
+						File selectedFile = fileChooser.getSelectedFile();
+						if (selectedFile != null) {
+							try {
+								Path imagePath = selectedFile.toPath();
+								byte[] imageData = Files.readAllBytes(imagePath);
+								usrBlobIcon = new javax.sql.rowset.serial.SerialBlob(imageData);
+								imageIcon = new ImageIcon(imageData);
+								lblUserPic.setIcon(imageIcon);
+
+								if (controller.updateUsrIcon(userName, usrBlobIcon, userType)) {
+									JOptionPane.showMessageDialog(MenuEntrenador.this, "Image uploaded to database!",
+											"Success", JOptionPane.INFORMATION_MESSAGE);
+								} else {
+									JOptionPane.showMessageDialog(MenuEntrenador.this, "Failed to upload image to database!",
+											"Error", JOptionPane.ERROR_MESSAGE);
+								}
+							} catch (IOException ex) {
+								ex.printStackTrace();
+							} catch (SerialException e1) {
+								e1.printStackTrace();
+							} catch (SQLException e1) {
+								e1.printStackTrace();
+							}
+						} else {
+							//
+						}
+					}
+				}
+			});
+
+			JOptionPane.showMessageDialog(this, btnUpload, "Upload Image", JOptionPane.PLAIN_MESSAGE);
+		}
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
@@ -321,5 +441,4 @@ public class MenuEntrenador extends JFrame implements ActionListener {
 		}
 
 	}
-
 }

@@ -54,4 +54,4 @@ INSERT INTO equipo (nombreEquipo, titulos, nombreEstadio) VALUES ('Barsa', 1000,
 INSERT INTO jugador (user, password, tipo, dorsal, numeroGoles, numeroAsistencias, nombreEquipo)
 VALUES ('alder', 'alder', 'jugador', 10, 0, 0, 'Barsa');
 UPDATE juegan SET fechaInicio = '2024-04-03 10:00:00', resultado = '3-0' WHERE fechaInicio = '2024-05-01 10:00:01';
-select * from entrenador;
+select * from juegan;
