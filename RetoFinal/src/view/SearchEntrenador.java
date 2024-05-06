@@ -334,7 +334,6 @@ public class SearchEntrenador extends JFrame implements ActionListener {
 	    if (segEntrenador != null) {
 	        textFieldUSer.addItem(segEntrenador);
 	    }
-
 	}
 
 	public void fillUserData(String miUser) {

@@ -62,7 +62,7 @@ public class Controller implements IController {
 	final String NOMBREequipoE = "Select nombreEquipo FROM entrenador WHERE user = ?";
 	final String nombreEstadio = "SELECT nombreEstadio from EQUIPO where nombreEquipo = ?";
 	final String Partidos = "SELECT nombreEquipoLocal, nombreEquipoVisitante, fechaInicio, resultado FROM juegan";
-	final String CONSULTARequipo = "SELECT * from juegan where nombreEquipoLocal = ?";
+	final String CONSULTARequipo = "SELECT * from juegan where nombreEquipoLocal = ? OR nombreEquipoVisitante = ?";
 
 	
 	@Override
@@ -1002,6 +1002,7 @@ public class Controller implements IController {
 		try {
 			statement = connection.prepareStatement(CONSULTARequipo);
 			statement.setString(1, equipoName);
+			statement.setString(2, equipoName);
 
 			resultSet = statement.executeQuery();
 			while (resultSet.next()) {

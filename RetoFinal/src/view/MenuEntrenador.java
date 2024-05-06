@@ -100,6 +100,12 @@ public class MenuEntrenador extends JFrame implements ActionListener {
 
 			}
 		});
+		
+		ImageIcon imgIcone = new ImageIcon(getClass().getResource("/images/icons/add.png"));
+		Image imageUsere = imgIcone.getImage().getScaledInstance(50, 50, Image.SCALE_SMOOTH);
+		lblBtnAddPic.setForeground(SystemColor.activeCaption);
+		lblBtnAddPic.setIcon(new ImageIcon(imageUsere));
+		
 		panelLeft.add(lblBtnAddPic);
 		btnConsultarEquipo.setHorizontalAlignment(SwingConstants.LEFT);
 		btnConsultarEquipo.setFont(loadFont("../fonts/tilt.ttf", Font.PLAIN, 14));
@@ -121,9 +127,10 @@ public class MenuEntrenador extends JFrame implements ActionListener {
 		panelLeft.add(btnGestJugadores);
 
 		lblWelcome = new JLabel("Welcome " + entrConnected);
+		lblWelcome.setBackground(new Color(240, 240, 240));
 		lblWelcome.setForeground(new Color(255, 255, 255));
 		lblWelcome.setFont(loadFont("../fonts/tilt.ttf", Font.PLAIN, 14));
-		lblWelcome.setBounds(20, 182, 217, 34);
+		lblWelcome.setBounds(23, 205, 217, 34);
 		panelLeft.add(lblWelcome);
 
 		btnConsultarPartidos = new JButton("     Consultar Partidos");
@@ -152,11 +159,13 @@ public class MenuEntrenador extends JFrame implements ActionListener {
 		btnCambiarContrasena = new JButton("     Cambiar contraseña");
 		btnCambiarContrasena.setForeground(new Color(255, 255, 255));
 		btnCambiarContrasena.addActionListener(this);
+		
 		lblUserPic = new JLabel();
 		lblUserPic.setBackground(SystemColor.activeCaption);
 		lblUserPic.setForeground(SystemColor.activeCaption);
 		lblUserPic.setBounds(50, 33, 150, 150);
 		panelLeft.add(lblUserPic);
+		
 		btnCambiarContrasena.setBounds(0, 513, 250, 49);
 		panelLeft.add(btnCambiarContrasena);
 		btnCambiarContrasena.setHorizontalAlignment(SwingConstants.LEFT);
@@ -339,9 +348,8 @@ public class MenuEntrenador extends JFrame implements ActionListener {
 		    ImageIcon defaultIcon = new ImageIcon("src/images/icons/default.png");
 		    lblUserPic.setIcon(defaultIcon);
 		}
-
-	
 		
+	
 		
 		
 		fillEquipoInfo();

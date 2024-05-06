@@ -401,7 +401,7 @@ public class SearchJugadore extends JFrame implements ActionListener {
 			this.dispose();
 			consultarPartidos.setVisible(true);
 		} else if (e.getSource() == btnCambiarDorsal) {
-			CambiarDorsal cambiarDorsal = new CambiarDorsal(controller, userName);
+			CambiarDorsal cambiarDorsal = new CambiarDorsal(controller, userName, userType);
 			this.dispose();
 			cambiarDorsal.setVisible(true);
 
