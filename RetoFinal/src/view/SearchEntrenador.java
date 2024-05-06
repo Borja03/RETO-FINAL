@@ -317,49 +317,40 @@ public class SearchEntrenador extends JFrame implements ActionListener {
 	}
 
 	public void fillEquiposNames() {
-		ArrayList<String> equiListaBox = new ArrayList<>();
-		txtEquiponame.removeAllItems();
-		equiListaBox = controller.getEquipos();
-
-		for (String equipo : equiListaBox) {
-			txtEquiponame.addItem(equipo);
-		}
-
+	    txtEquiponame.removeAllItems();
+	    for (String equipo : controller.getEquipos()) {
+	        txtEquiponame.addItem(equipo);
+	    }
 	}
 
 	public void fillEntrenadoresEquipo(String nombreEquipo) {
-		ArrayList<String> entListaBox = new ArrayList<>();
-		textFieldUSer.removeAllItems();
-		entListaBox.clear();
-		String primEntrenador = controller.getPrimEntrenador(nombreEquipo);
-		String segEntrenador = controller.getSegEntrenador(nombreEquipo);
+	    textFieldUSer.removeAllItems(); // Clear items from JComboBox
+	    String primEntrenador = controller.getPrimEntrenador(nombreEquipo);
+	    String segEntrenador = controller.getSegEntrenador(nombreEquipo);
 
-		entListaBox = new ArrayList<>(Arrays.asList("", primEntrenador, segEntrenador));
-
-		for (String str : entListaBox) {
-			textFieldUSer.addItem(str);
-		}
+	    if (primEntrenador != null) {
+	        textFieldUSer.addItem(primEntrenador);
+	    }
+	    if (segEntrenador != null) {
+	        textFieldUSer.addItem(segEntrenador);
+	    }
 	}
 
 	public void fillUserData(String miUser) {
-		Entrenador usr = (Entrenador) controller.getUsuario2(miUser);
-		if (usr != null) {
-			textFieldUSer.addItem(usr.getUser());
-			textFieldContrasena.setText(usr.getContrasenia());
-			txtEquiponame.addItem(usr.getNombreEquipo());
+	    Entrenador usr = (Entrenador) controller.getUsuario2(miUser);
+	    if (usr != null) {
+	        textFieldContrasena.setText(usr.getContrasenia());
+	        CargoEntrenador cargo = usr.getCargo();
 
-			CargoEntrenador cargo = usr.getCargo();
-
-			if (cargo == CargoEntrenador.PRIMER_ENTRENADOR) {
-				textFieldCargo.setSelectedItem("Primer_entrenador");
-			} else if (cargo == CargoEntrenador.SEGUNDO_ENTRENADOR) {
-				textFieldCargo.setSelectedItem("Segundo_entrenador");
-			}
-		} else {
-			System.out.println("El usuario no existe");
-		}
+	        if (cargo == CargoEntrenador.PRIMER_ENTRENADOR) {
+	            textFieldCargo.setSelectedItem("Primer_entrenador");
+	        } else if (cargo == CargoEntrenador.SEGUNDO_ENTRENADOR) {
+	            textFieldCargo.setSelectedItem("Segundo_entrenador");
+	        }
+	    } 
 	}
 
+	
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		Object o = e.getSource();
