@@ -12,6 +12,7 @@ import view.Login;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.BufferedReader;
+import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.awt.Label;
@@ -71,16 +72,34 @@ public class Splash extends JFrame {
 	}
 	
 	  private boolean loadPreference() {
-		  boolean darkModeEnabled=false;
-	        try (BufferedReader reader = new BufferedReader(new FileReader("preferences.txt"))) {
-	            String line = reader.readLine();
-	            if (line != null) {
-	                 darkModeEnabled = Boolean.parseBoolean(line);
-	            }
-	        } catch (IOException ex) {
-	            ex.printStackTrace();
-	        }
-	        return darkModeEnabled;
+		    boolean darkModeEnabled = false;
+		    FileReader fileReader = null;
+		    BufferedReader reader = null;
+		    try {
+		        fileReader = new FileReader("preferences.txt");
+		        reader = new BufferedReader(fileReader);
+		        String line = reader.readLine();
+		        if (line != null) {
+		            darkModeEnabled = Boolean.parseBoolean(line);
+		        }
+		    } catch (FileNotFoundException ex) {
+		        System.err.println("sometimes eclipse can not access it will ,the value by default will be false");
+		    } catch (IOException ex) {
+		        ex.printStackTrace();
+		    } finally {
+		        try {
+		            if (reader != null) {
+		                reader.close();
+		            }
+		            if (fileReader != null) {
+		                fileReader.close();
+		            }
+		        } catch (IOException ex) {
+		            ex.printStackTrace();
+		        }
+		    }
+		    return darkModeEnabled;
+
 	    }
 }
 

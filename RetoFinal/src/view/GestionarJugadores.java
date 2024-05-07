@@ -4,6 +4,7 @@ package view;
 import java.awt.Color; 
 import java.awt.EventQueue;
 import java.awt.Font;
+import java.awt.SystemColor;
 
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -15,6 +16,7 @@ import javax.swing.border.EmptyBorder;
 
 import controller.Controller;
 
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 
@@ -39,6 +41,7 @@ public class GestionarJugadores extends JFrame implements ActionListener {
 	private JLabel lblContrasena;
 	private JLabel lblDorsal;
 	private JLabel lblGoles;
+	private JLabel lblUserPic;
 	private JLabel lblAsistencias;
 	private JTextField textFieldUSer;
 	private JTextField textFieldContrasena;
@@ -306,6 +309,14 @@ public class GestionarJugadores extends JFrame implements ActionListener {
 		lblEquipo.setFont(new Font("Tahoma", Font.BOLD, 14));
 		contentPane.add(lblEquipo);
 		btnOK.addActionListener(this);
+		
+		lblUserPic = new JLabel();
+		lblUserPic.setBackground(SystemColor.activeCaption);
+		lblUserPic.setForeground(SystemColor.activeCaption);
+		lblUserPic.setBounds(50, 33, 150, 150);
+		panelLeft.add(lblUserPic);
+		
+
 
 	}
 
