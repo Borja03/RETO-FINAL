@@ -300,6 +300,7 @@ public class CambiarContra extends JFrame implements ActionListener {
 	}
 
 	public void showMenuJugador(String userName) {
+		JPanel panelLeft = new JPanel();
 		panelLeft = new JPanel();
 		panelLeft.setLayout(null);
 		panelLeft.setBackground(new Color(32, 206, 36));

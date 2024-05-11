@@ -31,38 +31,38 @@ public class Controller implements IController {
 	private PreparedStatement statement;
 	private ResultSet resultSet;
 
-	final String ALLequipos = "SELECT nombreEquipo FROM  equipo";
-	final String ConnectUser = "SELECT * FROM  laliga WHERE user_name =? AND password=?";
-	final String DELETEentrenador = "DELETE FROM entrenador WHERE user =?";
-	final String DELETEequipo = "DELETE FROM equipo WHERE nombreEquipo =?";
-	final String DELETEjugador = "DELETE FROM jugador WHERE user =?";
-	final String DORSALlLista = "SELECT dorsal FROM  jugador where nombreEquipo=?";
-	final String ENTRENADORequipo = "SELECT nombreEquipo FROM  entrenador where user=?";
-	final String ENTRENADORnombre = "SELECT user FROM  entrenador where nombreEquipo=? and tipoEntrenador=?";
-	final String GETentrenador = "SELECT * FROM entrenador WHERE user = ?";
-	final String GETEntrenadorPassword = "SELECT password FROM  entrenador where user=?";
-	final String GETjugador = "SELECT * FROM jugador WHERE user = ?";
-	final String GETJugadorPassword = "SELECT password FROM  jugador where user=?";
-	final String GETjugadorEquipo = "SELECT * FROM jugador WHERE user = ? AND nombreEquipo= ?";
-	final String INSERTequipo = "INSERT INTO equipo (nombreEquipo, titulos, nombreEstadio ,logo) VALUES (?, ?, ?, ?)";
-	final String INSERTjugador = "INSERT INTO jugador (user,password,dorsal,numeroGoles,numeroAsistencias,nombreEquipo) VALUES (?,?,?,?,?,?)";
-	final String INNSERTentrenador = "INSERT INTO entrenador (user,password,tipoEntrenador,nombreEquipo) VALUES (?,?,?,?)";
-	final String JUGADORDORequipo = "SELECT nombreEquipo FROM  jugador where user=?";
-	final String JUGADORESequipo = "SELECT * FROM  jugador where nombreEquipo=?";
-	final String MODIFICARentrenador = "UPDATE entrenador SET password=?, user=?,tipoEntrenador=? WHERE user=?";
-	final String MODIFICARjugador = "UPDATE jugador SET password=?, dorsal=?,numeroGoles=?, numeroAsistencias=? WHERE user=?";
+	final String ALLequipos = "SELECT nombreEquipo FROM equipo";
+	final String ConnectUser = "SELECT * FROM usuario WHERE user = ? AND password = ?";
+	final String DELETEentrenador = "DELETE FROM entrenador WHERE user = ?";
+	final String DELETEequipo = "DELETE FROM equipo WHERE nombreEquipo = ?";
+	final String DELETEjugador = "DELETE FROM jugador WHERE user = ?";
+	final String DORSALlLista = "SELECT dorsal FROM jugador where nombreEquipo = ?";
+	final String ENTRENADORequipo = "SELECT nombreEquipo FROM entrenador where user = ?";
+	final String ENTRENADORnombre = "SELECT usuario.* FROM entrenador INNER JOIN usuario ON entrenador.user = usuario.user WHERE entrenador.nombreEquipo = ? AND entrenador.tipoEntrenador = ?";
+	final String GETentrenador = "SELECT entrenador.*, usuario.password, usuario.tipo FROM entrenador INNER JOIN usuario ON entrenador.user = usuario.user WHERE usuario.user = ?";
+	final String GETEntrenadorPassword = "SELECT usuario.password FROM entrenador INNER JOIN usuario ON entrenador.user = usuario.user WHERE entrenador.user = ?";
+	final String GETjugador = "SELECT jugador.*, usuario.password, usuario.tipo FROM jugador INNER JOIN usuario ON jugador.user = usuario.user WHERE usuario.user = ?";
+	final String GETJugadorPassword = "SELECT usuario.password FROM jugador INNER JOIN usuario ON jugador.user = usuario.user WHERE jugador.user = ?";
+	final String GETjugadorEquipo = "SELECT jugador.*, usuario.password, usuario.tipo FROM jugador INNER JOIN usuario ON jugador.user = usuario.user WHERE jugador.user = ? AND jugador.nombreEquipo = ?";
+	final String INSERTequipo = "INSERT INTO equipo (nombreEquipo, titulos, nombreEstadio, logo) VALUES (?, ?, ?, ?)";
+	final String INSERTjugador = "INSERT INTO jugador (user, dorsal, numeroGoles, numeroAsistencias, nombreEquipo) VALUES (?, ?, ?, ?, ?)";
+	final String INNSERTentrenador = "INSERT INTO entrenador (user, tipoEntrenador, nombreEquipo) VALUES (?, ?, ?)";
+	final String JUGADORDORequipo = "SELECT nombreEquipo FROM jugador where user = ?";
+	final String JUGADORESequipo = "SELECT jugador.*, usuario.password, usuario.tipo FROM jugador INNER JOIN usuario ON jugador.user = usuario.user WHERE jugador.nombreEquipo = ?";
+	final String MODIFICARentrenador = "UPDATE entrenador SET user = ?, tipoEntrenador = ? WHERE user = ?";
+	final String MODIFICARjugador = "UPDATE jugador SET dorsal = ?, numeroGoles = ?, numeroAsistencias = ? WHERE user = ?";
 	final String MODIFICARpartidoFecha = "UPDATE juegan SET fechaInicio = ? WHERE fechaInicio = ?";
 	final String MODIFICARpartidoResultado = "UPDATE juegan SET resultado = ? WHERE fechaInicio = ?";
-	final String MODIFICARequipo = "UPDATE equipo SET titulos=?, nombreEstadio=? , logo=? WHERE nombreEquipo=?";
+	final String MODIFICARequipo = "UPDATE equipo SET titulos = ?, nombreEstadio = ?, logo = ? WHERE nombreEquipo = ?";
 	final String modificarPartidoFecha = "UPDATE juegan SET fechaInicio = ? WHERE fechaInicio = ?";
 	final String modificarPartidoResultado = "UPDATE juegan SET resultado = ? WHERE fechaInicio = ?";
-	final String MODIFICARuserIcon = "UPDATE jugador SET icon=?  WHERE user = ?";
-	final String NOMBREequipo = "SELECT * FROM  equipo where nombreEquipo=?";
-	final String nombreEquipo = "Select nombreEquipo FROM laliga WHERE user=?";
-	final String NOMBREequipoE = "Select nombreEquipo FROM entrenador WHERE user = ?";
-	final String nombreEstadio = "SELECT nombreEstadio from EQUIPO where nombreEquipo = ?";
+	final String MODIFICARuserIcon = "UPDATE jugador SET icon = ?  WHERE user = ?";
+	final String NOMBREequipo = "SELECT * FROM equipo where nombreEquipo = ?";
+	final String nombreEquipo = "SELECT nombreEquipo FROM usuario WHERE user = ?";
+	final String NOMBREequipoE = "SELECT nombreEquipo FROM entrenador WHERE user = ?";
+	final String nombreEstadio = "SELECT nombreEstadio FROM equipo WHERE nombreEquipo = ?";
 	final String Partidos = "SELECT nombreEquipoLocal, nombreEquipoVisitante, fechaInicio, resultado FROM juegan";
-	final String CONSULTARequipo = "SELECT * from juegan where nombreEquipoLocal = ?";
+	final String CONSULTARequipo = "SELECT * FROM juegan WHERE nombreEquipoLocal = ? OR nombreEquipoVisitante = ?";
 
 	
 	@Override
@@ -157,13 +157,13 @@ public class Controller implements IController {
 			user = "entrenador";
 			password = "entrenador";
 			openConnection(user, password);
-			query = "SELECT * FROM entrenador WHERE user = ? AND password = ?";
+			query = "SELECT * FROM usuario WHERE user = ? AND password = ?";
 		} else if ("Jugador".equals(userType)) {
 			System.out.println("checking Jugador...");
 			user = "jugador";
 			password = "jugador";
 			openConnection(user, password);
-			query = "SELECT * FROM jugador WHERE user = ? AND password = ?";
+			query = "SELECT * FROM usuario WHERE user = ? AND password = ?";
 		}
 
 		try (PreparedStatement statement = connection.prepareStatement(query)) {
@@ -436,17 +436,17 @@ public class Controller implements IController {
 
 		boolean modified = false;
 		try {
-
+			
 			Usuarios usuario = this.getUsuario(user);
 
 			Jugador jugador = (Jugador) usuario;
 			this.openConnection("jugador", "jugador");
 			statement = connection.prepareStatement(MODIFICARjugador);
-			statement.setString(1, ((Usuarios) jugador).getContrasenia());
-			statement.setInt(2, dorsal);
-			statement.setInt(3, jugador.getGoles());
-			statement.setInt(4, jugador.getAsistencias());
-			statement.setString(5, user);
+			//statement.setString(1, ((Usuarios) jugador).getContrasenia());
+			statement.setInt(1, dorsal);
+			statement.setInt(2, jugador.getGoles());
+			statement.setInt(3, jugador.getAsistencias());
+			statement.setString(4, user);
 			if (statement.executeUpdate() > 0) {
 				modified = true;
 
@@ -498,9 +498,9 @@ public class Controller implements IController {
 		boolean changed = false;
 		String query = "";
 		if ("entrenador".equals(userType)) {
-			query = "UPDATE entrenador SET password = ? WHERE user = ?";
+			query = "UPDATE usuario SET password = ? WHERE user = ?";
 		} else if ("jugador".equals(userType)) {
-			query = "UPDATE jugador SET password = ? WHERE user = ?";
+			query = "UPDATE usuario SET password = ? WHERE user = ?";
 		}
 		openConnection(userType, userType);
 
@@ -1002,6 +1002,7 @@ public class Controller implements IController {
 		try {
 			statement = connection.prepareStatement(CONSULTARequipo);
 			statement.setString(1, equipoName);
+			statement.setString(2, equipoName);
 
 			resultSet = statement.executeQuery();
 			while (resultSet.next()) {

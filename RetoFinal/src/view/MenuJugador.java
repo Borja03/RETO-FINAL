@@ -88,28 +88,14 @@ public class MenuJugador extends JFrame implements ActionListener {
 
 		JPanel panelLefts = new JPanel();
 		panelLefts.setBounds(0, 0, 250, 680);
-		panelLefts.setBackground(new Color(32, 206, 36));
+		panelLefts.setBackground(new Color(33, 199, 162));
 		contentPane.add(panelLefts);
 
 		btnLogOut = new JButton("     Log Out");
+		btnLogOut.setForeground(new Color(255, 255, 255));
 		btnLogOut.setBounds(0, 546, 250, 49);
 		btnLogOut.setHorizontalAlignment(SwingConstants.LEFT);
-		btnLogOut.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseEntered(MouseEvent e) {
-				btnLogOut.setBackground(new Color(90, 70, 50));
-			}
-
-			@Override
-			public void mouseExited(MouseEvent e) {
-				btnLogOut.setBackground(new Color(128, 128, 0));
-			}
-
-			@Override
-			public void mousePressed(MouseEvent e) {
-				btnLogOut.setBackground(new Color(50, 70, 90));
-			}
-		});
+		
 
 		lblBtnAddPic = new JLabel();
 		lblBtnAddPic.setBounds(160, 140, 50, 50);
@@ -127,7 +113,7 @@ public class MenuJugador extends JFrame implements ActionListener {
 		lblBtnAddPic.setForeground(SystemColor.activeCaption);
 		panelLefts.add(lblBtnAddPic);
 		lblBtnAddPic.setIcon(new ImageIcon(imageUser));
-		btnLogOut.setBackground(new Color(32, 206, 36));
+		btnLogOut.setBackground(new Color(33, 199, 162));
 		btnLogOut.setFocusable(false);
 		btnLogOut.setBorder(null);
 		panelLefts.add(btnLogOut);
@@ -135,49 +121,57 @@ public class MenuJugador extends JFrame implements ActionListener {
 		btnLogOut.setFont(new Font("Tahoma", Font.BOLD, 14));
 
 		btnCambiarCont = new JButton("     Cambiar Contraseña");
+		btnCambiarCont.setForeground(new Color(255, 255, 255));
 		btnCambiarCont.setBounds(0, 476, 250, 49);
 		btnCambiarCont.addActionListener(this);
 		btnCambiarCont.setHorizontalAlignment(SwingConstants.LEFT);
 		btnCambiarCont.setFont(new Font("Tahoma", Font.BOLD, 14));
 		btnCambiarCont.setFocusable(false);
 		btnCambiarCont.setBorder(null);
-		btnCambiarCont.setBackground(new Color(32, 206, 36));
+		btnCambiarCont.setBackground(new Color(33, 199, 162));
 		panelLefts.add(btnCambiarCont);
 
 		btnCambiarDorsal = new JButton("     Cambiar Dorsal");
+		btnCambiarDorsal.setForeground(new Color(255, 255, 255));
 		btnCambiarDorsal.setBounds(0, 406, 250, 49);
 		btnCambiarDorsal.addActionListener(this);
 		btnCambiarDorsal.setHorizontalAlignment(SwingConstants.LEFT);
 		btnCambiarDorsal.setFont(new Font("Tahoma", Font.BOLD, 14));
 		btnCambiarDorsal.setFocusable(false);
 		btnCambiarDorsal.setBorder(null);
-		btnCambiarDorsal.setBackground(new Color(32, 206, 36));
+		btnCambiarDorsal.setBackground(new Color(33, 199, 162));
 		panelLefts.add(btnCambiarDorsal);
 		
 
 		lblWelcome = new JLabel("     Welcome " + userName);
 		lblWelcome.setBounds(10, 228, 217, 34);
-		lblWelcome.setForeground(new Color(255, 255, 0));
+		lblWelcome.setForeground(new Color(255, 255, 255));
 		lblWelcome.setFont(new Font("Tahoma", Font.BOLD, 14));
 		panelLefts.add(lblWelcome);
 
 		btnConsultarPartidos = new JButton("     Consultar Partidos");
+		btnConsultarPartidos.setForeground(new Color(255, 255, 255));
 		btnConsultarPartidos.setBounds(0, 338, 250, 49);
 		btnConsultarPartidos.addActionListener(this);
 		btnConsultarPartidos.setHorizontalAlignment(SwingConstants.LEFT);
 		btnConsultarPartidos.setFont(new Font("Tahoma", Font.BOLD, 14));
 		btnConsultarPartidos.setFocusable(false);
 		btnConsultarPartidos.setBorder(null);
-		btnConsultarPartidos.setBackground(new Color(32, 206, 36));
+		btnConsultarPartidos.setBackground(new Color(33, 199, 162));
 		panelLefts.add(btnConsultarPartidos);
 
 		btnConsultarEquipo = new JButton("     Consultar Equipo");
+		btnConsultarEquipo.setForeground(new Color(255, 255, 255));
+		btnConsultarEquipo.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+			}
+		});
 		btnConsultarEquipo.setBounds(0, 271, 250, 49);
 		btnConsultarEquipo.setHorizontalAlignment(SwingConstants.LEFT);
 		btnConsultarEquipo.setFont(new Font("Tahoma", Font.BOLD, 14));
 		btnConsultarEquipo.setFocusable(false);
 		btnConsultarEquipo.setBorder(null);
-		btnConsultarEquipo.setBackground(new Color(255, 128, 64));
+		btnConsultarEquipo.setBackground(new Color(26, 169, 185));
 		panelLefts.add(btnConsultarEquipo);
 		
 				lblUserPic = new JLabel();
