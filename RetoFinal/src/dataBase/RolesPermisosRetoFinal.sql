@@ -9,6 +9,8 @@ GRANT ALL PRIVILEGES ON laLiga.entrenador TO admin_role;
 GRANT ALL PRIVILEGES ON laLiga.partidos TO admin_role;
 GRANT ALL PRIVILEGES ON laLiga.juegan TO admin_role;
 GRANT ALL PRIVILEGES ON laliga.usuario TO admin_role;
+GRANT EXECUTE ON PROCEDURE laliga.InsertarEquipo TO  admin_role;
+GRANT EXECUTE ON PROCEDURE laliga.ActualizarEquipo TO  admin_role;
 
 GRANT SELECT ON laLiga.equipo TO entrenador_role;
 GRANT SELECT, INSERT, UPDATE, DELETE ON laLiga.juegan TO entrenador_role;

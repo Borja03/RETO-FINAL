@@ -2,6 +2,7 @@ package controller;
 
 import java.time.LocalDateTime;
 import java.sql.Blob;
+import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -809,30 +810,60 @@ public class Controller implements IController {
 
 	@Override
 	public boolean crearEquipo(String nombreEquipo, int titulos, String nombreEstadio, Blob logo) {
-		boolean inserted = false;
+	    boolean inserted = false;
 
-		this.openConnection("admin", "admin");
-		try {
-			statement = connection.prepareStatement(INSERTequipo);
-			statement.setString(1, nombreEquipo);
-			statement.setInt(2, titulos);
-			statement.setString(3, nombreEstadio);
-			statement.setBlob(4, logo);
-			if (statement.executeUpdate() > 0) {
-				inserted = true;
-				System.out.println("Data inserted!");
-			} else {
-				System.out.println("Failed!");
-			}
-		} catch (SQLException e) {
-			return false;
-		} finally {
-			this.closeConnection();
-		}
+	    try {
+	        openConnection("admin", "admin");
+	        String insertEquipoQuery = "{CALL InsertarEquipo(?, ?, ?, ?)}";
+	        CallableStatement insertEquipoStatement = connection.prepareCall(insertEquipoQuery);
+	        insertEquipoStatement.setString(1, nombreEquipo);
+	        insertEquipoStatement.setInt(2, titulos);
+	        insertEquipoStatement.setString(3, nombreEstadio);
+	        insertEquipoStatement.setBlob(4, logo);
 
-		return inserted;
+	        if (insertEquipoStatement.executeUpdate() > 0) {
+	            inserted = true;
+	            System.out.println("Equipo insertado correctamente!");
+	        } else {
+	            System.out.println("Error al insertar equipo.");
+	        }
+	    } catch (SQLException e) {
+	        e.printStackTrace();
+	    } finally {
+	        closeConnection();
+	    }
 
+	    return inserted;
 	}
+
+	@Override
+	public boolean modificarEquipo(String nombreEquipo, int titulos, String nombreEstadio, Blob logo) {
+	    boolean modified = false;
+
+	    try {
+	        openConnection("admin", "admin");
+	        String updateEquipoQuery = "{CALL ActualizarEquipo(?, ?, ?, ?)}";
+	        CallableStatement updateEquipoStatement = connection.prepareCall(updateEquipoQuery);
+	        updateEquipoStatement.setString(1, nombreEquipo);
+	        updateEquipoStatement.setInt(2, titulos);
+	        updateEquipoStatement.setString(3, nombreEstadio);
+	        updateEquipoStatement.setBlob(4, logo);
+
+	        if (updateEquipoStatement.executeUpdate() > 0) {
+	            modified = true;
+	            System.out.println("Equipo actualizado correctamente!");
+	        } else {
+	            System.out.println("Error al actualizar equipo.");
+	        }
+	    } catch (SQLException e) {
+	        e.printStackTrace();
+	    } finally {
+	        closeConnection();
+	    }
+
+	    return modified;
+	}
+
 
 	@Override
 	public boolean borrarEquipo(String nombreEquipo) {
@@ -856,32 +887,6 @@ public class Controller implements IController {
 		}
 		return deleted;
 
-	}
-
-	@Override
-	public boolean modificarEquipo(String nombreEquipo, int titulos, String nombreEstadio, Blob logo) {
-		boolean modified = false;
-		this.openConnection("admin", "admin");
-		try {
-			statement = connection.prepareStatement(MODIFICARequipo);
-			statement.setInt(1, titulos);
-			statement.setString(2, nombreEstadio);
-			statement.setBlob(3, logo);
-			statement.setString(4, nombreEquipo);
-
-			if (statement.executeUpdate() > 0) {
-				modified = true;
-				System.out.println("Data inserted!");
-			} else {
-				System.out.println("Failed!");
-			}
-
-		} catch (SQLException e) {
-			return false;
-		} finally {
-			this.closeConnection();
-		}
-		return modified;
 	}
 
 	@Override
