@@ -1,5 +1,6 @@
 package view;
 
+import javax.sql.rowset.serial.SerialException;
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 
@@ -7,8 +8,14 @@ import controller.Controller;
 
 import java.awt.Color;
 import java.awt.Font;
+import java.awt.Image;
 import java.awt.event.*;
+import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.sql.Blob;
+import java.sql.SQLException;
 import java.awt.SystemColor;
 
 public class CambiarContra extends JFrame implements ActionListener {
@@ -44,6 +51,9 @@ public class CambiarContra extends JFrame implements ActionListener {
 	private JLabel lblWelcome;
 	private JButton btnConsultarPartidos;
 	private JButton btnConsultarEquipo;
+	private JButton btnUpload;
+	private Blob usrBlobIcon;
+	private ImageIcon imageIcon;
 	private JButton btnConsultarEquipoj,btnConsultarPartidosj,btnCambiarDorsalj,btnCambiarContj,btnLogOutj;
 
 	public CambiarContra(Controller controlador, String userName, String userType) {
@@ -124,23 +134,11 @@ public class CambiarContra extends JFrame implements ActionListener {
 
 		bottomPanelMsg = new JPanel();
 		bottomPanelMsg.setBounds(341, 251, 628, 395);
-		lblMsg1 = new JLabel("Contraseña");
+		lblMsg1 = new JLabel("Contraseña incorrecta");
 		lblMsg1.setForeground(new Color(192, 192, 192));
 		lblMsg1.setFont(new Font("Tahoma", Font.BOLD, 24));
 		lblMsg1.setBounds(200, 43, 230, 54);
 		bottomPanelMsg.add(lblMsg1);
-
-		lblMsg2 = new JLabel("No ");
-		lblMsg2.setForeground(Color.LIGHT_GRAY);
-		lblMsg2.setFont(new Font("Tahoma", Font.BOLD, 24));
-		lblMsg2.setBounds(200, 110, 230, 54);
-		bottomPanelMsg.add(lblMsg2);
-
-		lblMsg3 = new JLabel("Bla bla ");
-		lblMsg3.setForeground(Color.LIGHT_GRAY);
-		lblMsg3.setFont(new Font("Tahoma", Font.BOLD, 24));
-		lblMsg3.setBounds(200, 199, 230, 54);
-		bottomPanelMsg.add(lblMsg3);
 
 		contentPane.add(bottomPanelMsg);
 		
@@ -298,86 +296,153 @@ public class CambiarContra extends JFrame implements ActionListener {
 
 
 	}
+	
+	
 
 	public void showMenuJugador(String userName) {
-		JPanel panelLeft = new JPanel();
-		panelLeft = new JPanel();
-		panelLeft.setLayout(null);
-		panelLeft.setBackground(new Color(32, 206, 36));
-		panelLeft.setBounds(0, 0, 250, 680);
-		contentPane.add(panelLeft);
-		
-		lblBtnAddPic = new JLabel();
-		lblBtnAddPic.setForeground(SystemColor.activeCaption);
-		lblBtnAddPic.setBounds(191, 158, 50, 50);
-		panelLeft.add(lblBtnAddPic);
-		
-		lblUserPic = new JLabel();
-		lblUserPic.setForeground(SystemColor.activeCaption);
-		lblUserPic.setBackground(SystemColor.activeCaption);
-		lblUserPic.setBounds(54, 33, 150, 150);
-		panelLeft.add(lblUserPic);
-		
-		btnLogOutj = new JButton("     Log Out");
-		btnLogOutj.addActionListener(this);
-		btnLogOutj.setHorizontalAlignment(SwingConstants.LEFT);
-		btnLogOutj.setFont(new Font("Tahoma", Font.BOLD, 14));
-		btnLogOutj.setFocusable(false);
-		btnLogOutj.setBorder(null);
-		btnLogOutj.setBackground(new Color(32, 206, 36));
-		btnLogOutj.setBounds(0, 546, 250, 49);
-		panelLeft.add(btnLogOutj);
-		
-		btnCambiarContj = new JButton("     Cambiar Contraseña");
-		btnCambiarContj.setHorizontalAlignment(SwingConstants.LEFT);
-		btnCambiarContj.setFont(new Font("Tahoma", Font.BOLD, 14));
-		btnCambiarContj.setFocusable(false);
-		btnCambiarContj.setBorder(null);
-		btnCambiarContj.setBackground(new Color(255, 128, 64));
-		btnCambiarContj.setBounds(0, 476, 250, 49);
-		panelLeft.add(btnCambiarContj);
-		
-		btnCambiarDorsalj = new JButton("     Cambiar Dorsal");
-		btnCambiarDorsalj.addActionListener(this);
-		btnCambiarDorsalj.setHorizontalAlignment(SwingConstants.LEFT);
-		btnCambiarDorsalj.setFont(new Font("Tahoma", Font.BOLD, 14));
-		btnCambiarDorsalj.setFocusable(false);
-		btnCambiarDorsalj.setBorder(null);
-		btnCambiarDorsalj.setBackground(new Color(32, 206, 36));
-		btnCambiarDorsalj.setBounds(0, 406, 250, 49);
-		panelLeft.add(btnCambiarDorsalj);
-		
-		lblWelcome = new JLabel("     Welcome "+userName);
-		lblWelcome.setForeground(Color.YELLOW);
-		lblWelcome.setFont(new Font("Tahoma", Font.BOLD, 14));
-		lblWelcome.setBounds(20, 200, 217, 34);
-		panelLeft.add(lblWelcome);
-		
-		btnConsultarPartidosj = new JButton("     Consultar Partidos");
-		btnConsultarPartidosj.addActionListener(this);
-		btnConsultarPartidosj.setHorizontalAlignment(SwingConstants.LEFT);
-		btnConsultarPartidosj.setFont(new Font("Tahoma", Font.BOLD, 14));
-		btnConsultarPartidosj.setFocusable(false);
-		btnConsultarPartidosj.setBorder(null);
-		btnConsultarPartidosj.setBackground(new Color(32, 206, 36));
-		btnConsultarPartidosj.setBounds(0, 338, 250, 49);
-		panelLeft.add(btnConsultarPartidosj);
-		btnConsultarEquipoj = new JButton("     Consultar Equipo");
-		btnConsultarEquipoj.addActionListener(this);
-		btnConsultarEquipoj.setHorizontalAlignment(SwingConstants.LEFT);
-		btnConsultarEquipoj.setFont(new Font("Tahoma", Font.BOLD, 14));
-		btnConsultarEquipoj.setFocusable(false);
-		btnConsultarEquipoj.setBorder(null);
-		btnConsultarEquipoj.setBackground(new Color(32, 206, 36));
-		btnConsultarEquipoj.setBounds(0, 271, 250, 49);
-		panelLeft.add(btnConsultarEquipoj);
-		bottomPanelMsg.setVisible(false);
-		bottomPanel.setVisible(false);
+		JPanel panelLefts = new JPanel();
+		panelLefts.setBounds(0, 0, 250, 680);
+		panelLefts.setBackground(new Color(33, 199, 162));
+		contentPane.add(panelLefts);
 
+		btnLogOut = new JButton("     Log Out");
+		btnLogOut.setForeground(new Color(255, 255, 255));
+		btnLogOut.setBounds(0, 546, 250, 49);
+		btnLogOut.setHorizontalAlignment(SwingConstants.LEFT);
 		
+
+		lblBtnAddPic = new JLabel();
+		lblBtnAddPic.setBounds(160, 140, 50, 50);
+		lblBtnAddPic.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				userUploadImgDialog();
+
+			}
+		});
+
+		ImageIcon imgIcon = new ImageIcon(getClass().getResource("/images/icons/add.png"));
+		Image imageUser = imgIcon.getImage().getScaledInstance(50, 50, Image.SCALE_SMOOTH);
+		panelLefts.setLayout(null);
+		lblBtnAddPic.setForeground(SystemColor.activeCaption);
+		panelLefts.add(lblBtnAddPic);
+		lblBtnAddPic.setIcon(new ImageIcon(imageUser));
+		btnLogOut.setBackground(new Color(33, 199, 162));
+		btnLogOut.setFocusable(false);
+		btnLogOut.setBorder(null);
+		panelLefts.add(btnLogOut);
+		btnLogOut.addActionListener(this);
+		btnLogOut.setFont(new Font("Tahoma", Font.BOLD, 14));
+
+		btnCambiarCont = new JButton("     Cambiar Contraseña");
+		btnCambiarCont.setForeground(new Color(255, 255, 255));
+		btnCambiarCont.setBounds(0, 476, 250, 49);
+		btnCambiarCont.addActionListener(this);
+		btnCambiarCont.setHorizontalAlignment(SwingConstants.LEFT);
+		btnCambiarCont.setFont(new Font("Tahoma", Font.BOLD, 14));
+		btnCambiarCont.setFocusable(false);
+		btnCambiarCont.setBorder(null);
+		btnCambiarCont.setBackground(new Color(26, 169, 185));
+		panelLefts.add(btnCambiarCont);
+
+		btnCambiarDorsal = new JButton("     Cambiar Dorsal");
+		btnCambiarDorsal.setForeground(new Color(255, 255, 255));
+		btnCambiarDorsal.setBounds(0, 406, 250, 49);
+		btnCambiarDorsal.addActionListener(this);
+		btnCambiarDorsal.setHorizontalAlignment(SwingConstants.LEFT);
+		btnCambiarDorsal.setFont(new Font("Tahoma", Font.BOLD, 14));
+		btnCambiarDorsal.setFocusable(false);
+		btnCambiarDorsal.setBorder(null);
+		btnCambiarDorsal.setBackground(new Color(33, 199, 162));
+		panelLefts.add(btnCambiarDorsal);
+		
+
+		lblWelcome = new JLabel("     Welcome " + userName);
+		lblWelcome.setBounds(10, 228, 217, 34);
+		lblWelcome.setForeground(new Color(255, 255, 255));
+		lblWelcome.setFont(new Font("Tahoma", Font.BOLD, 14));
+		panelLefts.add(lblWelcome);
+
+		btnConsultarPartidos = new JButton("     Consultar Partidos");
+		btnConsultarPartidos.setForeground(new Color(255, 255, 255));
+		btnConsultarPartidos.setBounds(0, 338, 250, 49);
+		btnConsultarPartidos.addActionListener(this);
+		btnConsultarPartidos.setHorizontalAlignment(SwingConstants.LEFT);
+		btnConsultarPartidos.setFont(new Font("Tahoma", Font.BOLD, 14));
+		btnConsultarPartidos.setFocusable(false);
+		btnConsultarPartidos.setBorder(null);
+		btnConsultarPartidos.setBackground(new Color(33, 199, 162));
+		panelLefts.add(btnConsultarPartidos);
+
+		btnConsultarEquipo = new JButton("     Consultar Equipo");
+		btnConsultarEquipo.setForeground(new Color(255, 255, 255));
+		btnConsultarEquipo.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+			}
+		});
+		btnConsultarEquipo.setBounds(0, 271, 250, 49);
+		btnConsultarEquipo.setHorizontalAlignment(SwingConstants.LEFT);
+		btnConsultarEquipo.setFont(new Font("Tahoma", Font.BOLD, 14));
+		btnConsultarEquipo.setFocusable(false);
+		btnConsultarEquipo.setBorder(null);
+		btnConsultarEquipo.setBackground(new Color(33, 199, 162));
+		panelLefts.add(btnConsultarEquipo);
+		
+				lblUserPic = new JLabel();
+				lblUserPic.setBounds(50, 33, 150, 150);
+				lblUserPic.setBackground(SystemColor.activeCaption);
+				lblUserPic.setForeground(new Color(0, 64, 128));
+				panelLefts.add(lblUserPic);
+
+				bottomPanelMsg.setVisible(false);
+				bottomPanel.setVisible(false);
+
 		
 
 	}
+	
+	private void userUploadImgDialog() {
+		btnUpload = new JButton("Upload Image");
+		btnUpload.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				JFileChooser fileChooser = new JFileChooser();
+				int result = fileChooser.showOpenDialog(null);
+
+				if (result == JFileChooser.APPROVE_OPTION) {
+					File selectedFile = fileChooser.getSelectedFile();
+					if (selectedFile != null) {
+						try {
+							Path imagePath = selectedFile.toPath();
+							byte[] imageData = Files.readAllBytes(imagePath);
+							usrBlobIcon = new javax.sql.rowset.serial.SerialBlob(imageData);
+							imageIcon = new ImageIcon(imageData);
+							lblUserPic.setIcon(imageIcon);
+
+							if (controller.updateUsrIcon(userName, usrBlobIcon, userType)) {
+								JOptionPane.showMessageDialog(CambiarContra.this, "Image uploaded to database!",
+										"Success", JOptionPane.INFORMATION_MESSAGE);
+							} else {
+								JOptionPane.showMessageDialog(CambiarContra.this, "Failed to upload image to database!",
+										"Error", JOptionPane.ERROR_MESSAGE);
+							}
+						} catch (IOException ex) {
+							ex.printStackTrace();
+						} catch (SerialException e1) {
+							e1.printStackTrace();
+						} catch (SQLException e1) {
+							e1.printStackTrace();
+						}
+					} else {
+						//
+					}
+				}
+			}
+		});
+
+		JOptionPane.showMessageDialog(this, btnUpload, "Upload Image", JOptionPane.PLAIN_MESSAGE);
+	}
+
 
 	public void actionPerformed(ActionEvent e) {
 		Object o = e.getSource();
