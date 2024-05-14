@@ -31,6 +31,15 @@ import java.awt.event.MouseEvent;
 import java.awt.SystemColor;
 import javax.swing.JComboBox;
 
+/**
+ * The ModificarEquipos class provides a graphical user interface for modifying
+ * sports teams. Users can view details of existing teams, edit team
+ * information, and upload team logos. It extends JFrame and implements
+ * ActionListener to handle user interactions.
+ * 
+ * @author 1dami G1
+ * @since 2024-05-13
+ */
 public class ModificarEquipos extends JFrame implements ActionListener {
 
 	private static final long serialVersionUID = 1L;
@@ -66,6 +75,11 @@ public class ModificarEquipos extends JFrame implements ActionListener {
 	private String userType;
 	private JButton btnGestionarEntrenador;
 
+	/**
+	 * Constructs a new ModificarEquipos instance with the specified controller.
+	 * 
+	 * @param controller The controller for managing team-related actions.
+	 */
 	public ModificarEquipos(Controller controller) {
 		this.controller = controller;
 
@@ -76,6 +90,7 @@ public class ModificarEquipos extends JFrame implements ActionListener {
 		contentPane.setSize(1366, 768);
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
+		setLocationRelativeTo(null);
 
 		rightPanelAddEd = new JPanel();
 		rightPanelAddEd.setBounds(310, 154, 674, 526);
@@ -333,12 +348,20 @@ public class ModificarEquipos extends JFrame implements ActionListener {
 
 	}
 
+	/**
+	 * Fills the combo box with the names of existing teams.
+	 */
 	public void fillBoxEqName() {
 		for (String eqName : controller.getEquipos()) {
 			cBoxEquipos.addItem(eqName);
 		}
 	}
 
+	/**
+	 * Populates the team details fields with the information of the selected team.
+	 * 
+	 * @param selectedEquipo The name of the selected team.
+	 */
 	public void fillDataEquipo(String selectedEquipo) {
 		Equipo eq = controller.getEquipo(selectedEquipo);
 		nombreEquipoField.setText(eq.getNombreEquipo());
@@ -362,6 +385,11 @@ public class ModificarEquipos extends JFrame implements ActionListener {
 		}
 	}
 
+	/**
+	 * Handles various user actions performed in the GUI.
+	 * 
+	 * @param e The ActionEvent representing the user action.
+	 */
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		Object o = e.getSource();

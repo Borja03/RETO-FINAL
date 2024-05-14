@@ -8,6 +8,12 @@ import controller.Controller;
 import java.awt.*;
 import java.awt.event.*;
 
+/**
+ * The Splash class represents CambiarDorsal frame .
+ * 
+ * @author 1dami G1
+ * @since 2024-05-13
+ */
 public class CambiarDorsal extends JFrame implements ActionListener {
 
 	private static final long serialVersionUID = 1L;
@@ -17,11 +23,19 @@ public class CambiarDorsal extends JFrame implements ActionListener {
 	private String userType;
 	private JPanel contentPane;
 	private JButton btnLogOut;
-	private JButton  btnConsultarPartidos;
-	private JButton  btnCambiarCont;
-	private JButton  btnConsultarEquipo;
+	private JButton btnConsultarPartidos;
+	private JButton btnCambiarCont;
+	private JButton btnConsultarEquipo;
 
-	public CambiarDorsal(Controller cont, String userC,String userType) {
+	/**
+	 * Constructs a new CambiarDorsal frame.
+	 *
+	 * @param cont     the controller instance
+	 * @param userC    the username
+	 * @param userType the type of user
+	 */
+
+	public CambiarDorsal(Controller cont, String userC, String userType) {
 		this.controller = cont;
 		this.userName = userC;
 		this.userType = userType;
@@ -36,6 +50,8 @@ public class CambiarDorsal extends JFrame implements ActionListener {
 		contentPane.setBackground(Color.WHITE);
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
+		setLocationRelativeTo(null);
+
 		JPanel buttonsPanel = new JPanel(new GridLayout(5, 5, 10, 10));
 		buttonsPanel.setBounds(320, 10, 650, 650); // Ajusta la posición del panel y su tamaño
 		buttonsPanel.setBackground(Color.WHITE);
@@ -62,96 +78,100 @@ public class CambiarDorsal extends JFrame implements ActionListener {
 			buttonsPanel.add(button);
 		}
 		getContentPane().add(buttonsPanel, BorderLayout.CENTER);
-		
+
 		JPanel panelLeft = new JPanel();
 		panelLeft.setLayout(null);
 		panelLeft.setBackground(new Color(33, 199, 162));
 		panelLeft.setBounds(0, 0, 250, 680);
 		contentPane.add(panelLeft);
-		
+
 		JLabel lblBtnAddPic = new JLabel();
 		lblBtnAddPic.setForeground(SystemColor.activeCaption);
 		lblBtnAddPic.setBounds(191, 158, 50, 50);
 		panelLeft.add(lblBtnAddPic);
-		
+
 		JLabel lblUserPic = new JLabel();
 		lblUserPic.setForeground(SystemColor.activeCaption);
 		lblUserPic.setBackground(SystemColor.activeCaption);
 		lblUserPic.setBounds(54, 33, 150, 150);
 		panelLeft.add(lblUserPic);
-		
-		  btnLogOut = new JButton("     Log Out");
-		  btnLogOut.setForeground(new Color(255, 255, 255));
-	        btnLogOut.addActionListener(this);
-	        btnLogOut.setHorizontalAlignment(SwingConstants.LEFT);
-	        btnLogOut.setFont(new Font("Tahoma", Font.BOLD, 14));
-	        btnLogOut.setFocusable(false);
-	        btnLogOut.setBorder(null);
-	        btnLogOut.setBackground(new Color(33, 199, 162)); // Color ajustado
-	        btnLogOut.setBounds(0, 546, 250, 49);
-	        panelLeft.add(btnLogOut);
 
-	        btnCambiarCont = new JButton("     Cambiar Contraseña");
-	        btnCambiarCont.setForeground(new Color(255, 255, 255));
-	        btnCambiarCont.addActionListener(this);
-	        btnCambiarCont.setHorizontalAlignment(SwingConstants.LEFT);
-	        btnCambiarCont.setFont(new Font("Tahoma", Font.BOLD, 14));
-	        btnCambiarCont.setFocusable(false);
-	        btnCambiarCont.setBorder(null);
-	        btnCambiarCont.setBackground(new Color(33, 199, 162)); // Color ajustado
-	        btnCambiarCont.setBounds(0, 476, 250, 49);
-	        panelLeft.add(btnCambiarCont);
+		btnLogOut = new JButton("     Log Out");
+		btnLogOut.setForeground(new Color(255, 255, 255));
+		btnLogOut.addActionListener(this);
+		btnLogOut.setHorizontalAlignment(SwingConstants.LEFT);
+		btnLogOut.setFont(new Font("Tahoma", Font.BOLD, 14));
+		btnLogOut.setFocusable(false);
+		btnLogOut.setBorder(null);
+		btnLogOut.setBackground(new Color(33, 199, 162)); // Color ajustado
+		btnLogOut.setBounds(0, 546, 250, 49);
+		panelLeft.add(btnLogOut);
 
-	        JButton btnCambiarDorsal = new JButton("     Cambiar Dorsal");
-	        btnCambiarDorsal.setForeground(new Color(255, 255, 255));
+		btnCambiarCont = new JButton("     Cambiar Contraseña");
+		btnCambiarCont.setForeground(new Color(255, 255, 255));
+		btnCambiarCont.addActionListener(this);
+		btnCambiarCont.setHorizontalAlignment(SwingConstants.LEFT);
+		btnCambiarCont.setFont(new Font("Tahoma", Font.BOLD, 14));
+		btnCambiarCont.setFocusable(false);
+		btnCambiarCont.setBorder(null);
+		btnCambiarCont.setBackground(new Color(33, 199, 162)); // Color ajustado
+		btnCambiarCont.setBounds(0, 476, 250, 49);
+		panelLeft.add(btnCambiarCont);
 
-	        btnCambiarDorsal.setHorizontalAlignment(SwingConstants.LEFT);
-	        btnCambiarDorsal.setFont(new Font("Tahoma", Font.BOLD, 14));
-	        btnCambiarDorsal.setFocusable(false);
-	        btnCambiarDorsal.setBorder(null);
-	        btnCambiarDorsal.setBackground(new Color(26, 169, 185)); // Color ajustado
-	        btnCambiarDorsal.setBounds(0, 406, 250, 49);
-	        panelLeft.add(btnCambiarDorsal);
+		JButton btnCambiarDorsal = new JButton("     Cambiar Dorsal");
+		btnCambiarDorsal.setForeground(new Color(255, 255, 255));
 
-	        JLabel lblWelcome = new JLabel("     Welcome " + userName);
-	        lblWelcome.setForeground(new Color(255, 255, 255));
-	        lblWelcome.setFont(new Font("Tahoma", Font.BOLD, 14));
-	        lblWelcome.setBounds(40, 227, 217, 34);
-	        panelLeft.add(lblWelcome);
+		btnCambiarDorsal.setHorizontalAlignment(SwingConstants.LEFT);
+		btnCambiarDorsal.setFont(new Font("Tahoma", Font.BOLD, 14));
+		btnCambiarDorsal.setFocusable(false);
+		btnCambiarDorsal.setBorder(null);
+		btnCambiarDorsal.setBackground(new Color(26, 169, 185)); // Color ajustado
+		btnCambiarDorsal.setBounds(0, 406, 250, 49);
+		panelLeft.add(btnCambiarDorsal);
 
-	        btnConsultarPartidos = new JButton("     Consultar Partidos");
-	        btnConsultarPartidos.setForeground(new Color(255, 255, 255));
-	        btnConsultarPartidos.addActionListener(this);
-	        btnConsultarPartidos.setHorizontalAlignment(SwingConstants.LEFT);
-	        btnConsultarPartidos.setFont(new Font("Tahoma", Font.BOLD, 14));
-	        btnConsultarPartidos.setFocusable(false);
-	        btnConsultarPartidos.setBorder(null);
-	        btnConsultarPartidos.setBackground(new Color(33, 199, 162)); // Color ajustado
-	        btnConsultarPartidos.setBounds(0, 338, 250, 49);
-	        panelLeft.add(btnConsultarPartidos);
+		JLabel lblWelcome = new JLabel("     Welcome " + userName);
+		lblWelcome.setForeground(new Color(255, 255, 255));
+		lblWelcome.setFont(new Font("Tahoma", Font.BOLD, 14));
+		lblWelcome.setBounds(40, 227, 217, 34);
+		panelLeft.add(lblWelcome);
 
-	        btnConsultarEquipo = new JButton("     Consultar Equipo");
-	        btnConsultarEquipo.setForeground(new Color(255, 255, 255));
-	        btnConsultarEquipo.addActionListener(this);
-	        btnConsultarEquipo.setHorizontalAlignment(SwingConstants.LEFT);
-	        btnConsultarEquipo.setFont(new Font("Tahoma", Font.BOLD, 14));
-	        btnConsultarEquipo.setFocusable(false);
-	        btnConsultarEquipo.setBorder(null);
-	        btnConsultarEquipo.setBackground(new Color(33, 199, 162)); // Color ajustado
-	        btnConsultarEquipo.setBounds(0, 271, 250, 49);
-	        panelLeft.add(btnConsultarEquipo);
-	        setLocationRelativeTo(null);
+		btnConsultarPartidos = new JButton("     Consultar Partidos");
+		btnConsultarPartidos.setForeground(new Color(255, 255, 255));
+		btnConsultarPartidos.addActionListener(this);
+		btnConsultarPartidos.setHorizontalAlignment(SwingConstants.LEFT);
+		btnConsultarPartidos.setFont(new Font("Tahoma", Font.BOLD, 14));
+		btnConsultarPartidos.setFocusable(false);
+		btnConsultarPartidos.setBorder(null);
+		btnConsultarPartidos.setBackground(new Color(33, 199, 162)); // Color ajustado
+		btnConsultarPartidos.setBounds(0, 338, 250, 49);
+		panelLeft.add(btnConsultarPartidos);
 
-		
+		btnConsultarEquipo = new JButton("     Consultar Equipo");
+		btnConsultarEquipo.setForeground(new Color(255, 255, 255));
+		btnConsultarEquipo.addActionListener(this);
+		btnConsultarEquipo.setHorizontalAlignment(SwingConstants.LEFT);
+		btnConsultarEquipo.setFont(new Font("Tahoma", Font.BOLD, 14));
+		btnConsultarEquipo.setFocusable(false);
+		btnConsultarEquipo.setBorder(null);
+		btnConsultarEquipo.setBackground(new Color(33, 199, 162)); // Color ajustado
+		btnConsultarEquipo.setBounds(0, 271, 250, 49);
+		panelLeft.add(btnConsultarEquipo);
+		setLocationRelativeTo(null);
+
 	}
 
+	/**
+	 * Handles action events for the buttons.
+	 *
+	 * @param e the action event
+	 */
 	public void actionPerformed(ActionEvent e) {
-		// left menu button action listenners 
+		// left menu button action listenners
 		if (e.getSource() == btnLogOut) {
 			controller.logOut();
 			this.dispose();
 		} else if (e.getSource() == btnConsultarEquipo) {
-			MenuJugador menuJugador = new MenuJugador(controller, userName,userType);
+			MenuJugador menuJugador = new MenuJugador(controller, userName, userType);
 			menuJugador.setVisible(true);
 			this.dispose();
 		} else if (e.getSource() == btnConsultarPartidos) {
@@ -162,39 +182,35 @@ public class CambiarDorsal extends JFrame implements ActionListener {
 			CambiarContra ventanaCont = new CambiarContra(controller, userName, userType);
 			ventanaCont.setVisible(true);
 			this.dispose();
-		}else {
-		Object o = e.getSource();
-		JButton clickedButton = (JButton) o;
-		String buttonText = clickedButton.getText();
-		int dorsal = Integer.parseInt(buttonText);
-
-		int dialogResult = JOptionPane.showConfirmDialog(null, " Estas seguro que deseas cambiar el dorsal?",
-				"Confirmar", JOptionPane.YES_NO_OPTION);
-		if (dialogResult == JOptionPane.YES_OPTION) {
-			dorsal = Integer.parseInt(buttonText);
-			boolean success = controller.modificarJugadorConDorsal(userName, dorsal);
-			if (success) {
-				JOptionPane.showMessageDialog(null, "El dorsal se ha cambiado con  xito a " + buttonText);
-			} else {
-				JOptionPane.showMessageDialog(null, "Error al cambiar el dorsal");
-			}
 		} else {
-			JOptionPane.showMessageDialog(null, "No has confirmado cambiar el dorsal");
+			Object o = e.getSource();
+			JButton clickedButton = (JButton) o;
+			String buttonText = clickedButton.getText();
+			int dorsal = Integer.parseInt(buttonText);
+
+			int dialogResult = JOptionPane.showConfirmDialog(null, " Estas seguro que deseas cambiar el dorsal?",
+					"Confirmar", JOptionPane.YES_NO_OPTION);
+			if (dialogResult == JOptionPane.YES_OPTION) {
+				dorsal = Integer.parseInt(buttonText);
+				boolean success = controller.modificarJugadorConDorsal(userName, dorsal);
+				if (success) {
+					JOptionPane.showMessageDialog(null, "El dorsal se ha cambiado con  xito a " + buttonText);
+				} else {
+					JOptionPane.showMessageDialog(null, "Error al cambiar el dorsal");
+				}
+			} else {
+				JOptionPane.showMessageDialog(null, "No has confirmado cambiar el dorsal");
+			}
+
+			// Deshabilitar el bot n seleccionado
+			clickedButton.setEnabled(false);
+
+			// Volver a la ventana anterior
+			CambiarDorsal cambiarDorsal = new CambiarDorsal(controller, userName, userType);
+			this.dispose();
+			cambiarDorsal.setVisible(true);
+
 		}
+	}
 
-		// Deshabilitar el bot n seleccionado
-		clickedButton.setEnabled(false);
-
-		// Volver a la ventana anterior
-		CambiarDorsal cambiarDorsal = new CambiarDorsal(controller, userName,userType);
-		this.dispose();
-		cambiarDorsal.setVisible(true);
-		
-		
-
-
-		}
-		}
-	
-	
 }

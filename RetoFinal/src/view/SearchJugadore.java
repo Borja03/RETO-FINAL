@@ -73,6 +73,7 @@ public class SearchJugadore extends JFrame implements ActionListener {
 		contentPane.setSize(1366, 768);
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
+		setLocationRelativeTo(null);
 
 		bottomPanelMsg = new JPanel();
 		bottomPanelMsg.setBackground(SystemColor.menu);

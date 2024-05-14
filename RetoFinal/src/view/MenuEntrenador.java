@@ -37,6 +37,14 @@ import model.equipos.Equipo;
 import model.usuarios.Entrenador;
 import model.usuarios.Jugador;
 
+/**
+ * The MenuEntrenador class represents the main menu interface for an Entrenador
+ * (Coach) user type. It provides options to view team information, manage
+ * players, view matches, and change password. This class extends JFrame and
+ * implements the ActionListener interface.
+ * @author 1dami G1
+ * @since 2024-05-13
+ */
 public class MenuEntrenador extends JFrame implements ActionListener {
 
 	private static final long serialVersionUID = 1L;
@@ -63,12 +71,19 @@ public class MenuEntrenador extends JFrame implements ActionListener {
 	private Blob teamLogo;
 	private JLabel lblJugadoresLista;
 	private JButton[] leftPanelButtons;
-	
-	
+
 	private ImageIcon imageIcon;
 	private Blob usrBlobIcon;
 	private JButton btnUpload;
 
+	/**
+	 * Constructor for the MenuEntrenador class. Initializes the main menu for an
+	 * Entrenador user type.
+	 * 
+	 * @param cont          The controller instance for handling business logic.
+	 * @param entrConnected The username of the connected Entrenador.
+	 * @param userType      The type of user (Entrenador in this case).
+	 */
 	public MenuEntrenador(Controller cont, String entrConnected, String userType) {
 		this.controller = cont;
 		this.userName = entrConnected;
@@ -80,6 +95,7 @@ public class MenuEntrenador extends JFrame implements ActionListener {
 		contentPane.setSize(1366, 768);
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
+		setLocationRelativeTo(null);
 
 		JPanel panelLeft = new JPanel();
 		panelLeft.setBackground(new Color(86, 82, 252));
@@ -90,7 +106,7 @@ public class MenuEntrenador extends JFrame implements ActionListener {
 		btnConsultarEquipo = new JButton("     Consultar Equipo");
 		btnConsultarEquipo.setForeground(new Color(255, 255, 255));
 		btnConsultarEquipo.addActionListener(this);
-		
+
 		lblBtnAddPic = new JLabel();
 		lblBtnAddPic.setBounds(160, 140, 50, 50);
 		lblBtnAddPic.addMouseListener(new MouseAdapter() {
@@ -100,12 +116,12 @@ public class MenuEntrenador extends JFrame implements ActionListener {
 
 			}
 		});
-		
+
 		ImageIcon imgIcone = new ImageIcon(getClass().getResource("/images/icons/add.png"));
 		Image imageUsere = imgIcone.getImage().getScaledInstance(50, 50, Image.SCALE_SMOOTH);
 		lblBtnAddPic.setForeground(SystemColor.activeCaption);
 		lblBtnAddPic.setIcon(new ImageIcon(imageUsere));
-		
+
 		panelLeft.add(lblBtnAddPic);
 		btnConsultarEquipo.setHorizontalAlignment(SwingConstants.LEFT);
 		btnConsultarEquipo.setFont(loadFont("../fonts/tilt.ttf", Font.PLAIN, 14));
@@ -149,7 +165,7 @@ public class MenuEntrenador extends JFrame implements ActionListener {
 		btnLogOut.setBounds(0, 586, 250, 49);
 		panelLeft.add(btnLogOut);
 		btnLogOut.setHorizontalAlignment(SwingConstants.LEFT);
-	
+
 		btnLogOut.setBackground(new Color(86, 82, 252));
 		btnLogOut.setFocusable(false);
 		btnLogOut.setBorder(null);
@@ -159,13 +175,13 @@ public class MenuEntrenador extends JFrame implements ActionListener {
 		btnCambiarContrasena = new JButton("     Cambiar contraseña");
 		btnCambiarContrasena.setForeground(new Color(255, 255, 255));
 		btnCambiarContrasena.addActionListener(this);
-		
+
 		lblUserPic = new JLabel();
 		lblUserPic.setBackground(SystemColor.activeCaption);
 		lblUserPic.setForeground(SystemColor.activeCaption);
 		lblUserPic.setBounds(50, 33, 150, 150);
 		panelLeft.add(lblUserPic);
-		
+
 		btnCambiarContrasena.setBounds(0, 513, 250, 49);
 		panelLeft.add(btnCambiarContrasena);
 		btnCambiarContrasena.setHorizontalAlignment(SwingConstants.LEFT);
@@ -274,7 +290,7 @@ public class MenuEntrenador extends JFrame implements ActionListener {
 			data[i][1] = obj.getDorsal();
 			data[i][2] = obj.getGoles();
 			data[i][3] = obj.getAsistencias();
-			
+
 		}
 
 		DefaultTableModel model = new DefaultTableModel(data, columnNames);
@@ -327,36 +343,36 @@ public class MenuEntrenador extends JFrame implements ActionListener {
 		Image imageUser = imgIcon.getImage().getScaledInstance(50, 50, Image.SCALE_SMOOTH);
 		Entrenador enttrenador = controller.getUsuario2(entrConnected);
 		if (enttrenador.getPicProfile() != null) {
-		    try {
-		        byte[] imageData = enttrenador.getPicProfile().getBytes(1, (int) enttrenador.getPicProfile().length());
-		        if (imageData != null && imageData.length > 0) {
-		            ImageIcon icon2 = new ImageIcon(imageData);
-		            Image image2 = icon2.getImage().getScaledInstance(150, 150, Image.SCALE_SMOOTH);
-		            ImageIcon scaledIcon2 = new ImageIcon(image2);
-		            lblUserPic.setIcon(scaledIcon2);
-		        } else {
-		            // If imageData is null or empty, set a default image
-		            ImageIcon defaultIcon = new ImageIcon("src/images/icons/default.png");
-		            lblUserPic.setIcon(defaultIcon);
-		        }
-		    } catch (SQLException e) {
-		        System.err.println("Error reading image data from Blob: " + e.getMessage());
-		        e.printStackTrace();
-		    }
+			try {
+				byte[] imageData = enttrenador.getPicProfile().getBytes(1, (int) enttrenador.getPicProfile().length());
+				if (imageData != null && imageData.length > 0) {
+					ImageIcon icon2 = new ImageIcon(imageData);
+					Image image2 = icon2.getImage().getScaledInstance(150, 150, Image.SCALE_SMOOTH);
+					ImageIcon scaledIcon2 = new ImageIcon(image2);
+					lblUserPic.setIcon(scaledIcon2);
+				} else {
+					// If imageData is null or empty, set a default image
+					ImageIcon defaultIcon = new ImageIcon("src/images/icons/default.png");
+					lblUserPic.setIcon(defaultIcon);
+				}
+			} catch (SQLException e) {
+				System.err.println("Error reading image data from Blob: " + e.getMessage());
+				e.printStackTrace();
+			}
 		} else {
-		    // If the player's profile picture is null, set a default image
-		    ImageIcon defaultIcon = new ImageIcon("src/images/icons/default.png");
-		    lblUserPic.setIcon(defaultIcon);
+			// If the player's profile picture is null, set a default image
+			ImageIcon defaultIcon = new ImageIcon("src/images/icons/default.png");
+			lblUserPic.setIcon(defaultIcon);
 		}
-		
-	
-		
-		
+
 		fillEquipoInfo();
 		fillEntrenadoresInfo();
 		this.setVisible(true);
 	}
 
+	/**
+	 * Fills the UI with information about the team.
+	 */
 	public void fillEquipoInfo() {
 		nombreEquipo = controller.getMyTeam(userName, userType);
 		Equipo eq = controller.getEquipo(nombreEquipo);
@@ -365,6 +381,9 @@ public class MenuEntrenador extends JFrame implements ActionListener {
 		txtEqTitulos.setText(eq.getTitulos() + "");
 	}
 
+	/**
+	 * Fills the UI with information about the trainers.
+	 */
 	public void fillEntrenadoresInfo() {
 		String primEntrenador = controller.getPrimEntrenador(nombreEquipo);
 		String segEntrenador = controller.getSegEntrenador(nombreEquipo);
@@ -372,60 +391,78 @@ public class MenuEntrenador extends JFrame implements ActionListener {
 		txtEqPrimerEntre.setText(primEntrenador);
 		txtEqSegundoEntre.setText(segEntrenador);
 	}
-	
-	  private Font loadFont(String fontPath, int style, float size) {
-	        try {
-	            Font customFont = Font.createFont(Font.TRUETYPE_FONT, getClass().getResourceAsStream(fontPath)).deriveFont(style, size);
-	            GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
-	            ge.registerFont(customFont);
-	            return customFont;
-	        } catch (IOException | FontFormatException e) {
-	            e.printStackTrace();
-	            return null;
-	        }
-	    }
-	  private void userUploadImgDialog() {
-			btnUpload = new JButton("Upload Image");
-			btnUpload.addActionListener(new ActionListener() {
-				@Override
-				public void actionPerformed(ActionEvent e) {
-					JFileChooser fileChooser = new JFileChooser();
-					int result = fileChooser.showOpenDialog(null);
 
-					if (result == JFileChooser.APPROVE_OPTION) {
-						File selectedFile = fileChooser.getSelectedFile();
-						if (selectedFile != null) {
-							try {
-								Path imagePath = selectedFile.toPath();
-								byte[] imageData = Files.readAllBytes(imagePath);
-								usrBlobIcon = new javax.sql.rowset.serial.SerialBlob(imageData);
-								imageIcon = new ImageIcon(imageData);
-								lblUserPic.setIcon(imageIcon);
+	/**
+	 * Loads a custom font from a given file path.
+	 * 
+	 * @param fontPath The path to the font file.
+	 * @param style    The style of the font (e.g., Font.PLAIN).
+	 * @param size     The size of the font.
+	 * @return The loaded Font object.
+	 */
+	private Font loadFont(String fontPath, int style, float size) {
+		try {
+			Font customFont = Font.createFont(Font.TRUETYPE_FONT, getClass().getResourceAsStream(fontPath))
+					.deriveFont(style, size);
+			GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
+			ge.registerFont(customFont);
+			return customFont;
+		} catch (IOException | FontFormatException e) {
+			e.printStackTrace();
+			return null;
+		}
+	}
 
-								if (controller.updateUsrIcon(userName, usrBlobIcon, userType)) {
-									JOptionPane.showMessageDialog(MenuEntrenador.this, "Image uploaded to database!",
-											"Success", JOptionPane.INFORMATION_MESSAGE);
-								} else {
-									JOptionPane.showMessageDialog(MenuEntrenador.this, "Failed to upload image to database!",
-											"Error", JOptionPane.ERROR_MESSAGE);
-								}
-							} catch (IOException ex) {
-								ex.printStackTrace();
-							} catch (SerialException e1) {
-								e1.printStackTrace();
-							} catch (SQLException e1) {
-								e1.printStackTrace();
+	/**
+	 * Displays a dialog for the user to upload an image.
+	 */
+	private void userUploadImgDialog() {
+		btnUpload = new JButton("Upload Image");
+		btnUpload.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				JFileChooser fileChooser = new JFileChooser();
+				int result = fileChooser.showOpenDialog(null);
+
+				if (result == JFileChooser.APPROVE_OPTION) {
+					File selectedFile = fileChooser.getSelectedFile();
+					if (selectedFile != null) {
+						try {
+							Path imagePath = selectedFile.toPath();
+							byte[] imageData = Files.readAllBytes(imagePath);
+							usrBlobIcon = new javax.sql.rowset.serial.SerialBlob(imageData);
+							imageIcon = new ImageIcon(imageData);
+							lblUserPic.setIcon(imageIcon);
+
+							if (controller.updateUsrIcon(userName, usrBlobIcon, userType)) {
+								JOptionPane.showMessageDialog(MenuEntrenador.this, "Image uploaded to database!",
+										"Success", JOptionPane.INFORMATION_MESSAGE);
+							} else {
+								JOptionPane.showMessageDialog(MenuEntrenador.this,
+										"Failed to upload image to database!", "Error", JOptionPane.ERROR_MESSAGE);
 							}
-						} else {
-							//
+						} catch (IOException ex) {
+							ex.printStackTrace();
+						} catch (SerialException e1) {
+							e1.printStackTrace();
+						} catch (SQLException e1) {
+							e1.printStackTrace();
 						}
+					} else {
+						//
 					}
 				}
-			});
+			}
+		});
 
-			JOptionPane.showMessageDialog(this, btnUpload, "Upload Image", JOptionPane.PLAIN_MESSAGE);
-		}
+		JOptionPane.showMessageDialog(this, btnUpload, "Upload Image", JOptionPane.PLAIN_MESSAGE);
+	}
 
+	/**
+	 * Handles actionPerformed events for UI buttons.
+	 * 
+	 * @param e The ActionEvent object representing the event.
+	 */
 	@Override
 	public void actionPerformed(ActionEvent e) {
 

@@ -33,6 +33,17 @@ import controller.Controller;
 import model.partido.Juegan;
 import utlidades.Util;
 
+/**
+ * The ConsultarPartidos class represents a JFrame for viewing football (soccer)
+ * matches. It provides functionality for both players and coaches to view
+ * upcoming matches for their team. Users can interact with the interface to
+ * perform actions such as logging out, changing settings, and navigating to
+ * other functionalities. The Splash class represents the splash screen of the
+ * application.
+ * 
+ * @author 1dami G1
+ * @since 2024-05-13
+ */
 public class ConsultarPartidos extends JFrame implements ActionListener {
 
 	private static final long serialVersionUID = 1L;
@@ -51,10 +62,18 @@ public class ConsultarPartidos extends JFrame implements ActionListener {
 	private JButton btnCambiarContrasena;
 	private JButton btnConsultarEquipoj, btnConsultarPartidosj, btnCambiarDorsalj, btnCambiarContj, btnLogOutj;
 
+	/**
+	 * Constructs a new ConsultarPartidos JFrame.
+	 * 
+	 * @param cont          The Controller instance for handling business logic.
+	 * @param entrConnected The username of the currently logged-in user.
+	 * @param userType      The type of user (e.g., "jugador" or "entrenador").
+	 */
 	public ConsultarPartidos(Controller cont, String entrConnected, String userType) {
 		this.controller = cont;
 		this.userName = entrConnected;
 		this.userType = userType;
+
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 1008, 717);
 		contentPane = new JPanel();
@@ -62,6 +81,7 @@ public class ConsultarPartidos extends JFrame implements ActionListener {
 		contentPane.setSize(1366, 768);
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
+		setLocationRelativeTo(null);
 
 		// Left panel
 		// Right panel
@@ -77,11 +97,8 @@ public class ConsultarPartidos extends JFrame implements ActionListener {
 		JScrollPane scrollPane = new JScrollPane(cardsPanel);
 		scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
 		rightPanel.add(scrollPane, BorderLayout.CENTER);
-		rightPanel.add(scrollPane); // Add scroll pane to right panel
+		rightPanel.add(scrollPane);
 
-		// String logo1 = "/images/equiposLogo/athletic-bilbao.png";
-		// String logo2 = "/images/equiposLogo/real-madrid.png";
-		System.out.println(userName);
 		String miEquipo = controller.getMyTeam(userName, userType);
 		System.out.println(miEquipo);
 		ArrayList<Juegan> misPartidos = controller.consultarPartidoEquipo(miEquipo);
@@ -95,7 +112,6 @@ public class ConsultarPartidos extends JFrame implements ActionListener {
 			logo1 = Util.blobToImgIcon(logo1Blob);
 			logo2 = Util.blobToImgIcon(logo2Blob);
 			if (misPartidos.get(i).getFechaInicio().isAfter(LocalDateTime.now())) {
-				System.out.println("Herrrre");
 				miCard(misPartidos.get(i).getNombreEquipoLocal(), logo1, misPartidos.get(i).getNombreEquipoVisitante(),
 						logo2, misPartidos.get(i).getFechaInicio().toString(), estadio, (20 + (180 * i)));
 			}
@@ -103,7 +119,7 @@ public class ConsultarPartidos extends JFrame implements ActionListener {
 		}
 
 		setVisible(true);
-		//chosing  mleft menu based on user type
+		// chosing mleft menu based on user type
 		if (userType.equalsIgnoreCase("jugador")) {
 			showMenuJugador();
 		} else if (userType.equalsIgnoreCase("entrenador")) {
@@ -111,6 +127,9 @@ public class ConsultarPartidos extends JFrame implements ActionListener {
 		}
 	}
 
+	/**
+	 * Sets up the left menu panel with options specific to a jugador (player) user.
+	 */
 	public void showMenuJugador() {
 		JPanel panelLeft = new JPanel();
 		panelLeft.setLayout(null);
@@ -144,7 +163,7 @@ public class ConsultarPartidos extends JFrame implements ActionListener {
 		btnCambiarContj.setBorder(null);
 		btnCambiarContj.setBackground(new Color(33, 199, 162));
 		panelLeft.add(btnCambiarContj);
-		
+
 		btnCambiarDorsalj = new JButton("     Cambiar Dorsal");
 		btnCambiarDorsalj.setForeground(new Color(255, 255, 255));
 		btnCambiarDorsalj.setBounds(0, 406, 250, 49);
@@ -155,7 +174,6 @@ public class ConsultarPartidos extends JFrame implements ActionListener {
 		btnCambiarDorsalj.setBorder(null);
 		btnCambiarDorsalj.setBackground(new Color(33, 199, 162));
 		panelLeft.add(btnCambiarDorsalj);
-		
 
 		lblWelcome = new JLabel("     Welcome " + userName);
 		lblWelcome.setBounds(10, 228, 217, 34);
@@ -173,7 +191,7 @@ public class ConsultarPartidos extends JFrame implements ActionListener {
 		btnConsultarPartidosj.setBorder(null);
 		btnConsultarPartidosj.setBackground(new Color(26, 169, 185));
 		panelLeft.add(btnConsultarPartidosj);
-		
+
 		btnConsultarEquipoj = new JButton("     Consultar Equipo");
 		btnConsultarEquipoj.setForeground(new Color(255, 255, 255));
 		btnConsultarEquipoj.addActionListener(this);
@@ -186,6 +204,10 @@ public class ConsultarPartidos extends JFrame implements ActionListener {
 		panelLeft.add(btnConsultarEquipoj);
 	}
 
+	/**
+	 * Sets up the left menu panel with options specific to a entrenador (coach)
+	 * user.
+	 */
 	public void showMenuEntrenador() {
 		JPanel panelLeft = new JPanel();
 		panelLeft.setBackground(new Color(86, 82, 252));
@@ -323,6 +345,16 @@ public class ConsultarPartidos extends JFrame implements ActionListener {
 
 	}
 
+	/**
+	 * Constructs a visual representation of a match and adds it to the cardsPanel.
+	 * 
+	 * @param eqLocal     The name of the local team.
+	 * @param logo1       The ImageIcon representing the logo of the local team.
+	 * @param EqVisitante The name of the visiting team.
+	 * @param logo2       The ImageIcon representing the logo of the visiting team.
+	 * @param dateTime    The date and time of the match.
+	 * @param estadio     The name of the stadium where the match will be held.
+	 */
 	public void miCard(String eqLocal, ImageIcon logo1, String EqVisitante, ImageIcon logo2, String dateTime,
 			String estadio, int high) {
 
@@ -342,7 +374,6 @@ public class ConsultarPartidos extends JFrame implements ActionListener {
 		partidoPanel.add(lblEqLocal);
 
 		JLabel lblEqLogo = new JLabel();
-		// ImageIcon imgIcon = new ImageIcon(getClass().getResource(logo1));
 		ImageIcon imgIcon = logo1;
 		lblEqLogo.setIcon(imgIcon);
 		lblEqLogo.setBounds(15, 15, 150, 150);
@@ -359,7 +390,6 @@ public class ConsultarPartidos extends JFrame implements ActionListener {
 		partidoPanel.add(lblEqVistante);
 
 		JLabel lblEqLogo1 = new JLabel();
-		// ImageIcon imgIcon2 = new ImageIcon(getClass().getResource(logo2));
 		ImageIcon imgIcon2 = logo2;
 		lblEqLogo1.setIcon(imgIcon2);
 		lblEqLogo1.setBounds(547, 15, 150, 150);
@@ -378,6 +408,11 @@ public class ConsultarPartidos extends JFrame implements ActionListener {
 		cardsPanel.add(partidoPanel);
 	}
 
+	/**
+	 * Handles action events triggered by user interactions with buttons.
+	 * 
+	 * @param e The ActionEvent to be processed.
+	 */
 	@Override
 	public void actionPerformed(ActionEvent e) {
 

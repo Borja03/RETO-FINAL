@@ -78,7 +78,8 @@ public class ModificarPartido extends JFrame implements ActionListener {
 		contentPane.setSize(1366, 768);
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
-		
+		setLocationRelativeTo(null);
+
 		topPanel = new JPanel();
 		topPanel.setBorder(new TitledBorder(null, "", TitledBorder.LEADING, TitledBorder.TOP, null, null));
 		topPanel.setBounds(260, 20, 706, 107);

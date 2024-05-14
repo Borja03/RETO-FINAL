@@ -25,6 +25,12 @@ import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 import java.awt.event.ActionEvent;
 
+/**
+ * JFrame for managing coaches.
+ * 
+ * @author 1dami G1
+ * @since 2024-05-13
+ */
 public class GestionarEntre extends JFrame implements ActionListener {
 
 	private static final long serialVersionUID = 1L;
@@ -50,6 +56,11 @@ public class GestionarEntre extends JFrame implements ActionListener {
 	private String userType;
 	private JButton btnGestionarEntrenador;
 
+	/**
+	 * Constructs a new GestionarEntre JFrame.
+	 * 
+	 * @param controller The Controller instance for handling business logic.
+	 */
 	public GestionarEntre(Controller controller) {
 		this.controller = controller;
 
@@ -60,6 +71,7 @@ public class GestionarEntre extends JFrame implements ActionListener {
 		contentPane.setSize(1366, 768);
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
+		setLocationRelativeTo(null);
 
 		btnCrear = new JButton("Añadir Entrenadores");
 		btnCrear.setFont(new Font("Tahoma", Font.BOLD, 14));
@@ -279,6 +291,11 @@ public class GestionarEntre extends JFrame implements ActionListener {
 		}
 	}
 
+	/**
+	 * ActionListener implementation method. Handles button clicks and actions.
+	 * 
+	 * @param e The ActionEvent that occurred.
+	 */
 	@Override
 	public void actionPerformed(ActionEvent e) {
 
@@ -327,7 +344,6 @@ public class GestionarEntre extends JFrame implements ActionListener {
 			this.dispose();
 			controller.logOut();
 
-	
 		} else if (e.getSource() == btnAnadir) {
 
 			if (controller.crearEntrenador(myTeam, usr, password, tipo)) {

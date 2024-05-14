@@ -18,20 +18,20 @@ import java.sql.Blob;
 import java.sql.SQLException;
 import java.awt.SystemColor;
 
-
 /**
- * The CambiarContra class represents the password change window of the application.
+ * The CambiarContra class represents the password change window of the
+ * application.
+ * @author 1dami G1
+ * @since 2024-05-13
  */
 public class CambiarContra extends JFrame implements ActionListener {
 
+	private static final long serialVersionUID = 1L;
+	private JPanel contentPane;
+	private Controller controller;
+	private String userType;
 
-
-    private static final long serialVersionUID = 1L;
-    private JPanel contentPane;
-    private Controller controller;
-    private String userType;
-
-    private String userName;
+	private String userName;
 	private JPasswordField textFieldOldPassword;
 	private JPasswordField confirmPasswordField;
 	private JPasswordField passwordFieldFirst;
@@ -58,20 +58,20 @@ public class CambiarContra extends JFrame implements ActionListener {
 	private JButton btnUpload;
 	private Blob usrBlobIcon;
 	private ImageIcon imageIcon;
-	private JButton btnConsultarEquipoj,btnConsultarPartidosj,btnCambiarDorsalj,btnCambiarContj,btnLogOutj;
+	private JButton btnConsultarEquipoj, btnConsultarPartidosj, btnCambiarDorsalj, btnCambiarContj, btnLogOutj;
 
 	/**
-     * Constructs a new CambiarContra window.
-     * 
-     * @param controlador The Controller instance.
-     * @param userName The username of the user.
-     * @param userType The type of the user (e.g., jugador, entrenador).
-     */
-	
+	 * Constructs a new CambiarContra window.
+	 * 
+	 * @param controlador The Controller instance.
+	 * @param userName    The username of the user.
+	 * @param userType    The type of the user (e.g., jugador, entrenador).
+	 */
+
 	public CambiarContra(Controller controlador, String userName, String userType) {
 		this.controller = controlador;
 		this.userName = userName;
-		this.userType = userType; 
+		this.userType = userType;
 
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 1008, 717);
@@ -80,6 +80,7 @@ public class CambiarContra extends JFrame implements ActionListener {
 		contentPane.setSize(1366, 768);
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
+		setLocationRelativeTo(null);
 
 		JPanel topPanel = new JPanel();
 		topPanel.setBounds(341, 31, 621, 210);
@@ -153,9 +154,6 @@ public class CambiarContra extends JFrame implements ActionListener {
 		bottomPanelMsg.add(lblMsg1);
 
 		contentPane.add(bottomPanelMsg);
-		
-
-
 
 		if (userType.equalsIgnoreCase("jugador")) {
 			showMenuJugador(userName);
@@ -165,151 +163,154 @@ public class CambiarContra extends JFrame implements ActionListener {
 
 	}
 
+	/**
+	 * The left menu of entrenador: if userType is entrenador will show this menu.
+	 */
 	public void showMenuEntre(String userName) {
-		 JPanel panelLeft = new JPanel();
-	        panelLeft.setBackground(new Color(86, 82, 252));
-	        panelLeft.setBounds(0, 0, 250, 680);
-	        contentPane.add(panelLeft);
-	        panelLeft.setLayout(null);
+		JPanel panelLeft = new JPanel();
+		panelLeft.setBackground(new Color(86, 82, 252));
+		panelLeft.setBounds(0, 0, 250, 680);
+		contentPane.add(panelLeft);
+		panelLeft.setLayout(null);
 
-	        btnConsultarEquipo = new JButton("     Consultar Equipo");
-	        btnConsultarEquipo.setForeground(new Color(255, 255, 255));
-	        btnConsultarEquipo.addActionListener(this);
-	        btnConsultarEquipo.setHorizontalAlignment(SwingConstants.LEFT);
-	        btnConsultarEquipo.setFont(new Font("Tahoma", Font.BOLD, 14));
-	        btnConsultarEquipo.setFocusable(false);
-	        btnConsultarEquipo.setBorder(null);
-	        btnConsultarEquipo.setBackground(new Color(86, 82, 252));
-	        btnConsultarEquipo.setBounds(0, 395, 250, 49);
-	        panelLeft.add(btnConsultarEquipo);
-	        // Cambio de color al pasar el ratón sobre el botón
-	        btnConsultarEquipo.addMouseListener(new MouseAdapter() {
-	            @Override
-	            public void mouseEntered(MouseEvent e) {
-	                btnConsultarEquipo.setBackground(new Color(100, 100, 100)); // Cambia el color al entrar
-	            }
+		btnConsultarEquipo = new JButton("     Consultar Equipo");
+		btnConsultarEquipo.setForeground(new Color(255, 255, 255));
+		btnConsultarEquipo.addActionListener(this);
+		btnConsultarEquipo.setHorizontalAlignment(SwingConstants.LEFT);
+		btnConsultarEquipo.setFont(new Font("Tahoma", Font.BOLD, 14));
+		btnConsultarEquipo.setFocusable(false);
+		btnConsultarEquipo.setBorder(null);
+		btnConsultarEquipo.setBackground(new Color(86, 82, 252));
+		btnConsultarEquipo.setBounds(0, 395, 250, 49);
+		panelLeft.add(btnConsultarEquipo);
+		// Cambio de color al pasar el ratón sobre el botón
+		btnConsultarEquipo.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseEntered(MouseEvent e) {
+				btnConsultarEquipo.setBackground(new Color(100, 100, 100)); // Cambia el color al entrar
+			}
 
-	            @Override
-	            public void mouseExited(MouseEvent e) {
-	                btnConsultarEquipo.setBackground(new Color(86, 82, 252)); // Restaura el color al salir
-	            }
-	        });
+			@Override
+			public void mouseExited(MouseEvent e) {
+				btnConsultarEquipo.setBackground(new Color(86, 82, 252)); // Restaura el color al salir
+			}
+		});
 
-	        btnGestJugadores = new JButton("     Gestionar jugadores");
-	        btnGestJugadores.setForeground(new Color(255, 255, 255));
-	        btnGestJugadores.addActionListener(this);
-	        btnGestJugadores.setHorizontalAlignment(SwingConstants.LEFT);
-	        btnGestJugadores.setFont(new Font("Tahoma", Font.BOLD, 14));
-	        btnGestJugadores.setFocusable(false);
-	        btnGestJugadores.setBorder(null);
-	        btnGestJugadores.setBackground(new Color(86, 82, 252));
-	        btnGestJugadores.setBounds(0, 332, 250, 49);
-	        panelLeft.add(btnGestJugadores);
-	        // Cambio de color al pasar el ratón sobre el botón
-	        btnGestJugadores.addMouseListener(new MouseAdapter() {
-	            @Override
-	            public void mouseEntered(MouseEvent e) {
-	                btnGestJugadores.setBackground(new Color(100, 100, 100)); // Cambia el color al entrar
-	            }
+		btnGestJugadores = new JButton("     Gestionar jugadores");
+		btnGestJugadores.setForeground(new Color(255, 255, 255));
+		btnGestJugadores.addActionListener(this);
+		btnGestJugadores.setHorizontalAlignment(SwingConstants.LEFT);
+		btnGestJugadores.setFont(new Font("Tahoma", Font.BOLD, 14));
+		btnGestJugadores.setFocusable(false);
+		btnGestJugadores.setBorder(null);
+		btnGestJugadores.setBackground(new Color(86, 82, 252));
+		btnGestJugadores.setBounds(0, 332, 250, 49);
+		panelLeft.add(btnGestJugadores);
+		// Cambio de color al pasar el ratón sobre el botón
+		btnGestJugadores.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseEntered(MouseEvent e) {
+				btnGestJugadores.setBackground(new Color(100, 100, 100)); // Cambia el color al entrar
+			}
 
-	            @Override
-	            public void mouseExited(MouseEvent e) {
-	                btnGestJugadores.setBackground(new Color(86, 82, 252)); // Restaura el color al salir
-	            }
-	        });
+			@Override
+			public void mouseExited(MouseEvent e) {
+				btnGestJugadores.setBackground(new Color(86, 82, 252)); // Restaura el color al salir
+			}
+		});
 
-	        lblWelcome = new JLabel("Welcome "+userName);
-	        lblWelcome.setForeground(new Color(255, 255, 255));
-	        lblWelcome.setFont(new Font("Tahoma", Font.BOLD, 14));
-	        lblWelcome.setBounds(20, 200, 217, 34);
-	        panelLeft.add(lblWelcome);
+		lblWelcome = new JLabel("Welcome " + userName);
+		lblWelcome.setForeground(new Color(255, 255, 255));
+		lblWelcome.setFont(new Font("Tahoma", Font.BOLD, 14));
+		lblWelcome.setBounds(20, 200, 217, 34);
+		panelLeft.add(lblWelcome);
 
-	        btnConsultarPartidos = new JButton("     Consultar Partidos");
-	        btnConsultarPartidos.setForeground(new Color(255, 255, 255));
-	        btnConsultarPartidos.addActionListener(this);
-	        btnConsultarPartidos.setHorizontalAlignment(SwingConstants.LEFT);
-	        btnConsultarPartidos.setFont(new Font("Tahoma", Font.BOLD, 14));
-	        btnConsultarPartidos.setFocusable(false);
-	        btnConsultarPartidos.setBorder(null);
-	        btnConsultarPartidos.setBackground(new Color(86, 82, 252));
-	        btnConsultarPartidos.setBounds(0, 454, 250, 49);
-	        panelLeft.add(btnConsultarPartidos);
-	        // Cambio de color al pasar el ratón sobre el botón
-	        btnConsultarPartidos.addMouseListener(new MouseAdapter() {
-	            @Override
-	            public void mouseEntered(MouseEvent e) {
-	                btnConsultarPartidos.setBackground(new Color(100, 100, 100)); // Cambia el color al entrar
-	            }
+		btnConsultarPartidos = new JButton("     Consultar Partidos");
+		btnConsultarPartidos.setForeground(new Color(255, 255, 255));
+		btnConsultarPartidos.addActionListener(this);
+		btnConsultarPartidos.setHorizontalAlignment(SwingConstants.LEFT);
+		btnConsultarPartidos.setFont(new Font("Tahoma", Font.BOLD, 14));
+		btnConsultarPartidos.setFocusable(false);
+		btnConsultarPartidos.setBorder(null);
+		btnConsultarPartidos.setBackground(new Color(86, 82, 252));
+		btnConsultarPartidos.setBounds(0, 454, 250, 49);
+		panelLeft.add(btnConsultarPartidos);
+		// Cambio de color al pasar el ratón sobre el botón
+		btnConsultarPartidos.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseEntered(MouseEvent e) {
+				btnConsultarPartidos.setBackground(new Color(100, 100, 100)); // Cambia el color al entrar
+			}
 
-	            @Override
-	            public void mouseExited(MouseEvent e) {
-	                btnConsultarPartidos.setBackground(new Color(86, 82, 252)); // Restaura el color al salir
-	            }
-	        });
+			@Override
+			public void mouseExited(MouseEvent e) {
+				btnConsultarPartidos.setBackground(new Color(86, 82, 252)); // Restaura el color al salir
+			}
+		});
 
-	        btnLogOut = new JButton("     Log Out");
-	        btnLogOut.setForeground(new Color(255, 255, 255));
-	        btnLogOut.setBounds(0, 586, 250, 49);
-	        panelLeft.add(btnLogOut);
-	        btnLogOut.setHorizontalAlignment(SwingConstants.LEFT);
+		btnLogOut = new JButton("     Log Out");
+		btnLogOut.setForeground(new Color(255, 255, 255));
+		btnLogOut.setBounds(0, 586, 250, 49);
+		panelLeft.add(btnLogOut);
+		btnLogOut.setHorizontalAlignment(SwingConstants.LEFT);
 
-	        btnLogOut.setBackground(new Color(86, 82, 252));
-	        btnLogOut.setFocusable(false);
-	        btnLogOut.setBorder(null);
-	        btnLogOut.addActionListener(this);
-	        btnLogOut.setFont(new Font("Tahoma", Font.BOLD, 14));
+		btnLogOut.setBackground(new Color(86, 82, 252));
+		btnLogOut.setFocusable(false);
+		btnLogOut.setBorder(null);
+		btnLogOut.addActionListener(this);
+		btnLogOut.setFont(new Font("Tahoma", Font.BOLD, 14));
 
-	        btnLogOut.addMouseListener(new MouseAdapter() {
-	            @Override
-	            public void mouseEntered(MouseEvent e) {
-	                btnLogOut.setBackground(new Color(100, 100, 100)); // Cambia el color al entrar
-	            }
+		btnLogOut.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseEntered(MouseEvent e) {
+				btnLogOut.setBackground(new Color(100, 100, 100)); // Cambia el color al entrar
+			}
 
-	            @Override
-	            public void mouseExited(MouseEvent e) {
-	                btnLogOut.setBackground(new Color(86, 82, 252)); // Se mantiene gris al salir
-	            }
+			@Override
+			public void mouseExited(MouseEvent e) {
+				btnLogOut.setBackground(new Color(86, 82, 252)); // Se mantiene gris al salir
+			}
 
-	            @Override
-	            public void mousePressed(MouseEvent e) {
-	                btnLogOut.setBackground(new Color(50, 70, 90)); // Cambia el color al presionar
-	            }
-	        });
+			@Override
+			public void mousePressed(MouseEvent e) {
+				btnLogOut.setBackground(new Color(50, 70, 90)); // Cambia el color al presionar
+			}
+		});
 
-	        btnCambiarContrasena = new JButton("     Cambiar contraseña");
-	        btnCambiarContrasena.setForeground(new Color(255, 255, 255));
-	        btnCambiarContrasena.addActionListener(this);
-	        btnCambiarContrasena.setBounds(0, 513, 250, 49);
-	        panelLeft.add(btnCambiarContrasena);
-	        btnCambiarContrasena.setHorizontalAlignment(SwingConstants.LEFT);
-	        btnCambiarContrasena.setFont(new Font("Tahoma", Font.BOLD, 14));
-	        btnCambiarContrasena.setFocusable(false);
-	        btnCambiarContrasena.setBorder(null);
-	        btnCambiarContrasena.setBackground(new Color(100, 100, 100)); // Cambiado a gris
-	        btnCambiarContrasena.addMouseListener(new MouseAdapter() {
-	            @Override
-	            public void mouseEntered(MouseEvent e) {
-	                btnCambiarContrasena.setBackground(new Color(100, 100, 100)); // Cambia el color al entrar
-	            }
+		btnCambiarContrasena = new JButton("     Cambiar contraseña");
+		btnCambiarContrasena.setForeground(new Color(255, 255, 255));
+		btnCambiarContrasena.addActionListener(this);
+		btnCambiarContrasena.setBounds(0, 513, 250, 49);
+		panelLeft.add(btnCambiarContrasena);
+		btnCambiarContrasena.setHorizontalAlignment(SwingConstants.LEFT);
+		btnCambiarContrasena.setFont(new Font("Tahoma", Font.BOLD, 14));
+		btnCambiarContrasena.setFocusable(false);
+		btnCambiarContrasena.setBorder(null);
+		btnCambiarContrasena.setBackground(new Color(100, 100, 100)); // Cambiado a gris
+		btnCambiarContrasena.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseEntered(MouseEvent e) {
+				btnCambiarContrasena.setBackground(new Color(100, 100, 100)); // Cambia el color al entrar
+			}
 
-	            @Override
-	            public void mouseExited(MouseEvent e) {
-	                btnCambiarContrasena.setBackground(new Color(100, 100, 100)); // Se mantiene gris al salir
-	            }
+			@Override
+			public void mouseExited(MouseEvent e) {
+				btnCambiarContrasena.setBackground(new Color(100, 100, 100)); // Se mantiene gris al salir
+			}
 
-	            @Override
-	            public void mousePressed(MouseEvent e) {
-	                btnCambiarContrasena.setBackground(new Color(50, 70, 90)); // Cambia el color al presionar
-	            }
-	        });
-	    	bottomPanelMsg.setVisible(false);
-			bottomPanel.setVisible(false);
-
-
+			@Override
+			public void mousePressed(MouseEvent e) {
+				btnCambiarContrasena.setBackground(new Color(50, 70, 90)); // Cambia el color al presionar
+			}
+		});
+		bottomPanelMsg.setVisible(false);
+		bottomPanel.setVisible(false);
 
 	}
-	
-	
+
+	/**
+	 * The left menu of jugador: if userType is jugador will show this menu.
+	 */
 
 	public void showMenuJugador(String userName) {
 		JPanel panelLefts = new JPanel();
@@ -321,7 +322,6 @@ public class CambiarContra extends JFrame implements ActionListener {
 		btnLogOut.setForeground(new Color(255, 255, 255));
 		btnLogOut.setBounds(0, 546, 250, 49);
 		btnLogOut.setHorizontalAlignment(SwingConstants.LEFT);
-		
 
 		lblBtnAddPic = new JLabel();
 		lblBtnAddPic.setBounds(160, 140, 50, 50);
@@ -367,7 +367,6 @@ public class CambiarContra extends JFrame implements ActionListener {
 		btnCambiarDorsal.setBorder(null);
 		btnCambiarDorsal.setBackground(new Color(33, 199, 162));
 		panelLefts.add(btnCambiarDorsal);
-		
 
 		lblWelcome = new JLabel("     Welcome " + userName);
 		lblWelcome.setBounds(10, 228, 217, 34);
@@ -399,20 +398,23 @@ public class CambiarContra extends JFrame implements ActionListener {
 		btnConsultarEquipo.setBorder(null);
 		btnConsultarEquipo.setBackground(new Color(33, 199, 162));
 		panelLefts.add(btnConsultarEquipo);
-		
-				lblUserPic = new JLabel();
-				lblUserPic.setBounds(50, 33, 150, 150);
-				lblUserPic.setBackground(SystemColor.activeCaption);
-				lblUserPic.setForeground(new Color(0, 64, 128));
-				panelLefts.add(lblUserPic);
 
-				bottomPanelMsg.setVisible(false);
-				bottomPanel.setVisible(false);
+		lblUserPic = new JLabel();
+		lblUserPic.setBounds(50, 33, 150, 150);
+		lblUserPic.setBackground(SystemColor.activeCaption);
+		lblUserPic.setForeground(new Color(0, 64, 128));
+		panelLefts.add(lblUserPic);
 
-		
+		bottomPanelMsg.setVisible(false);
+		bottomPanel.setVisible(false);
 
 	}
-	
+
+	/**
+	 * Opens a dialog for the user to upload an image. The selected image is
+	 * converted to a Blob and displayed in a JLabel. If the upload is successful,
+	 * the image is updated in the database.
+	 */
 	private void userUploadImgDialog() {
 		btnUpload = new JButton("Upload Image");
 		btnUpload.addActionListener(new ActionListener() {
@@ -455,11 +457,16 @@ public class CambiarContra extends JFrame implements ActionListener {
 		JOptionPane.showMessageDialog(this, btnUpload, "Upload Image", JOptionPane.PLAIN_MESSAGE);
 	}
 
+	/**
+	 * Handles action events for the login class.
+	 * 
+	 * @param e the action event
+	 */
 
 	public void actionPerformed(ActionEvent e) {
 		Object o = e.getSource();
 		System.out.println("Action performed: " + e.getActionCommand());
-		
+
 		if (e.getSource() == btnVerificar) {
 			String oldPassword = new String(textFieldOldPassword.getPassword());
 			if (!oldPassword.equals(controller.getUsuarioPassword(userName, userType))) {
@@ -469,7 +476,7 @@ public class CambiarContra extends JFrame implements ActionListener {
 
 			}
 		} else if (o == btnCambiarDorsal) {
-			CambiarDorsal ventanaDorsal = new CambiarDorsal(controller, userName,userType);
+			CambiarDorsal ventanaDorsal = new CambiarDorsal(controller, userName, userType);
 			ventanaDorsal.setVisible(true);
 			this.setVisible(false);
 		} else if (o == btnConsultarPartidos) {
@@ -490,31 +497,29 @@ public class CambiarContra extends JFrame implements ActionListener {
 			GestionarJugadores gestJ = new GestionarJugadores(controller, userName, userType, myTeam);
 			gestJ.setVisible(true);
 			this.setVisible(false);
-		}else if (o == btnLogOut) {
+		} else if (o == btnLogOut) {
 			controller.logOut();
 			this.dispose();
 		}
 
-       
-       
 		if (e.getSource() == btnSave) {
 			System.out.println("btn saved clicked ");
 
 			cambiarContrasenia();
-		}/*
+		} /*
 			 * else if (o == btnVolverMenu) { if ("Jugador".equals(userType)) { MenuJugador
 			 * menuJugador = new MenuJugador(controller, userName);
 			 * menuJugador.setVisible(true); } else if ("Entrenador".equals(userType)) {
 			 * MenuEntrenador menuEntrenador = new MenuEntrenador(controller, userName);
 			 * menuEntrenador.setVisible(true); }
 			 */
-		//for jugador menu 
+		// for jugador menu
 
 		if (o == btnLogOutj) {
 			controller.logOut();
 			this.dispose();
 		} else if (o == btnCambiarDorsalj) {
-			CambiarDorsal ventanaDorsal = new CambiarDorsal(controller, userName,userType);
+			CambiarDorsal ventanaDorsal = new CambiarDorsal(controller, userName, userType);
 			ventanaDorsal.setVisible(true);
 			this.dispose();
 		} else if (o == btnConsultarPartidosj) {

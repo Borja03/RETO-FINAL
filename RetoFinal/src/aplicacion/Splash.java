@@ -46,6 +46,7 @@ public class Splash extends JFrame {
         contentPane.setSize(1366, 768);
         setContentPane(contentPane);
         contentPane.setLayout(null);
+		setLocationRelativeTo(null);
 
         JLabel imgTitle = new JLabel();
         ImageIcon imgIcon = new ImageIcon(getClass().getResource("/images/titleLogo.png"));

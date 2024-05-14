@@ -79,6 +79,7 @@ public class Login extends JFrame implements ActionListener {
 		panelLeft.setBounds(0, 0, 345, 680);
 		contentPane.add(panelLeft);
 		contentPane.setLayout(null);
+		setLocationRelativeTo(null);
 
 		txtUserName = new JTextField();
 		txtUserName.setBounds(514, 235, 407, 53);
@@ -221,7 +222,10 @@ public class Login extends JFrame implements ActionListener {
 		SwingUtilities.updateComponentTreeUI(this);
 	}
 
-	
+	/**
+	 * Handles action events for the login class.
+	 * @param e the action event
+	 */
 	
 	@Override
 	public void actionPerformed(ActionEvent e) {

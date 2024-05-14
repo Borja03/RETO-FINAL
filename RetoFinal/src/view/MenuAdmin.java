@@ -26,7 +26,13 @@ import java.awt.Font;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.SystemColor;
-
+/**
+ * The MenuAdmin class represents the administration menu for the application.
+ * It provides various functionalities for managing teams, matches, and coaches.
+ * The Splash class represents the splash screen of the application.
+ * @author 1dami G1
+ * @since 2024-05-13
+ */
 public class MenuAdmin extends JFrame implements ActionListener {
 
 	private static final long serialVersionUID = 1L;
@@ -53,7 +59,12 @@ public class MenuAdmin extends JFrame implements ActionListener {
 	private JPanel topMenuPanelAddEq;
 	private String userType;
 	private JButton btnGestionarEntrenador;
-
+	
+	/**
+	 * Constructs the MenuAdmin frame.
+	 *
+	 * @param controller the controller used to handle business logic
+	 */
 	public MenuAdmin(Controller controller) {
 		this.controller = controller;
 
@@ -64,6 +75,7 @@ public class MenuAdmin extends JFrame implements ActionListener {
 		contentPane.setSize(1366, 768);
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
+		setLocationRelativeTo(null);
 
 		rightPanelAddEd = new JPanel();
 		rightPanelAddEd.setBounds(310, 73, 674, 597);
@@ -295,7 +307,39 @@ public class MenuAdmin extends JFrame implements ActionListener {
 		rightPanelAddEd.add(lblNombreDelEstadio);
 
 	}
+	// func to upload equipos logo 
+	public void uploadLogo() {
+		JFileChooser fileChooser = new JFileChooser();
+		int result = fileChooser.showOpenDialog(null);
 
+		if (result == JFileChooser.APPROVE_OPTION) {
+			File selectedFile = fileChooser.getSelectedFile();
+			if (selectedFile != null) {
+				try {
+					Path imagePath = selectedFile.toPath();
+					byte[] imageData = Files.readAllBytes(imagePath);
+					imageBlob = new javax.sql.rowset.serial.SerialBlob(imageData);
+					imageIcon = new ImageIcon(imageData);
+					lblEquipoLogo.setIcon(imageIcon);
+				} catch (IOException ex) {
+					ex.printStackTrace();
+				} catch (SerialException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				} catch (SQLException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+			} else {
+
+			}
+		}
+	}
+	
+	/**
+	 * Handles action events for the MenuAdmin class.
+	 * @param e the action event
+	 */
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		Object o = e.getSource();
@@ -326,31 +370,7 @@ public class MenuAdmin extends JFrame implements ActionListener {
 
 		if (o == btnUpload) {
 
-			JFileChooser fileChooser = new JFileChooser();
-			int result = fileChooser.showOpenDialog(null);
-
-			if (result == JFileChooser.APPROVE_OPTION) {
-				File selectedFile = fileChooser.getSelectedFile();
-				if (selectedFile != null) {
-					try {
-						Path imagePath = selectedFile.toPath();
-						byte[] imageData = Files.readAllBytes(imagePath);
-						imageBlob = new javax.sql.rowset.serial.SerialBlob(imageData);
-						imageIcon = new ImageIcon(imageData);
-						lblEquipoLogo.setIcon(imageIcon);
-					} catch (IOException ex) {
-						ex.printStackTrace();
-					} catch (SerialException e1) {
-						// TODO Auto-generated catch block
-						e1.printStackTrace();
-					} catch (SQLException e1) {
-						// TODO Auto-generated catch block
-						e1.printStackTrace();
-					}
-				} else {
-
-				}
-			}
+			uploadLogo();
 
 		} else if (o == bntAnadirEq) {
 			if (controller.crearEquipo(nombreEquipoField.getText(), Integer.valueOf(txttitulosField.getText()),

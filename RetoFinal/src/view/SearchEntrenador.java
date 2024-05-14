@@ -61,6 +61,7 @@ public class SearchEntrenador extends JFrame implements ActionListener {
 		contentPane.setSize(1366, 768);
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
+		setLocationRelativeTo(null);
 
 		btnAddEntrenador = new JButton("Añadir Entrenadores");
 		btnAddEntrenador.setFont(new Font("Tahoma", Font.BOLD, 14));

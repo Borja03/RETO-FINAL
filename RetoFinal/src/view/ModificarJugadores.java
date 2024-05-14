@@ -25,7 +25,14 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.ActionEvent;
 import java.awt.SystemColor;
-
+/**
+ * The ModificarJugadores class provides a graphical user interface for modifying players.
+ * Users can add, delete, or modify player information such as username, password, dorsal number, goals, and assists.
+ * It extends JFrame and implements ActionListener to handle user interactions.
+ * 
+ * @author 1dami G1
+ * @since 2024-05-13
+ */
 public class ModificarJugadores extends JFrame implements ActionListener {
 
 	private static final long serialVersionUID = 1L;
@@ -63,11 +70,20 @@ public class ModificarJugadores extends JFrame implements ActionListener {
 	private JButton btnModificarJugador;
 	private JButton btnGestJugadores;
 
-	public ModificarJugadores(Controller controller, String user, String team,String userType) {
-	    this.controller = controller;
-	    this.userName = user;
-	    this.miEquipo = team;
-	    this.userType=userType;
+	/**
+	 * Constructs a new ModificarJugadores instance with the specified controller,
+	 * user, team, and user type.
+	 * 
+	 * @param controller The controller for managing player-related actions.
+	 * @param user       The username of the current user.
+	 * @param team       The name of the team associated with the current user.
+	 * @param userType   The type of user (e.g., coach, administrator).
+	 */
+	public ModificarJugadores(Controller controller, String user, String team, String userType) {
+		this.controller = controller;
+		this.userName = user;
+		this.miEquipo = team;
+		this.userType = userType;
 
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 1008, 717);
@@ -76,6 +92,7 @@ public class ModificarJugadores extends JFrame implements ActionListener {
 		contentPane.setSize(1366, 768);
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
+		setLocationRelativeTo(null);
 
 		bottomPanelMsg = new JPanel();
 		bottomPanelMsg.setBackground(SystemColor.menu);
@@ -156,7 +173,7 @@ public class ModificarJugadores extends JFrame implements ActionListener {
 		bottomPanel.add(btnElimimarJugador);
 		btnElimimarJugador.addActionListener(this);
 
-		 btnModificarJugador = new JButton("Modificar jugador");
+		btnModificarJugador = new JButton("Modificar jugador");
 		btnModificarJugador.setBounds(204, 308, 169, 35);
 		btnModificarJugador.setFont(new Font("Tahoma", Font.BOLD, 14));
 		bottomPanel.add(btnModificarJugador);
@@ -180,156 +197,154 @@ public class ModificarJugadores extends JFrame implements ActionListener {
 		contentPane.add(btnDelete);
 
 		JPanel panelLeft = new JPanel();
-        panelLeft.setBackground(new Color(86, 82, 252));
-        panelLeft.setBounds(0, 0, 250, 680);
-        contentPane.add(panelLeft);
-        panelLeft.setLayout(null);
+		panelLeft.setBackground(new Color(86, 82, 252));
+		panelLeft.setBounds(0, 0, 250, 680);
+		contentPane.add(panelLeft);
+		panelLeft.setLayout(null);
 
-        btnConsultarEquipo = new JButton("     Consultar Equipo");
-        btnConsultarEquipo.setForeground(new Color(255, 255, 255));
-        btnConsultarEquipo.addActionListener(this);
-        btnConsultarEquipo.setHorizontalAlignment(SwingConstants.LEFT);
-        btnConsultarEquipo.setFont(new Font("Tahoma", Font.BOLD, 14));
-        btnConsultarEquipo.setFocusable(false);
-        btnConsultarEquipo.setBorder(null);
-        btnConsultarEquipo.setBackground(new Color(86, 82, 252));
-        btnConsultarEquipo.setBounds(0, 395, 250, 49);
-        panelLeft.add(btnConsultarEquipo);
-        // Action listener solo para el botón "Consultar Equipo"
-        btnConsultarEquipo.addMouseListener(new MouseAdapter() {
-            @Override
-            public void mouseEntered(MouseEvent e) {
-                btnConsultarEquipo.setBackground(new Color(100, 100, 100)); // Cambia el color al entrar
-            }
+		btnConsultarEquipo = new JButton("     Consultar Equipo");
+		btnConsultarEquipo.setForeground(new Color(255, 255, 255));
+		btnConsultarEquipo.addActionListener(this);
+		btnConsultarEquipo.setHorizontalAlignment(SwingConstants.LEFT);
+		btnConsultarEquipo.setFont(new Font("Tahoma", Font.BOLD, 14));
+		btnConsultarEquipo.setFocusable(false);
+		btnConsultarEquipo.setBorder(null);
+		btnConsultarEquipo.setBackground(new Color(86, 82, 252));
+		btnConsultarEquipo.setBounds(0, 395, 250, 49);
+		panelLeft.add(btnConsultarEquipo);
+		// Action listener solo para el botón "Consultar Equipo"
+		btnConsultarEquipo.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseEntered(MouseEvent e) {
+				btnConsultarEquipo.setBackground(new Color(100, 100, 100)); // Cambia el color al entrar
+			}
 
-            @Override
-            public void mouseExited(MouseEvent e) {
-                btnConsultarEquipo.setBackground(new Color(86, 82, 252)); // Restaura el color al salir
-            }
+			@Override
+			public void mouseExited(MouseEvent e) {
+				btnConsultarEquipo.setBackground(new Color(86, 82, 252)); // Restaura el color al salir
+			}
 
-            @Override
-            public void mousePressed(MouseEvent e) {
-                btnConsultarEquipo.setBackground(new Color(50, 50, 50)); // Cambia el color al presionar
-            }
-        });
-        btnGestJugadores = new JButton("     Gestionar jugadores");
-        btnGestJugadores.setForeground(new Color(255, 255, 255));
-        btnGestJugadores.addActionListener(this);
-        btnGestJugadores.setHorizontalAlignment(SwingConstants.LEFT);
-        btnGestJugadores.setFont(new Font("Tahoma", Font.BOLD, 14));
-        btnGestJugadores.setFocusable(false);
-        btnGestJugadores.setBorder(null);
-        btnGestJugadores.setBackground(new Color(100, 100, 100)); // Color inicial gris
-        btnGestJugadores.setBounds(0, 332, 250, 49);
-        panelLeft.add(btnGestJugadores);
-        // Action listener para el botón "Gestionar Jugadores"
-        btnGestJugadores.addMouseListener(new MouseAdapter() {
-            @Override
-            public void mouseEntered(MouseEvent e) {
-                btnGestJugadores.setBackground(new Color(100, 100, 100)); // Cambia el color al entrar
-            }
+			@Override
+			public void mousePressed(MouseEvent e) {
+				btnConsultarEquipo.setBackground(new Color(50, 50, 50)); // Cambia el color al presionar
+			}
+		});
+		btnGestJugadores = new JButton("     Gestionar jugadores");
+		btnGestJugadores.setForeground(new Color(255, 255, 255));
+		btnGestJugadores.addActionListener(this);
+		btnGestJugadores.setHorizontalAlignment(SwingConstants.LEFT);
+		btnGestJugadores.setFont(new Font("Tahoma", Font.BOLD, 14));
+		btnGestJugadores.setFocusable(false);
+		btnGestJugadores.setBorder(null);
+		btnGestJugadores.setBackground(new Color(100, 100, 100)); // Color inicial gris
+		btnGestJugadores.setBounds(0, 332, 250, 49);
+		panelLeft.add(btnGestJugadores);
+		// Action listener para el botón "Gestionar Jugadores"
+		btnGestJugadores.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseEntered(MouseEvent e) {
+				btnGestJugadores.setBackground(new Color(100, 100, 100)); // Cambia el color al entrar
+			}
 
-            @Override
-            public void mouseExited(MouseEvent e) {
-                btnGestJugadores.setBackground(new Color(100, 100, 100)); // Restaura el color al salir
-            }
+			@Override
+			public void mouseExited(MouseEvent e) {
+				btnGestJugadores.setBackground(new Color(100, 100, 100)); // Restaura el color al salir
+			}
 
-            @Override
-            public void mousePressed(MouseEvent e) {
-                btnGestJugadores.setBackground(new Color(100, 100, 100)); // Cambia el color al presionar
-            }
-        });
-        lblWelcome = new JLabel("Welcome " + user + "");
-        lblWelcome.setForeground(new Color(255, 255, 255));
-        lblWelcome.setFont(new Font("Tahoma", Font.BOLD, 14));
-        lblWelcome.setBounds(20, 182, 217, 34);
-        panelLeft.add(lblWelcome);
+			@Override
+			public void mousePressed(MouseEvent e) {
+				btnGestJugadores.setBackground(new Color(100, 100, 100)); // Cambia el color al presionar
+			}
+		});
+		lblWelcome = new JLabel("Welcome " + user + "");
+		lblWelcome.setForeground(new Color(255, 255, 255));
+		lblWelcome.setFont(new Font("Tahoma", Font.BOLD, 14));
+		lblWelcome.setBounds(20, 182, 217, 34);
+		panelLeft.add(lblWelcome);
 
-        btnConsultarPartidos = new JButton("     Consultar Partidos");
-        btnConsultarPartidos.setForeground(new Color(255, 255, 255));
-        btnConsultarPartidos.addActionListener(this);
-        btnConsultarPartidos.setHorizontalAlignment(SwingConstants.LEFT);
-        btnConsultarPartidos.setFont(new Font("Tahoma", Font.BOLD, 14));
-        btnConsultarPartidos.setFocusable(false);
-        btnConsultarPartidos.setBorder(null);
-        btnConsultarPartidos.setBackground(new Color(86, 82, 252));
-        btnConsultarPartidos.setBounds(0, 454, 250, 49);
-        panelLeft.add(btnConsultarPartidos);
-        btnConsultarPartidos.addMouseListener(new MouseAdapter() {
-            @Override
-            public void mouseEntered(MouseEvent e) {
-                btnConsultarPartidos.setBackground(new Color(100, 100, 100)); // Cambia el color al entrar
-            }
+		btnConsultarPartidos = new JButton("     Consultar Partidos");
+		btnConsultarPartidos.setForeground(new Color(255, 255, 255));
+		btnConsultarPartidos.addActionListener(this);
+		btnConsultarPartidos.setHorizontalAlignment(SwingConstants.LEFT);
+		btnConsultarPartidos.setFont(new Font("Tahoma", Font.BOLD, 14));
+		btnConsultarPartidos.setFocusable(false);
+		btnConsultarPartidos.setBorder(null);
+		btnConsultarPartidos.setBackground(new Color(86, 82, 252));
+		btnConsultarPartidos.setBounds(0, 454, 250, 49);
+		panelLeft.add(btnConsultarPartidos);
+		btnConsultarPartidos.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseEntered(MouseEvent e) {
+				btnConsultarPartidos.setBackground(new Color(100, 100, 100)); // Cambia el color al entrar
+			}
 
-            @Override
-            public void mouseExited(MouseEvent e) {
-                btnConsultarPartidos.setBackground(new Color(86, 82, 252)); // Restaura el color al salir
-            }
+			@Override
+			public void mouseExited(MouseEvent e) {
+				btnConsultarPartidos.setBackground(new Color(86, 82, 252)); // Restaura el color al salir
+			}
 
-            @Override
-            public void mousePressed(MouseEvent e) {
-                btnConsultarPartidos.setBackground(new Color(50, 50, 50)); // Cambia el color al presionar
-            }
-        });
+			@Override
+			public void mousePressed(MouseEvent e) {
+				btnConsultarPartidos.setBackground(new Color(50, 50, 50)); // Cambia el color al presionar
+			}
+		});
 
+		btnLogOut = new JButton("     Log Out");
+		btnLogOut.setForeground(new Color(255, 255, 255));
+		btnLogOut.setBounds(0, 586, 250, 49);
+		panelLeft.add(btnLogOut);
+		btnLogOut.setHorizontalAlignment(SwingConstants.LEFT);
+		btnLogOut.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseEntered(MouseEvent e) {
+				btnLogOut.setBackground(new Color(100, 100, 100));
+			}
 
-        btnLogOut = new JButton("     Log Out");
-        btnLogOut.setForeground(new Color(255, 255, 255));
-        btnLogOut.setBounds(0, 586, 250, 49);
-        panelLeft.add(btnLogOut);
-        btnLogOut.setHorizontalAlignment(SwingConstants.LEFT);
-        btnLogOut.addMouseListener(new MouseAdapter() {
-            @Override
-            public void mouseEntered(MouseEvent e) {
-                btnLogOut.setBackground(new Color(100, 100, 100));
-            }
+			@Override
+			public void mouseExited(MouseEvent e) {
+				btnLogOut.setBackground(new Color(86, 82, 252));
+			}
 
-            @Override
-            public void mouseExited(MouseEvent e) {
-                btnLogOut.setBackground(new Color(86, 82, 252));
-            }
+			@Override
+			public void mousePressed(MouseEvent e) {
+				btnLogOut.setBackground(new Color(50, 70, 90));
+			}
+		});
+		btnLogOut.setBackground(new Color(86, 82, 252));
+		btnLogOut.setFocusable(false);
+		btnLogOut.setBorder(null);
+		btnLogOut.addActionListener(this);
+		btnLogOut.setFont(new Font("Tahoma", Font.BOLD, 14));
 
-            @Override
-            public void mousePressed(MouseEvent e) {
-                btnLogOut.setBackground(new Color(50, 70, 90));
-            }
-        });
-        btnLogOut.setBackground(new Color(86, 82, 252));
-        btnLogOut.setFocusable(false);
-        btnLogOut.setBorder(null);
-        btnLogOut.addActionListener(this);
-        btnLogOut.setFont(new Font("Tahoma", Font.BOLD, 14));
+		btnCambiarCont = new JButton("     Cambiar contraseña");
+		btnCambiarCont.setForeground(new Color(255, 255, 255));
+		btnCambiarCont.addActionListener(this);
+		btnCambiarCont.setBounds(0, 513, 250, 49);
+		panelLeft.add(btnCambiarCont);
+		btnCambiarCont.setHorizontalAlignment(SwingConstants.LEFT);
+		btnCambiarCont.setFont(new Font("Tahoma", Font.BOLD, 14));
+		btnCambiarCont.setFocusable(false);
+		btnCambiarCont.setBorder(null);
+		btnCambiarCont.setBackground(new Color(86, 82, 252));
+		// Action listener para el botón "Cambiar contraseña"
+		btnCambiarCont.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseEntered(MouseEvent e) {
+				btnCambiarCont.setBackground(new Color(100, 100, 100)); // Cambia el color al entrar
+			}
 
-        btnCambiarCont = new JButton("     Cambiar contraseña");
-        btnCambiarCont.setForeground(new Color(255, 255, 255));
-        btnCambiarCont.addActionListener(this);
-        btnCambiarCont.setBounds(0, 513, 250, 49);
-        panelLeft.add(btnCambiarCont);
-        btnCambiarCont.setHorizontalAlignment(SwingConstants.LEFT);
-        btnCambiarCont.setFont(new Font("Tahoma", Font.BOLD, 14));
-        btnCambiarCont.setFocusable(false);
-        btnCambiarCont.setBorder(null);
-        btnCambiarCont.setBackground(new Color(86, 82, 252));
-        // Action listener para el botón "Cambiar contraseña"
-        btnCambiarCont.addMouseListener(new MouseAdapter() {
-            @Override
-            public void mouseEntered(MouseEvent e) {
-            	btnCambiarCont.setBackground(new Color(100, 100, 100)); // Cambia el color al entrar
-            }
+			@Override
+			public void mouseExited(MouseEvent e) {
+				btnCambiarCont.setBackground(new Color(86, 82, 252)); // Restaura el color al salir
+			}
 
-            @Override
-            public void mouseExited(MouseEvent e) {
-            	btnCambiarCont.setBackground(new Color(86, 82, 252)); // Restaura el color al salir
-            }
-
-            @Override
-            public void mousePressed(MouseEvent e) {
-            	btnCambiarCont.setBackground(new Color(50, 50, 50)); // Cambia el color al presionar
-            }
-        });
+			@Override
+			public void mousePressed(MouseEvent e) {
+				btnCambiarCont.setBackground(new Color(50, 50, 50)); // Cambia el color al presionar
+			}
+		});
 		panelLeft.add(btnConsultarEquipo);
 
-		
 		JPanel topPanel = new JPanel();
 		topPanel.setBounds(310, 85, 676, 154);
 		contentPane.add(topPanel);
@@ -368,6 +383,10 @@ public class ModificarJugadores extends JFrame implements ActionListener {
 
 	}
 
+	/**
+	 * Fills the combo box with dorsal numbers that are not already in use by
+	 * players in the team.
+	 */
 	public void fillDorsalBox() {
 		for (int i = 1; i <= 25; i++) {
 			if (!controller.getUsedDorsal(miEquipo).contains(i)) {
@@ -376,6 +395,9 @@ public class ModificarJugadores extends JFrame implements ActionListener {
 		}
 	}
 
+	/**
+	 * Fills the user interface fields with the information of the selected user.
+	 */
 	public void fillUserData() {
 		Jugador usr = (Jugador) controller.getUsuario(textFieldUSer.getText());
 		textFieldUSer.setText(usr.getUser());
@@ -385,41 +407,45 @@ public class ModificarJugadores extends JFrame implements ActionListener {
 		textFieldAsist.setText(usr.getAsistencias() + "");
 	}
 
+	/**
+	 * Handles various user actions performed in the GUI.
+	 * 
+	 * @param e The ActionEvent representing the user action.
+	 */
 	@Override
 	public void actionPerformed(ActionEvent e) {
 
 		if (e.getSource() == btnConsultarEquipo) {
-			MenuEntrenador menuEntrenador = new MenuEntrenador(controller, userName,userType);
+			MenuEntrenador menuEntrenador = new MenuEntrenador(controller, userName, userType);
 			this.dispose();
 			menuEntrenador.setVisible(true);
-		/*} else if (e.getSource() == btnCambiarDorsal) {
-			CambiarDorsal cambiarDorsal = new CambiarDorsal(controller, userName, userType);
-			this.dispose();
-			cambiarDorsal.setVisible(true);
-			controller.logOut();*/
+			/*
+			 * } else if (e.getSource() == btnCambiarDorsal) { CambiarDorsal cambiarDorsal =
+			 * new CambiarDorsal(controller, userName, userType); this.dispose();
+			 * cambiarDorsal.setVisible(true); controller.logOut();
+			 */
 		} else if (e.getSource() == btnConsultarPartidos) {
-			ConsultarPartidos consultarPartidos = new ConsultarPartidos(controller, userName,userType);
+			ConsultarPartidos consultarPartidos = new ConsultarPartidos(controller, userName, userType);
 			this.dispose();
 			consultarPartidos.setVisible(true);
 		} else if (e.getSource() == btnLogOut) {
 			this.dispose();
 			controller.logOut();
-		}else if(e.getSource() == btnCambiarCont) {
-			CambiarContra cambiarContra = new CambiarContra(controller,userName,userType);
+		} else if (e.getSource() == btnCambiarCont) {
+			CambiarContra cambiarContra = new CambiarContra(controller, userName, userType);
 			cambiarContra.setVisible(true);
 			this.dispose();
-		}else if (e.getSource() == btnCrear) {
+		} else if (e.getSource() == btnCrear) {
 			GestionarJugadores g1 = new GestionarJugadores(controller, userName, userType, miEquipo);
 			g1.setVisible(true);
 			this.dispose();
-		}else if (e.getSource() == btnElimimarJugador) {
-		    controller.borrarJugador(userName);
-		    JOptionPane.showMessageDialog(null, "¡Jugador eliminado con éxito!");
-		    MenuEntrenador menuEntrenador = new MenuEntrenador(controller, userName,userType);
+		} else if (e.getSource() == btnElimimarJugador) {
+			controller.borrarJugador(userName);
+			JOptionPane.showMessageDialog(null, "¡Jugador eliminado con éxito!");
+			MenuEntrenador menuEntrenador = new MenuEntrenador(controller, userName, userType);
 			this.dispose();
 			menuEntrenador.setVisible(true);
 		}
-
 
 		else if (e.getSource() == btnBuscarJugador) {
 			if (controller.checkUserExist(textFieldUSer.getText())) {
@@ -449,13 +475,13 @@ public class ModificarJugadores extends JFrame implements ActionListener {
 //						textFieldContrasena.setText("");
 //						textFieldGoles.setText("");
 //						textFieldAsist.setText("");
-				GestionarJugadores gestionarJugadores = new GestionarJugadores(controller, user,userType, miEquipo);
+				GestionarJugadores gestionarJugadores = new GestionarJugadores(controller, user, userType, miEquipo);
 				this.dispose();
 				gestionarJugadores.setVisible(true);
 
 				if (opcion == JOptionPane.NO_OPTION) {
 					this.dispose();
-					GestionarJugadores g1 = new GestionarJugadores(controller, user,userType, myTeam);
+					GestionarJugadores g1 = new GestionarJugadores(controller, user, userType, myTeam);
 					g1.setVisible(true);
 				}
 			}
