@@ -1,3 +1,4 @@
+
 package controller;
 
 import java.time.LocalDateTime;
@@ -65,7 +66,6 @@ public class Controller implements IController {
 	final String Partidos = "SELECT nombreEquipoLocal, nombreEquipoVisitante, fechaInicio, resultado FROM juegan";
 	final String CONSULTARequipo = "SELECT * FROM juegan WHERE nombreEquipoLocal = ? OR nombreEquipoVisitante = ?";
 
-	
 	@Override
 	public boolean checkUserExist(String user) {
 		boolean exist = false;
@@ -394,7 +394,7 @@ public class Controller implements IController {
 		}
 		return partidosProgramados;
 	}
-
+	
 	@Override
 	public void modificarPartido(Juegan partidoModificado, LocalDateTime fechaAntigua) {
 		try {
@@ -820,7 +820,6 @@ public class Controller implements IController {
 	        insertEquipoStatement.setInt(2, titulos);
 	        insertEquipoStatement.setString(3, nombreEstadio);
 	        insertEquipoStatement.setBlob(4, logo);
-
 	        if (insertEquipoStatement.executeUpdate() > 0) {
 	            inserted = true;
 	            System.out.println("Equipo insertado correctamente!");
@@ -1033,5 +1032,4 @@ public class Controller implements IController {
 		// TODO Auto-generated method stub
 		
 	}
-
 }

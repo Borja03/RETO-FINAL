@@ -33,17 +33,21 @@
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 /CambiarDorsal$1.class
 =======
 >>>>>>> Enzo
 =======
 >>>>>>> c027c9284a54636c2c83b8c9c4e557de6dbb2f7d
+=======
+>>>>>>> origin/borja
 /CrearEquipo$1.class
 /CrearEquipo$2.class
 /CrearEquipo$3.class
 /CrearEquipo$4.class
 /CrearEquipo$5.class
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 =======
@@ -57,6 +61,11 @@
 /CambiarDorsal$1.class
 >>>>>>> d12c6eb3d85e8e66ab5e94a7572586e722491bb2
 >>>>>>> c027c9284a54636c2c83b8c9c4e557de6dbb2f7d
+=======
+=======
+/CambiarDorsal$1.class
+>>>>>>> d12c6eb3d85e8e66ab5e94a7572586e722491bb2
+>>>>>>> origin/borja
 /GestionarEntre$1.class
 /GestionarEntre$2.class
 /GestionarEntre$3.class
@@ -64,8 +73,11 @@
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 >>>>>>> c027c9284a54636c2c83b8c9c4e557de6dbb2f7d
+=======
+>>>>>>> origin/borja
 /ModificarEquipos$1.class
 /ModificarEquipos$2.class
 /ModificarEquipos$3.class
@@ -74,10 +86,13 @@
 /ModificarEquipos.class
 =======
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 >>>>>>> Enzo
 =======
 >>>>>>> c027c9284a54636c2c83b8c9c4e557de6dbb2f7d
+=======
+>>>>>>> origin/borja
 /Login$1.class
 /Login$ImagePanel.class
 /MenuAdmin$1.class
@@ -88,6 +103,7 @@
 /MenuJugador$3.class
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 >>>>>>> d12c6eb3d85e8e66ab5e94a7572586e722491bb2
 =======
 =======
@@ -102,6 +118,9 @@
 =======
 >>>>>>> d12c6eb3d85e8e66ab5e94a7572586e722491bb2
 >>>>>>> c027c9284a54636c2c83b8c9c4e557de6dbb2f7d
+=======
+>>>>>>> d12c6eb3d85e8e66ab5e94a7572586e722491bb2
+>>>>>>> origin/borja
 /SearchEntrenador$1.class
 /SearchEntrenador$2.class
 /SearchEntrenador$3.class

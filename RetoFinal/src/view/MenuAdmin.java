@@ -370,5 +370,3 @@ public class MenuAdmin extends JFrame implements ActionListener {
 		}
 	}
 }
-
-

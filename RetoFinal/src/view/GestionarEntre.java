@@ -1,3 +1,4 @@
+
 package view;
 
 import java.awt.Color;
@@ -79,6 +80,7 @@ public class GestionarEntre extends JFrame implements ActionListener {
 
 		JPanel panelLeft = new JPanel();
 		panelLeft.setBounds(0, 0, 250, 680);
+
 		panelLeft.setBackground(new Color(242, 45, 45));
 		contentPane.add(panelLeft);
 
@@ -113,6 +115,7 @@ public class GestionarEntre extends JFrame implements ActionListener {
 		btnModPartidos = new JButton("     Modificar partidos");
 		btnModPartidos.setForeground(new Color(255, 255, 255));
 		btnModPartidos.setBounds(0, 446, 250, 49);
+
 		btnModPartidos.addActionListener(this);
 		btnModPartidos.setHorizontalAlignment(SwingConstants.LEFT);
 		btnModPartidos.setFont(new Font("Tahoma", Font.BOLD, 14));
@@ -304,11 +307,10 @@ public class GestionarEntre extends JFrame implements ActionListener {
 			CrearPartido cPartidos = new CrearPartido(controller);
 			this.dispose();
 			cPartidos.setVisible(true);
-		} else if (o == btnGestionarEquipo) {
+		} else if (e.getSource() == btnGestionarEquipo) {
 			MenuAdmin cPartidos = new MenuAdmin(controller);
 			this.dispose();
 			cPartidos.setVisible(true);
-
 		} else if (e.getSource() == btnModPartidos) {
 			ModificarPartido modificarPartido = new ModificarPartido(controller);
 			this.dispose();
@@ -327,11 +329,11 @@ public class GestionarEntre extends JFrame implements ActionListener {
 			this.dispose();
 			controller.logOut();
 
-	
 		} else if (e.getSource() == btnAnadir) {
 
 			if (controller.crearEntrenador(myTeam, usr, password, tipo)) {
 				opcion = JOptionPane.showConfirmDialog(this, (String) "",
+
 						"El entrenador ha sido introducido correctamente\n¿Desea añadir otro jugador?",
 						JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE, null);
 
@@ -341,8 +343,25 @@ public class GestionarEntre extends JFrame implements ActionListener {
 					g1.setVisible(true);
 				} else {
 					GestionarEntre gestionarEntre = new GestionarEntre(controller);
-					gestionarEntre.setVisible(true);
 					this.dispose();
+				}
+
+				if (e.getSource() == btnAnadir) {
+
+					if (controller.crearEntrenador(usr, password, myTeam, tipo)) {
+						opcion = JOptionPane.showConfirmDialog(this, (String) "",
+								"El entrenador ha sido introducido correctamente\n¿Desea añadir otro jugador?",
+								JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE, null);
+
+						if (opcion == JOptionPane.NO_OPTION) {
+							this.dispose();
+							MenuAdmin g1 = new MenuAdmin(controller);
+							g1.setVisible(true);
+						} else {
+							GestionarEntre gestionarEntre = new GestionarEntre(controller);
+							this.dispose();
+						}
+					}
 				}
 			}
 

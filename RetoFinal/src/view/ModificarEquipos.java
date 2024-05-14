@@ -400,7 +400,6 @@ public class ModificarEquipos extends JFrame implements ActionListener {
 
 		// top paenel buttons
 		if (o == btnAddEquipo) {
-
 			MenuAdmin menuAdmin = new MenuAdmin(controller);
 			this.dispose();
 
