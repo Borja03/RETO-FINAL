@@ -65,7 +65,7 @@ public class CambiarDorsal extends JFrame implements ActionListener {
 		
 		JPanel panelLeft = new JPanel();
 		panelLeft.setLayout(null);
-		panelLeft.setBackground(new Color(32, 206, 36));
+		panelLeft.setBackground(new Color(33, 199, 162));
 		panelLeft.setBounds(0, 0, 250, 680);
 		contentPane.add(panelLeft);
 		
@@ -80,62 +80,67 @@ public class CambiarDorsal extends JFrame implements ActionListener {
 		lblUserPic.setBounds(54, 33, 150, 150);
 		panelLeft.add(lblUserPic);
 		
-		btnLogOut = new JButton("     Log Out");
-		btnLogOut.addActionListener(this);
-		btnLogOut.setHorizontalAlignment(SwingConstants.LEFT);
-		btnLogOut.setFont(new Font("Tahoma", Font.BOLD, 14));
-		btnLogOut.setFocusable(false);
-		btnLogOut.setBorder(null);
-		btnLogOut.setBackground(new Color(32, 206, 36));
-		btnLogOut.setBounds(0, 546, 250, 49);
-		panelLeft.add(btnLogOut);
-		
-		btnCambiarCont = new JButton("     Cambiar Contraseña");
-		btnCambiarCont.addActionListener(this);
-		btnCambiarCont.setHorizontalAlignment(SwingConstants.LEFT);
-		btnCambiarCont.setFont(new Font("Tahoma", Font.BOLD, 14));
-		btnCambiarCont.setFocusable(false);
-		btnCambiarCont.setBorder(null);
-		btnCambiarCont.setBackground(new Color(32, 206, 36));
-		btnCambiarCont.setBounds(0, 476, 250, 49);
-		panelLeft.add(btnCambiarCont);
-		
-		JButton btnCambiarDorsal = new JButton("     Cambiar Dorsal");
-	
-		btnCambiarDorsal.setHorizontalAlignment(SwingConstants.LEFT);
-		btnCambiarDorsal.setFont(new Font("Tahoma", Font.BOLD, 14));
-		btnCambiarDorsal.setFocusable(false);
-		btnCambiarDorsal.setBorder(null);
-		btnCambiarDorsal.setBackground(new Color(255, 128, 64));
-		btnCambiarDorsal.setBounds(0, 406, 250, 49);
-		panelLeft.add(btnCambiarDorsal);
-		
-		JLabel lblWelcome = new JLabel("     Welcome " +userName);
-		lblWelcome.setForeground(Color.YELLOW);
-		lblWelcome.setFont(new Font("Tahoma", Font.BOLD, 14));
-		lblWelcome.setBounds(40, 227, 217, 34);
-		panelLeft.add(lblWelcome);
-		
-		btnConsultarPartidos = new JButton("     Consultar Partidos");
-		btnConsultarPartidos.addActionListener(this);
-		btnConsultarPartidos.setHorizontalAlignment(SwingConstants.LEFT);
-		btnConsultarPartidos.setFont(new Font("Tahoma", Font.BOLD, 14));
-		btnConsultarPartidos.setFocusable(false);
-		btnConsultarPartidos.setBorder(null);
-		btnConsultarPartidos.setBackground(new Color(32, 206, 36));
-		btnConsultarPartidos.setBounds(0, 338, 250, 49);
-		panelLeft.add(btnConsultarPartidos);
-		
-		btnConsultarEquipo = new JButton("     Consultar Equipo");
-		btnConsultarEquipo.addActionListener(this);
-		btnConsultarEquipo.setHorizontalAlignment(SwingConstants.LEFT);
-		btnConsultarEquipo.setFont(new Font("Tahoma", Font.BOLD, 14));
-		btnConsultarEquipo.setFocusable(false);
-		btnConsultarEquipo.setBorder(null);
-		btnConsultarEquipo.setBackground(new Color(32, 206, 36));
-		btnConsultarEquipo.setBounds(0, 271, 250, 49);
-		panelLeft.add(btnConsultarEquipo);
-		setLocationRelativeTo(null);
+		  btnLogOut = new JButton("     Log Out");
+		  btnLogOut.setForeground(new Color(255, 255, 255));
+	        btnLogOut.addActionListener(this);
+	        btnLogOut.setHorizontalAlignment(SwingConstants.LEFT);
+	        btnLogOut.setFont(new Font("Tahoma", Font.BOLD, 14));
+	        btnLogOut.setFocusable(false);
+	        btnLogOut.setBorder(null);
+	        btnLogOut.setBackground(new Color(33, 199, 162)); // Color ajustado
+	        btnLogOut.setBounds(0, 546, 250, 49);
+	        panelLeft.add(btnLogOut);
+
+	        btnCambiarCont = new JButton("     Cambiar Contraseña");
+	        btnCambiarCont.setForeground(new Color(255, 255, 255));
+	        btnCambiarCont.addActionListener(this);
+	        btnCambiarCont.setHorizontalAlignment(SwingConstants.LEFT);
+	        btnCambiarCont.setFont(new Font("Tahoma", Font.BOLD, 14));
+	        btnCambiarCont.setFocusable(false);
+	        btnCambiarCont.setBorder(null);
+	        btnCambiarCont.setBackground(new Color(33, 199, 162)); // Color ajustado
+	        btnCambiarCont.setBounds(0, 476, 250, 49);
+	        panelLeft.add(btnCambiarCont);
+
+	        JButton btnCambiarDorsal = new JButton("     Cambiar Dorsal");
+	        btnCambiarDorsal.setForeground(new Color(255, 255, 255));
+
+	        btnCambiarDorsal.setHorizontalAlignment(SwingConstants.LEFT);
+	        btnCambiarDorsal.setFont(new Font("Tahoma", Font.BOLD, 14));
+	        btnCambiarDorsal.setFocusable(false);
+	        btnCambiarDorsal.setBorder(null);
+	        btnCambiarDorsal.setBackground(new Color(26, 169, 185)); // Color ajustado
+	        btnCambiarDorsal.setBounds(0, 406, 250, 49);
+	        panelLeft.add(btnCambiarDorsal);
+
+	        JLabel lblWelcome = new JLabel("     Welcome " + userName);
+	        lblWelcome.setForeground(new Color(255, 255, 255));
+	        lblWelcome.setFont(new Font("Tahoma", Font.BOLD, 14));
+	        lblWelcome.setBounds(40, 227, 217, 34);
+	        panelLeft.add(lblWelcome);
+
+	        btnConsultarPartidos = new JButton("     Consultar Partidos");
+	        btnConsultarPartidos.setForeground(new Color(255, 255, 255));
+	        btnConsultarPartidos.addActionListener(this);
+	        btnConsultarPartidos.setHorizontalAlignment(SwingConstants.LEFT);
+	        btnConsultarPartidos.setFont(new Font("Tahoma", Font.BOLD, 14));
+	        btnConsultarPartidos.setFocusable(false);
+	        btnConsultarPartidos.setBorder(null);
+	        btnConsultarPartidos.setBackground(new Color(33, 199, 162)); // Color ajustado
+	        btnConsultarPartidos.setBounds(0, 338, 250, 49);
+	        panelLeft.add(btnConsultarPartidos);
+
+	        btnConsultarEquipo = new JButton("     Consultar Equipo");
+	        btnConsultarEquipo.setForeground(new Color(255, 255, 255));
+	        btnConsultarEquipo.addActionListener(this);
+	        btnConsultarEquipo.setHorizontalAlignment(SwingConstants.LEFT);
+	        btnConsultarEquipo.setFont(new Font("Tahoma", Font.BOLD, 14));
+	        btnConsultarEquipo.setFocusable(false);
+	        btnConsultarEquipo.setBorder(null);
+	        btnConsultarEquipo.setBackground(new Color(33, 199, 162)); // Color ajustado
+	        btnConsultarEquipo.setBounds(0, 271, 250, 49);
+	        panelLeft.add(btnConsultarEquipo);
+	        setLocationRelativeTo(null);
 
 		
 	}
@@ -163,7 +168,7 @@ public class CambiarDorsal extends JFrame implements ActionListener {
 		String buttonText = clickedButton.getText();
 		int dorsal = Integer.parseInt(buttonText);
 
-		int dialogResult = JOptionPane.showConfirmDialog(null, " Est s seguro que deseas cambiar el dorsal?",
+		int dialogResult = JOptionPane.showConfirmDialog(null, " Estas seguro que deseas cambiar el dorsal?",
 				"Confirmar", JOptionPane.YES_NO_OPTION);
 		if (dialogResult == JOptionPane.YES_OPTION) {
 			dorsal = Integer.parseInt(buttonText);

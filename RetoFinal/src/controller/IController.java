@@ -35,11 +35,9 @@ public interface IController {
 
 	public boolean modificarJugador(String user, String password, int dorsal, int numGoles, int numAsist);
 
-	public void consultarEquipo();
 
 	public void modificarDorsal();
 
-	public void consultarPartido();
 
 	public ArrayList<String> getEquipos();
 

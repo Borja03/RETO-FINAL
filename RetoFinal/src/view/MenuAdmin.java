@@ -21,8 +21,6 @@ import javax.swing.border.EmptyBorder;
 import java.sql.Blob;
 import java.sql.SQLException;
 import controller.Controller;
-import view.Login.ImagePanel;
-
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.event.MouseAdapter;
