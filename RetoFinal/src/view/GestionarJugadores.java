@@ -384,4 +384,3 @@ public class GestionarJugadores extends JFrame implements ActionListener {
 
 	}
 }
-

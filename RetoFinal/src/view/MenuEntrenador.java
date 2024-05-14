@@ -1,4 +1,3 @@
-
 package view;
 
 import java.awt.Color;
@@ -64,10 +63,11 @@ public class MenuEntrenador extends JFrame implements ActionListener {
 	private Blob teamLogo;
 	private JLabel lblJugadoresLista;
 	private JButton[] leftPanelButtons;
+	
+	
 	private ImageIcon imageIcon;
 	private Blob usrBlobIcon;
 	private JButton btnUpload;
-
 
 	public MenuEntrenador(Controller cont, String entrConnected, String userType) {
 		this.controller = cont;
@@ -450,4 +450,3 @@ public class MenuEntrenador extends JFrame implements ActionListener {
 
 	}
 }
-
