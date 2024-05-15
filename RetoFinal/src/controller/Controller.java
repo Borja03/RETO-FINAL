@@ -443,11 +443,10 @@ public class Controller implements IController {
 			Jugador jugador = (Jugador) usuario;
 			this.openConnection("jugador", "jugador");
 			statement = connection.prepareStatement(MODIFICARjugador);
-			statement.setString(1, ((Usuarios) jugador).getContrasenia());
-			statement.setInt(2, dorsal);
-			statement.setInt(3, jugador.getGoles());
-			statement.setInt(4, jugador.getAsistencias());
-			statement.setString(5, user);
+			statement.setInt(1, dorsal);
+			statement.setInt(2, jugador.getGoles());
+			statement.setInt(3, jugador.getAsistencias());
+			statement.setString(4, user);
 			if (statement.executeUpdate() > 0) {
 				modified = true;
 
@@ -721,7 +720,6 @@ public class Controller implements IController {
 			while (resultSet.next()) {
 				entName = resultSet.getString("user");
 			}
-
 		} catch (SQLException e) {
 			System.out.println("Error de SQL");
 			e.printStackTrace();
