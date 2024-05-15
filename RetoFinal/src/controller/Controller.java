@@ -500,11 +500,7 @@ public class Controller implements IController {
 	public boolean cambiarPassword(String user, String newPassword, String userType) {
 		boolean changed = false;
 		String query = "";
-		if ("entrenador".equals(userType)) {
-			query = "UPDATE entrenador SET password = ? WHERE user = ?";
-		} else if ("jugador".equals(userType)) {
-			query = "UPDATE jugador SET password = ? WHERE user = ?";
-		}
+			query = "UPDATE usuario SET password = ? WHERE user = ?";
 		openConnection(userType, userType);
 
 		try {
