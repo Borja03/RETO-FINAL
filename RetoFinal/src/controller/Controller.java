@@ -141,89 +141,54 @@ public class Controller implements IController {
 	}
 
 	
-	/* @Override to fix 
-	public boolean logIn(String usuario, String contraseña, String tipoUsuario) {
+	
+	
+	@Override
+	public boolean logIn(String usuario, String contrasena, String tipoUsuario) {
 	    String userDb;
 	    String passDb;
 
 	    try {
-	        if ("Admin".equals(tipoUsuario)) {
+	        if ("Admin".equalsIgnoreCase(tipoUsuario)) {
 	            System.out.println("Comprobando Administrador...");
 	            user = "admin";
 	            password = "admin";
-	            openConnection(user, password);
-	            if (usuario.equals("admin") && contraseña.equals("admin")) {
+				connection = MySqlConnection.getInstance(tipoUsuario.toLowerCase()).getConnection();
+
+	            if (usuario.equals("admin") && contrasena.equals("admin")) {
 	                return true;
 	            }
-	        } else if ("Entrenador".equals(tipoUsuario) || "Jugador".equals(tipoUsuario)) {
+	        } else if ("Entrenador".equalsIgnoreCase(tipoUsuario) || "Jugador".equalsIgnoreCase(tipoUsuario)) {
 	            System.out.println("Comprobando " + tipoUsuario + "...");
 	            user = tipoUsuario.toLowerCase();
-	            password = tipoUsuario.toLowerCase(); */
-	@Override
-	public boolean logIn(String username, String pass, String userType) {
-		String query = "";
-		String userDb;
-		String passDb;
+	            password = tipoUsuario.toLowerCase();
+				connection = MySqlConnection.getInstance(tipoUsuario.toLowerCase()).getConnection();
+	            String query = "SELECT * FROM usuario WHERE user = ? AND password = ?";
+	            try (PreparedStatement statement = connection.prepareStatement(query)) {
+	                statement.setString(1, usuario);
+	                statement.setString(2, contrasena);
+	                ResultSet resultSet = statement.executeQuery();
 
-		if ("Admin".equals(userType)) {
-			System.out.println("checking Admin...");
-			// user = "admin";
-			// password = "admin";
-			// openConnection(user, password);
+	                if (resultSet.next()) {
+	                    userDb = resultSet.getString("user");
+	                    passDb = resultSet.getString("password");
+	                    if (userDb.equals(usuario) && passDb.equals(contrasena)) {
+	                        return true;
+	                    }
+	                }
+	            }
+	        }
+	    } catch (SQLException ex) {
+	        ex.printStackTrace();
+	    } finally {
 			try {
-				connection = MySqlConnection.getInstance("admin").getConnection();
+				MySqlConnection.getInstance(tipoUsuario.toLowerCase()).getConnection().close();
 			} catch (SQLException e) {
 				e.printStackTrace();
 			}
-
-			if (username.equals("admin") && pass.equals("admin")) {
-				return true;
-			}
-
-		} else if ("Entrenador".equals(userType)) {
-			System.out.println("checking Entrenador...");
-			// user = "entrenador";
-			// password = "entrenador";
-			// openConnection(user, password);
-			try {
-				connection = MySqlConnection.getInstance("entrenador").getConnection();
-			} catch (SQLException e) {
-				e.printStackTrace();
-			}
-
-			query = "SELECT * FROM usuario WHERE user = ? AND password = ?";
-		} else if ("Jugador".equals(userType)) {
-			System.out.println("checking Jugador...");
-			// user = "jugador";
-			// password = "jugador";
-			// openConnection(user, password);
-			try {
-				connection = MySqlConnection.getInstance("jugador").getConnection();
-			} catch (SQLException e) {
-				e.printStackTrace();
-			}
-			query = "SELECT * FROM usuario WHERE user = ? AND password = ?";
-		}
-
-		try (PreparedStatement statement = connection.prepareStatement(query)) {
-			statement.setString(1, username);
-			statement.setString(2, pass);
-			ResultSet resultSet = statement.executeQuery();
-
-			if (resultSet.next()) {
-				userDb = resultSet.getString("user");
-				passDb = resultSet.getString("password");
-				if (userDb.equals(username) && passDb.equals(pass)) {
-					return true;
-				}
-			}
-
-		} catch (SQLException ex) {
-			ex.printStackTrace();
-		}
-		return false;
+	    }
+	    return false;
 	}
-	
 	
 
 
@@ -626,16 +591,13 @@ public class Controller implements IController {
 		return exists;
 	}
 
+	
+
 	@Override
-	public boolean cambiarPassword(String user, String newPassword, String userType) {
+	 public boolean cambiarPassword(String user, String newPassword, String userType) {
 		boolean changed = false;
 		String query = "";
-		if ("entrenador".equals(userType)) {
 			query = "UPDATE usuario SET password = ? WHERE user = ?";
-		} else if ("jugador".equals(userType)) {
-			query = "UPDATE usuario SET password = ? WHERE user = ?";
-		}
-		// openConnection(userType, userType);
 
 		try {
 			connection = MySqlConnection.getInstance(userType).getConnection();
