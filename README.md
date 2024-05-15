@@ -11,7 +11,7 @@ if you can not  see design button in java classes classes that has interface(But
 try open with --> windowsBuilder Editor
 if it's not working 
 find classpath in your project and add this line
-
+```
 <classpath>
 <classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-20">
 		<attributes>
@@ -19,7 +19,7 @@ find classpath in your project and add this line
 		</attributes>
 	</classpathentry>
 </classpath>
-
+```
 now try open with --> windowsBuilder Editor
 
 - Fixing errors : Editor Does Not Contain Main Type
