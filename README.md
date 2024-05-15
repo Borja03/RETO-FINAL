@@ -29,6 +29,7 @@ right click and build path --> remove from build path ->right click and build pa
 select all libraries from library package and add to build path
 
 # ABOUT US 👽
+We are a group of DAM students who have come together to solve a challenge for class. We have chosen the topic ourselves
 
 ## GITHUB 👨‍💻
 ### [ALDER](https://github.com/Alderoto16)
