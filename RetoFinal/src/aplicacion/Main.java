@@ -3,7 +3,6 @@ package aplicacion;
 import controller.Controller;
 import aplicacion.Splash;
 
-import java.time.LocalDate;
 
 /**
  * The Main class is the entry point of the application.
