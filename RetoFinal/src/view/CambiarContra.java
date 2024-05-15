@@ -25,40 +25,162 @@ import java.awt.SystemColor;
  * @since 2024-05-13
  */
 public class CambiarContra extends JFrame implements ActionListener {
-
+	/**
+	 * Unique identifier for serializing the class.
+	 */
 	private static final long serialVersionUID = 1L;
+
+	
+	/**
+	 * Panel that contains the main content of the GUI.
+	 */
 	private JPanel contentPane;
+
+	/**
+	 * Reference to the controller handling the GUI logic.
+	 */
 	private Controller controller;
+
+	/**
+	 * Represents the type of user currently logged in.
+	 */
 	private String userType;
 
+	/**
+	 * The username of the current user.
+	 */
 	private String userName;
+
+	/**
+	 * Field for entering the old password.
+	 */
 	private JPasswordField textFieldOldPassword;
+
+	/**
+	 * Field for confirming a new password.
+	 */
 	private JPasswordField confirmPasswordField;
+
+	/**
+	 * Field for entering the new password.
+	 */
 	private JPasswordField passwordFieldFirst;
+
+	/**
+	 * Panel for displaying bottom messages.
+	 */
 	private JPanel bottomPanelMsg;
+
+	/**
+	 * Panel for bottom buttons.
+	 */
 	private JPanel bottomPanel;
+
+	/**
+	 * Label for displaying message 1.
+	 */
 	private JLabel lblMsg1;
+
+	/**
+	 * Label for displaying message 2.
+	 */
 	private JLabel lblMsg2;
+
+	/**
+	 * Label for displaying message 3.
+	 */
 	private JLabel lblMsg3;
+
+	/**
+	 * Button for verifying inputs.
+	 */
 	private JButton btnVerificar;
+
+	/**
+	 * Button for saving changes.
+	 */
 	private JButton btnSave;
+
+	/**
+	 * Button for changing passwords.
+	 */
 	private JButton btnCambiarContrasena;
+
+	/**
+	 * Button for managing players.
+	 */
 	private JButton btnGestJugadores;
 
+	/**
+	 * Label for indicating a new password.
+	 */
 	private JLabel lnlNewPass;
+
+	/**
+	 * Panel for left-side content.
+	 */
 	private JPanel panelLeft;
+
+	/**
+	 * Label for adding profile picture.
+	 */
 	private JLabel lblBtnAddPic;
+
+	/**
+	 * Label for displaying user profile picture.
+	 */
 	private JLabel lblUserPic;
+
+	/**
+	 * Button for logging out.
+	 */
 	private JButton btnLogOut;
+
+	/**
+	 * Button for changing passwords.
+	 */
 	private JButton btnCambiarCont;
+
+	/**
+	 * Button for changing player dorsal numbers.
+	 */
 	private JButton btnCambiarDorsal;
+
+	/**
+	 * Label for welcoming the user.
+	 */
 	private JLabel lblWelcome;
+
+	/**
+	 * Button for consulting match details.
+	 */
 	private JButton btnConsultarPartidos;
+
+	/**
+	 * Button for consulting team details.
+	 */
 	private JButton btnConsultarEquipo;
+
+	/**
+	 * Button for uploading files.
+	 */
 	private JButton btnUpload;
+
+	/**
+	 * Blob object representing user profile picture.
+	 */
 	private Blob usrBlobIcon;
+
+	/**
+	 * ImageIcon for user profile picture.
+	 */
 	private ImageIcon imageIcon;
+
+	/**
+	 * Buttons for various actions (consulting, changing dorsal, logging out).
+	 */
 	private JButton btnConsultarEquipoj, btnConsultarPartidosj, btnCambiarDorsalj, btnCambiarContj, btnLogOutj;
+
 
 	/**
 	 * Constructs a new CambiarContra window.
@@ -92,8 +214,8 @@ public class CambiarContra extends JFrame implements ActionListener {
 		textFieldOldPassword.setFont(new Font("Tahoma", Font.BOLD, 14));
 		topPanel.add(textFieldOldPassword);
 
-		JLabel lblOldPassword = new JLabel("Old password : ");
-		lblOldPassword.setBounds(10, 75, 150, 34);
+		JLabel lblOldPassword = new JLabel("Contraseña antigua : ");
+		lblOldPassword.setBounds(10, 75, 180, 34);
 		lblOldPassword.setFont(new Font("Tahoma", Font.BOLD, 14));
 		topPanel.add(lblOldPassword);
 
@@ -103,7 +225,7 @@ public class CambiarContra extends JFrame implements ActionListener {
 		btnVerificar.setFont(new Font("Tahoma", Font.BOLD, 14));
 		topPanel.add(btnVerificar);
 
-		JLabel lblOldPasswordVerifcation = new JLabel("Old Password verifcation ");
+		JLabel lblOldPasswordVerifcation = new JLabel("Verificación de contraseña  ");
 		lblOldPasswordVerifcation.setFont(new Font("Tahoma", Font.BOLD, 14));
 		lblOldPasswordVerifcation.setBounds(200, 10, 250, 34);
 		topPanel.add(lblOldPasswordVerifcation);
@@ -165,6 +287,7 @@ public class CambiarContra extends JFrame implements ActionListener {
 
 	/**
 	 * The left menu of entrenador: if userType is entrenador will show this menu.
+	 * @param userName    The username of the user.
 	 */
 	public void showMenuEntre(String userName) {
 		JPanel panelLeft = new JPanel();
@@ -310,6 +433,7 @@ public class CambiarContra extends JFrame implements ActionListener {
 
 	/**
 	 * The left menu of jugador: if userType is jugador will show this menu.
+	 * @param userName    The username of the user.
 	 */
 
 	public void showMenuJugador(String userName) {
@@ -333,12 +457,8 @@ public class CambiarContra extends JFrame implements ActionListener {
 			}
 		});
 
-		ImageIcon imgIcon = new ImageIcon(getClass().getResource("/images/icons/add.png"));
-		Image imageUser = imgIcon.getImage().getScaledInstance(50, 50, Image.SCALE_SMOOTH);
 		panelLefts.setLayout(null);
-		lblBtnAddPic.setForeground(SystemColor.activeCaption);
-		panelLefts.add(lblBtnAddPic);
-		lblBtnAddPic.setIcon(new ImageIcon(imageUser));
+	
 		btnLogOut.setBackground(new Color(33, 199, 162));
 		btnLogOut.setFocusable(false);
 		btnLogOut.setBorder(null);

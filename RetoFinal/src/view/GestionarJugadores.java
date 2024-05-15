@@ -32,35 +32,139 @@ import java.awt.event.ActionEvent;
  * @since 2024-05-13
  */
 public class GestionarJugadores extends JFrame implements ActionListener {
-
+	
+	/**
+	 * Unique identifier for serialization.
+	 */
 	private static final long serialVersionUID = 1L;
+
+	/**
+	 * Panel that contains the main content of the GUI.
+	 */
 	private JPanel contentPane;
+
+	/**
+	 * Button for creating new entities.
+	 */
 	private JButton btnCrear;
+
+	/**
+	 * Button for deleting a player.
+	 */
 	private JButton btnDeleteJugador;
+
+	/**
+	 * Reference to the controller handling the GUI logic.
+	 */
 	private Controller controller;
+
+	/**
+	 * Button for logging out.
+	 */
 	private JButton btnLogOut;
+
+	/**
+	 * Button for changing the user's password.
+	 */
 	private JButton btnCambiarCont;
+
+	/**
+	 * Label displaying a welcome message.
+	 */
 	private JLabel lblWelcome;
+
+	/**
+	 * Button for consulting match details.
+	 */
 	private JButton btnConsultarPartidos;
+
+	/**
+	 * Button for consulting team details.
+	 */
 	private JButton btnConsultarEquipo;
+
+	/**
+	 * Label displaying the username.
+	 */
 	private JLabel lblUser;
+
+	/**
+	 * Label displaying the password.
+	 */
 	private JLabel lblContrasena;
+
+	/**
+	 * Label displaying the player's jersey number.
+	 */
 	private JLabel lblDorsal;
+
+	/**
+	 * Label displaying the number of goals scored by the player.
+	 */
 	private JLabel lblGoles;
+
+	/**
+	 * Label displaying the user's profile picture.
+	 */
 	private JLabel lblUserPic;
+
+	/**
+	 * Label displaying the number of assists made by the player.
+	 */
 	private JLabel lblAsistencias;
+
+	/**
+	 * Text field for entering the username.
+	 */
 	private JTextField textFieldUSer;
+
+	/**
+	 * Text field for entering the password.
+	 */
 	private JTextField textFieldContrasena;
+
+	/**
+	 * Combo box for selecting the player's jersey number.
+	 */
 	private JComboBox<Integer> textFieldDorsal;
+
+	/**
+	 * Text field for entering the number of goals scored by the player.
+	 */
 	private JTextField textFieldGoles;
+	/**
+	 * Text field for entering the number of assists made by the player.
+	 */
 	private JTextField textFieldAsist;
+	/**
+	 * Button for confirming an action.
+	 */
 	private JButton btnOK;
+	/**
+	 * Text field for entering the name of the team.
+	 */
 	private JTextField txtEquiponame;
+	/**
+	 * The team associated with the current user.
+	 */
 	private String miEquipo;
+	/**
+	 * The username of the current user.
+	 */
 	private String userName;
+
+	/**
+	 * The type of user currently logged in.
+	 */
 	private String userType;
+
+	/**
+	 * Button for managing players.
+	 */
 	private JButton btnGestJugadores;
 
+	
+	
 	/**
 	 * Constructs a new GestionarJugadores JFrame.
 	 * 

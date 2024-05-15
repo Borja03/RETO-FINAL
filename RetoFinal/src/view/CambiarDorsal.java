@@ -15,18 +15,43 @@ import java.awt.event.*;
  * @since 2024-05-13
  */
 public class CambiarDorsal extends JFrame implements ActionListener {
-
+	/**
+	 * Unique identifier for serializing the class.
+	 */
 	private static final long serialVersionUID = 1L;
-
+	/**
+	 * Reference to the controller handling the GUI logic.
+	 */
 	private Controller controller;
-	private String userName;
-	private String userType;
-	private JPanel contentPane;
-	private JButton btnLogOut;
-	private JButton btnConsultarPartidos;
-	private JButton btnCambiarCont;
-	private JButton btnConsultarEquipo;
 
+	/**
+	 * The username of the current user.
+	 */
+	private String userName;
+	/**
+	 * Represents the type of user currently logged in.
+	 */
+	private String userType;
+	/**
+	 * Panel that contains the main content of the GUI.
+	 */
+	private JPanel contentPane;
+	/**
+	 * Button for logging out.
+	 */
+	private JButton btnLogOut;
+	/**
+	 * Button for consulting match details.
+	 */
+	private JButton btnConsultarPartidos;
+	/**
+	 * Button for changing passwords.
+	 */
+	private JButton btnCambiarCont;
+	/**
+	 * Button for consulting team details.
+	 */
+	private JButton btnConsultarEquipo;
 	/**
 	 * Constructs a new CambiarDorsal frame.
 	 *
@@ -34,7 +59,6 @@ public class CambiarDorsal extends JFrame implements ActionListener {
 	 * @param userC    the username
 	 * @param userType the type of user
 	 */
-
 	public CambiarDorsal(Controller cont, String userC, String userType) {
 		this.controller = cont;
 		this.userName = userC;

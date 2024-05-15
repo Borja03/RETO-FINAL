@@ -33,9 +33,13 @@ import model.partido.Juegan;
 import javax.swing.border.CompoundBorder;
 import javax.swing.border.MatteBorder;
 import javax.swing.border.TitledBorder;
-
+/**
+ * This class represents the GUI for modifying a match.
+ */
 public class ModificarPartido extends JFrame implements ActionListener {
-
+	/**
+	 * Unique identifier for serializing the class.
+	 */
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
 	private JLabel equipoLocalLabel;
@@ -67,6 +71,11 @@ public class ModificarPartido extends JFrame implements ActionListener {
 	private LocalDateTime date;
 	private JPanel topPanel;
 	private JPanel panelModificar;
+	 /**
+     * Constructor for ModificarPartido.
+     *
+     * @param controlador the controller used to handle actions and data.
+     */
 
 	public ModificarPartido(Controller controlador) {
 		this.controller = controlador;
@@ -354,6 +363,12 @@ public class ModificarPartido extends JFrame implements ActionListener {
 		}
 	}
 
+	
+	 /**
+     * Handles action events triggered by user interactions with the UI.
+     *
+     * @param e the action event triggered by the user.
+     */
 	public void actionPerformed(ActionEvent e) {
 		Object o = e.getSource();
 		if (o == partidosComboBox) {

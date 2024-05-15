@@ -34,41 +34,176 @@ import java.awt.SystemColor;
  * @since 2024-05-13
  */
 public class ModificarJugadores extends JFrame implements ActionListener {
-
+	/**
+	 * Unique identifier for serializing the class.
+	 */
 	private static final long serialVersionUID = 1L;
+	/**
+	 * The main content pane of the view.
+	 */
 	private JPanel contentPane;
+
+	/**
+	 * Button for creating a new record.
+	 */
 	private JButton btnCrear;
+
+	/**
+	 * Button for deleting a record.
+	 */
 	private JButton btnDelete;
+
+	/**
+	 * Reference to the controller for handling actions.
+	 */
 	private Controller controller;
+
+	/**
+	 * Button for logging out.
+	 */
 	private JButton btnLogOut;
+
+	/**
+	 * Button for changing password.
+	 */
 	private JButton btnCambiarCont;
+
+	/**
+	 * Button for changing dorsal (jersey number).
+	 */
 	private JButton btnCambiarDorsal;
+
+	/**
+	 * Label for welcoming the user.
+	 */
 	private JLabel lblWelcome;
+
+	/**
+	 * Button for accessing match information.
+	 */
 	private JButton btnConsultarPartidos;
+
+	/**
+	 * Button for accessing team information.
+	 */
 	private JButton btnConsultarEquipo;
+
+	/**
+	 * Label for indicating username.
+	 */
 	private JLabel lblUser;
+
+	/**
+	 * Label for indicating password.
+	 */
 	private JLabel lblContrasena;
+
+	/**
+	 * Label for indicating dorsal (jersey number).
+	 */
 	private JLabel lblDorsal;
+
+	/**
+	 * Label for indicating goals.
+	 */
 	private JLabel lblGoles;
+
+	/**
+	 * Label for indicating assists.
+	 */
 	private JLabel lblAsistencias;
+
+	/**
+	 * Text field for entering username.
+	 */
 	private JTextField textFieldUSer;
+
+	/**
+	 * Text field for entering password.
+	 */
 	private JTextField textFieldContrasena;
+
+	/**
+	 * Combo box for selecting dorsal (jersey number).
+	 */
 	private JComboBox<Integer> textFieldDorsal;
+
+	/**
+	 * Text field for entering goals.
+	 */
 	private JTextField textFieldGoles;
+
+	/**
+	 * Text field for entering assists.
+	 */
 	private JTextField textFieldAsist;
+
+	/**
+	 * Button for deleting a player.
+	 */
 	private JButton btnElimimarJugador;
+
+	/**
+	 * Text field for entering team name.
+	 */
 	private JTextField txtEquiponame;
+
+	/**
+	 * The user's team.
+	 */
 	private String miEquipo;
+
+	/**
+	 * The username of the logged-in user.
+	 */
 	private String userName;
+
+	/**
+	 * Button for searching for a player.
+	 */
 	private JButton btnBuscarJugador;
+
+	/**
+	 * Panel for the bottom section.
+	 */
 	private JPanel bottomPanel;
+
+	/**
+	 * Panel for displaying messages in the bottom section.
+	 */
 	private JPanel bottomPanelMsg;
+
+	/**
+	 * Label indicating player.
+	 */
 	private JLabel lblJugador;
+
+	/**
+	 * Label indicating non-existence.
+	 */
 	private JLabel lblNoExiste;
+
+	/**
+	 * The type of user logged in.
+	 */
 	private String userType;
+
+	/**
+	 * Button for confirming an action.
+	 */
 	private JButton btnOK;
+
+	/**
+	 * Button for modifying a player.
+	 */
 	private JButton btnModificarJugador;
+
+	/**
+	 * Button for managing players.
+	 */
 	private JButton btnGestJugadores;
+	 
+
 
 	/**
 	 * Constructs a new ModificarJugadores instance with the specified controller,

@@ -58,7 +58,7 @@ public class Controller implements IController {
 	final String MODIFICARequipo = "UPDATE equipo SET titulos = ?, nombreEstadio = ?, logo = ? WHERE nombreEquipo = ?";
 	final String modificarPartidoFecha = "UPDATE juegan SET fechaInicio = ? WHERE fechaInicio = ?";
 	final String modificarPartidoResultado = "UPDATE juegan SET resultado = ? WHERE fechaInicio = ?";
-	final String MODIFICARuserIcon = "UPDATE jugador SET icon = ?  WHERE user = ?";
+	final String MODIFICARuserIcon = "UPDATE usuario SET icon = ?  WHERE user = ?";
 	final String NOMBREequipo = "SELECT * FROM equipo where nombreEquipo = ?";
 	final String nombreEquipo = "SELECT nombreEquipo FROM usuario WHERE user = ?";
 	final String NOMBREequipoE = "SELECT nombreEquipo FROM entrenador WHERE user = ?";
@@ -661,9 +661,9 @@ public class Controller implements IController {
 		String myTeam = null;
 		String query = "";
 
-		if ("entrenador".equals(userType)) {
+		if ("entrenador".equalsIgnoreCase(userType)) {
 			query = ENTRENADORequipo;
-		} else if ("jugador".equals(userType)) {
+		} else if ("jugador".equalsIgnoreCase(userType)) {
 			query = JUGADORDORequipo;
 		}
 		// this.openConnection(userType, userType);

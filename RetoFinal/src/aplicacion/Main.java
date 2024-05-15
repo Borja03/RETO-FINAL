@@ -11,17 +11,18 @@ import java.time.LocalDate;
  * @author 1dami
  * @since 2024-05-13
  */
+
 public class Main {
 
-    /**
-     * The main method creates a Controller and a Splash instance,
-     * then makes the Splash visible.
-     * 
-     * @param args Command-line arguments (not used).
-     */
-    public static void main(String[] args) {
-        Controller controller = new Controller();
-        Splash splash = new Splash(controller);
-        splash.setVisible(true);
-    }
+	/**
+	 * The main method creates a Controller and a Splash instance, then makes the
+	 * Splash visible.
+	 * 
+	 * @param args Command-line arguments (not used).
+	 */
+	public static void main(String[] args) {
+		Controller controller = new Controller();
+		Splash splash = new Splash(controller);
+		splash.setVisible(true);
+	}
 }

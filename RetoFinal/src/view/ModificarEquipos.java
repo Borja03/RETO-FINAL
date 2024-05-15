@@ -41,40 +41,164 @@ import javax.swing.JComboBox;
  * @since 2024-05-13
  */
 public class ModificarEquipos extends JFrame implements ActionListener {
-
+	/**
+	 * Unique identifier for serializing the class.
+	 */
+	/**
+	 * Serial version UID for serialization.
+	 */
 	private static final long serialVersionUID = 1L;
+
+	/**
+	 * The main content pane of the view.
+	 */
 	private JPanel contentPane;
+
+	/**
+	 * Reference to the controller for handling actions.
+	 */
 	private Controller controller;
+
+	/**
+	 * Username of the current user.
+	 */
 	private String userName;
+
+	/**
+	 * Panel for adding or editing records.
+	 */
 	private JPanel rightPanelAddEd;
+
+	/**
+	 * Text field for entering the team's name.
+	 */
 	private JTextField nombreEquipoField;
+
+	/**
+	 * Text field for entering the team's stadium name.
+	 */
 	private JTextField nombreEstadioField;
+
+	/**
+	 * Text field for entering the number of titles.
+	 */
 	private JTextField txttitulosField;
+
+	/**
+	 * Button for modifying team information.
+	 */
 	private JButton bntModificarEq;
+
+	/**
+	 * Button for adding a new team.
+	 */
 	private JButton btnAddEquipo;
+
+	/**
+	 * Button for modifying records.
+	 */
 	private JButton btnModificar;
+
+	/**
+	 * Button for uploading an image.
+	 */
 	private JButton btnUpload;
+
+	/**
+	 * Label for displaying the team's logo.
+	 */
 	private JLabel lblEqLogo;
+
+	/**
+	 * Icon representing the image.
+	 */
 	private ImageIcon imageIcon;
+
+	/**
+	 * Blob object representing the image.
+	 */
 	private Blob imageBlob;
+
+	/**
+	 * Label for indicating the stadium name.
+	 */
 	private JLabel lblNombreDelEstadio;
+
+	/**
+	 * Panel for the top menu in adding/editing views.
+	 */
 	private JPanel topMenuPanelAddEq;
+
+	/**
+	 * Button for deleting a team.
+	 */
 	private JButton btnBorrarEquipo;
+
+	/**
+	 * Panel for searching records.
+	 */
 	private JPanel panelSearch;
+
+	/**
+	 * Label indicating the team name.
+	 */
 	private JLabel lblNombreEquipo_1;
+
+	/**
+	 * Combo box for selecting teams.
+	 */
 	private JComboBox<String> cBoxEquipos;
+
+	/**
+	 * Button for logging out.
+	 */
 	private JButton btnLogOut;
+
+	/**
+	 * Button for modifying matches.
+	 */
 	private JButton btnModificarPartido;
+
+	/**
+	 * Label for welcoming the user.
+	 */
 	private JLabel lblWelcome;
+
+	/**
+	 * Button for accessing match information.
+	 */
 	private JButton btnConsultarPartidos;
+
+	/**
+	 * Button for creating a new match.
+	 */
 	private JButton btnCrearPartido;
 
+	/**
+	 * Button for adding a new team.
+	 */
 	private JButton bntAnadirEq;
-	private JButton btnModificarEquipo;
-	private JLabel lblEquipoLogo;
-	private String userType;
-	private JButton btnGestionarEntrenador;
 
+	/**
+	 * Button for modifying team information.
+	 */
+	private JButton btnModificarEquipo;
+
+	/**
+	 * Label for displaying the team's logo.
+	 */
+	private JLabel lblEquipoLogo;
+
+	/**
+	 * Type of user logged in.
+	 */
+	private String userType;
+
+	/**
+	 * Button for managing coaches.
+	 */
+	private JButton btnGestionarEntrenador;
+	 
 	/**
 	 * Constructs a new ModificarEquipos instance with the specified controller.
 	 * 

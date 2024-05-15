@@ -32,29 +32,100 @@ import java.awt.event.ActionEvent;
  * @since 2024-05-13
  */
 public class GestionarEntre extends JFrame implements ActionListener {
-
+	/**
+	 * Unique identifier for serialization.
+	 */
 	private static final long serialVersionUID = 1L;
+	/**
+	 * Panel that contains the main content of the GUI.
+	 */
 	private JPanel contentPane;
+	/**
+	 * Button for creating entities.
+	 */
 	private JButton btnCrear;
+	/**
+	 * Button for deleting or modifying entities.
+	 */
 	private JButton btnDeleteMod;
+	/**
+	 * Reference to the controller handling the GUI logic.
+	 */
 	private Controller controller;
+	/**
+	 * Button for logging out.
+	 */
 	private JButton btnLogOut;
+	/**
+	 * Button for modifying match details.
+	 */
 	private JButton btnModPartidos;
+	/**
+	 * Label displaying a welcome message.
+	 */
 	private JLabel lblWelcome;
+
+	/**
+	 * Button for managing teams.
+	 */
 	private JButton btnGestionarEquipo;
+
+	/**
+	 * Button for creating a new match.
+	 */
 	private JButton btnCrearPartido;
+	/**
+	 * Label displaying the username.
+	 */
 	private JLabel lblUser;
+	/**
+	 * Label displaying the password.
+	 */
 	private JLabel lblContrasena;
+	/**
+	 * Label displaying the user's role or position.
+	 */
 	private JLabel lblCargo;
+
+	/**
+	 * Text field for entering the username.
+	 */
 	private JTextField textFieldUSer;
+
+	/**
+	 * Text field for entering the password.
+	 */
 	private JTextField textFieldContrasena;
+	/**
+	 * Combo box for selecting the user's role or position.
+	 */
 	private JComboBox textFieldCargo;
+	/**
+	 * Button for adding new elements.
+	 */
 	private JButton btnAnadir;
+	/**
+	 * The username of the current user.
+	 */
 	private String user;
+
+	/**
+	 * The team associated with the current user.
+	 */
 	private String myTeam;
+	/**
+	 * Combo box for selecting the team.
+	 */
 	private JComboBox<String> textFieldEquipo;
+	/**
+	 * Represents the type of user currently logged in.
+	 */
 	private String userType;
+	/**
+	 * Button for managing coaches.
+	 */
 	private JButton btnGestionarEntrenador;
+
 
 	/**
 	 * Constructs a new GestionarEntre JFrame.

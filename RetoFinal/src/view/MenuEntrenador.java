@@ -46,35 +46,144 @@ import model.usuarios.Jugador;
  * @since 2024-05-13
  */
 public class MenuEntrenador extends JFrame implements ActionListener {
-
+	/**
+	 * Unique identifier for serializing the class.
+	 */
+	/**
+	 * Serial version UID for serialization.
+	 */
 	private static final long serialVersionUID = 1L;
+
+	/**
+	 * The main content pane of the view.
+	 */
 	private JPanel contentPane;
+
+	/**
+	 * Button for logging out.
+	 */
 	private JButton btnLogOut;
+
+	/**
+	 * Button for accessing team information.
+	 */
 	private JButton btnConsultarEquipo;
+
+	/**
+	 * Button for managing players.
+	 */
 	private JButton btnGestJugadores;
+
+	/**
+	 * Button for accessing match information.
+	 */
 	private JButton btnConsultarPartidos;
+
+	/**
+	 * Button for changing password.
+	 */
 	private JButton btnCambiarContrasena;
+
+	/**
+	 * Reference to the controller for handling actions.
+	 */
 	private Controller controller;
+
+	/**
+	 * Label for welcoming the user.
+	 */
 	private JLabel lblWelcome;
+
+	/**
+	 * Label for displaying the user's profile picture.
+	 */
 	private JLabel lblUserPic;
+
+	/**
+	 * Label for indicating adding a profile picture.
+	 */
 	private JLabel lblBtnAddPic;
+
+	/**
+	 * Username of the current user.
+	 */
 	private String userName;
+
+	/**
+	 * Type of user logged in.
+	 */
 	private String userType;
+
+	/**
+	 * Text field for entering the team's name.
+	 */
 	private JTextField txtEqNombre;
+
+	/**
+	 * Text field for entering the team's stadium.
+	 */
 	private JTextField txtEqEstadio;
+
+	/**
+	 * Text field for entering the team's titles.
+	 */
 	private JTextField txtEqTitulos;
+
+	/**
+	 * Text field for entering the team's first coach.
+	 */
 	private JTextField txtEqPrimerEntre;
+
+	/**
+	 * Text field for entering the team's second coach.
+	 */
 	private JTextField txtEqSegundoEntre;
+
+	/**
+	 * Table for displaying team information.
+	 */
 	private JTable table;
+
+	/**
+	 * Scroll pane for the team information table.
+	 */
 	private JScrollPane scrollPane_1;
+
+	/**
+	 * Name of the team being viewed.
+	 */
 	private String nombreEquipo;
+
+	/**
+	 * Blob object representing the team's logo.
+	 */
 	private Blob teamLogo;
+
+	/**
+	 * Label for indicating the list of players.
+	 */
 	private JLabel lblJugadoresLista;
+
+	/**
+	 * Array of buttons for the left panel.
+	 */
 	private JButton[] leftPanelButtons;
 
+	/**
+	 * Icon representing the profile picture.
+	 */
 	private ImageIcon imageIcon;
+
+	/**
+	 * Blob object representing the user's profile picture.
+	 */
 	private Blob usrBlobIcon;
+
+	/**
+	 * Button for uploading a profile picture.
+	 */
 	private JButton btnUpload;
+	 
 
 	/**
 	 * Constructor for the MenuEntrenador class. Initializes the main menu for an

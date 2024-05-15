@@ -25,32 +25,154 @@ import model.usuarios.Entrenador;
 import javax.swing.border.TitledBorder;
 import javax.swing.border.EtchedBorder;
 
+/**
+ * The SearchEntrenador class represents a GUI for searching and managing
+ * 'Entrenador' (coach) entities. This class extends JFrame and implements
+ * ActionListener. It provides functionality to add, delete, and modify
+ * entrenador records.
+ */
 public class SearchEntrenador extends JFrame implements ActionListener {
-
+	/**
+	 * Unique identifier for serializing the class.
+	 */
 	private static final long serialVersionUID = 1L;
+	/**
+	 * 
+	 * Represents the main content pane of the application window.
+	 */
 	private JPanel contentPane;
+
+	/**
+	 * 
+	 * Button for adding a new coach.
+	 */
 	private JButton btnAddEntrenador;
+
+	/**
+	 * 
+	 * Button for deleting or modifying a coach.
+	 */
 	private JButton btnDeleteMod;
+
+	/**
+	 * 
+	 * Instance of the application controller.
+	 */
 	private Controller controller;
+
+	/**
+	 * 
+	 * Button for logging out from the application.
+	 */
 	private JButton btnLogOut;
+
+	/**
+	 * 
+	 * Button for modifying matches.
+	 */
 	private JButton btnModPartidos;
+
+	/**
+	 * 
+	 * Label for displaying a welcome message.
+	 */
 	private JLabel lblWelcome;
+
+	/**
+	 * 
+	 * Button for managing teams.
+	 */
 	private JButton btnGestionarEquipo;
+
+	/**
+	 * 
+	 * Button for creating a new match.
+	 */
 	private JButton btnCrearPartido;
+
+	/**
+	 * 
+	 * Label for displaying the username.
+	 */
 	private JLabel lblUser;
+
+	/**
+	 * 
+	 * Label for displaying the password.
+	 */
 	private JLabel lblContrasena;
+
+	/**
+	 * 
+	 * Label for displaying the user's role.
+	 */
 	private JLabel lblCargo;
+
+	/**
+	 * 
+	 * Dropdown list for selecting a user.
+	 */
 	private JComboBox<String> textFieldUSer;
+
+	/**
+	 * 
+	 * Text field for entering the password.
+	 */
 	private JTextField textFieldContrasena;
+
+	/**
+	 * 
+	 * Dropdown list for selecting a user's role.
+	 */
 	private JComboBox<String> textFieldCargo;
+
+	/**
+	 * 
+	 * Button for deleting a coach.
+	 */
 	private JButton btnEliminarEntrenador;
+
+	/**
+	 * 
+	 * Dropdown list for selecting a team.
+	 */
 	private JComboBox<String> txtEquiponame;
+
+	/**
+	 * 
+	 * Panel for displaying bottom elements.
+	 */
 	private JPanel bottomPanel;
+
+	/**
+	 * 
+	 * The user's name.
+	 */
 	private String user;
+
+	/**
+	 * 
+	 * Button for modifying a coach.
+	 */
 	private JButton btnModificarEntrenador;
+
+	/**
+	 * 
+	 * The type of user.
+	 */
 	private String userType;
+
+	/**
+	 * 
+	 * Button for managing coaches.
+	 */
 	private JButton btnGestionarEntrenador;
 
+	/**
+	 * Constructs a new SearchEntrenador frame.
+	 *
+	 * @param controller the Controller instance to handle application logic
+	 */
 	public SearchEntrenador(Controller controller) {
 		this.controller = controller;
 
@@ -186,7 +308,6 @@ public class SearchEntrenador extends JFrame implements ActionListener {
 		btnCrearPartido.setBackground(new Color(242, 45, 45));
 		btnCrearPartido.setBounds(0, 327, 250, 49);
 
-
 		btnCrearPartido.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseEntered(MouseEvent e) {
@@ -317,41 +438,61 @@ public class SearchEntrenador extends JFrame implements ActionListener {
 
 	}
 
+	/**
+	 * Fills the JComboBox with the names of all available teams.
+	 */
 	public void fillEquiposNames() {
-	    txtEquiponame.removeAllItems();
-	    for (String equipo : controller.getEquipos()) {
-	        txtEquiponame.addItem(equipo);
-	    }
+		txtEquiponame.removeAllItems();
+		for (String equipo : controller.getEquipos()) {
+			txtEquiponame.addItem(equipo);
+		}
 	}
 
+	/**
+	 * Fills the JComboBox with the names of coaches associated with the specified
+	 * team.
+	 *
+	 * @param nombreEquipo The name of the team for which coaches are to be
+	 *                     retrieved.
+	 */
 	public void fillEntrenadoresEquipo(String nombreEquipo) {
-	    textFieldUSer.removeAllItems(); // Clear items from JComboBox
-	    String primEntrenador = controller.getPrimEntrenador(nombreEquipo);
-	    String segEntrenador = controller.getSegEntrenador(nombreEquipo);
+		textFieldUSer.removeAllItems(); // Clear items from JComboBox
+		String primEntrenador = controller.getPrimEntrenador(nombreEquipo);
+		String segEntrenador = controller.getSegEntrenador(nombreEquipo);
 
-	    if (primEntrenador != null) {
-	        textFieldUSer.addItem(primEntrenador);
-	    }
-	    if (segEntrenador != null) {
-	        textFieldUSer.addItem(segEntrenador);
-	    }
+		if (primEntrenador != null) {
+			textFieldUSer.addItem(primEntrenador);
+		}
+		if (segEntrenador != null) {
+			textFieldUSer.addItem(segEntrenador);
+		}
 	}
 
+	/**
+	 * Fills the user data fields based on the provided username.
+	 *
+	 * @param miUser The username for which user data is to be filled.
+	 */
 	public void fillUserData(String miUser) {
-	    Entrenador usr = (Entrenador) controller.getUsuario2(miUser);
-	    if (usr != null) {
-	        textFieldContrasena.setText(usr.getContrasenia());
-	        CargoEntrenador cargo = usr.getCargo();
+		Entrenador usr = (Entrenador) controller.getUsuario2(miUser);
+		if (usr != null) {
+			textFieldContrasena.setText(usr.getContrasenia());
+			CargoEntrenador cargo = usr.getCargo();
 
-	        if (cargo == CargoEntrenador.PRIMER_ENTRENADOR) {
-	            textFieldCargo.setSelectedItem("Primer_entrenador");
-	        } else if (cargo == CargoEntrenador.SEGUNDO_ENTRENADOR) {
-	            textFieldCargo.setSelectedItem("Segundo_entrenador");
-	        }
-	    } 
+			if (cargo == CargoEntrenador.PRIMER_ENTRENADOR) {
+				textFieldCargo.setSelectedItem("Primer_entrenador");
+			} else if (cargo == CargoEntrenador.SEGUNDO_ENTRENADOR) {
+				textFieldCargo.setSelectedItem("Segundo_entrenador");
+			}
+		}
 	}
 
-	
+	/**
+	 * Handles action events generated by the various buttons in the GUI.
+	 *
+	 * @param e the action event
+	 */
+
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		Object o = e.getSource();
@@ -380,21 +521,20 @@ public class SearchEntrenador extends JFrame implements ActionListener {
 			ModificarPartido modPartido = new ModificarPartido(controller);
 			this.dispose();
 			modPartido.setVisible(true);
-		} else  if (o == txtEquiponame && e.getActionCommand().equals("comboBoxChanged")) {
-	        // User selected a team name
-	        if (txtEquiponame.getSelectedItem() != null) {
-	            String selectedTeam = (String) txtEquiponame.getSelectedItem();
-	            fillEntrenadoresEquipo(selectedTeam); // Update userTextField with team's players
-	        }
-	    } else if (o == textFieldUSer && e.getActionCommand().equals("comboBoxChanged")) {
-	        // User selected a player
-	        if (textFieldUSer.getSelectedItem() != null) {
-	            String selectedUser = (String) textFieldUSer.getSelectedItem();
-	            fillUserData(selectedUser); // Display selected user's information
+		} else if (o == txtEquiponame && e.getActionCommand().equals("comboBoxChanged")) {
+			// User selected a team name
+			if (txtEquiponame.getSelectedItem() != null) {
+				String selectedTeam = (String) txtEquiponame.getSelectedItem();
+				fillEntrenadoresEquipo(selectedTeam); // Update userTextField with team's players
+			}
+		} else if (o == textFieldUSer && e.getActionCommand().equals("comboBoxChanged")) {
+			// User selected a player
+			if (textFieldUSer.getSelectedItem() != null) {
+				String selectedUser = (String) textFieldUSer.getSelectedItem();
+				fillUserData(selectedUser); // Display selected user's information
 				bottomPanel.setVisible(true);
 
-	        }
-		
+			}
 
 		} else if (o == btnEliminarEntrenador) {
 			if (controller.borrarEntrenador(textFieldUSer.getSelectedItem().toString())) {

@@ -1,6 +1,5 @@
 package view;
 
-
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
@@ -25,7 +24,6 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.PrintWriter;
 
-
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
@@ -36,32 +34,76 @@ import javax.swing.JTextField;
 import javax.swing.SwingUtilities;
 import javax.swing.UIManager;
 
-
 import javax.swing.JToggleButton;
 
 /**
  * The Splash class represents the splash screen of the application.
+ * 
  * @author 1dami G1
  * @since 2024-05-13
  */
 public class Login extends JFrame implements ActionListener {
 
+	/**
+	 * Serial version UID for serialization.
+	 */
 	private static final long serialVersionUID = 1L;
+
+	/**
+	 * The main content pane of the login window.
+	 */
 	private JPanel contentPane;
+
+	/**
+	 * Text field for entering the username.
+	 */
 	private JTextField txtUserName;
+
+	/**
+	 * Password field for entering the password.
+	 */
 	private JPasswordField txtPass;
+
+	/**
+	 * Combo box for selecting the user role.
+	 */
 	private JComboBox<String> cBxRole;
+
+	/**
+	 * Button for logging in.
+	 */
 	private JButton btnLogIn;
+
+	/**
+	 * Reference to the controller for handling login actions.
+	 */
 	private Controller controller;
+
+	/**
+	 * Label for displaying messages to the user.
+	 */
 	private JLabel lblMsg;
+
+	/**
+	 * Checkbox for toggling password visibility.
+	 */
 	private JCheckBox chckbxShowPassword;
+
+	/**
+	 * Toggle button for switching between dark and light mode.
+	 */
 	private JToggleButton tglBtnDark;
+
+	/**
+	 * State variable indicating whether dark mode is enabled or not.
+	 */
 	private boolean darkModeState;
-	  /**
-     * Constructs a new Login window.
-     * 
-     * @param cont The Controller instance.
-     */
+
+	/**
+	 * Constructs a new Login window.
+	 * 
+	 * @param cont The Controller instance.
+	 */
 	public Login(Controller cont) {
 		this.controller = cont;
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -162,15 +204,16 @@ public class Login extends JFrame implements ActionListener {
 
 		applyDarkMode(darkModeState);
 	}
-	
-	 /**
-     * Loads a custom font from the specified font path.
-     * 
-     * @param fontPath The path to the font file.
-     * @param style    The style of the font (e.g., Font.PLAIN, Font.BOLD, Font.ITALIC).
-     * @param size     The size of the font.
-     * @return         The loaded custom font.
-     */
+
+	/**
+	 * Loads a custom font from the specified font path.
+	 * 
+	 * @param fontPath The path to the font file.
+	 * @param style    The style of the font (e.g., Font.PLAIN, Font.BOLD,
+	 *                 Font.ITALIC).
+	 * @param size     The size of the font.
+	 * @return The loaded custom font.
+	 */
 
 	private Font loadFont(String fontPath, int style, float size) {
 		try {
@@ -185,11 +228,11 @@ public class Login extends JFrame implements ActionListener {
 		}
 	}
 
-	 /**
-     * Saves the user's preference for dark mode.
-     * 
-     * @param enabled {@code true} if dark mode is enabled, {@code false} otherwise.
-     */
+	/**
+	 * Saves the user's preference for dark mode.
+	 * 
+	 * @param enabled {@code true} if dark mode is enabled, {@code false} otherwise.
+	 */
 	private void savePreference(boolean enabled) {
 		try (PrintWriter writer = new PrintWriter("preferences.txt")) {
 			writer.println(enabled);
@@ -197,12 +240,13 @@ public class Login extends JFrame implements ActionListener {
 			ex.printStackTrace();
 		}
 	}
-	
-    /**
-     * Applies dark mode or light mode based on the given boolean value.
-     * 
-     * @param enabled {@code true} to apply dark mode, {@code false} to apply light mode.
-     */
+
+	/**
+	 * Applies dark mode or light mode based on the given boolean value.
+	 * 
+	 * @param enabled {@code true} to apply dark mode, {@code false} to apply light
+	 *                mode.
+	 */
 
 	private void applyDarkMode(boolean enabled) {
 		if (enabled) {
@@ -224,9 +268,10 @@ public class Login extends JFrame implements ActionListener {
 
 	/**
 	 * Handles action events for the login class.
+	 * 
 	 * @param e the action event
 	 */
-	
+
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		if (e.getSource() == btnLogIn) {
@@ -265,7 +310,6 @@ public class Login extends JFrame implements ActionListener {
 				txtPass.setEchoChar('*');
 			}
 		}
-
 
 	}
 

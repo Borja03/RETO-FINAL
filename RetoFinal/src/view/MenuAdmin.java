@@ -26,40 +26,137 @@ import java.awt.Font;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.SystemColor;
+
 /**
  * The MenuAdmin class represents the administration menu for the application.
  * It provides various functionalities for managing teams, matches, and coaches.
  * The Splash class represents the splash screen of the application.
+ * 
  * @author 1dami G1
  * @since 2024-05-13
  */
 public class MenuAdmin extends JFrame implements ActionListener {
 
+	/**
+	 * Unique identifier for serialization.
+	 */
 	private static final long serialVersionUID = 1L;
+
+	/**
+	 * Panel that contains the main content of the GUI.
+	 */
 	private JPanel contentPane;
+
+	/**
+	 * Reference to the controller handling the GUI logic.
+	 */
 	private Controller controller;
+
+	/**
+	 * Button for logging out.
+	 */
 	private JButton btnLogOut;
+
+	/**
+	 * Button for modifying a match.
+	 */
 	private JButton btnModificarPartido;
+
+	/**
+	 * Label displaying a welcome message.
+	 */
 	private JLabel lblWelcome;
+
+	/**
+	 * Button for consulting match details.
+	 */
 	private JButton btnConsultarPartidos;
+
+	/**
+	 * Button for creating a new match.
+	 */
 	private JButton btnCrearPartido;
+
+	/**
+	 * The username of the current user.
+	 */
 	private String userName;
+
+	/**
+	 * Panel on the right side for adding/editing entities.
+	 */
 	private JPanel rightPanelAddEd;
+
+	/**
+	 * Text field for entering the name of a team.
+	 */
 	private JTextField nombreEquipoField;
+
+	/**
+	 * Text field for entering the name of a stadium.
+	 */
 	private JTextField nombreEstadioField;
+
+	/**
+	 * Text field for entering the number of titles.
+	 */
 	private JTextField txttitulosField;
+
+	/**
+	 * Button for adding an entity.
+	 */
 	private JButton bntAnadirEq;
+
+	/**
+	 * Button for adding a team.
+	 */
 	private JButton btnAddEquipo;
+
+	/**
+	 * Button for modifying an entity.
+	 */
 	private JButton btnModificar;
+
+	/**
+	 * Button for uploading an image.
+	 */
 	private JButton btnUpload;
+
+	/**
+	 * Label displaying the logo of a team.
+	 */
 	private JLabel lblEquipoLogo;
+
+	/**
+	 * ImageIcon representing the logo image.
+	 */
 	private ImageIcon imageIcon;
+
+	/**
+	 * Blob object representing the image.
+	 */
 	private Blob imageBlob;
+
+	/**
+	 * Label displaying the name of the stadium.
+	 */
 	private JLabel lblNombreDelEstadio;
+
+	/**
+	 * Panel at the top for menu options related to adding a team.
+	 */
 	private JPanel topMenuPanelAddEq;
+
+	/**
+	 * The type of user currently logged in.
+	 */
 	private String userType;
+
+	/**
+	 * Button for managing coaches.
+	 */
 	private JButton btnGestionarEntrenador;
-	
+
 	/**
 	 * Constructs the MenuAdmin frame.
 	 *
@@ -307,7 +404,10 @@ public class MenuAdmin extends JFrame implements ActionListener {
 		rightPanelAddEd.add(lblNombreDelEstadio);
 
 	}
-	// func to upload equipos logo 
+
+	/**
+	 * Allows the user to upload a logo for the team.
+	 */
 	public void uploadLogo() {
 		JFileChooser fileChooser = new JFileChooser();
 		int result = fileChooser.showOpenDialog(null);
@@ -335,58 +435,89 @@ public class MenuAdmin extends JFrame implements ActionListener {
 			}
 		}
 	}
-	
+
 	/**
 	 * Handles action events for the MenuAdmin class.
+	 * 
 	 * @param e the action event
 	 */
 	@Override
-	public void actionPerformed(ActionEvent e) {
-		Object o = e.getSource();
-
-		// left menu buttons
-		if (e.getSource() == btnCrearPartido) {
-			CrearPartido crearPartido = new CrearPartido(controller);
-			this.dispose();
-			crearPartido.setVisible(true);
-		} else if (e.getSource() == btnModificarPartido) {
-			ModificarPartido modificarPartido = new ModificarPartido(controller);
-			this.dispose();
-			modificarPartido.setVisible(true);
-
-		} else if (e.getSource() == btnGestionarEntrenador) {
-			GestionarEntre gestionarEntre = new GestionarEntre(controller);
-			this.dispose();
-			gestionarEntre.setVisible(true);
-		} else if (e.getSource() == btnLogOut) {
+    public void actionPerformed(ActionEvent e) {
+        if (e.getSource()== btnLogOut) {
 			this.dispose();
 			controller.logOut();
-		} else if (e.getSource() == btnModificar) {
+        } else if (e.getSource() == btnModificar) {
 			this.dispose();
 			ModificarEquipos modificarEquipos = new ModificarEquipos(controller);
 			modificarEquipos.setVisible(true);
-		}
-		// right panel buttons
+        } else if (e.getSource() == btnCrearPartido) {
+    		CrearPartido crearPartido = new CrearPartido(controller);
+			this.dispose();
+			crearPartido.setVisible(true);
+        } else if (e.getSource()== btnGestionarEntrenador) {
+			GestionarEntre gestionarEntre = new GestionarEntre(controller);
+			this.dispose();
+			gestionarEntre.setVisible(true);
+        } else if (e.getSource() == btnAddEquipo) {
+        	
+            rightPanelAddEd.setVisible(true);
+        } else if (e.getSource() == btnModificarPartido) {
+			ModificarPartido modificarPartido = new ModificarPartido(controller);
+			this.dispose();
+			modificarPartido.setVisible(true);
+        } else if (e.getSource() == bntAnadirEq) {
+            addTeam();
+        } else if (e.getSource() == btnUpload) {
+            uploadImage();
+        }
+    }
 
-		if (o == btnUpload) {
+    private void uploadImage() {
+        JFileChooser fileChooser = new JFileChooser();
+        int result = fileChooser.showOpenDialog(this);
+        if (result == JFileChooser.APPROVE_OPTION) {
+            File selectedFile = fileChooser.getSelectedFile();
+            try {
+                imageBlob = new javax.sql.rowset.serial.SerialBlob(Files.readAllBytes(selectedFile.toPath()));
+                imageIcon = new ImageIcon(selectedFile.getAbsolutePath());
+                lblEquipoLogo.setIcon(imageIcon);
+            } catch (IOException | SQLException ex) {
+                ex.printStackTrace();
+                JOptionPane.showMessageDialog(this, "Error al cargar la imagen. Por favor, inténtelo de nuevo.", "Error", JOptionPane.ERROR_MESSAGE);
+            }
+        }
+    }
 
-			uploadLogo();
+    private void addTeam() {
+        String nombreEquipo = nombreEquipoField.getText().trim();
+        String nombreEstadio = nombreEstadioField.getText().trim();
+        String titulosText = txttitulosField.getText().trim();
+        if (nombreEquipo.isEmpty() || nombreEstadio.isEmpty() || titulosText.isEmpty() || imageBlob == null) {
+            JOptionPane.showMessageDialog(this, "Por favor, complete todos los campos y cargue una imagen.", "Campos incompletos", JOptionPane.WARNING_MESSAGE);
+            return;
+        }
 
-		} else if (o == bntAnadirEq) {
-			if (controller.crearEquipo(nombreEquipoField.getText(), Integer.valueOf(txttitulosField.getText()),
-					nombreEstadioField.getText(), imageBlob)) {
-				int opcion = JOptionPane.showConfirmDialog(this,
-						(String) "El equipo ha sido introducido correctamente\n¿Desea añadir otro equipo?", "",
-						JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE, null);
-				if (opcion == JOptionPane.NO_OPTION) {
-					this.dispose();
-					MenuAdmin ma = new MenuAdmin(controller);
-					ma.setVisible(true);
-				}
+        int titulos;
+        try {
+            titulos = Integer.parseInt(titulosText);
+        } catch (NumberFormatException ex) {
+            JOptionPane.showMessageDialog(this, "Por favor, ingrese un número válido de títulos.", "Entrada inválida", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
 
-			}
-		}
-	}
+          if(  controller.crearEquipo(nombreEquipo, titulos, nombreEstadio, imageBlob)) {
+            JOptionPane.showMessageDialog(this, "Equipo añadido correctamente.", "Éxito", JOptionPane.INFORMATION_MESSAGE);
+            clearFields();
+          } else  {
+            JOptionPane.showMessageDialog(this, "Error al añadir el equipo(Ya existe). Por favor, inténtelo de nuevo.", "Error", JOptionPane.ERROR_MESSAGE);
+        }
+    }
+
+    private void clearFields() {
+        nombreEquipoField.setText("");
+        nombreEstadioField.setText("");
+        txttitulosField.setText("");
+        lblEquipoLogo.setIcon(null);
+        imageBlob = null;
+    }
 }
-
-

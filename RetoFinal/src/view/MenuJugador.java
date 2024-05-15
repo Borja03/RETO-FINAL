@@ -50,35 +50,140 @@ import javax.swing.border.SoftBevelBorder;
  * @since 2024-05-13
  */
 public class MenuJugador extends JFrame implements ActionListener {
-
+	/**
+	 * Unique identifier for serializing the class.
+	 */
+	/**
+	 * Serial version UID for serialization.
+	 */
 	private static final long serialVersionUID = 1L;
+
+	/**
+	 * The main content pane of the view.
+	 */
 	private JPanel contentPane;
+
+	/**
+	 * Button for logging out.
+	 */
 	private JButton btnLogOut;
+
+	/**
+	 * Button for changing password.
+	 */
 	private JButton btnCambiarCont;
+
+	/**
+	 * Button for changing player's dorsal number.
+	 */
 	private JButton btnCambiarDorsal;
+
+	/**
+	 * Reference to the controller for handling actions.
+	 */
 	private Controller controller;
+
+	/**
+	 * Label for welcoming the user.
+	 */
 	private JLabel lblWelcome;
+
+	/**
+	 * Username of the current user.
+	 */
 	private String userName;
+
+	/**
+	 * Button for accessing match information.
+	 */
 	private JButton btnConsultarPartidos;
+
+	/**
+	 * Button for accessing team information.
+	 */
 	private JButton btnConsultarEquipo;
+
+	/**
+	 * Text field for entering the team's name.
+	 */
 	private JTextField txtEqNombre;
+
+	/**
+	 * Text field for entering the team's stadium.
+	 */
 	private JTextField txtEqEstadio;
+
+	/**
+	 * Text field for entering the team's titles.
+	 */
 	private JTextField txtEqTitulos;
+
+	/**
+	 * Text field for entering the team's first coach.
+	 */
 	private JTextField txtEqPrimerEntre;
+
+	/**
+	 * Text field for entering the team's second coach.
+	 */
 	private JTextField txtEqSegundoEntre;
+
+	/**
+	 * Table for displaying team information.
+	 */
 	private JTable table;
+
+	/**
+	 * Scroll pane for the team information table.
+	 */
 	private JScrollPane scrollPane_1;
+
+	/**
+	 * Name of the team being viewed.
+	 */
 	private String nombreEquipo;
+
+	/**
+	 * Blob object representing the team's logo.
+	 */
 	private Blob teamLogo;
+
+	/**
+	 * Type of user logged in.
+	 */
 	private String userType;
 
+	/**
+	 * Label for indicating the list of players.
+	 */
 	private JLabel lblJugadoresLista;
+
+	/**
+	 * Label for indicating the user's profile picture.
+	 */
 	private JLabel lblUserPic;
+
+	/**
+	 * Label for indicating adding a profile picture.
+	 */
 	private JLabel lblBtnAddPic;
 
+	/**
+	 * Icon representing the profile picture.
+	 */
 	private ImageIcon imageIcon;
+
+	/**
+	 * Blob object representing the user's profile picture.
+	 */
 	private Blob usrBlobIcon;
+
+	/**
+	 * Button for uploading a profile picture.
+	 */
 	private JButton btnUpload;
+	 
+
 
 	/**
 	 * Constructs a new MenuJugador object.
@@ -264,6 +369,7 @@ public class MenuJugador extends JFrame implements ActionListener {
 		JLabel lblEqLogo = new JLabel();
 
 		nombreEquipo = controller.getMyTeam(userName, "jugador");
+		System.out.println(nombreEquipo);
 		teamLogo = controller.getEquipo(nombreEquipo).getLogo();
 		if (teamLogo != null) {
 			try {

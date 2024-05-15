@@ -2,55 +2,115 @@ package model.partido;
 
 import java.time.LocalDateTime;
 
+/**
+ * Represents a match (Juegan) between two teams with attributes such as local team name, visiting team name, start date, and result.
+ */
 public class Juegan {
-	private String nombreEquipoLocal;
-	private String nombreEquipoVisitante;
-	private LocalDateTime fechaInicio;
-	private String resultado;
+    
+    /**
+     * The name of the home team.
+     */
+    private String nombreEquipoLocal;
+    
+    /**
+     * The name of the visiting team.
+     */
+    private String nombreEquipoVisitante;
+    
+    /**
+     * The start date and time of the match.
+     */
+    private LocalDateTime fechaInicio;
+    
+    /**
+     * The result of the match.
+     */
+    private String resultado;
 
-	public Juegan(String nombreEquipoLocal, String nombreEquipoVisitante, LocalDateTime fechaInicio, String resultado) {
-		this.nombreEquipoLocal = nombreEquipoLocal;
-		this.nombreEquipoVisitante = nombreEquipoVisitante;
-		this.fechaInicio = fechaInicio;
-		this.resultado = resultado;
-	}
+    /**
+     * Constructs a new Juegan instance with the specified local team name, visiting team name, start date, and result.
+     *
+     * @param nombreEquipoLocal the name of the home team
+     * @param nombreEquipoVisitante the name of the visiting team
+     * @param fechaInicio the start date and time of the match
+     * @param resultado the result of the match
+     */
+    public Juegan(String nombreEquipoLocal, String nombreEquipoVisitante, LocalDateTime fechaInicio, String resultado) {
+        this.nombreEquipoLocal = nombreEquipoLocal;
+        this.nombreEquipoVisitante = nombreEquipoVisitante;
+        this.fechaInicio = fechaInicio;
+        this.resultado = resultado;
+    }
 
-	public String getNombreEquipoLocal() {
-		return nombreEquipoLocal;
-	}
+    /**
+     * Gets the name of the home team.
+     *
+     * @return the name of the home team
+     */
+    public String getNombreEquipoLocal() {
+        return nombreEquipoLocal;
+    }
 
-	public void setNombreEquipoLocal(String nombreEquipoLocal) {
-		this.nombreEquipoLocal = nombreEquipoLocal;
-	}
+    /**
+     * Sets the name of the home team.
+     *
+     * @param nombreEquipoLocal the name of the home team
+     */
+    public void setNombreEquipoLocal(String nombreEquipoLocal) {
+        this.nombreEquipoLocal = nombreEquipoLocal;
+    }
 
-	public String getNombreEquipoVisitante() {
-		return nombreEquipoVisitante;
-	}
+    /**
+     * Gets the name of the visiting team.
+     *
+     * @return the name of the visiting team
+     */
+    public String getNombreEquipoVisitante() {
+        return nombreEquipoVisitante;
+    }
 
-	public void setNombreEquipoVisitante(String nombreEquipoVisitante) {
-		this.nombreEquipoVisitante = nombreEquipoVisitante;
-	}
+    /**
+     * Sets the name of the visiting team.
+     *
+     * @param nombreEquipoVisitante the name of the visiting team
+     */
+    public void setNombreEquipoVisitante(String nombreEquipoVisitante) {
+        this.nombreEquipoVisitante = nombreEquipoVisitante;
+    }
 
-	public LocalDateTime getFechaInicio() {
-		return fechaInicio;
-	}
+    /**
+     * Gets the start date and time of the match.
+     *
+     * @return the start date and time of the match
+     */
+    public LocalDateTime getFechaInicio() {
+        return fechaInicio;
+    }
 
-	public void setFechaInicio(LocalDateTime fechaInicio) {
-		this.fechaInicio = fechaInicio;
-	}
+    /**
+     * Sets the start date and time of the match.
+     *
+     * @param fechaInicio the start date and time of the match
+     */
+    public void setFechaInicio(LocalDateTime fechaInicio) {
+        this.fechaInicio = fechaInicio;
+    }
 
-	public String getResultado() {
-		return resultado;
-	}
+    /**
+     * Gets the result of the match.
+     *
+     * @return the result of the match
+     */
+    public String getResultado() {
+        return resultado;
+    }
 
-	public void setResultado(String resultado) {
-		this.resultado = resultado;
-	}
-
-	@Override
-	public String toString() {
-		return "Juegan [nombreEquipoLocal=" + nombreEquipoLocal + ", nombreEquipoVisitante=" + nombreEquipoVisitante
-				+ ", fechaInicio=" + fechaInicio + ", resultado=" + resultado + "]";
-	}
-
+    /**
+     * Sets the result of the match.
+     *
+     * @param resultado the result of the match
+     */
+    public void setResultado(String resultado) {
+        this.resultado = resultado;
+    }
 }

@@ -39,7 +39,9 @@ import model.equipos.Equipo;
  * @since 2024-05-13
  */
 class CrearPartido extends JFrame implements ActionListener {
-
+	/**
+	 * Unique identifier for serializing the class.
+	 */
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
 	private JButton btnLogOut;
