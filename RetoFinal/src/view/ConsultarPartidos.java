@@ -1,4 +1,3 @@
-
 package view;
 
 import java.awt.BorderLayout;
@@ -518,3 +517,4 @@ public class ConsultarPartidos extends JFrame implements ActionListener {
 	}
 
 }
+

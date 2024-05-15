@@ -52,10 +52,13 @@ public class GestionarJugadores extends JFrame implements ActionListener {
 	 * Button for deleting a player.
 	 */
 	private JButton btnDeleteJugador;
+<<<<<<< HEAD
 
 	/**
 	 * Reference to the controller handling the GUI logic.
 	 */
+=======
+>>>>>>> origin/Alder
 	private Controller controller;
 
 	/**
@@ -102,6 +105,7 @@ public class GestionarJugadores extends JFrame implements ActionListener {
 	 * Label displaying the number of goals scored by the player.
 	 */
 	private JLabel lblGoles;
+<<<<<<< HEAD
 
 	/**
 	 * Label displaying the user's profile picture.
@@ -111,6 +115,9 @@ public class GestionarJugadores extends JFrame implements ActionListener {
 	/**
 	 * Label displaying the number of assists made by the player.
 	 */
+=======
+	private JLabel lblUserPic;
+>>>>>>> origin/Alder
 	private JLabel lblAsistencias;
 
 	/**
@@ -204,9 +211,15 @@ public class GestionarJugadores extends JFrame implements ActionListener {
 
 		JPanel panelLeft = new JPanel();
 		panelLeft.setBounds(0, 0, 250, 680);
+<<<<<<< HEAD
 		panelLeft.setBackground(new Color(86, 82, 252));
 		contentPane.add(panelLeft);
 		panelLeft.setLayout(null);
+=======
+        panelLeft.setBackground(new Color(86, 82, 252));
+        contentPane.add(panelLeft);
+        panelLeft.setLayout(null);
+>>>>>>> origin/Alder
 
 		btnConsultarEquipo = new JButton("     Consultar Equipo");
 		btnConsultarEquipo.setForeground(new Color(255, 255, 255));
@@ -392,7 +405,11 @@ public class GestionarJugadores extends JFrame implements ActionListener {
 		textFieldDorsal = new JComboBox<>();
 		textFieldDorsal.setBounds(515, 333, 250, 35);
 		textFieldDorsal.setFont(new Font("Tahoma", Font.BOLD, 14));
+<<<<<<< HEAD
 		fillDorsalBox();
+=======
+		fillDorsalBox ();
+>>>>>>> origin/Alder
 		contentPane.add(textFieldDorsal);
 
 		textFieldGoles = new JTextField();
@@ -425,6 +442,14 @@ public class GestionarJugadores extends JFrame implements ActionListener {
 		lblEquipo.setFont(new Font("Tahoma", Font.BOLD, 14));
 		contentPane.add(lblEquipo);
 		btnOK.addActionListener(this);
+		
+		lblUserPic = new JLabel();
+		lblUserPic.setBackground(SystemColor.activeCaption);
+		lblUserPic.setForeground(SystemColor.activeCaption);
+		lblUserPic.setBounds(50, 33, 150, 150);
+		panelLeft.add(lblUserPic);
+		
+
 
 		lblUserPic = new JLabel();
 		lblUserPic.setBackground(SystemColor.activeCaption);
@@ -455,7 +480,11 @@ public class GestionarJugadores extends JFrame implements ActionListener {
 	public void actionPerformed(ActionEvent e) {
 
 		if (e.getSource() == btnDeleteJugador) {
+<<<<<<< HEAD
 			ModificarJugadores eliminarJugadores = new ModificarJugadores(controller, userName, miEquipo, userType);
+=======
+			ModificarJugadores eliminarJugadores = new ModificarJugadores (controller,userName,miEquipo,userType);
+>>>>>>> origin/Alder
 			this.dispose();
 			eliminarJugadores.setVisible(true);
 		} else if (e.getSource() == btnConsultarEquipo) {

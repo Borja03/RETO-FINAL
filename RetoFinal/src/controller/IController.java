@@ -1,4 +1,3 @@
-
 package controller;
 
 import java.security.Timestamp;
@@ -35,9 +34,11 @@ public interface IController {
 
 	public boolean modificarJugador(String user, String password, int dorsal, int numGoles, int numAsist);
 
+	public void consultarEquipo();
 
 	public void modificarDorsal();
 
+	public void consultarPartido();
 
 	public ArrayList<String> getEquipos();
 
@@ -79,7 +80,4 @@ public interface IController {
 
 	boolean modificarJugadorConDorsal(String user, int dorsal);
 
-
-
 }
-
