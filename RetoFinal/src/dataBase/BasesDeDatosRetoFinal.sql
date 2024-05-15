@@ -50,13 +50,13 @@ insert into usuario(user, password, tipo) values('entrenador','1234','entrenador
 insert into entrenador(user, tipoEntrenador, nombreEquipo) values('entrenador','Primer_entrenador','Athletic de Bilbao');
 
 -- Insertar usuario para el jugador
-insert into usuario(user, password, tipo) values('jugador','1234','1');
+insert into usuario(user, password, tipo) values('jugador','1234','jugador');
 insert into jugador (user, dorsal, numeroGoles, numeroAsistencias, nombreEquipo) values('jugador',9,999,500,'Athletic de Bilbao');
 
 INSERT INTO equipo (nombreEquipo, titulos, nombreEstadio) VALUES ('Barsa', 1000, 'Camp Nou');
 
 -- Insertar usuario para el jugador de Barsa
-insert into usuario(user, password, tipo) values('alder','alder','1');
+insert into usuario(user, password, tipo) values('alder','alder','jugador');
 INSERT INTO jugador (user, dorsal, numeroGoles, numeroAsistencias, nombreEquipo)
 VALUES ('alder', 10, 0, 0, 'Barsa');
 

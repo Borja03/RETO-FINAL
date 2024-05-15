@@ -41,39 +41,159 @@ import javax.swing.border.CompoundBorder;
 import javax.swing.border.EtchedBorder;
 import javax.swing.border.SoftBevelBorder;
 
+/**
+ * MenuJugador class represents the graphical user interface for the menu
+ * options available to a player user. It allows the player to view and interact
+ * with various functionalities related to their profile and team.
+ * 
+ * @author 1dami G1
+ * @since 2024-05-13
+ */
 public class MenuJugador extends JFrame implements ActionListener {
-
+	/**
+	 * Unique identifier for serializing the class.
+	 */
+	/**
+	 * Serial version UID for serialization.
+	 */
 	private static final long serialVersionUID = 1L;
+
+	/**
+	 * The main content pane of the view.
+	 */
 	private JPanel contentPane;
+
+	/**
+	 * Button for logging out.
+	 */
 	private JButton btnLogOut;
+
+	/**
+	 * Button for changing password.
+	 */
 	private JButton btnCambiarCont;
+
+	/**
+	 * Button for changing player's dorsal number.
+	 */
 	private JButton btnCambiarDorsal;
+
+	/**
+	 * Reference to the controller for handling actions.
+	 */
 	private Controller controller;
+
+	/**
+	 * Label for welcoming the user.
+	 */
 	private JLabel lblWelcome;
+
+	/**
+	 * Username of the current user.
+	 */
 	private String userName;
+
+	/**
+	 * Button for accessing match information.
+	 */
 	private JButton btnConsultarPartidos;
+
+	/**
+	 * Button for accessing team information.
+	 */
 	private JButton btnConsultarEquipo;
+
+	/**
+	 * Text field for entering the team's name.
+	 */
 	private JTextField txtEqNombre;
+
+	/**
+	 * Text field for entering the team's stadium.
+	 */
 	private JTextField txtEqEstadio;
+
+	/**
+	 * Text field for entering the team's titles.
+	 */
 	private JTextField txtEqTitulos;
+
+	/**
+	 * Text field for entering the team's first coach.
+	 */
 	private JTextField txtEqPrimerEntre;
+
+	/**
+	 * Text field for entering the team's second coach.
+	 */
 	private JTextField txtEqSegundoEntre;
+
+	/**
+	 * Table for displaying team information.
+	 */
 	private JTable table;
+
+	/**
+	 * Scroll pane for the team information table.
+	 */
 	private JScrollPane scrollPane_1;
+
+	/**
+	 * Name of the team being viewed.
+	 */
 	private String nombreEquipo;
+
+	/**
+	 * Blob object representing the team's logo.
+	 */
 	private Blob teamLogo;
+
+	/**
+	 * Type of user logged in.
+	 */
 	private String userType;
 
+	/**
+	 * Label for indicating the list of players.
+	 */
 	private JLabel lblJugadoresLista;
+
+	/**
+	 * Label for indicating the user's profile picture.
+	 */
 	private JLabel lblUserPic;
+
+	/**
+	 * Label for indicating adding a profile picture.
+	 */
 	private JLabel lblBtnAddPic;
 
+	/**
+	 * Icon representing the profile picture.
+	 */
 	private ImageIcon imageIcon;
+
+	/**
+	 * Blob object representing the user's profile picture.
+	 */
 	private Blob usrBlobIcon;
+
+	/**
+	 * Button for uploading a profile picture.
+	 */
 	private JButton btnUpload;
-	
-	
-	public MenuJugador(Controller cont, String userConnected,String userType) {
+	 
+
+
+	/**
+	 * Constructs a new MenuJugador object.
+	 * 
+	 * @param cont          The controller object for handling interactions between
+	 *                      the view and the model.
+	 * @param userConnected The username of the currently logged-in user.
+	 * @param userType      The type of user, in this case, "jugador" (player).
+	 */
+	public MenuJugador(Controller cont, String userConnected, String userType) {
 
 		this.controller = cont;
 		this.userName = userConnected;
@@ -85,6 +205,7 @@ public class MenuJugador extends JFrame implements ActionListener {
 		contentPane.setSize(1366, 768);
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
+		setLocationRelativeTo(null);
 
 		JPanel panelLefts = new JPanel();
 		panelLefts.setBounds(0, 0, 250, 680);
@@ -95,7 +216,6 @@ public class MenuJugador extends JFrame implements ActionListener {
 		btnLogOut.setForeground(new Color(255, 255, 255));
 		btnLogOut.setBounds(0, 546, 250, 49);
 		btnLogOut.setHorizontalAlignment(SwingConstants.LEFT);
-		
 
 		lblBtnAddPic = new JLabel();
 		lblBtnAddPic.setBounds(160, 140, 50, 50);
@@ -141,7 +261,6 @@ public class MenuJugador extends JFrame implements ActionListener {
 		btnCambiarDorsal.setBorder(null);
 		btnCambiarDorsal.setBackground(new Color(33, 199, 162));
 		panelLefts.add(btnCambiarDorsal);
-		
 
 		lblWelcome = new JLabel("     Welcome " + userName);
 		lblWelcome.setBounds(10, 228, 217, 34);
@@ -173,12 +292,12 @@ public class MenuJugador extends JFrame implements ActionListener {
 		btnConsultarEquipo.setBorder(null);
 		btnConsultarEquipo.setBackground(new Color(26, 169, 185));
 		panelLefts.add(btnConsultarEquipo);
-		
-				lblUserPic = new JLabel();
-				lblUserPic.setBounds(50, 33, 150, 150);
-				lblUserPic.setBackground(SystemColor.activeCaption);
-				lblUserPic.setForeground(new Color(0, 64, 128));
-				panelLefts.add(lblUserPic);
+
+		lblUserPic = new JLabel();
+		lblUserPic.setBounds(50, 33, 150, 150);
+		lblUserPic.setBackground(SystemColor.activeCaption);
+		lblUserPic.setForeground(new Color(0, 64, 128));
+		panelLefts.add(lblUserPic);
 
 		JPanel panel = new JPanel();
 		panel.setBorder(new SoftBevelBorder(BevelBorder.RAISED, null, null, null, null));
@@ -250,6 +369,7 @@ public class MenuJugador extends JFrame implements ActionListener {
 		JLabel lblEqLogo = new JLabel();
 
 		nombreEquipo = controller.getMyTeam(userName, "jugador");
+		System.out.println(nombreEquipo);
 		teamLogo = controller.getEquipo(nombreEquipo).getLogo();
 		if (teamLogo != null) {
 			try {
@@ -269,7 +389,6 @@ public class MenuJugador extends JFrame implements ActionListener {
 		lblEqLogo.setBounds(22, 10, 150, 150);
 		panel.add(lblEqLogo);
 
-
 		ArrayList<Jugador> dataList = controller.getJugadoresPorEquipo(nombreEquipo);
 
 		String[] columnNames = { "Nombre", "Dorsal", "Goles", "Asistencias" };
@@ -281,32 +400,32 @@ public class MenuJugador extends JFrame implements ActionListener {
 			data[i][1] = obj.getDorsal();
 			data[i][2] = obj.getGoles();
 			data[i][3] = obj.getAsistencias();
-			
+
 		}
 
 		for (Jugador jug : dataList) {
 			if (userName.equals(jug.getUser())) {
 				if (jug.getPicProfile() != null) {
 					try {
-				        byte[] imageData = jug.getPicProfile().getBytes(1, (int) jug.getPicProfile().length());
-				        if (imageData != null && imageData.length > 0) {
-				            ImageIcon icon2 = new ImageIcon(imageData);
-				            Image image2 = icon2.getImage().getScaledInstance(150, 150, Image.SCALE_SMOOTH);
-				            ImageIcon scaledIcon2 = new ImageIcon(image2);
-				            lblUserPic.setIcon(scaledIcon2);
-				        } else {
-				            // if image is null in data base or empty, show a default image
-				            ImageIcon defaultIcon = new ImageIcon("src/images/icons/default.png");
-				            lblUserPic.setIcon(defaultIcon);
-				        }
-				    } catch (SQLException e) {
-				        System.err.println("Error reading image data from Blob: " + e.getMessage());
-				        e.printStackTrace();
-				    }
+						byte[] imageData = jug.getPicProfile().getBytes(1, (int) jug.getPicProfile().length());
+						if (imageData != null && imageData.length > 0) {
+							ImageIcon icon2 = new ImageIcon(imageData);
+							Image image2 = icon2.getImage().getScaledInstance(150, 150, Image.SCALE_SMOOTH);
+							ImageIcon scaledIcon2 = new ImageIcon(image2);
+							lblUserPic.setIcon(scaledIcon2);
+						} else {
+							// if image is null in data base or empty, show a default image
+							ImageIcon defaultIcon = new ImageIcon("src/images/icons/default.png");
+							lblUserPic.setIcon(defaultIcon);
+						}
+					} catch (SQLException e) {
+						System.err.println("Error reading image data from Blob: " + e.getMessage());
+						e.printStackTrace();
+					}
 				} else {
-		            // if image is null in data base or empty, show a default image
-				    ImageIcon defaultIcon = new ImageIcon("src/images/icons/default.png");
-				    lblUserPic.setIcon(defaultIcon);
+					// if image is null in data base or empty, show a default image
+					ImageIcon defaultIcon = new ImageIcon("src/images/icons/default.png");
+					lblUserPic.setIcon(defaultIcon);
 				}
 
 			}
@@ -334,6 +453,9 @@ public class MenuJugador extends JFrame implements ActionListener {
 		fillEntrenadoresInfo();
 	}
 
+	/**
+	 * Fills the information related to the player's team in the GUI.
+	 */
 	public void fillEquipoInfo() {
 		nombreEquipo = controller.getMyTeam(userName, userType);
 		Equipo eq = controller.getEquipo(nombreEquipo);
@@ -342,6 +464,9 @@ public class MenuJugador extends JFrame implements ActionListener {
 		txtEqTitulos.setText(eq.getTitulos() + "");
 	}
 
+	/**
+	 * Fills the information related to the coaches of the player's team in the GUI.
+	 */
 	public void fillEntrenadoresInfo() {
 		String primEntrenador = controller.getPrimEntrenador(nombreEquipo);
 		String segEntrenador = controller.getSegEntrenador(nombreEquipo);
@@ -350,6 +475,9 @@ public class MenuJugador extends JFrame implements ActionListener {
 		txtEqSegundoEntre.setText(segEntrenador);
 	}
 
+	/**
+	 * Displays a dialog for the user to upload their profile picture.
+	 */
 	private void userUploadImgDialog() {
 		btnUpload = new JButton("Upload Image");
 		btnUpload.addActionListener(new ActionListener() {
@@ -392,29 +520,34 @@ public class MenuJugador extends JFrame implements ActionListener {
 		JOptionPane.showMessageDialog(this, btnUpload, "Upload Image", JOptionPane.PLAIN_MESSAGE);
 	}
 
+	/**
+	 * Handles the actionPerformed event for various buttons in the GUI.
+	 * 
+	 * @param e The ActionEvent object representing the event.
+	 */
+
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		Object o = e.getSource();
 
+		if (o == btnLogOut) {
+			controller.logOut();
+			this.dispose();
+		} else if (o == btnCambiarDorsal) {
+			CambiarDorsal ventanaDorsal = new CambiarDorsal(controller, userName, userType);
+			ventanaDorsal.setVisible(true);
+			this.setVisible(false);
+		} else if (o == btnConsultarPartidos) {
+			ConsultarPartidos consultarPartidos = new ConsultarPartidos(controller, userName, userType);
+			consultarPartidos.setVisible(true);
+			this.dispose();
 
-			if (o == btnLogOut) {
-				controller.logOut();
-				this.dispose();
-			} else if (o == btnCambiarDorsal) {
-				CambiarDorsal ventanaDorsal = new CambiarDorsal(controller, userName,userType);
-				ventanaDorsal.setVisible(true);
-				this.setVisible(false);
-			} else if (o == btnConsultarPartidos) {
-				ConsultarPartidos consultarPartidos = new ConsultarPartidos(controller, userName, userType);
-				consultarPartidos.setVisible(true);
-				this.dispose();
-
-			} else if (o == btnCambiarCont) {
-				CambiarContra ventanaCont = new CambiarContra(controller, userName, userType);
-				ventanaCont.setVisible(true);
-				this.dispose();
-			}
-
+		} else if (o == btnCambiarCont) {
+			CambiarContra ventanaCont = new CambiarContra(controller, userName, userType);
+			ventanaCont.setVisible(true);
+			this.dispose();
 		}
-	
+
+	}
+
 }

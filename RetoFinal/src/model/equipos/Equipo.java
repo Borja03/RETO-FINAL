@@ -1,91 +1,170 @@
 package model.equipos;
 
-import java.io.Serializable;
-
 import java.sql.Blob;
 import java.util.ArrayList;
 
 import model.partido.Juegan;
 
-public class Equipo implements Serializable {
+/**
+ * Represents a team (Equipo) with attributes such as team name, stadium, titles, logo, and a list of matches.
+ */
+public class Equipo {
 
-	private static final long serialVersionUID = 1L;
-	private String nombreEquipo;
-	private String estadio;
-	private int titulos;
-	private Blob logo;
-	private ArrayList<Juegan> listaPartido;
+ 
+    /**
+     * The name of the team.
+     */
+    private String nombreEquipo;
+    
+    /**
+     * The name of the stadium where the team plays.
+     */
+    private String estadio;
+    
+    /**
+     * The number of titles the team has won.
+     */
+    private int titulos;
+    
+    /**
+     * The logo of the team as a Blob.
+     */
+    private Blob logo;
+    
+    /**
+     * A list of matches the team has played.
+     */
+    private ArrayList<Juegan> listaPartido;
 
-	public Equipo() {
-		this.nombreEquipo = "";
-		this.estadio = "";
-		this.listaPartido = new ArrayList<>();
-		this.titulos = 0;
-	}
+    /**
+     * Default constructor that initializes an Equipo with default values.
+     */
+    public Equipo() {
+        this.nombreEquipo = "";
+        this.estadio = "";
+        this.listaPartido = new ArrayList<>();
+        this.titulos = 0;
+    }
 
-	public Equipo(String nombreEquipo, String estadio, int titulos) {
-		this.nombreEquipo = nombreEquipo;
-		this.estadio = estadio;
-		this.titulos = titulos;
-		this.listaPartido = new ArrayList<>();
-	}
+    /**
+     * Constructs a new Equipo with the specified team name, stadium, and number of titles.
+     *
+     * @param nombreEquipo the name of the team
+     * @param estadio the name of the stadium
+     * @param titulos the number of titles the team has won
+     */
+    public Equipo(String nombreEquipo, String estadio, int titulos) {
+        this.nombreEquipo = nombreEquipo;
+        this.estadio = estadio;
+        this.titulos = titulos;
+        this.listaPartido = new ArrayList<>();
+    }
 
-	public Equipo(String nombreEquipo, String estadio, int titulos,Blob logoLink) {
-		this.nombreEquipo = nombreEquipo;
-		this.estadio = estadio;
-		this.titulos = titulos;
-		this.logo = logoLink;
-		this.listaPartido = new ArrayList<>();
-	}
+    /**
+     * Constructs a new Equipo with the specified team name, stadium, number of titles, and logo.
+     *
+     * @param nombreEquipo the name of the team
+     * @param estadio the name of the stadium
+     * @param titulos the number of titles the team has won
+     * @param logo the logo of the team as a Blob
+     */
+    public Equipo(String nombreEquipo, String estadio, int titulos, Blob logo) {
+        this.nombreEquipo = nombreEquipo;
+        this.estadio = estadio;
+        this.titulos = titulos;
+        this.logo = logo;
+        this.listaPartido = new ArrayList<>();
+    }
 
-	public String getNombreEquipo() {
-		return nombreEquipo;
-	}
+    /**
+     * Gets the name of the team.
+     *
+     * @return the name of the team
+     */
+    public String getNombreEquipo() {
+        return nombreEquipo;
+    }
 
-	public void setNombreEquipo(String nombreEquipo) {
-		this.nombreEquipo = nombreEquipo;
-	}
+    /**
+     * Sets the name of the team.
+     *
+     * @param nombreEquipo the name of the team
+     */
+    public void setNombreEquipo(String nombreEquipo) {
+        this.nombreEquipo = nombreEquipo;
+    }
 
-	public String getEstadio() {
-		return estadio;
-	}
+    /**
+     * Gets the name of the stadium where the team plays.
+     *
+     * @return the name of the stadium
+     */
+    public String getEstadio() {
+        return estadio;
+    }
 
-	public void setEstadio(String estadio) {
-		this.estadio = estadio;
-	}
+    /**
+     * Sets the name of the stadium where the team plays.
+     *
+     * @param estadio the name of the stadium
+     */
+    public void setEstadio(String estadio) {
+        this.estadio = estadio;
+    }
 
-	public int getTitulos() {
-		return titulos;
-	}
+    /**
+     * Gets the number of titles the team has won.
+     *
+     * @return the number of titles
+     */
+    public int getTitulos() {
+        return titulos;
+    }
 
-	public void setTitulos(int titulos) {
-		this.titulos = titulos;
-	}
+    /**
+     * Sets the number of titles the team has won.
+     *
+     * @param titulos the number of titles
+     */
+    public void setTitulos(int titulos) {
+        this.titulos = titulos;
+    }
 
-	public ArrayList<Juegan> getListaPartido() {
-		return listaPartido;
-	}
+    /**
+     * Gets the list of matches the team has played.
+     *
+     * @return the list of matches
+     */
+    public ArrayList<Juegan> getListaPartido() {
+        return listaPartido;
+    }
 
-	public void setListaPartido(ArrayList<Juegan> listaPartido) {
-		this.listaPartido = listaPartido;
-	}
+    /**
+     * Sets the list of matches the team has played.
+     *
+     * @param listaPartido the list of matches
+     */
+    public void setListaPartido(ArrayList<Juegan> listaPartido) {
+        this.listaPartido = listaPartido;
+    }
 
+    /**
+     * Gets the logo of the team.
+     *
+     * @return the logo of the team
+     */
+    public Blob getLogo() {
+        return logo;
+    }
 
+    /**
+     * Sets the logo of the team.
+     *
+     * @param logo the logo of the team
+     */
+    public void setLogo(Blob logo) {
+        this.logo = logo;
+    }
 
-
-	public Blob getLogo() {
-		return logo;
-	}
-
-	public void setLogo(Blob logo) {
-		this.logo = logo;
-	}
-
-	public void getDatosEquipo() {
-		System.out.println("-----Datos del equipo-----");
-		System.out.println("Nombre del equipo : " + this.nombreEquipo);
-		System.out.println("Estadio : " + this.estadio);
-		System.out.println("Titulos : " + this.titulos);
-
-	}
+  
 }
