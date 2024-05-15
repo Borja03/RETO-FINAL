@@ -47,7 +47,9 @@ public class Controller implements IController {
 	final String GETJugadorPassword = "SELECT usuario.password FROM jugador INNER JOIN usuario ON jugador.user = usuario.user WHERE jugador.user = ?";
 	final String GETjugadorEquipo = "SELECT jugador.*, usuario.password, usuario.tipo FROM jugador INNER JOIN usuario ON jugador.user = usuario.user WHERE jugador.user = ? AND jugador.nombreEquipo = ?";
 	final String INSERTequipo = "INSERT INTO equipo (nombreEquipo, titulos, nombreEstadio, logo) VALUES (?, ?, ?, ?)";
+	final String INSERTjugadorUser = "INSERT INTO usuario (user, password) VALUES (?, ?)";
 	final String INSERTjugador = "INSERT INTO jugador (user, dorsal, numeroGoles, numeroAsistencias, nombreEquipo) VALUES (?, ?, ?, ?, ?)";
+	final String INNSERTentrenadorUser = "INSERT INTO usuario (user, password) VALUES (?, ?)";
 	final String INNSERTentrenador = "INSERT INTO entrenador (user, tipoEntrenador, nombreEquipo) VALUES (?, ?, ?)";
 	final String JUGADORDORequipo = "SELECT nombreEquipo FROM jugador where user = ?";
 	final String JUGADORESequipo = "SELECT jugador.*, usuario.password, usuario.tipo FROM jugador INNER JOIN usuario ON jugador.user = usuario.user WHERE jugador.nombreEquipo = ?";
@@ -139,52 +141,47 @@ public class Controller implements IController {
 	}
 
 	@Override
-	public boolean logIn(String username, String pass, String userType) {
-		String query = "";
-		String userDb;
-		String passDb;
+	public boolean logIn(String usuario, String contraseña, String tipoUsuario) {
+	    String userDb;
+	    String passDb;
 
-		if ("Admin".equals(userType)) {
-			System.out.println("checking Admin...");
-			user = "admin";
-			password = "admin";
-			openConnection(user, password);
-			if (username.equals("admin") && pass.equals("admin")) {
-				return true;
-			}
+	    try {
+	        if ("Admin".equals(tipoUsuario)) {
+	            System.out.println("Comprobando Administrador...");
+	            user = "admin";
+	            password = "admin";
+	            openConnection(user, password);
+	            if (usuario.equals("admin") && contraseña.equals("admin")) {
+	                return true;
+	            }
+	        } else if ("Entrenador".equals(tipoUsuario) || "Jugador".equals(tipoUsuario)) {
+	            System.out.println("Comprobando " + tipoUsuario + "...");
+	            user = tipoUsuario.toLowerCase();
+	            password = tipoUsuario.toLowerCase();
+	            openConnection(user, password);
+	            String query = "SELECT * FROM usuario WHERE user = ? AND password = ?";
+	            try (PreparedStatement statement = connection.prepareStatement(query)) {
+	                statement.setString(1, usuario);
+	                statement.setString(2, contraseña);
+	                ResultSet resultSet = statement.executeQuery();
 
-		} else if ("Entrenador".equals(userType)) {
-			System.out.println("checking Entrenador...");
-			user = "entrenador";
-			password = "entrenador";
-			openConnection(user, password);
-			query = "SELECT * FROM usuario WHERE user = ? AND password = ?";
-		} else if ("Jugador".equals(userType)) {
-			System.out.println("checking Jugador...");
-			user = "jugador";
-			password = "jugador";
-			openConnection(user, password);
-			query = "SELECT * FROM usuario WHERE user = ? AND password = ?";
-		}
-
-		try (PreparedStatement statement = connection.prepareStatement(query)) {
-			statement.setString(1, username);
-			statement.setString(2, pass);
-			ResultSet resultSet = statement.executeQuery();
-
-			if (resultSet.next()) {
-				userDb = resultSet.getString("user");
-				passDb = resultSet.getString("password");
-				if (userDb.equals(username) && passDb.equals(pass)) {
-					return true;
-				}
-			}
-
-		} catch (SQLException ex) {
-			ex.printStackTrace();
-		}
-		return false;
+	                if (resultSet.next()) {
+	                    userDb = resultSet.getString("user");
+	                    passDb = resultSet.getString("password");
+	                    if (userDb.equals(usuario) && passDb.equals(contraseña)) {
+	                        return true;
+	                    }
+	                }
+	            }
+	        }
+	    } catch (SQLException ex) {
+	        ex.printStackTrace();
+	    } finally {
+	        closeConnection();
+	    }
+	    return false;
 	}
+
 
 	@Override
 	public boolean crearEntrenador(String nombreEquipo, String user, String password, CargoEntrenador tipoEntrenador) {
@@ -192,11 +189,14 @@ public class Controller implements IController {
 		this.openConnection("admin", "admin");
 
 		try {
-			statement = connection.prepareStatement(INNSERTentrenador);
+			statement = connection.prepareStatement(INNSERTentrenadorUser);
 			statement.setString(1, user);
 			statement.setString(2, password);
-			statement.setString(3, tipoEntrenador.getNombre());
-			statement.setString(4, nombreEquipo);
+			statement.executeUpdate();
+			statement = connection.prepareStatement(INNSERTentrenador);
+			statement.setString(1, user);
+			statement.setString(2, tipoEntrenador.getNombre());
+			statement.setString(3, nombreEquipo);
 			if (statement.executeUpdate() > 0) {
 				added = true;
 			}
@@ -243,13 +243,16 @@ public class Controller implements IController {
 		boolean added = false;
 		this.openConnection("entrenador", "entrenador");
 		try {
-			statement = connection.prepareStatement(INSERTjugador);
+			statement = connection.prepareStatement(INSERTjugadorUser);
 			statement.setString(1, user);
 			statement.setString(2, password);
-			statement.setInt(3, dorsal);
-			statement.setInt(4, numeroGoles);
-			statement.setInt(5, numeroAsistencias);
-			statement.setString(6, nombreEquipo);
+			statement.executeUpdate();
+			statement = connection.prepareStatement(INSERTjugador);
+			statement.setString(1, user);
+			statement.setInt(2, dorsal);
+			statement.setInt(3, numeroGoles);
+			statement.setInt(4, numeroAsistencias);
+			statement.setString(5, nombreEquipo);
 			if (statement.executeUpdate() > 0) {
 				added = true;
 				System.out.println("Data inserted!");

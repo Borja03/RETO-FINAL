@@ -32,8 +32,7 @@ numeroGoles integer(3) unsigned,
 numeroAsistencias integer(3) unsigned,
 nombreEquipo varchar(30),
 foreign key (nombreEquipo) references equipo(nombreEquipo) on delete cascade,
-foreign key (user) references usuario(user) on delete cascade,
-icon blob
+foreign key (user) references usuario(user) on delete cascade
 );
 
 create table entrenador(
@@ -41,8 +40,7 @@ user varchar(20) primary key,
 tipoEntrenador enum('Primer_entrenador', 'Segundo_entrenador'),
 nombreEquipo varchar(30),
 foreign key (nombreEquipo) references equipo(nombreEquipo) on delete cascade,
-foreign key (user) references usuario(user) on delete cascade,
-icon blob
+foreign key (user) references usuario(user) on delete cascade
 );
 
 insert into equipo(nombreEquipo, titulos, nombreEstadio) values('Athletic de Bilbao',100,'San Mames');
