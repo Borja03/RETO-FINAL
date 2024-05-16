@@ -39,7 +39,8 @@ import javax.swing.JComboBox;
  * ActionListener to handle user interactions.
  * 
  * @author 1dami G1
- * @since 2024-05-13
+ * @version 1.0
+ * Date 2024-05-13 
  */
 public class ModificarEquipos extends JFrame implements ActionListener {
 	/**

@@ -1,10 +1,8 @@
 package controller;
 
-import java.security.Timestamp;
 import java.sql.Blob;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
-import java.util.Date;
 
 import model.equipos.Equipo;
 import model.partido.Juegan;
@@ -14,8 +12,6 @@ import model.usuarios.Usuarios;
 
 public interface IController {
 	public boolean checkUserExist(String user);
-
-	public void logOut();
 
 	public boolean logIn(String username, String pass, String userType);
 
@@ -72,15 +68,15 @@ public interface IController {
 
 	public void modificarPartido(Juegan juegan, LocalDateTime fecha);
 
-	ArrayList<Juegan> consultarPartidoEquipo(String equipoName);
+	public ArrayList<Juegan> consultarPartidoEquipo(String equipoName);
 
-	boolean checkUserExist2(String user);
-
-	ArrayList<Juegan> listaPartidos();
+	public ArrayList<Juegan> listaPartidos();
 
 	boolean modificarJugadorConDorsal(String user, int dorsal);
 
-
 	void updateAsistencias(String localTeam, String visitTeam, LocalDateTime matchTime);
+
+	public void logOut();
+
 
 }

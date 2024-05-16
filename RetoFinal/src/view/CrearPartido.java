@@ -36,7 +36,8 @@ import model.equipos.Equipo;
  * matches. It allows administrators to schedule matches by selecting the local
  * and visiting teams, specifying the stadium, date, and time for the match.
  * @author 1dami G1
- * @since 2024-05-13
+ * @version 1.0
+ * Date 2024-05-13 
  */
 class CrearPartido extends JFrame implements ActionListener {
 	/**

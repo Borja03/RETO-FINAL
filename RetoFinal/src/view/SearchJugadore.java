@@ -27,7 +27,10 @@ import java.awt.SystemColor;
 
 /**
  * The SearchJugadore class provides a GUI for searching and managing player information.
- */
+ * @author 1dami G1
+ * @version 1.0
+ * Date 2024-05-13 
+ * */
 public class SearchJugadore extends JFrame implements ActionListener {
 	/**
 	 * Unique identifier for serializing the class.

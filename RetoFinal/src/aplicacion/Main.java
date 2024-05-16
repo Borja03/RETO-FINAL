@@ -7,8 +7,9 @@ import aplicacion.Splash;
 /**
  * The Main class is the entry point of the application.
  *
- * @author 1dami
- * @since 2024-05-13
+ * @author 1dami G1
+ * @version 1.0
+ * Date 2024-05-13 
  */
 
 public class Main {

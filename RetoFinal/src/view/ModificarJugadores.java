@@ -31,7 +31,8 @@ import java.awt.SystemColor;
  * It extends JFrame and implements ActionListener to handle user interactions.
  * 
  * @author 1dami G1
- * @since 2024-05-13
+ * @version 1.0
+ * Date 2024-05-13 3
  */
 public class ModificarJugadores extends JFrame implements ActionListener {
 	/**
