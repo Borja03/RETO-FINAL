@@ -22,6 +22,7 @@ import java.sql.Blob;
 import java.sql.SQLException;
 import controller.Controller;
 import model.equipos.Equipo;
+import utlidades.Util;
 
 import java.awt.Color;
 import java.awt.Font;
@@ -492,20 +493,13 @@ public class ModificarEquipos extends JFrame implements ActionListener {
 		nombreEstadioField.setText(eq.getEstadio());
 		txttitulosField.setText(eq.getTitulos() + "");
 
+		ImageIcon defaultLogo = new ImageIcon("src/images/icons/equiposinlogo.png");
+
 		Blob imgB = eq.getLogo();
 		if (imgB != null) {
-			try {
-				byte[] imageData = imgB.getBytes(1, (int) imgB.length());
-				if (imageData != null && imageData.length > 0) {
-					ImageIcon icon = new ImageIcon(imageData);
-					Image image = icon.getImage().getScaledInstance(200, 200, Image.SCALE_SMOOTH);
-					ImageIcon scaledIcon = new ImageIcon(image);
-					lblEqLogo.setIcon(scaledIcon);
-				}
-			} catch (SQLException e) {
-				System.err.println("Error reading image data from Blob: " + e.getMessage());
-				e.printStackTrace();
-			}
+			lblEqLogo.setIcon(Util.blobToImgIcon(imgB));
+		}else {
+			lblEqLogo.setIcon(defaultLogo);
 		}
 	}
 

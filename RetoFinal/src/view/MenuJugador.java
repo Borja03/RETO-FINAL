@@ -14,6 +14,8 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.sql.Blob;
 import java.sql.SQLException;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.ArrayList;
 
 import javax.sql.rowset.serial.SerialException;
@@ -34,6 +36,7 @@ import javax.swing.table.DefaultTableModel;
 
 import controller.Controller;
 import model.equipos.Equipo;
+import model.partido.Juegan;
 import model.usuarios.Jugador;
 import java.awt.SystemColor;
 import javax.swing.border.BevelBorder;
@@ -388,6 +391,9 @@ public class MenuJugador extends JFrame implements ActionListener {
 
 		lblEqLogo.setBounds(22, 10, 150, 150);
 		panel.add(lblEqLogo);
+		
+		fillEquipoInfo();
+		fillEntrenadoresInfo();
 
 		ArrayList<Jugador> dataList = controller.getJugadoresPorEquipo(nombreEquipo);
 
@@ -449,8 +455,7 @@ public class MenuJugador extends JFrame implements ActionListener {
 
 		this.setVisible(true);
 
-		fillEquipoInfo();
-		fillEntrenadoresInfo();
+
 	}
 
 	/**
@@ -458,6 +463,24 @@ public class MenuJugador extends JFrame implements ActionListener {
 	 */
 	public void fillEquipoInfo() {
 		nombreEquipo = controller.getMyTeam(userName, userType);
+		
+		ArrayList<Juegan> misPartidos = controller.consultarPartidoEquipo(nombreEquipo);
+		for (Juegan partido : misPartidos) {
+			
+		    LocalDateTime fechaMasPartidoDuracion = partido.getFechaInicio().plusMinutes(120);
+		    
+		    if (LocalDateTime.now().isAfter(fechaMasPartidoDuracion)) {
+		        if (!partido.isAssistUpdated()) {
+		            controller.updateAsistencias(
+		                partido.getNombreEquipoLocal(),
+		                partido.getNombreEquipoVisitante(),
+		                partido.getFechaInicio()
+		            );
+		        }
+		    }
+		}
+
+
 		Equipo eq = controller.getEquipo(nombreEquipo);
 		txtEqNombre.setText(eq.getNombreEquipo());
 		txtEqEstadio.setText(eq.getEstadio());

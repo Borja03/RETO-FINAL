@@ -1,6 +1,7 @@
 package model.partido;
 
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 
 /**
  * Represents a match (Juegan) between two teams with attributes such as local team name, visiting team name, start date, and result.
@@ -27,6 +28,9 @@ public class Juegan {
      */
     private String resultado;
 
+    private boolean assistUpdated=false;
+    
+    
     /**
      * Constructs a new Juegan instance with the specified local team name, visiting team name, start date, and result.
      *
@@ -42,6 +46,13 @@ public class Juegan {
         this.resultado = resultado;
     }
 
+    public Juegan(String nombreEquipoLocal, String nombreEquipoVisitante, LocalDateTime fechaInicio, String resultado,boolean assistUpdated) {
+        this.nombreEquipoLocal = nombreEquipoLocal;
+        this.nombreEquipoVisitante = nombreEquipoVisitante;
+        this.fechaInicio = fechaInicio;
+        this.resultado = resultado;
+        this.assistUpdated=assistUpdated;
+    }
     /**
      * Gets the name of the home team.
      *
@@ -113,4 +124,14 @@ public class Juegan {
     public void setResultado(String resultado) {
         this.resultado = resultado;
     }
+
+    public boolean isAssistUpdated() {
+		return assistUpdated;
+	}
+
+    public void setAssistUpdated(boolean assistUpdated) {
+		this.assistUpdated = assistUpdated;
+	}
+    
+    
 }

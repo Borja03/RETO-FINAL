@@ -1,6 +1,8 @@
 package controller;
+
 import java.time.LocalDateTime;
 import java.sql.Blob;
+import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -9,6 +11,7 @@ import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Date;
+
 
 import model.equipos.Equipo;
 import model.partido.Juegan;
@@ -31,6 +34,7 @@ public class Controller implements IController {
 	private Connection connection;
 	private PreparedStatement statement;
 	private ResultSet resultSet;
+	private CallableStatement callableStatement = null;
 
 	final String ALLequipos = "SELECT nombreEquipo FROM equipo";
 	final String ConnectUser = "SELECT * FROM usuario WHERE user = ? AND password = ?";
@@ -64,7 +68,7 @@ public class Controller implements IController {
 	final String nombreEstadio = "SELECT nombreEstadio FROM equipo WHERE nombreEquipo = ?";
 	final String Partidos = "SELECT nombreEquipoLocal, nombreEquipoVisitante, fechaInicio, resultado FROM juegan";
 	final String CONSULTARequipo = "SELECT * FROM juegan WHERE nombreEquipoLocal = ? OR nombreEquipoVisitante = ?";
-	
+
 	final String INSERTjugadorUser = "INSERT INTO usuario (user, password) VALUES (?, ?)";
 	final String INNSERTentrenadorUser = "INSERT INTO usuario (user, password) VALUES (?, ?)";
 
@@ -139,62 +143,56 @@ public class Controller implements IController {
 
 	}
 
-	
-	
-	
 	@Override
 	public boolean logIn(String usuario, String contrasena, String tipoUsuario) {
-	    String userDb;
-	    String passDb;
+		String userDb;
+		String passDb;
 
-	    try {
-	        if ("Admin".equalsIgnoreCase(tipoUsuario)) {
-	            System.out.println("Comprobando Administrador...");
-	            user = "admin";
-	            password = "admin";
+		try {
+			if ("Admin".equalsIgnoreCase(tipoUsuario)) {
+				System.out.println("Comprobando Administrador...");
+				user = "admin";
+				password = "admin";
 				connection = MySqlConnection.getInstance(tipoUsuario.toLowerCase()).getConnection();
 
-	            if (usuario.equals("admin") && contrasena.equals("admin")) {
-	                return true;
-	            }
-	        } else if ("Entrenador".equalsIgnoreCase(tipoUsuario) || "Jugador".equalsIgnoreCase(tipoUsuario)) {
-	            System.out.println("Comprobando " + tipoUsuario + "...");
-	            user = tipoUsuario.toLowerCase();
-	            password = tipoUsuario.toLowerCase();
+				if (usuario.equals("admin") && contrasena.equals("admin")) {
+					return true;
+				}
+			} else if ("Entrenador".equalsIgnoreCase(tipoUsuario) || "Jugador".equalsIgnoreCase(tipoUsuario)) {
+				System.out.println("Comprobando " + tipoUsuario + "...");
+				user = tipoUsuario.toLowerCase();
+				password = tipoUsuario.toLowerCase();
 				connection = MySqlConnection.getInstance(tipoUsuario.toLowerCase()).getConnection();
-	            String query = "SELECT * FROM usuario WHERE user = ? AND password = ?";
-	            try (PreparedStatement statement = connection.prepareStatement(query)) {
-	                statement.setString(1, usuario);
-	                statement.setString(2, contrasena);
-	                ResultSet resultSet = statement.executeQuery();
+				String query = "SELECT * FROM usuario WHERE user = ? AND password = ?";
+				try (PreparedStatement statement = connection.prepareStatement(query)) {
+					statement.setString(1, usuario);
+					statement.setString(2, contrasena);
+					ResultSet resultSet = statement.executeQuery();
 
-	                if (resultSet.next()) {
-	                    userDb = resultSet.getString("user");
-	                    passDb = resultSet.getString("password");
-	                    if (userDb.equals(usuario) && passDb.equals(contrasena)) {
-	                        return true;
-	                    }
-	                }
-	            }
-	        }
-	    } catch (SQLException ex) {
-	        ex.printStackTrace();
-	    } finally {
+					if (resultSet.next()) {
+						userDb = resultSet.getString("user");
+						passDb = resultSet.getString("password");
+						if (userDb.equals(usuario) && passDb.equals(contrasena)) {
+							return true;
+						}
+					}
+				}
+			}
+		} catch (SQLException ex) {
+			ex.printStackTrace();
+		} finally {
 			try {
 				MySqlConnection.getInstance(tipoUsuario.toLowerCase()).getConnection().close();
 			} catch (SQLException e) {
 				e.printStackTrace();
 			}
-	    }
-	    return false;
+		}
+		return false;
 	}
-	
-
 
 	@Override
 	public boolean crearEntrenador(String nombreEquipo, String user, String password, CargoEntrenador tipoEntrenador) {
 		boolean added = false;
-
 
 		try {
 			connection = MySqlConnection.getInstance("admin").getConnection();
@@ -210,7 +208,7 @@ public class Controller implements IController {
 			if (statement.executeUpdate() > 0) {
 				added = true;
 			}
-			
+
 		} catch (SQLException e) {
 			System.out.println("Error de SQL");
 			e.printStackTrace();
@@ -301,9 +299,6 @@ public class Controller implements IController {
 		return added;
 	}
 
-
-	
-	
 	@Override
 	public boolean borrarEntrenador(String user) {
 		boolean deleted = false;
@@ -590,13 +585,11 @@ public class Controller implements IController {
 		return exists;
 	}
 
-	
-
 	@Override
-	 public boolean cambiarPassword(String user, String newPassword, String userType) {
+	public boolean cambiarPassword(String user, String newPassword, String userType) {
 		boolean changed = false;
 		String query = "";
-			query = "UPDATE usuario SET password = ? WHERE user = ?";
+		query = "UPDATE usuario SET password = ? WHERE user = ?";
 
 		try {
 			connection = MySqlConnection.getInstance(userType).getConnection();
@@ -1172,7 +1165,6 @@ public class Controller implements IController {
 			} catch (SQLException e) {
 				e.printStackTrace();
 			}
-			;
 		}
 		return modified;
 	}
@@ -1278,7 +1270,7 @@ public class Controller implements IController {
 			} catch (SQLException e) {
 				e.printStackTrace();
 			}
-			;
+			
 		}
 		return partidosLista;
 	}
@@ -1294,18 +1286,44 @@ public class Controller implements IController {
 			e.printStackTrace();
 		}
 	}
+	@Override
+	public void updateAsistencias(String localTeam,String visitTeam,LocalDateTime matchTime) {
+
+		try {
+			connection = MySqlConnection.getInstance("jugador").getConnection();
+
+            callableStatement = connection.prepareCall("{CALL UpdateAsistenciasAfterMatch(?, ?, ?)}");
+            callableStatement.setString(1, localTeam);
+            callableStatement.setString(2, visitTeam);
+            Timestamp timestamp = Timestamp.valueOf(matchTime);
+            callableStatement.setTimestamp(3, timestamp);
+
+            callableStatement.execute();
+
+            System.out.println("Asistencias updated successfully for the match.");
+        
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				MySqlConnection.getInstance("admin").getConnection().close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+	}
 
 	@Override
 	public void consultarEquipo() {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
 	public void consultarPartido() {
 		// TODO Auto-generated method stub
-		
+
 	}
 
-}
 
+}

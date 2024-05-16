@@ -16,6 +16,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.sql.Blob;
 import java.sql.SQLException;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 
 import javax.sql.rowset.serial.SerialException;
@@ -34,6 +35,7 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.table.DefaultTableModel;
 import controller.Controller;
 import model.equipos.Equipo;
+import model.partido.Juegan;
 import model.usuarios.Entrenador;
 import model.usuarios.Jugador;
 
@@ -484,6 +486,22 @@ public class MenuEntrenador extends JFrame implements ActionListener {
 	 */
 	public void fillEquipoInfo() {
 		nombreEquipo = controller.getMyTeam(userName, userType);
+		
+		ArrayList<Juegan> misPartidos = controller.consultarPartidoEquipo(nombreEquipo);
+		for (Juegan partido : misPartidos) {
+			
+		    LocalDateTime fechaMasPartidoDuracion = partido.getFechaInicio().plusMinutes(120);
+		    
+		    if (LocalDateTime.now().isAfter(fechaMasPartidoDuracion)) {
+		        if (!partido.isAssistUpdated()) {
+		            controller.updateAsistencias(
+		                partido.getNombreEquipoLocal(),
+		                partido.getNombreEquipoVisitante(),
+		                partido.getFechaInicio()
+		            );
+		        }
+		    }
+		}
 		Equipo eq = controller.getEquipo(nombreEquipo);
 		txtEqNombre.setText(eq.getNombreEquipo());
 		txtEqEstadio.setText(eq.getEstadio());
