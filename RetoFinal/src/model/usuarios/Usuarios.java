@@ -2,75 +2,136 @@ package model.usuarios;
 
 import java.sql.Blob;
 
+/**
+ * Represents a user (Usuario) with attributes such as type, username, password, and profile picture.
+ */
 public class Usuarios {
 
-	private static final long serialVersionUID = 1L;
-	protected String tipo;
-	protected String user;
-	protected String contrasenia;
-	protected Blob picProfile;
 
-	public Usuarios() {
-		this.tipo = "";
-		this.user = "";
-		this.contrasenia = "";
-	}
+    /**
+     * The type of user.
+     */
+    protected String tipo;
+    
+    /**
+     * The username of the user.
+     */
+    protected String user;
+    
+    /**
+     * The password of the user.
+     */
+    protected String contrasenia;
+    
+    /**
+     * The profile picture of the user.
+     */
+    protected Blob picProfile;
 
+    /**
+     * Default constructor that initializes a Usuario with default values.
+     */
+    public Usuarios() {
+        this.tipo = "";
+        this.user = "";
+        this.contrasenia = "";
+    }
 
+    /**
+     * Constructs a new Usuario with the specified type, username, and password.
+     *
+     * @param tipo the type of user
+     * @param user the username of the user
+     * @param contrasenia the password of the user
+     */
+    public Usuarios(String tipo, String user, String contrasenia) {
+        this.tipo = tipo;
+        this.user = user;
+        this.contrasenia = contrasenia;
+    }
 
+    /**
+     * Constructs a new Usuario with the specified username, password, and profile picture.
+     *
+     * @param user the username of the user
+     * @param contrasenia the password of the user
+     * @param picProfile the profile picture of the user as a Blob
+     */
+    public Usuarios(String user, String contrasenia, Blob picProfile) {
+        this.user = user;
+        this.contrasenia = contrasenia;
+        this.picProfile = picProfile;
+    }
 
-	public Usuarios(String nombre, String user, String contrasenia) {
-		this.tipo = nombre;
-		this.user = user;
-		this.contrasenia = contrasenia;
-	}
-	
+    /**
+     * Gets the type of user.
+     *
+     * @return the type of user
+     */
+    public String getTipo() {
+        return tipo;
+    }
 
-	public Usuarios(String user, String contrasenia,Blob picProfile) {
-		this.user = user;
-		this.contrasenia = contrasenia;
-		this.picProfile = picProfile;
+    /**
+     * Sets the type of user.
+     *
+     * @param tipo the type of user
+     */
+    public void setTipo(String tipo) {
+        this.tipo = tipo;
+    }
 
-	}
+    /**
+     * Gets the username of the user.
+     *
+     * @return the username of the user
+     */
+    public String getUser() {
+        return user;
+    }
 
-	public String getTipo() {
-		return tipo;
-	}
+    /**
+     * Sets the username of the user.
+     *
+     * @param user the username of the user
+     */
+    public void setUser(String user) {
+        this.user = user;
+    }
 
-	public void setTipo(String nombre) {
-		this.tipo = nombre;
-	}
+    /**
+     * Gets the password of the user.
+     *
+     * @return the password of the user
+     */
+    public String getContrasenia() {
+        return contrasenia;
+    }
 
-	public String getUser() {
-		return user;
-	}
+    /**
+     * Sets the password of the user.
+     *
+     * @param contrasenia the password of the user
+     */
+    public void setContrasenia(String contrasenia) {
+        this.contrasenia = contrasenia;
+    }
 
-	public void setUser(String user) {
-		this.user = user;
-	}
+    /**
+     * Gets the profile picture of the user.
+     *
+     * @return the profile picture of the user
+     */
+    public Blob getPicProfile() {
+        return picProfile;
+    }
 
-	public String getContrasenia() {
-		return contrasenia;
-	}
-
-	public void setContrasenia(String contrasenia) {
-		this.contrasenia = contrasenia;
-	}
-	
-
-	public Blob getPicProfile() {
-		return picProfile;
-	}
-
-
-	public void setPicProfile(Blob picProfile) {
-		this.picProfile = picProfile;
-	}
-
-
-
-	@Override
-	public String toString() {
-		return "Usuarios{" + "nombre='" + tipo + '\'' + '}';
-	}
+    /**
+     * Sets the profile picture of the user.
+     *
+     * @param picProfile the profile picture of the user
+     */
+    public void setPicProfile(Blob picProfile) {
+        this.picProfile = picProfile;
+    }
 }

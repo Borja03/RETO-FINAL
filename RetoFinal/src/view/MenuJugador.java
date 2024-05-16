@@ -1,3 +1,4 @@
+
 package view;
 
 import java.awt.Color;
@@ -35,39 +36,164 @@ import controller.Controller;
 import model.equipos.Equipo;
 import model.usuarios.Jugador;
 import java.awt.SystemColor;
+import javax.swing.border.BevelBorder;
+import javax.swing.border.CompoundBorder;
+import javax.swing.border.EtchedBorder;
+import javax.swing.border.SoftBevelBorder;
 
+/**
+ * MenuJugador class represents the graphical user interface for the menu
+ * options available to a player user. It allows the player to view and interact
+ * with various functionalities related to their profile and team.
+ * 
+ * @author 1dami G1
+ * @since 2024-05-13
+ */
 public class MenuJugador extends JFrame implements ActionListener {
-
+	/**
+	 * Unique identifier for serializing the class.
+	 */
+	/**
+	 * Serial version UID for serialization.
+	 */
 	private static final long serialVersionUID = 1L;
+
+	/**
+	 * The main content pane of the view.
+	 */
 	private JPanel contentPane;
+
+	/**
+	 * Button for logging out.
+	 */
 	private JButton btnLogOut;
+
+	/**
+	 * Button for changing password.
+	 */
 	private JButton btnCambiarCont;
+
+	/**
+	 * Button for changing player's dorsal number.
+	 */
 	private JButton btnCambiarDorsal;
+
+	/**
+	 * Reference to the controller for handling actions.
+	 */
 	private Controller controller;
+
+	/**
+	 * Label for welcoming the user.
+	 */
 	private JLabel lblWelcome;
+
+	/**
+	 * Username of the current user.
+	 */
 	private String userName;
+
+	/**
+	 * Button for accessing match information.
+	 */
 	private JButton btnConsultarPartidos;
+
+	/**
+	 * Button for accessing team information.
+	 */
 	private JButton btnConsultarEquipo;
+
+	/**
+	 * Text field for entering the team's name.
+	 */
 	private JTextField txtEqNombre;
+
+	/**
+	 * Text field for entering the team's stadium.
+	 */
 	private JTextField txtEqEstadio;
+
+	/**
+	 * Text field for entering the team's titles.
+	 */
 	private JTextField txtEqTitulos;
+
+	/**
+	 * Text field for entering the team's first coach.
+	 */
 	private JTextField txtEqPrimerEntre;
+
+	/**
+	 * Text field for entering the team's second coach.
+	 */
 	private JTextField txtEqSegundoEntre;
+
+	/**
+	 * Table for displaying team information.
+	 */
 	private JTable table;
+
+	/**
+	 * Scroll pane for the team information table.
+	 */
 	private JScrollPane scrollPane_1;
+
+	/**
+	 * Name of the team being viewed.
+	 */
 	private String nombreEquipo;
+
+	/**
+	 * Blob object representing the team's logo.
+	 */
 	private Blob teamLogo;
+
+	/**
+	 * Type of user logged in.
+	 */
 	private String userType;
+
+	/**
+	 * Label for indicating the list of players.
+	 */
 	private JLabel lblJugadoresLista;
+
+	/**
+	 * Label for indicating the user's profile picture.
+	 */
 	private JLabel lblUserPic;
+
+	/**
+	 * Label for indicating adding a profile picture.
+	 */
 	private JLabel lblBtnAddPic;
 
+	/**
+	 * Icon representing the profile picture.
+	 */
 	private ImageIcon imageIcon;
+
+	/**
+	 * Blob object representing the user's profile picture.
+	 */
 	private Blob usrBlobIcon;
+
+	/**
+	 * Button for uploading a profile picture.
+	 */
 	private JButton btnUpload;
-	
-	
-	public MenuJugador(Controller cont, String userConnected,String userType) {
+	 
+
+
+	/**
+	 * Constructs a new MenuJugador object.
+	 * 
+	 * @param cont          The controller object for handling interactions between
+	 *                      the view and the model.
+	 * @param userConnected The username of the currently logged-in user.
+	 * @param userType      The type of user, in this case, "jugador" (player).
+	 */
+	public MenuJugador(Controller cont, String userConnected, String userType) {
 
 		this.controller = cont;
 		this.userName = userConnected;
@@ -79,33 +205,20 @@ public class MenuJugador extends JFrame implements ActionListener {
 		contentPane.setSize(1366, 768);
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
+		setLocationRelativeTo(null);
 
-		JPanel panelLeft = new JPanel();
-		panelLeft.setBounds(0, 0, 300, 680);
-		panelLeft.setBackground(new Color(128, 128, 0));
-		contentPane.add(panelLeft);
-		panelLeft.setLayout(null);
+		JPanel panelLefts = new JPanel();
+		panelLefts.setBounds(0, 0, 250, 680);
+		panelLefts.setBackground(new Color(33, 199, 162));
+		contentPane.add(panelLefts);
 
 		btnLogOut = new JButton("     Log Out");
+		btnLogOut.setForeground(new Color(255, 255, 255));
+		btnLogOut.setBounds(0, 546, 250, 49);
 		btnLogOut.setHorizontalAlignment(SwingConstants.LEFT);
-		btnLogOut.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseEntered(MouseEvent e) {
-				btnLogOut.setBackground(new Color(90, 70, 50));
-			}
-
-			@Override
-			public void mouseExited(MouseEvent e) {
-				btnLogOut.setBackground(new Color(128, 128, 0));
-			}
-
-			@Override
-			public void mousePressed(MouseEvent e) {
-				btnLogOut.setBackground(new Color(50, 70, 90));
-			}
-		});
 
 		lblBtnAddPic = new JLabel();
+		lblBtnAddPic.setBounds(160, 140, 50, 50);
 		lblBtnAddPic.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
@@ -116,74 +229,81 @@ public class MenuJugador extends JFrame implements ActionListener {
 
 		ImageIcon imgIcon = new ImageIcon(getClass().getResource("/images/icons/add.png"));
 		Image imageUser = imgIcon.getImage().getScaledInstance(50, 50, Image.SCALE_SMOOTH);
+		panelLefts.setLayout(null);
 		lblBtnAddPic.setForeground(SystemColor.activeCaption);
-		lblBtnAddPic.setBounds(191, 158, 50, 50);
-		panelLeft.add(lblBtnAddPic);
+		panelLefts.add(lblBtnAddPic);
 		lblBtnAddPic.setIcon(new ImageIcon(imageUser));
-
-		lblUserPic = new JLabel();
-		lblUserPic.setBackground(SystemColor.activeCaption);
-		lblUserPic.setForeground(SystemColor.activeCaption);
-		lblUserPic.setBounds(54, 33, 150, 150);
-		panelLeft.add(lblUserPic);
-		btnLogOut.setBackground(new Color(128, 128, 0));
-		btnLogOut.setBounds(40, 546, 200, 49);
+		btnLogOut.setBackground(new Color(33, 199, 162));
 		btnLogOut.setFocusable(false);
 		btnLogOut.setBorder(null);
-		panelLeft.add(btnLogOut);
+		panelLefts.add(btnLogOut);
 		btnLogOut.addActionListener(this);
 		btnLogOut.setFont(new Font("Tahoma", Font.BOLD, 14));
 
 		btnCambiarCont = new JButton("     Cambiar Contraseña");
+		btnCambiarCont.setForeground(new Color(255, 255, 255));
+		btnCambiarCont.setBounds(0, 476, 250, 49);
 		btnCambiarCont.addActionListener(this);
 		btnCambiarCont.setHorizontalAlignment(SwingConstants.LEFT);
 		btnCambiarCont.setFont(new Font("Tahoma", Font.BOLD, 14));
 		btnCambiarCont.setFocusable(false);
 		btnCambiarCont.setBorder(null);
-		btnCambiarCont.setBackground(new Color(128, 128, 0));
-		btnCambiarCont.setBounds(40, 476, 200, 49);
-		panelLeft.add(btnCambiarCont);
+		btnCambiarCont.setBackground(new Color(33, 199, 162));
+		panelLefts.add(btnCambiarCont);
 
 		btnCambiarDorsal = new JButton("     Cambiar Dorsal");
+		btnCambiarDorsal.setForeground(new Color(255, 255, 255));
+		btnCambiarDorsal.setBounds(0, 406, 250, 49);
 		btnCambiarDorsal.addActionListener(this);
 		btnCambiarDorsal.setHorizontalAlignment(SwingConstants.LEFT);
 		btnCambiarDorsal.setFont(new Font("Tahoma", Font.BOLD, 14));
 		btnCambiarDorsal.setFocusable(false);
 		btnCambiarDorsal.setBorder(null);
-		btnCambiarDorsal.setBackground(new Color(128, 128, 0));
-		btnCambiarDorsal.setBounds(40, 406, 200, 49);
-		panelLeft.add(btnCambiarDorsal);
-		
+		btnCambiarDorsal.setBackground(new Color(33, 199, 162));
+		panelLefts.add(btnCambiarDorsal);
 
 		lblWelcome = new JLabel("     Welcome " + userName);
-		lblWelcome.setForeground(new Color(255, 255, 0));
+		lblWelcome.setBounds(10, 228, 217, 34);
+		lblWelcome.setForeground(new Color(255, 255, 255));
 		lblWelcome.setFont(new Font("Tahoma", Font.BOLD, 14));
-		lblWelcome.setBounds(40, 227, 217, 34);
-		panelLeft.add(lblWelcome);
+		panelLefts.add(lblWelcome);
 
 		btnConsultarPartidos = new JButton("     Consultar Partidos");
+		btnConsultarPartidos.setForeground(new Color(255, 255, 255));
+		btnConsultarPartidos.setBounds(0, 338, 250, 49);
 		btnConsultarPartidos.addActionListener(this);
 		btnConsultarPartidos.setHorizontalAlignment(SwingConstants.LEFT);
 		btnConsultarPartidos.setFont(new Font("Tahoma", Font.BOLD, 14));
 		btnConsultarPartidos.setFocusable(false);
 		btnConsultarPartidos.setBorder(null);
-		btnConsultarPartidos.setBackground(new Color(128, 128, 0));
-		btnConsultarPartidos.setBounds(40, 338, 200, 49);
-		panelLeft.add(btnConsultarPartidos);
+		btnConsultarPartidos.setBackground(new Color(33, 199, 162));
+		panelLefts.add(btnConsultarPartidos);
 
 		btnConsultarEquipo = new JButton("     Consultar Equipo");
+		btnConsultarEquipo.setForeground(new Color(255, 255, 255));
+		btnConsultarEquipo.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+			}
+		});
+		btnConsultarEquipo.setBounds(0, 271, 250, 49);
 		btnConsultarEquipo.setHorizontalAlignment(SwingConstants.LEFT);
 		btnConsultarEquipo.setFont(new Font("Tahoma", Font.BOLD, 14));
 		btnConsultarEquipo.setFocusable(false);
 		btnConsultarEquipo.setBorder(null);
-		btnConsultarEquipo.setBackground(new Color(255, 128, 64));
-		btnConsultarEquipo.setBounds(40, 271, 200, 49);
-		panelLeft.add(btnConsultarEquipo);
+		btnConsultarEquipo.setBackground(new Color(26, 169, 185));
+		panelLefts.add(btnConsultarEquipo);
+
+		lblUserPic = new JLabel();
+		lblUserPic.setBounds(50, 33, 150, 150);
+		lblUserPic.setBackground(SystemColor.activeCaption);
+		lblUserPic.setForeground(new Color(0, 64, 128));
+		panelLefts.add(lblUserPic);
 
 		JPanel panel = new JPanel();
-		panel.setBounds(308, 10, 676, 178);
+		panel.setBorder(new SoftBevelBorder(BevelBorder.RAISED, null, null, null, null));
+		panel.setBounds(281, 10, 703, 178);
 		panel.setForeground(new Color(255, 128, 64));
-		panel.setBackground(new Color(192, 192, 192));
+		panel.setBackground(SystemColor.menu);
 		contentPane.add(panel);
 		panel.setLayout(null);
 
@@ -249,6 +369,7 @@ public class MenuJugador extends JFrame implements ActionListener {
 		JLabel lblEqLogo = new JLabel();
 
 		nombreEquipo = controller.getMyTeam(userName, "jugador");
+		System.out.println(nombreEquipo);
 		teamLogo = controller.getEquipo(nombreEquipo).getLogo();
 		if (teamLogo != null) {
 			try {
@@ -270,15 +391,18 @@ public class MenuJugador extends JFrame implements ActionListener {
 
 		ArrayList<Jugador> dataList = controller.getJugadoresPorEquipo(nombreEquipo);
 
-		String[] columnNames = { "Nombre", "Dorsal", "Goles" };
-		Object[][] data = new Object[dataList.size()][3];
+		String[] columnNames = { "Nombre", "Dorsal", "Goles", "Asistencias" };
+		Object[][] data = new Object[dataList.size()][4];
 
 		for (int i = 0; i < dataList.size(); i++) {
 			Jugador obj = dataList.get(i);
 			data[i][0] = obj.getUser();
 			data[i][1] = obj.getDorsal();
-			data[i][2] = obj.getAsistencias();
+			data[i][2] = obj.getGoles();
+			data[i][3] = obj.getAsistencias();
+
 		}
+
 		for (Jugador jug : dataList) {
 			if (userName.equals(jug.getUser())) {
 				if (jug.getPicProfile() != null) {
@@ -289,20 +413,27 @@ public class MenuJugador extends JFrame implements ActionListener {
 							Image image2 = icon2.getImage().getScaledInstance(150, 150, Image.SCALE_SMOOTH);
 							ImageIcon scaledIcon2 = new ImageIcon(image2);
 							lblUserPic.setIcon(scaledIcon2);
+						} else {
+							// if image is null in data base or empty, show a default image
+							ImageIcon defaultIcon = new ImageIcon("src/images/icons/default.png");
+							lblUserPic.setIcon(defaultIcon);
 						}
 					} catch (SQLException e) {
 						System.err.println("Error reading image data from Blob: " + e.getMessage());
 						e.printStackTrace();
 					}
+				} else {
+					// if image is null in data base or empty, show a default image
+					ImageIcon defaultIcon = new ImageIcon("src/images/icons/default.png");
+					lblUserPic.setIcon(defaultIcon);
 				}
+
 			}
-
 		}
-
 		DefaultTableModel model = new DefaultTableModel(data, columnNames);
 
 		scrollPane_1 = new JScrollPane();
-		scrollPane_1.setBounds(310, 220, 674, 450);
+		scrollPane_1.setBounds(281, 235, 703, 435);
 		contentPane.add(scrollPane_1);
 
 		table = new JTable(model);
@@ -312,7 +443,7 @@ public class MenuJugador extends JFrame implements ActionListener {
 		scrollPane_1.setColumnHeaderView(scrollPane);
 
 		lblJugadoresLista = new JLabel("Jugadores lista :");
-		lblJugadoresLista.setBounds(547, 188, 191, 22);
+		lblJugadoresLista.setBounds(535, 203, 191, 22);
 		lblJugadoresLista.setFont(new Font("Tahoma", Font.BOLD, 18));
 		contentPane.add(lblJugadoresLista);
 
@@ -322,6 +453,9 @@ public class MenuJugador extends JFrame implements ActionListener {
 		fillEntrenadoresInfo();
 	}
 
+	/**
+	 * Fills the information related to the player's team in the GUI.
+	 */
 	public void fillEquipoInfo() {
 		nombreEquipo = controller.getMyTeam(userName, userType);
 		Equipo eq = controller.getEquipo(nombreEquipo);
@@ -330,6 +464,9 @@ public class MenuJugador extends JFrame implements ActionListener {
 		txtEqTitulos.setText(eq.getTitulos() + "");
 	}
 
+	/**
+	 * Fills the information related to the coaches of the player's team in the GUI.
+	 */
 	public void fillEntrenadoresInfo() {
 		String primEntrenador = controller.getPrimEntrenador(nombreEquipo);
 		String segEntrenador = controller.getSegEntrenador(nombreEquipo);
@@ -338,6 +475,9 @@ public class MenuJugador extends JFrame implements ActionListener {
 		txtEqSegundoEntre.setText(segEntrenador);
 	}
 
+	/**
+	 * Displays a dialog for the user to upload their profile picture.
+	 */
 	private void userUploadImgDialog() {
 		btnUpload = new JButton("Upload Image");
 		btnUpload.addActionListener(new ActionListener() {
@@ -380,29 +520,34 @@ public class MenuJugador extends JFrame implements ActionListener {
 		JOptionPane.showMessageDialog(this, btnUpload, "Upload Image", JOptionPane.PLAIN_MESSAGE);
 	}
 
+	/**
+	 * Handles the actionPerformed event for various buttons in the GUI.
+	 * 
+	 * @param e The ActionEvent object representing the event.
+	 */
+
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		Object o = e.getSource();
-    
-			if (o == btnLogOut) {
-				controller.logOut();
-				this.dispose();
-			} else if (o == btnCambiarDorsal) {
-				CambiarDorsal ventanaDorsal = new CambiarDorsal(controller, userName, userType);
-				ventanaDorsal.setVisible(true);
-				this.setVisible(false);
-			} else if (o == btnConsultarPartidos) {
-				ConsultarPartidos consultarPartidos = new ConsultarPartidos(controller, userName, userType);
-				consultarPartidos.setVisible(true);
-				this.dispose();
 
-			} else if (o == btnCambiarCont) {
-				CambiarContra ventanaCont = new CambiarContra(controller, userName, userType);
-				ventanaCont.setVisible(true);
-				this.dispose();
-			}
+		if (o == btnLogOut) {
+			controller.logOut();
+			this.dispose();
+		} else if (o == btnCambiarDorsal) {
+			CambiarDorsal ventanaDorsal = new CambiarDorsal(controller, userName, userType);
+			ventanaDorsal.setVisible(true);
+			this.setVisible(false);
+		} else if (o == btnConsultarPartidos) {
+			ConsultarPartidos consultarPartidos = new ConsultarPartidos(controller, userName, userType);
+			consultarPartidos.setVisible(true);
+			this.dispose();
 
+		} else if (o == btnCambiarCont) {
+			CambiarContra ventanaCont = new CambiarContra(controller, userName, userType);
+			ventanaCont.setVisible(true);
+			this.dispose();
 		}
+
 	}
-	
+
 }

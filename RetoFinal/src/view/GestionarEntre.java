@@ -25,31 +25,113 @@ import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 import java.awt.event.ActionEvent;
 
+/**
+ * JFrame for managing coaches.
+ * 
+ * @author 1dami G1
+ * @since 2024-05-13
+ */
 public class GestionarEntre extends JFrame implements ActionListener {
-
+	/**
+	 * Unique identifier for serialization.
+	 */
 	private static final long serialVersionUID = 1L;
+	/**
+	 * Panel that contains the main content of the GUI.
+	 */
 	private JPanel contentPane;
+	/**
+	 * Button for creating entities.
+	 */
 	private JButton btnCrear;
+	/**
+	 * Button for deleting or modifying entities.
+	 */
 	private JButton btnDeleteMod;
+	/**
+	 * Reference to the controller handling the GUI logic.
+	 */
 	private Controller controller;
+	/**
+	 * Button for logging out.
+	 */
 	private JButton btnLogOut;
+	/**
+	 * Button for modifying match details.
+	 */
 	private JButton btnModPartidos;
+	/**
+	 * Label displaying a welcome message.
+	 */
 	private JLabel lblWelcome;
+
+	/**
+	 * Button for managing teams.
+	 */
 	private JButton btnGestionarEquipo;
+
+	/**
+	 * Button for creating a new match.
+	 */
 	private JButton btnCrearPartido;
+	/**
+	 * Label displaying the username.
+	 */
 	private JLabel lblUser;
+	/**
+	 * Label displaying the password.
+	 */
 	private JLabel lblContrasena;
+	/**
+	 * Label displaying the user's role or position.
+	 */
 	private JLabel lblCargo;
+
+	/**
+	 * Text field for entering the username.
+	 */
 	private JTextField textFieldUSer;
+
+	/**
+	 * Text field for entering the password.
+	 */
 	private JTextField textFieldContrasena;
+	/**
+	 * Combo box for selecting the user's role or position.
+	 */
 	private JComboBox textFieldCargo;
+	/**
+	 * Button for adding new elements.
+	 */
 	private JButton btnAnadir;
+	/**
+	 * The username of the current user.
+	 */
 	private String user;
+
+	/**
+	 * The team associated with the current user.
+	 */
 	private String myTeam;
+	/**
+	 * Combo box for selecting the team.
+	 */
 	private JComboBox<String> textFieldEquipo;
+	/**
+	 * Represents the type of user currently logged in.
+	 */
 	private String userType;
+	/**
+	 * Button for managing coaches.
+	 */
 	private JButton btnGestionarEntrenador;
 
+
+	/**
+	 * Constructs a new GestionarEntre JFrame.
+	 * 
+	 * @param controller The Controller instance for handling business logic.
+	 */
 	public GestionarEntre(Controller controller) {
 		this.controller = controller;
 
@@ -60,6 +142,7 @@ public class GestionarEntre extends JFrame implements ActionListener {
 		contentPane.setSize(1366, 768);
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
+		setLocationRelativeTo(null);
 
 		btnCrear = new JButton("Añadir Entrenadores");
 		btnCrear.setFont(new Font("Tahoma", Font.BOLD, 14));
@@ -78,7 +161,7 @@ public class GestionarEntre extends JFrame implements ActionListener {
 		contentPane.add(btnDeleteMod);
 
 		JPanel panelLeft = new JPanel();
-		panelLeft.setBounds(0, 0, 312, 680);
+		panelLeft.setBounds(0, 0, 250, 680);
 		panelLeft.setBackground(new Color(242, 45, 45));
 		contentPane.add(panelLeft);
 
@@ -112,7 +195,7 @@ public class GestionarEntre extends JFrame implements ActionListener {
 
 		btnModPartidos = new JButton("     Modificar partidos");
 		btnModPartidos.setForeground(new Color(255, 255, 255));
-		btnModPartidos.setBounds(0, 446, 310, 49);
+		btnModPartidos.setBounds(0, 446, 250, 49);
 		btnModPartidos.addActionListener(this);
 		btnModPartidos.setHorizontalAlignment(SwingConstants.LEFT);
 		btnModPartidos.setFont(new Font("Tahoma", Font.BOLD, 14));
@@ -138,14 +221,14 @@ public class GestionarEntre extends JFrame implements ActionListener {
 		});
 
 		lblWelcome = new JLabel("   Welcome Admin");
-		lblWelcome.setBounds(37, 180, 217, 34);
+		lblWelcome.setBounds(10, 180, 217, 34);
 		lblWelcome.setForeground(new Color(0, 0, 0));
 		lblWelcome.setFont(new Font("Tahoma", Font.BOLD, 20));
 		panelLeft.add(lblWelcome);
 
 		btnGestionarEquipo = new JButton("     Gestionar Equipo");
 		btnGestionarEquipo.setForeground(new Color(255, 255, 255));
-		btnGestionarEquipo.setBounds(0, 386, 310, 49);
+		btnGestionarEquipo.setBounds(0, 386, 250, 49);
 		btnGestionarEquipo.setHorizontalAlignment(SwingConstants.LEFT);
 		btnGestionarEquipo.setFont(new Font("Tahoma", Font.BOLD, 14));
 		btnGestionarEquipo.setFocusable(false);
@@ -172,7 +255,7 @@ public class GestionarEntre extends JFrame implements ActionListener {
 
 		btnCrearPartido = new JButton("     Crear partido");
 		btnCrearPartido.setForeground(new Color(255, 255, 255));
-		btnCrearPartido.setBounds(0, 327, 310, 49);
+		btnCrearPartido.setBounds(0, 327, 250, 49);
 		btnCrearPartido.setHorizontalAlignment(SwingConstants.LEFT);
 		btnCrearPartido.addActionListener(this);
 		btnCrearPartido.setFont(new Font("Tahoma", Font.BOLD, 14));
@@ -199,7 +282,7 @@ public class GestionarEntre extends JFrame implements ActionListener {
 
 		btnGestionarEntrenador = new JButton("     Gestionar entrenadores");
 		btnGestionarEntrenador.setForeground(new Color(255, 255, 255));
-		btnGestionarEntrenador.setBounds(0, 275, 310, 49);
+		btnGestionarEntrenador.setBounds(0, 275, 250, 49);
 		btnGestionarEntrenador.setHorizontalAlignment(SwingConstants.LEFT);
 		btnGestionarEntrenador.setFont(new Font("Tahoma", Font.BOLD, 14));
 		btnGestionarEntrenador.setFocusable(false);
@@ -279,6 +362,11 @@ public class GestionarEntre extends JFrame implements ActionListener {
 		}
 	}
 
+	/**
+	 * ActionListener implementation method. Handles button clicks and actions.
+	 * 
+	 * @param e The ActionEvent that occurred.
+	 */
 	@Override
 	public void actionPerformed(ActionEvent e) {
 
@@ -327,7 +415,6 @@ public class GestionarEntre extends JFrame implements ActionListener {
 			this.dispose();
 			controller.logOut();
 
-	
 		} else if (e.getSource() == btnAnadir) {
 
 			if (controller.crearEntrenador(myTeam, usr, password, tipo)) {

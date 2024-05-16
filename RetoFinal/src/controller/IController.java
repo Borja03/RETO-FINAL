@@ -1,4 +1,3 @@
-
 package controller;
 
 import java.security.Timestamp;
@@ -75,5 +74,10 @@ public interface IController {
 
 	ArrayList<Juegan> consultarPartidoEquipo(String equipoName);
 
-}
+	boolean checkUserExist2(String user);
 
+	ArrayList<Juegan> listaPartidos();
+
+	boolean modificarJugadorConDorsal(String user, int dorsal);
+
+}

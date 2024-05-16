@@ -1,47 +1,96 @@
 package model.usuarios;
 
-import java.util.ArrayList;
+import java.sql.Blob;
 
-import com.mysql.cj.jdbc.Blob;
-
-import model.equipos.Equipo;
-
+/**
+ * Represents a coach (Entrenador) which is a type of Usuario.
+ * A coach has attributes such as team name and coach position.
+ */
 public class Entrenador extends Usuarios {
 
-	private static final long serialVersionUID = 1L;
-	private String nombreEquipo;
-	private CargoEntrenador cargo;
+    /**
+     * The name of the team the coach is associated with.
+     */
+    private String nombreEquipo;
+    
+    /**
+     * The position of the coach.
+     */
+    private CargoEntrenador cargo;
 
-	public Entrenador(String nombre, String user, String contrasenia, String nombreEquipo, CargoEntrenador cargo) {
-		super(nombre, user, contrasenia);
-		this.nombreEquipo = nombreEquipo;
-		this.cargo = cargo;
-	}
-	public Entrenador(String nombre, String user, String contrasenia, String nombreEquipo, CargoEntrenador cargo,Blob picProfile) {
-		super(user, contrasenia,picProfile);
-		this.nombreEquipo = nombreEquipo;
-		this.cargo = cargo;
-	}
+    /**
+     * Constructs a new Entrenador with the specified details.
+     *
+     * @param nombre the name of the coach
+     * @param user the username of the coach
+     * @param contrasenia the password of the coach
+     * @param nombreEquipo the name of the team
+     * @param cargo the position of the coach
+     */
+    public Entrenador(String nombre, String user, String contrasenia, String nombreEquipo, CargoEntrenador cargo) {
+        super(nombre, user, contrasenia);
+        this.nombreEquipo = nombreEquipo;
+        this.cargo = cargo;
+    }
 
-	public Entrenador() {
-		super();
-		this.nombreEquipo = "";
-		this.cargo = null;
-	}
+    /**
+     * Constructs a new Entrenador with the specified details including profile picture.
+     *
+     * @param nombre the name of the coach
+     * @param user the username of the coach
+     * @param contrasenia the password of the coach
+     * @param nombreEquipo the name of the team
+     * @param cargo the position of the coach
+     * @param picProfile the profile picture of the coach as a Blob
+     */
+    public Entrenador(String nombre, String user, String contrasenia, String nombreEquipo, CargoEntrenador cargo, Blob picProfile) {
+        super(user, contrasenia, picProfile);
+        this.nombreEquipo = nombreEquipo;
+        this.cargo = cargo;
+    }
 
-	public String getNombreEquipo() {
-		return nombreEquipo;
-	}
+    /**
+     * Default constructor that initializes an Entrenador with default values.
+     */
+    public Entrenador() {
+        super();
+        this.nombreEquipo = "";
+        this.cargo = null;
+    }
 
-	public void setNombreEquipo(String nombreEquipo) {
-		this.nombreEquipo = nombreEquipo;
-	}
+    /**
+     * Gets the name of the team the coach is associated with.
+     *
+     * @return the name of the team
+     */
+    public String getNombreEquipo() {
+        return nombreEquipo;
+    }
 
-	public CargoEntrenador getCargo() {
-		return cargo;
-	}
+    /**
+     * Sets the name of the team the coach is associated with.
+     *
+     * @param nombreEquipo the name of the team
+     */
+    public void setNombreEquipo(String nombreEquipo) {
+        this.nombreEquipo = nombreEquipo;
+    }
 
-	public void setCargo(CargoEntrenador cargo) {
-		this.cargo = cargo;
-	}
+    /**
+     * Gets the position of the coach.
+     *
+     * @return the position of the coach
+     */
+    public CargoEntrenador getCargo() {
+        return cargo;
+    }
+
+    /**
+     * Sets the position of the coach.
+     *
+     * @param cargo the position of the coach
+     */
+    public void setCargo(CargoEntrenador cargo) {
+        this.cargo = cargo;
+    }
 }

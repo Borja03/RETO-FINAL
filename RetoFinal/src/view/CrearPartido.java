@@ -9,6 +9,7 @@ import java.awt.event.MouseEvent;
 import java.sql.Timestamp;
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.HashMap;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -30,8 +31,17 @@ import com.toedter.calendar.JCalendar;
 import controller.Controller;
 import model.equipos.Equipo;
 
+/**
+ * The CrearPartido class represents a JFrame for creating football (soccer)
+ * matches. It allows administrators to schedule matches by selecting the local
+ * and visiting teams, specifying the stadium, date, and time for the match.
+ * @author 1dami G1
+ * @since 2024-05-13
+ */
 class CrearPartido extends JFrame implements ActionListener {
-
+	/**
+	 * Unique identifier for serializing the class.
+	 */
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
 	private JButton btnLogOut;
@@ -52,9 +62,14 @@ class CrearPartido extends JFrame implements ActionListener {
 	private String user;
 	private String userType;
 
+	/**
+	 * Constructs a new CrearPartido JFrame.
+	 * 
+	 * @param cont The Controller instance for handling business logic.
+	 */
 	public CrearPartido(Controller cont) {
 		this.controller = cont;
-		
+
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 1008, 717);
 		contentPane = new JPanel();
@@ -62,9 +77,10 @@ class CrearPartido extends JFrame implements ActionListener {
 		contentPane.setSize(1366, 768);
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
+		setLocationRelativeTo(null);
 
 		JPanel panelLeft = new JPanel();
-		panelLeft.setBounds(0, 0, 312, 680);
+		panelLeft.setBounds(0, 0, 250, 680);
 		panelLeft.setBackground(new Color(242, 45, 45));
 		getContentPane().add(panelLeft);
 		panelLeft.setLayout(null);
@@ -73,7 +89,7 @@ class CrearPartido extends JFrame implements ActionListener {
 		btnLogOut.setForeground(new Color(255, 255, 255));
 		btnLogOut.setHorizontalAlignment(SwingConstants.LEFT);
 		btnLogOut.setBackground(new Color(242, 45, 45));
-		btnLogOut.setBounds(0, 595, 310, 49);
+		btnLogOut.setBounds(0, 595, 250, 49);
 		btnLogOut.setFocusable(false);
 		btnLogOut.setBorder(null);
 		panelLeft.add(btnLogOut);
@@ -104,7 +120,7 @@ class CrearPartido extends JFrame implements ActionListener {
 		btnGestEquipo.setFocusable(false);
 		btnGestEquipo.setBorder(null);
 		btnGestEquipo.setBackground(new Color(242, 45, 45));
-		btnGestEquipo.setBounds(0, 386, 310, 49);
+		btnGestEquipo.setBounds(0, 386, 250, 49);
 		panelLeft.add(btnGestEquipo);
 		btnGestEquipo.addMouseListener(new MouseAdapter() {
 			@Override
@@ -126,7 +142,7 @@ class CrearPartido extends JFrame implements ActionListener {
 		lblWelcome = new JLabel("   Welcome Admin");
 		lblWelcome.setForeground(new Color(0, 0, 0));
 		lblWelcome.setFont(new Font("Tahoma", Font.BOLD, 20));
-		lblWelcome.setBounds(37, 180, 217, 34);
+		lblWelcome.setBounds(10, 180, 217, 34);
 		panelLeft.add(lblWelcome);
 
 		btnGestionarEntrenador = new JButton("     Gestionar entrenador");
@@ -136,7 +152,7 @@ class CrearPartido extends JFrame implements ActionListener {
 		btnGestionarEntrenador.setFocusable(false);
 		btnGestionarEntrenador.setBorder(null);
 		btnGestionarEntrenador.setBackground(new Color(242, 45, 45));
-		btnGestionarEntrenador.setBounds(0, 275, 310, 49);
+		btnGestionarEntrenador.setBounds(0, 275, 250, 49);
 		btnGestionarEntrenador.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseEntered(MouseEvent e) {
@@ -162,7 +178,7 @@ class CrearPartido extends JFrame implements ActionListener {
 		btnCrearPartido.setFocusable(false);
 		btnCrearPartido.setBorder(null);
 		btnCrearPartido.setBackground(new Color(220, 3, 9));
-		btnCrearPartido.setBounds(0, 327, 310, 49);
+		btnCrearPartido.setBounds(0, 327, 250, 49);
 		btnCrearPartido.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseEntered(MouseEvent e) {
@@ -189,7 +205,7 @@ class CrearPartido extends JFrame implements ActionListener {
 		btnModificarPartido.setFocusable(false);
 		btnModificarPartido.setBorder(null);
 		btnModificarPartido.setBackground(new Color(242, 45, 45));
-		btnModificarPartido.setBounds(0, 445, 310, 49);
+		btnModificarPartido.setBounds(0, 445, 250, 49);
 		btnModificarPartido.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseEntered(MouseEvent e) {
@@ -216,7 +232,8 @@ class CrearPartido extends JFrame implements ActionListener {
 
 		// Configuración del timeSpinner
 		timeSpinner = new JSpinner(new SpinnerDateModel());
-		JSpinner.DateEditor timeEditor = new JSpinner.DateEditor(timeSpinner, "HH:mm:ss");
+		timeSpinner.setFont(new Font("Tahoma", Font.BOLD, 14));
+		JSpinner.DateEditor timeEditor = new JSpinner.DateEditor(timeSpinner, "HH:mm");
 		timeSpinner.setEditor(timeEditor);
 		timeSpinner.setBounds(532, 514, 100, 34);
 		getContentPane().add(timeSpinner);
@@ -264,6 +281,8 @@ class CrearPartido extends JFrame implements ActionListener {
 
 		// Calendario para seleccionar la fecha del partido
 		datePicker = new JCalendar();
+		datePicker.getYearChooser().getSpinner().setFont(new Font("Tahoma", Font.BOLD, 14));
+		datePicker.getMonthChooser().getComboBox().setFont(new Font("Tahoma", Font.BOLD, 14));
 		datePicker.setBounds(532, 273, 400, 200);
 		getContentPane().add(datePicker);
 
@@ -272,7 +291,7 @@ class CrearPartido extends JFrame implements ActionListener {
 		okButton.setFont(new Font("Tahoma", Font.BOLD, 14));
 		okButton.setBounds(815, 603, 150, 34);
 		getContentPane().add(okButton);
-		
+
 		JLabel lblNewLabel_3_1 = new JLabel("Fecha:");
 		lblNewLabel_3_1.setFont(new Font("Tahoma", Font.BOLD, 14));
 		lblNewLabel_3_1.setBounds(380, 511, 100, 34);
@@ -283,6 +302,9 @@ class CrearPartido extends JFrame implements ActionListener {
 		okButton.addActionListener(this);
 	}
 
+	/**
+	 * Fills the team combo boxes with available teams.
+	 */
 	private void llenarComboBoxEquipos() {
 		ArrayList<Equipo> equipos = controller.listarEquiposCP();
 		equipoVisitanteComboBox.addItem("");
@@ -299,6 +321,13 @@ class CrearPartido extends JFrame implements ActionListener {
 		}
 	}
 
+	@SuppressWarnings("deprecation")
+	/**
+	 * ActionListener implementation method. Handles various button clicks and
+	 * actions.
+	 * 
+	 * @param e The ActionEvent that occurred.
+	 */
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		Object o = e.getSource();
@@ -311,14 +340,16 @@ class CrearPartido extends JFrame implements ActionListener {
 		} else if (o == okButton) {
 			String equipoLocal = (String) equipoLocalComboBox.getSelectedItem();
 			String equipoVisitante = (String) equipoVisitanteComboBox.getSelectedItem();
+
 			Timestamp fechaInicio = new Timestamp(datePicker.getDate().getTime());
 			java.util.Date horaSeleccionada = (java.util.Date) timeSpinner.getValue();
+			Calendar calendar = Calendar.getInstance();
+			calendar.setTime(horaSeleccionada);
 			Timestamp horaInicio = new Timestamp(horaSeleccionada.getTime());
 
 			if (equipoLocal != null && equipoVisitante != null && fechaInicio != null && horaInicio != null) {
-				fechaInicio.setHours(horaInicio.getHours());
-				fechaInicio.setMinutes(horaInicio.getMinutes());
-				fechaInicio.setSeconds(horaInicio.getSeconds());
+				fechaInicio.setHours(calendar.get(Calendar.HOUR_OF_DAY));
+				fechaInicio.setMinutes(calendar.get(Calendar.MINUTE));
 
 				boolean partidoCreado = controller.crearPartido(equipoLocal, equipoVisitante, fechaInicio);
 				if (partidoCreado) {
@@ -346,7 +377,7 @@ class CrearPartido extends JFrame implements ActionListener {
 					equipoVisitanteComboBox.addItem(equipo);
 				}
 			}
-		} else  if (o == btnModificarPartido) { // Acción para el botón Modificar partido
+		} else if (o == btnModificarPartido) { // Acción para el botón Modificar partido
 			ModificarPartido frame = new ModificarPartido(controller);
 			frame.setVisible(true);
 			this.dispose();
@@ -358,15 +389,14 @@ class CrearPartido extends JFrame implements ActionListener {
 			MenuAdmin menAdmin = new MenuAdmin(controller);
 			menuAdmin.setVisible(true);
 			this.dispose();
-		}else if (o == btnModificarPartido) {
+		} else if (o == btnModificarPartido) {
 			ModificarPartido modificarPartido = new ModificarPartido(controller);
 			menuAdmin.setVisible(true);
 			this.dispose();
-		}else if (o == btnLogOut) {
+		} else if (o == btnLogOut) {
 			Login frame = new Login(controller);
 			frame.setVisible(true);
 			this.dispose();
 		}
 	}
 }
-
