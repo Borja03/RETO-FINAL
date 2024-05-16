@@ -517,4 +517,3 @@ public class ConsultarPartidos extends JFrame implements ActionListener {
 	}
 
 }
-

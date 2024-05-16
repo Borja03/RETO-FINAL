@@ -12,13 +12,11 @@ import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Date;
 
-
 import model.equipos.Equipo;
 import model.partido.Juegan;
 import model.usuarios.CargoEntrenador;
 import model.usuarios.Entrenador;
 import model.usuarios.Jugador;
-import model.usuarios.Tipo;
 import model.usuarios.Usuarios;
 import utlidades.MySqlConnection;
 import view.CambiarDorsal;
@@ -26,8 +24,6 @@ import view.Login;
 
 public class Controller implements IController {
 
-	// private static final String DB_URL =
-	// "jdbc:mysql://localhost:3306/laliga?serverTimezone=Europe/Madrid&allowPublicKeyRetrieval=true&useSSL=false";
 	private String user;
 	private String password;
 
@@ -39,6 +35,7 @@ public class Controller implements IController {
 	final String ALLequipos = "SELECT nombreEquipo FROM equipo";
 	final String ConnectUser = "SELECT * FROM usuario WHERE user = ? AND password = ?";
 	final String DELETEentrenador = "DELETE FROM entrenador WHERE user = ?";
+	final String DELETEentrenadorUsuario = "DELETE FROM usuario WHERE user = ?";
 	final String DELETEequipo = "DELETE FROM equipo WHERE nombreEquipo = ?";
 	final String DELETEjugador = "DELETE FROM jugador WHERE user = ?";
 	final String DORSALlLista = "SELECT dorsal FROM jugador where nombreEquipo = ?";
@@ -54,7 +51,8 @@ public class Controller implements IController {
 	final String INNSERTentrenador = "INSERT INTO entrenador (user, tipoEntrenador, nombreEquipo) VALUES (?, ?, ?)";
 	final String JUGADORDORequipo = "SELECT nombreEquipo FROM jugador where user = ?";
 	final String JUGADORESequipo = "SELECT jugador.*, usuario.password, usuario.tipo FROM jugador INNER JOIN usuario ON jugador.user = usuario.user WHERE jugador.nombreEquipo = ?";
-	final String MODIFICARentrenador = "UPDATE entrenador SET user = ?, tipoEntrenador = ? WHERE user = ?";
+	final String MODIFICARentrenadorUsuario = "UPDATE usuario SET password = ? WHERE user = ?";
+	final String MODIFICARentrenador = "UPDATE entrenador SET tipoEntrenador = ? WHERE user = ?";
 	final String MODIFICARjugador = "UPDATE jugador SET dorsal = ?, numeroGoles = ?, numeroAsistencias = ? WHERE user = ?";
 	final String MODIFICARpartidoFecha = "UPDATE juegan SET fechaInicio = ? WHERE fechaInicio = ?";
 	final String MODIFICARpartidoResultado = "UPDATE juegan SET resultado = ? WHERE fechaInicio = ?";
@@ -306,8 +304,11 @@ public class Controller implements IController {
 		try {
 			connection = MySqlConnection.getInstance("admin").getConnection();
 
-			statement = connection.prepareStatement(DELETEentrenador);
+			statement = connection.prepareStatement(DELETEentrenadorUsuario);
+			statement.setString(1, user);
+			statement.executeUpdate();
 
+			statement = connection.prepareStatement(DELETEentrenador);
 			statement.setString(1, user);
 			if (statement.executeUpdate() > 0) {
 				deleted = true;
@@ -326,10 +327,8 @@ public class Controller implements IController {
 			} catch (SQLException e) {
 				e.printStackTrace();
 			}
-			;
 		}
 		return deleted;
-
 	}
 
 	@Override
@@ -372,11 +371,13 @@ public class Controller implements IController {
 			connection = MySqlConnection.getInstance("admin").getConnection();
 
 			statement = connection.prepareStatement(MODIFICARentrenador);
-			// statement.setString(1, user);
 			statement.setString(1, password);
 			statement.setString(2, user);
-			statement.setString(3, tipoEntrenador.getNombre());
-			statement.setString(4, user);
+			statement.executeUpdate();
+
+			statement = connection.prepareStatement(MODIFICARentrenador);
+			statement.setString(1, tipoEntrenador.getNombre());
+			statement.setString(2, user);
 
 			if (statement.executeUpdate() > 0) {
 				modified = true;
@@ -1270,7 +1271,7 @@ public class Controller implements IController {
 			} catch (SQLException e) {
 				e.printStackTrace();
 			}
-			
+
 		}
 		return partidosLista;
 	}
@@ -1286,22 +1287,23 @@ public class Controller implements IController {
 			e.printStackTrace();
 		}
 	}
+
 	@Override
-	public void updateAsistencias(String localTeam,String visitTeam,LocalDateTime matchTime) {
+	public void updateAsistencias(String localTeam, String visitTeam, LocalDateTime matchTime) {
 
 		try {
 			connection = MySqlConnection.getInstance("jugador").getConnection();
 
-            callableStatement = connection.prepareCall("{CALL UpdateAsistenciasAfterMatch(?, ?, ?)}");
-            callableStatement.setString(1, localTeam);
-            callableStatement.setString(2, visitTeam);
-            Timestamp timestamp = Timestamp.valueOf(matchTime);
-            callableStatement.setTimestamp(3, timestamp);
+			callableStatement = connection.prepareCall("{CALL UpdateAsistenciasAfterMatch(?, ?, ?)}");
+			callableStatement.setString(1, localTeam);
+			callableStatement.setString(2, visitTeam);
+			Timestamp timestamp = Timestamp.valueOf(matchTime);
+			callableStatement.setTimestamp(3, timestamp);
 
-            callableStatement.execute();
+			callableStatement.execute();
 
-            System.out.println("Asistencias updated successfully for the match.");
-        
+			System.out.println("Asistencias updated successfully for the match.");
+
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} finally {
@@ -1324,6 +1326,5 @@ public class Controller implements IController {
 		// TODO Auto-generated method stub
 
 	}
-
 
 }
