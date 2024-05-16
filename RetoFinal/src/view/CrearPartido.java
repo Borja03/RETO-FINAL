@@ -31,8 +31,17 @@ import com.toedter.calendar.JCalendar;
 import controller.Controller;
 import model.equipos.Equipo;
 
+/**
+ * The CrearPartido class represents a JFrame for creating football (soccer)
+ * matches. It allows administrators to schedule matches by selecting the local
+ * and visiting teams, specifying the stadium, date, and time for the match.
+ * @author 1dami G1
+ * @since 2024-05-13
+ */
 class CrearPartido extends JFrame implements ActionListener {
-
+	/**
+	 * Unique identifier for serializing the class.
+	 */
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
 	private JButton btnLogOut;
@@ -53,9 +62,14 @@ class CrearPartido extends JFrame implements ActionListener {
 	private String user;
 	private String userType;
 
+	/**
+	 * Constructs a new CrearPartido JFrame.
+	 * 
+	 * @param cont The Controller instance for handling business logic.
+	 */
 	public CrearPartido(Controller cont) {
 		this.controller = cont;
-		
+
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 1008, 717);
 		contentPane = new JPanel();
@@ -63,6 +77,7 @@ class CrearPartido extends JFrame implements ActionListener {
 		contentPane.setSize(1366, 768);
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
+		setLocationRelativeTo(null);
 
 		JPanel panelLeft = new JPanel();
 		panelLeft.setBounds(0, 0, 250, 680);
@@ -276,7 +291,7 @@ class CrearPartido extends JFrame implements ActionListener {
 		okButton.setFont(new Font("Tahoma", Font.BOLD, 14));
 		okButton.setBounds(815, 603, 150, 34);
 		getContentPane().add(okButton);
-		
+
 		JLabel lblNewLabel_3_1 = new JLabel("Fecha:");
 		lblNewLabel_3_1.setFont(new Font("Tahoma", Font.BOLD, 14));
 		lblNewLabel_3_1.setBounds(380, 511, 100, 34);
@@ -287,6 +302,9 @@ class CrearPartido extends JFrame implements ActionListener {
 		okButton.addActionListener(this);
 	}
 
+	/**
+	 * Fills the team combo boxes with available teams.
+	 */
 	private void llenarComboBoxEquipos() {
 		ArrayList<Equipo> equipos = controller.listarEquiposCP();
 		equipoVisitanteComboBox.addItem("");
@@ -304,6 +322,12 @@ class CrearPartido extends JFrame implements ActionListener {
 	}
 
 	@SuppressWarnings("deprecation")
+	/**
+	 * ActionListener implementation method. Handles various button clicks and
+	 * actions.
+	 * 
+	 * @param e The ActionEvent that occurred.
+	 */
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		Object o = e.getSource();
@@ -316,7 +340,7 @@ class CrearPartido extends JFrame implements ActionListener {
 		} else if (o == okButton) {
 			String equipoLocal = (String) equipoLocalComboBox.getSelectedItem();
 			String equipoVisitante = (String) equipoVisitanteComboBox.getSelectedItem();
-			
+
 			Timestamp fechaInicio = new Timestamp(datePicker.getDate().getTime());
 			java.util.Date horaSeleccionada = (java.util.Date) timeSpinner.getValue();
 			Calendar calendar = Calendar.getInstance();
@@ -353,7 +377,7 @@ class CrearPartido extends JFrame implements ActionListener {
 					equipoVisitanteComboBox.addItem(equipo);
 				}
 			}
-		} else  if (o == btnModificarPartido) { // Acción para el botón Modificar partido
+		} else if (o == btnModificarPartido) { // Acción para el botón Modificar partido
 			ModificarPartido frame = new ModificarPartido(controller);
 			frame.setVisible(true);
 			this.dispose();
@@ -365,15 +389,14 @@ class CrearPartido extends JFrame implements ActionListener {
 			MenuAdmin menAdmin = new MenuAdmin(controller);
 			menuAdmin.setVisible(true);
 			this.dispose();
-		}else if (o == btnModificarPartido) {
+		} else if (o == btnModificarPartido) {
 			ModificarPartido modificarPartido = new ModificarPartido(controller);
 			menuAdmin.setVisible(true);
 			this.dispose();
-		}else if (o == btnLogOut) {
+		} else if (o == btnLogOut) {
 			Login frame = new Login(controller);
 			frame.setVisible(true);
 			this.dispose();
 		}
 	}
 }
-

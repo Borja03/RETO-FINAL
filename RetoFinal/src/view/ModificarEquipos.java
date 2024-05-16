@@ -22,6 +22,7 @@ import java.sql.Blob;
 import java.sql.SQLException;
 import controller.Controller;
 import model.equipos.Equipo;
+import utlidades.Util;
 
 import java.awt.Color;
 import java.awt.Font;
@@ -31,41 +32,179 @@ import java.awt.event.MouseEvent;
 import java.awt.SystemColor;
 import javax.swing.JComboBox;
 
+/**
+ * The ModificarEquipos class provides a graphical user interface for modifying
+ * sports teams. Users can view details of existing teams, edit team
+ * information, and upload team logos. It extends JFrame and implements
+ * ActionListener to handle user interactions.
+ * 
+ * @author 1dami G1
+ * @since 2024-05-13
+ */
 public class ModificarEquipos extends JFrame implements ActionListener {
-
+	/**
+	 * Unique identifier for serializing the class.
+	 */
+	/**
+	 * Serial version UID for serialization.
+	 */
 	private static final long serialVersionUID = 1L;
+
+	/**
+	 * The main content pane of the view.
+	 */
 	private JPanel contentPane;
+
+	/**
+	 * Reference to the controller for handling actions.
+	 */
 	private Controller controller;
+
+	/**
+	 * Username of the current user.
+	 */
 	private String userName;
+
+	/**
+	 * Panel for adding or editing records.
+	 */
 	private JPanel rightPanelAddEd;
+
+	/**
+	 * Text field for entering the team's name.
+	 */
 	private JTextField nombreEquipoField;
+
+	/**
+	 * Text field for entering the team's stadium name.
+	 */
 	private JTextField nombreEstadioField;
+
+	/**
+	 * Text field for entering the number of titles.
+	 */
 	private JTextField txttitulosField;
+
+	/**
+	 * Button for modifying team information.
+	 */
 	private JButton bntModificarEq;
+
+	/**
+	 * Button for adding a new team.
+	 */
 	private JButton btnAddEquipo;
+
+	/**
+	 * Button for modifying records.
+	 */
 	private JButton btnModificar;
+
+	/**
+	 * Button for uploading an image.
+	 */
 	private JButton btnUpload;
+
+	/**
+	 * Label for displaying the team's logo.
+	 */
 	private JLabel lblEqLogo;
+
+	/**
+	 * Icon representing the image.
+	 */
 	private ImageIcon imageIcon;
+
+	/**
+	 * Blob object representing the image.
+	 */
 	private Blob imageBlob;
+
+	/**
+	 * Label for indicating the stadium name.
+	 */
 	private JLabel lblNombreDelEstadio;
+
+	/**
+	 * Panel for the top menu in adding/editing views.
+	 */
 	private JPanel topMenuPanelAddEq;
+
+	/**
+	 * Button for deleting a team.
+	 */
 	private JButton btnBorrarEquipo;
+
+	/**
+	 * Panel for searching records.
+	 */
 	private JPanel panelSearch;
+
+	/**
+	 * Label indicating the team name.
+	 */
 	private JLabel lblNombreEquipo_1;
+
+	/**
+	 * Combo box for selecting teams.
+	 */
 	private JComboBox<String> cBoxEquipos;
+
+	/**
+	 * Button for logging out.
+	 */
 	private JButton btnLogOut;
+
+	/**
+	 * Button for modifying matches.
+	 */
 	private JButton btnModificarPartido;
+
+	/**
+	 * Label for welcoming the user.
+	 */
 	private JLabel lblWelcome;
+
+	/**
+	 * Button for accessing match information.
+	 */
 	private JButton btnConsultarPartidos;
+
+	/**
+	 * Button for creating a new match.
+	 */
 	private JButton btnCrearPartido;
 
+	/**
+	 * Button for adding a new team.
+	 */
 	private JButton bntAnadirEq;
-	private JButton btnModificarEquipo;
-	private JLabel lblEquipoLogo;
-	private String userType;
-	private JButton btnGestionarEntrenador;
 
+	/**
+	 * Button for modifying team information.
+	 */
+	private JButton btnModificarEquipo;
+
+	/**
+	 * Label for displaying the team's logo.
+	 */
+	private JLabel lblEquipoLogo;
+
+	/**
+	 * Type of user logged in.
+	 */
+	private String userType;
+
+	/**
+	 * Button for managing coaches.
+	 */
+	private JButton btnGestionarEntrenador;
+	 
+	/**
+	 * Constructs a new ModificarEquipos instance with the specified controller.
+	 * 
+	 * @param controller The controller for managing team-related actions.
+	 */
 	public ModificarEquipos(Controller controller) {
 		this.controller = controller;
 
@@ -76,6 +215,7 @@ public class ModificarEquipos extends JFrame implements ActionListener {
 		contentPane.setSize(1366, 768);
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
+		setLocationRelativeTo(null);
 
 		rightPanelAddEd = new JPanel();
 		rightPanelAddEd.setBounds(310, 154, 674, 526);
@@ -333,35 +473,41 @@ public class ModificarEquipos extends JFrame implements ActionListener {
 
 	}
 
+	/**
+	 * Fills the combo box with the names of existing teams.
+	 */
 	public void fillBoxEqName() {
 		for (String eqName : controller.getEquipos()) {
 			cBoxEquipos.addItem(eqName);
 		}
 	}
 
+	/**
+	 * Populates the team details fields with the information of the selected team.
+	 * 
+	 * @param selectedEquipo The name of the selected team.
+	 */
 	public void fillDataEquipo(String selectedEquipo) {
 		Equipo eq = controller.getEquipo(selectedEquipo);
 		nombreEquipoField.setText(eq.getNombreEquipo());
 		nombreEstadioField.setText(eq.getEstadio());
 		txttitulosField.setText(eq.getTitulos() + "");
 
+		ImageIcon defaultLogo = new ImageIcon("src/images/icons/equiposinlogo.png");
+
 		Blob imgB = eq.getLogo();
 		if (imgB != null) {
-			try {
-				byte[] imageData = imgB.getBytes(1, (int) imgB.length());
-				if (imageData != null && imageData.length > 0) {
-					ImageIcon icon = new ImageIcon(imageData);
-					Image image = icon.getImage().getScaledInstance(200, 200, Image.SCALE_SMOOTH);
-					ImageIcon scaledIcon = new ImageIcon(image);
-					lblEqLogo.setIcon(scaledIcon);
-				}
-			} catch (SQLException e) {
-				System.err.println("Error reading image data from Blob: " + e.getMessage());
-				e.printStackTrace();
-			}
+			lblEqLogo.setIcon(Util.blobToImgIcon(imgB));
+		}else {
+			lblEqLogo.setIcon(defaultLogo);
 		}
 	}
 
+	/**
+	 * Handles various user actions performed in the GUI.
+	 * 
+	 * @param e The ActionEvent representing the user action.
+	 */
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		Object o = e.getSource();

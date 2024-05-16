@@ -2,6 +2,7 @@ package controller;
 
 import java.time.LocalDateTime;
 import java.sql.Blob;
+import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -11,6 +12,7 @@ import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Date;
 
+
 import model.equipos.Equipo;
 import model.partido.Juegan;
 import model.usuarios.CargoEntrenador;
@@ -18,18 +20,21 @@ import model.usuarios.Entrenador;
 import model.usuarios.Jugador;
 import model.usuarios.Tipo;
 import model.usuarios.Usuarios;
+import utlidades.MySqlConnection;
 import view.CambiarDorsal;
 import view.Login;
 
 public class Controller implements IController {
 
-	private static final String DB_URL = "jdbc:mysql://localhost:3306/laliga?serverTimezone=Europe/Madrid&allowPublicKeyRetrieval=true&useSSL=false";
+	// private static final String DB_URL =
+	// "jdbc:mysql://localhost:3306/laliga?serverTimezone=Europe/Madrid&allowPublicKeyRetrieval=true&useSSL=false";
 	private String user;
 	private String password;
 
 	private Connection connection;
 	private PreparedStatement statement;
 	private ResultSet resultSet;
+	private CallableStatement callableStatement = null;
 
 	final String ALLequipos = "SELECT nombreEquipo FROM equipo";
 	final String ConnectUser = "SELECT * FROM usuario WHERE user = ? AND password = ?";
@@ -56,7 +61,7 @@ public class Controller implements IController {
 	final String MODIFICARequipo = "UPDATE equipo SET titulos = ?, nombreEstadio = ?, logo = ? WHERE nombreEquipo = ?";
 	final String modificarPartidoFecha = "UPDATE juegan SET fechaInicio = ? WHERE fechaInicio = ?";
 	final String modificarPartidoResultado = "UPDATE juegan SET resultado = ? WHERE fechaInicio = ?";
-	final String MODIFICARuserIcon = "UPDATE jugador SET icon = ?  WHERE user = ?";
+	final String MODIFICARuserIcon = "UPDATE usuario SET icon = ?  WHERE user = ?";
 	final String NOMBREequipo = "SELECT * FROM equipo where nombreEquipo = ?";
 	final String nombreEquipo = "SELECT nombreEquipo FROM usuario WHERE user = ?";
 	final String NOMBREequipoE = "SELECT nombreEquipo FROM entrenador WHERE user = ?";
@@ -64,12 +69,16 @@ public class Controller implements IController {
 	final String Partidos = "SELECT nombreEquipoLocal, nombreEquipoVisitante, fechaInicio, resultado FROM juegan";
 	final String CONSULTARequipo = "SELECT * FROM juegan WHERE nombreEquipoLocal = ? OR nombreEquipoVisitante = ?";
 
-	
+	final String INSERTjugadorUser = "INSERT INTO usuario (user, password) VALUES (?, ?)";
+	final String INNSERTentrenadorUser = "INSERT INTO usuario (user, password) VALUES (?, ?)";
+
 	@Override
 	public boolean checkUserExist(String user) {
 		boolean exist = false;
-		this.openConnection("entrenador", "entrenador");
+		// this.openConnection("entrenador", "entrenador");
 		try {
+			connection = MySqlConnection.getInstance("entrenador").getConnection();
+
 			statement = connection.prepareStatement(GETjugador);
 
 			statement.setString(1, user);
@@ -82,16 +91,25 @@ public class Controller implements IController {
 			System.out.println("Error de SQL");
 			e.printStackTrace();
 		} finally {
-			this.closeConnection();
+			// this.closeConnection();
+			try {
+				MySqlConnection.getInstance("admin").getConnection().close();
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+
 		}
 		return exist;
 	}
-	
+
 	@Override
 	public boolean checkUserExist2(String user) {
 		boolean exist = false;
-		this.openConnection("admin", "admin");
+		// this.openConnection("admin", "admin");
 		try {
+			connection = MySqlConnection.getInstance("admin").getConnection();
+
 			statement = connection.prepareStatement(GETentrenador);
 
 			statement.setString(1, user);
@@ -104,7 +122,14 @@ public class Controller implements IController {
 			System.out.println("Error de SQL");
 			e.printStackTrace();
 		} finally {
-			this.closeConnection();
+			// this.closeConnection();
+			try {
+				MySqlConnection.getInstance("admin").getConnection().close();
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+
 		}
 		return exist;
 	}
@@ -112,75 +137,55 @@ public class Controller implements IController {
 	@Override
 	public void logOut() {
 		this.closeConnection();
+
 		Login login = new Login(this);
 		login.setVisible(true);
 
 	}
 
-	public void openConnection(String user, String password) {
-		try {
-			connection = DriverManager.getConnection(DB_URL, user, password);
-		} catch (SQLException ex) {
-			ex.printStackTrace();
-		}
-	}
-
-	public void closeConnection() {
-		try {
-			if (statement != null)
-				statement.close();
-			if (connection != null)
-				connection.close();
-			System.out.println("Close Connection");
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-	}
-
 	@Override
-	public boolean logIn(String username, String pass, String userType) {
-		String query = "";
+	public boolean logIn(String usuario, String contrasena, String tipoUsuario) {
 		String userDb;
 		String passDb;
 
-		if ("Admin".equals(userType)) {
-			System.out.println("checking Admin...");
-			user = "admin";
-			password = "admin";
-			openConnection(user, password);
-			if (username.equals("admin") && pass.equals("admin")) {
-				return true;
-			}
+		try {
+			if ("Admin".equalsIgnoreCase(tipoUsuario)) {
+				System.out.println("Comprobando Administrador...");
+				user = "admin";
+				password = "admin";
+				connection = MySqlConnection.getInstance(tipoUsuario.toLowerCase()).getConnection();
 
-		} else if ("Entrenador".equals(userType)) {
-			System.out.println("checking Entrenador...");
-			user = "entrenador";
-			password = "entrenador";
-			openConnection(user, password);
-			query = "SELECT * FROM usuario WHERE user = ? AND password = ?";
-		} else if ("Jugador".equals(userType)) {
-			System.out.println("checking Jugador...");
-			user = "jugador";
-			password = "jugador";
-			openConnection(user, password);
-			query = "SELECT * FROM usuario WHERE user = ? AND password = ?";
-		}
-
-		try (PreparedStatement statement = connection.prepareStatement(query)) {
-			statement.setString(1, username);
-			statement.setString(2, pass);
-			ResultSet resultSet = statement.executeQuery();
-
-			if (resultSet.next()) {
-				userDb = resultSet.getString("user");
-				passDb = resultSet.getString("password");
-				if (userDb.equals(username) && passDb.equals(pass)) {
+				if (usuario.equals("admin") && contrasena.equals("admin")) {
 					return true;
 				}
-			}
+			} else if ("Entrenador".equalsIgnoreCase(tipoUsuario) || "Jugador".equalsIgnoreCase(tipoUsuario)) {
+				System.out.println("Comprobando " + tipoUsuario + "...");
+				user = tipoUsuario.toLowerCase();
+				password = tipoUsuario.toLowerCase();
+				connection = MySqlConnection.getInstance(tipoUsuario.toLowerCase()).getConnection();
+				String query = "SELECT * FROM usuario WHERE user = ? AND password = ?";
+				try (PreparedStatement statement = connection.prepareStatement(query)) {
+					statement.setString(1, usuario);
+					statement.setString(2, contrasena);
+					ResultSet resultSet = statement.executeQuery();
 
+					if (resultSet.next()) {
+						userDb = resultSet.getString("user");
+						passDb = resultSet.getString("password");
+						if (userDb.equals(usuario) && passDb.equals(contrasena)) {
+							return true;
+						}
+					}
+				}
+			}
 		} catch (SQLException ex) {
 			ex.printStackTrace();
+		} finally {
+			try {
+				MySqlConnection.getInstance(tipoUsuario.toLowerCase()).getConnection().close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
 		}
 		return false;
 	}
@@ -188,22 +193,34 @@ public class Controller implements IController {
 	@Override
 	public boolean crearEntrenador(String nombreEquipo, String user, String password, CargoEntrenador tipoEntrenador) {
 		boolean added = false;
-		this.openConnection("admin", "admin");
 
 		try {
-			statement = connection.prepareStatement(INNSERTentrenador);
+			connection = MySqlConnection.getInstance("admin").getConnection();
+
+			statement = connection.prepareStatement(INNSERTentrenadorUser);
 			statement.setString(1, user);
 			statement.setString(2, password);
-			statement.setString(3, tipoEntrenador.getNombre());
-			statement.setString(4, nombreEquipo);
+			statement.executeUpdate();
+			statement = connection.prepareStatement(INNSERTentrenador);
+			statement.setString(1, user);
+			statement.setString(2, tipoEntrenador.getNombre());
+			statement.setString(3, nombreEquipo);
 			if (statement.executeUpdate() > 0) {
 				added = true;
 			}
+
 		} catch (SQLException e) {
 			System.out.println("Error de SQL");
 			e.printStackTrace();
 		} finally {
-			this.closeConnection();
+			// this.closeConnection();
+			try {
+				MySqlConnection.getInstance("admin").getConnection().close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+			;
+
 		}
 		return added;
 	}
@@ -212,7 +229,8 @@ public class Controller implements IController {
 	public boolean crearPartido(String equipoLocal, String equipoVisitante, java.sql.Timestamp fechaInicio) {
 		boolean added = false;
 		try {
-			openConnection("admin", "admin");
+			// openConnection("admin", "admin");
+			connection = MySqlConnection.getInstance("admin").getConnection();
 
 			String insertJueganQuery = "INSERT INTO juegan (nombreEquipoLocal, nombreEquipoVisitante, fechaInicio, resultado) VALUES (?, ?, ?, ?)";
 			PreparedStatement insertJueganStatement = connection.prepareStatement(insertJueganQuery);
@@ -231,7 +249,13 @@ public class Controller implements IController {
 			System.out.println("Error de SQL");
 			e.printStackTrace();
 		} finally {
-			closeConnection();
+			// closeConnection();
+			try {
+				MySqlConnection.getInstance("admin").getConnection().close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+			;
 		}
 		return added;
 	}
@@ -240,15 +264,20 @@ public class Controller implements IController {
 	public boolean crearJugador(String user, String password, int dorsal, int numeroGoles, int numeroAsistencias,
 			String nombreEquipo) {
 		boolean added = false;
-		this.openConnection("entrenador", "entrenador");
+		// this.openConnection("entrenador", "entrenador");
 		try {
-			statement = connection.prepareStatement(INSERTjugador);
+			connection = MySqlConnection.getInstance("entrenador").getConnection();
+
+			statement = connection.prepareStatement(INSERTjugadorUser);
 			statement.setString(1, user);
 			statement.setString(2, password);
-			statement.setInt(3, dorsal);
-			statement.setInt(4, numeroGoles);
-			statement.setInt(5, numeroAsistencias);
-			statement.setString(6, nombreEquipo);
+			statement.executeUpdate();
+			statement = connection.prepareStatement(INSERTjugador);
+			statement.setString(1, user);
+			statement.setInt(2, dorsal);
+			statement.setInt(3, numeroGoles);
+			statement.setInt(4, numeroAsistencias);
+			statement.setString(5, nombreEquipo);
 			if (statement.executeUpdate() > 0) {
 				added = true;
 				System.out.println("Data inserted!");
@@ -259,7 +288,13 @@ public class Controller implements IController {
 			System.out.println("Error de SQL");
 			e.printStackTrace();
 		} finally {
-			this.closeConnection();
+			// this.closeConnection();
+			try {
+				MySqlConnection.getInstance("entrenador").getConnection().close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+			;
 		}
 		return added;
 	}
@@ -267,8 +302,10 @@ public class Controller implements IController {
 	@Override
 	public boolean borrarEntrenador(String user) {
 		boolean deleted = false;
-		this.openConnection("admin", "admin");
+		// this.openConnection("admin", "admin");
 		try {
+			connection = MySqlConnection.getInstance("admin").getConnection();
+
 			statement = connection.prepareStatement(DELETEentrenador);
 
 			statement.setString(1, user);
@@ -283,7 +320,13 @@ public class Controller implements IController {
 			System.out.println("Error de SQL");
 			e.printStackTrace();
 		} finally {
-			this.closeConnection();
+			// this.closeConnection();
+			try {
+				MySqlConnection.getInstance("admin").getConnection().close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+			;
 		}
 		return deleted;
 
@@ -292,8 +335,10 @@ public class Controller implements IController {
 	@Override
 	public boolean borrarJugador(String user) {
 		boolean deleted = false;
-		this.openConnection("entrenador", "entrenador");
+		// this.openConnection("entrenador", "entrenador");
 		try {
+			connection = MySqlConnection.getInstance("entrenador").getConnection();
+
 			statement = connection.prepareStatement(DELETEjugador);
 
 			statement.setString(1, user);
@@ -308,7 +353,13 @@ public class Controller implements IController {
 			System.out.println("Error de SQL");
 			e.printStackTrace();
 		} finally {
-			this.closeConnection();
+			// this.closeConnection();
+			try {
+				MySqlConnection.getInstance("admin").getConnection().close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+			;
 		}
 		return deleted;
 	}
@@ -316,8 +367,10 @@ public class Controller implements IController {
 	@Override
 	public boolean modificarEntrenador(String user, String password, CargoEntrenador tipoEntrenador) {
 		boolean modified = false;
-		this.openConnection("admin", "admin");
+		// this.openConnection("admin", "admin");
 		try {
+			connection = MySqlConnection.getInstance("admin").getConnection();
+
 			statement = connection.prepareStatement(MODIFICARentrenador);
 			// statement.setString(1, user);
 			statement.setString(1, password);
@@ -336,7 +389,13 @@ public class Controller implements IController {
 			System.out.println("Error de SQL");
 			e.printStackTrace();
 		} finally {
-			this.closeConnection();
+			// this.closeConnection();
+			try {
+				MySqlConnection.getInstance("admin").getConnection().close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+			;
 		}
 		return modified;
 	}
@@ -344,8 +403,10 @@ public class Controller implements IController {
 	@Override
 	public boolean modificarJugador(String user, String password, int dorsal, int numGoles, int numAsist) {
 		boolean modified = false;
-		this.openConnection("entrenador", "entrenador");
+		// this.openConnection("entrenador", "entrenador");
 		try {
+			connection = MySqlConnection.getInstance("entrenador").getConnection();
+
 			statement = connection.prepareStatement(MODIFICARjugador);
 			// statement.setString(1, user);
 			statement.setString(1, password);
@@ -364,16 +425,24 @@ public class Controller implements IController {
 			System.out.println("Error de SQL");
 			e.printStackTrace();
 		} finally {
-			this.closeConnection();
+			// this.closeConnection();
+			try {
+				MySqlConnection.getInstance("admin").getConnection().close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+			;
 		}
 		return modified;
 	}
-	
+
 	@Override
 	public ArrayList<Juegan> listaPartidos() {
-		this.openConnection("admin", "admin");
+		// this.openConnection("admin", "admin");
 		ArrayList<Juegan> partidosProgramados = new ArrayList<>();
 		try {
+			connection = MySqlConnection.getInstance("admin").getConnection();
+
 			statement = connection.prepareStatement(Partidos);
 			resultSet = statement.executeQuery();
 
@@ -389,7 +458,13 @@ public class Controller implements IController {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} finally {
-			this.closeConnection();
+			// this.closeConnection();
+			try {
+				MySqlConnection.getInstance("admin").getConnection().close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+			;
 		}
 		return partidosProgramados;
 	}
@@ -397,7 +472,8 @@ public class Controller implements IController {
 	@Override
 	public void modificarPartido(Juegan partidoModificado, LocalDateTime fechaAntigua) {
 		try {
-			this.openConnection("admin", "admin"); // Abre la conexión
+			// this.openConnection("admin", "admin"); // Abre la conexión
+			connection = MySqlConnection.getInstance("admin").getConnection();
 
 			// Modificar el resultado del partido
 			PreparedStatement stmtResultado = connection.prepareStatement(modificarPartidoResultado);
@@ -415,19 +491,19 @@ public class Controller implements IController {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} finally {
-			this.closeConnection(); // Cierra la conexión
+			// this.closeConnection(); // Cierra la conexión
+			try {
+				MySqlConnection.getInstance("admin").getConnection().close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+			;
 		}
 	}
 
 	@Override
-	public void consultarEquipo() {
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
 	public void modificarDorsal() {
-		CambiarDorsal ventanaDorsal = new CambiarDorsal(this, "usuario","jugador");
+		CambiarDorsal ventanaDorsal = new CambiarDorsal(this, "usuario", "jugador");
 		ventanaDorsal.setVisible(true);
 	}
 
@@ -436,13 +512,15 @@ public class Controller implements IController {
 
 		boolean modified = false;
 		try {
-			
+
 			Usuarios usuario = this.getUsuario(user);
 
 			Jugador jugador = (Jugador) usuario;
-			this.openConnection("jugador", "jugador");
+			// this.openConnection("jugador", "jugador");
+			connection = MySqlConnection.getInstance("jugador").getConnection();
+
 			statement = connection.prepareStatement(MODIFICARjugador);
-			//statement.setString(1, ((Usuarios) jugador).getContrasenia());
+			// statement.setString(1, ((Usuarios) jugador).getContrasenia());
 			statement.setInt(1, dorsal);
 			statement.setInt(2, jugador.getGoles());
 			statement.setInt(3, jugador.getAsistencias());
@@ -460,15 +538,23 @@ public class Controller implements IController {
 			System.out.println("Error de SQL");
 			e.printStackTrace();
 		} finally {
-			this.closeConnection();
+			// this.closeConnection();
+			try {
+				MySqlConnection.getInstance("admin").getConnection().close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+
 		}
 		return modified;
 	}
 
 	public boolean existeDorsal(int dorsal, String user) {
-		this.openConnection("jugador", "jugador");
+		// this.openConnection("jugador", "jugador");
 		boolean exists = false;
 		try {
+			connection = MySqlConnection.getInstance("jugador").getConnection();
+
 			statement = connection.prepareStatement(GETjugador);
 			statement.setString(1, user);
 			resultSet = statement.executeQuery();
@@ -489,7 +575,13 @@ public class Controller implements IController {
 			System.out.println("Error de SQL");
 			e.printStackTrace();
 		}
-		this.closeConnection();
+		// this.closeConnection();
+		try {
+			MySqlConnection.getInstance("jugador").getConnection().close();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		;
 		return exists;
 	}
 
@@ -497,14 +589,11 @@ public class Controller implements IController {
 	public boolean cambiarPassword(String user, String newPassword, String userType) {
 		boolean changed = false;
 		String query = "";
-		if ("entrenador".equals(userType)) {
-			query = "UPDATE usuario SET password = ? WHERE user = ?";
-		} else if ("jugador".equals(userType)) {
-			query = "UPDATE usuario SET password = ? WHERE user = ?";
-		}
-		openConnection(userType, userType);
+		query = "UPDATE usuario SET password = ? WHERE user = ?";
 
 		try {
+			connection = MySqlConnection.getInstance(userType).getConnection();
+
 			statement = connection.prepareStatement(query);
 			statement.setString(1, newPassword);
 			statement.setString(2, user);
@@ -519,15 +608,23 @@ public class Controller implements IController {
 			System.out.println("Error de SQL");
 			e.printStackTrace();
 		} finally {
-			closeConnection();
+			// closeConnection();
+			try {
+				MySqlConnection.getInstance(userType).getConnection().close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+			;
 		}
 		return changed;
 	}
 
 	public ArrayList<String> getEquipos() {
 		ArrayList<String> misEquipos = new ArrayList<>();
-		this.openConnection("admin", "admin");
+
 		try {
+			connection = MySqlConnection.getInstance("admin").getConnection();
+
 			statement = connection.prepareStatement(ALLequipos);
 			resultSet = statement.executeQuery();
 			while (resultSet.next()) {
@@ -539,7 +636,13 @@ public class Controller implements IController {
 			System.out.println("Error de SQL");
 			e.printStackTrace();
 		} finally {
-			this.closeConnection();
+			// this.closeConnection();
+			try {
+				MySqlConnection.getInstance("admin").getConnection().close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+			;
 		}
 		return misEquipos;
 	}
@@ -548,13 +651,15 @@ public class Controller implements IController {
 		String myTeam = null;
 		String query = "";
 
-		if ("entrenador".equals(userType)) {
+		if ("entrenador".equalsIgnoreCase(userType)) {
 			query = ENTRENADORequipo;
-		} else if ("jugador".equals(userType)) {
+		} else if ("jugador".equalsIgnoreCase(userType)) {
 			query = JUGADORDORequipo;
 		}
-		this.openConnection(userType, userType);
+		// this.openConnection(userType, userType);
 		try {
+			connection = MySqlConnection.getInstance(userType).getConnection();
+
 			statement = connection.prepareStatement(query);
 			statement.setString(1, userName);
 
@@ -567,15 +672,23 @@ public class Controller implements IController {
 			System.out.println("Error de SQL");
 			e.printStackTrace();
 		} finally {
-			this.closeConnection();
+			// this.closeConnection();
+			try {
+				MySqlConnection.getInstance(userType).getConnection().close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+			;
 		}
 		return myTeam;
 	}
 
 	public Usuarios getUsuario(String user) {
 		Usuarios usuario = null;
-		this.openConnection("entrenador", "entrenador");
+		// this.openConnection("entrenador", "entrenador");
 		try {
+			connection = MySqlConnection.getInstance("entrenador").getConnection();
+
 			statement = connection.prepareStatement(GETjugador);
 			statement.setString(1, user);
 
@@ -596,7 +709,13 @@ public class Controller implements IController {
 			System.out.println("Error de SQL");
 			e.printStackTrace();
 		} finally {
-			this.closeConnection();
+			// this.closeConnection();
+			try {
+				MySqlConnection.getInstance("entrenador").getConnection().close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+			;
 		}
 		return usuario;
 
@@ -604,8 +723,10 @@ public class Controller implements IController {
 
 	public Entrenador getUsuario2(String user) {
 		Entrenador entrenador = null;
-		this.openConnection("admin", "admin");
+		// this.openConnection("admin", "admin");
 		try {
+			connection = MySqlConnection.getInstance("admin").getConnection();
+
 			statement = connection.prepareStatement(GETentrenador);
 			statement.setString(1, user);
 
@@ -631,7 +752,13 @@ public class Controller implements IController {
 			System.out.println("Error de SQL");
 			e.printStackTrace();
 		} finally {
-			this.closeConnection();
+			// this.closeConnection();
+			try {
+				MySqlConnection.getInstance("admin").getConnection().close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+			;
 		}
 		return entrenador;
 	}
@@ -641,7 +768,9 @@ public class Controller implements IController {
 		ArrayList<Equipo> equipos = new ArrayList<>();
 
 		try {
-			openConnection("admin", "admin");
+			connection = MySqlConnection.getInstance("admin").getConnection();
+
+			// openConnection("admin", "admin");
 			String query = "SELECT * FROM equipo";
 			statement = connection.prepareStatement(query);
 			resultSet = statement.executeQuery();
@@ -656,7 +785,13 @@ public class Controller implements IController {
 		} catch (SQLException ex) {
 			ex.printStackTrace();
 		} finally {
-			closeConnection();
+			// closeConnection();
+			try {
+				MySqlConnection.getInstance("admin").getConnection().close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+			;
 		}
 
 		return equipos;
@@ -664,8 +799,10 @@ public class Controller implements IController {
 
 	public Date obtenerFechaPartido(String nombrePartido) {
 		Date fechaPartido = null;
-		this.openConnection("admin", "admin");
+		// this.openConnection("admin", "admin");
 		try {
+			connection = MySqlConnection.getInstance("admin").getConnection();
+
 			statement = connection.prepareStatement(
 					"SELECT fechaInicio FROM juegan WHERE nombreEquipoLocal = ? OR nombreEquipoVisitante = ?");
 			statement.setString(1, nombrePartido);
@@ -677,7 +814,13 @@ public class Controller implements IController {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} finally {
-			this.closeConnection();
+			// this.closeConnection();
+			try {
+				MySqlConnection.getInstance("admin").getConnection().close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+			;
 		}
 		return fechaPartido;
 	}
@@ -685,8 +828,16 @@ public class Controller implements IController {
 	@Override
 	public Equipo getEquipo(String nombreEquipo) {
 		Equipo myTeam = null;
-		this.openConnection("entrenador", "entrenador");
+		// this.openConnection("entrenador", "entrenador");
 		try {
+			connection = MySqlConnection.getInstance("entrenador").getConnection();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+		try {
+
 			statement = connection.prepareStatement(NOMBREequipo);
 			statement.setString(1, nombreEquipo);
 
@@ -703,15 +854,23 @@ public class Controller implements IController {
 			System.out.println("Error de SQL");
 			e.printStackTrace();
 		} finally {
-			this.closeConnection();
+			// this.closeConnection();
+			try {
+				MySqlConnection.getInstance("jugador").getConnection().close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+			;
 		}
 		return myTeam;
 	}
 
 	public String getPrimEntrenador(String eqName) {
 		String entName = null;
-		this.openConnection("entrenador", "entrenador");
+		// this.openConnection("entrenador", "entrenador");
 		try {
+			connection = MySqlConnection.getInstance("entrenador").getConnection();
+
 			statement = connection.prepareStatement(ENTRENADORnombre);
 			statement.setString(1, eqName);
 			statement.setString(2, "PRIMER_ENTRENADOR");
@@ -725,7 +884,13 @@ public class Controller implements IController {
 			System.out.println("Error de SQL");
 			e.printStackTrace();
 		} finally {
-			this.closeConnection();
+			// this.closeConnection();
+			try {
+				MySqlConnection.getInstance("entrenador").getConnection().close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+			;
 		}
 		return entName;
 	}
@@ -733,8 +898,10 @@ public class Controller implements IController {
 	@Override
 	public String getSegEntrenador(String eqName) {
 		String entName = null;
-		this.openConnection("entrenador", "entrenador");
+		// this.openConnection("entrenador", "entrenador");
 		try {
+			connection = MySqlConnection.getInstance("entrenador").getConnection();
+
 			statement = connection.prepareStatement(ENTRENADORnombre);
 			statement.setString(1, eqName);
 			statement.setString(2, "SEGUNDO_ENTRENADOR");
@@ -748,7 +915,13 @@ public class Controller implements IController {
 			System.out.println("Error de SQL");
 			e.printStackTrace();
 		} finally {
-			this.closeConnection();
+			// this.closeConnection();
+			try {
+				MySqlConnection.getInstance("entrenador").getConnection().close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+			;
 		}
 		return entName;
 	}
@@ -758,7 +931,9 @@ public class Controller implements IController {
 		ArrayList<Jugador> jugadoresEq = new ArrayList<>();
 
 		try {
-			openConnection("entrenador", "entrenador");
+			// openConnection("entrenador", "entrenador");
+			connection = MySqlConnection.getInstance("entrenador").getConnection();
+
 			statement = connection.prepareStatement(JUGADORESequipo);
 			statement.setString(1, nombreEquipo);
 			resultSet = statement.executeQuery();
@@ -778,7 +953,13 @@ public class Controller implements IController {
 		} catch (SQLException ex) {
 			ex.printStackTrace();
 		} finally {
-			closeConnection();
+			// closeConnection();
+			try {
+				MySqlConnection.getInstance("entrenador").getConnection().close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+			;
 		}
 
 		return jugadoresEq;
@@ -788,8 +969,10 @@ public class Controller implements IController {
 	public ArrayList<Integer> getUsedDorsal(String eqName) {
 		ArrayList<Integer> dorsalLista = new ArrayList<>();
 		int dorsal;
-		this.openConnection("entrenador", "entrenador");
+		// this.openConnection("entrenador", "entrenador");
 		try {
+			connection = MySqlConnection.getInstance("entrenador").getConnection();
+
 			statement = connection.prepareStatement(DORSALlLista);
 			statement.setString(1, eqName);
 
@@ -802,7 +985,13 @@ public class Controller implements IController {
 			System.out.println("Error de SQL");
 			e.printStackTrace();
 		} finally {
-			this.closeConnection();
+			// this.closeConnection();
+			try {
+				MySqlConnection.getInstance("entrenador").getConnection().close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+			;
 		}
 		return dorsalLista;
 	}
@@ -811,8 +1000,10 @@ public class Controller implements IController {
 	public boolean crearEquipo(String nombreEquipo, int titulos, String nombreEstadio, Blob logo) {
 		boolean inserted = false;
 
-		this.openConnection("admin", "admin");
+		// this.openConnection("admin", "admin");
 		try {
+			connection = MySqlConnection.getInstance("admin").getConnection();
+
 			statement = connection.prepareStatement(INSERTequipo);
 			statement.setString(1, nombreEquipo);
 			statement.setInt(2, titulos);
@@ -827,7 +1018,13 @@ public class Controller implements IController {
 		} catch (SQLException e) {
 			return false;
 		} finally {
-			this.closeConnection();
+			// this.closeConnection();
+			try {
+				MySqlConnection.getInstance("entrenador").getConnection().close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+			;
 		}
 
 		return inserted;
@@ -837,8 +1034,10 @@ public class Controller implements IController {
 	@Override
 	public boolean borrarEquipo(String nombreEquipo) {
 		boolean deleted = false;
-		this.openConnection("admin", "admin");
+		// this.openConnection("admin", "admin");
 		try {
+			connection = MySqlConnection.getInstance("admin").getConnection();
+
 			statement = connection.prepareStatement(DELETEequipo);
 
 			statement.setString(1, nombreEquipo);
@@ -852,7 +1051,13 @@ public class Controller implements IController {
 			System.out.println("Error de SQL");
 			e.printStackTrace();
 		} finally {
-			this.closeConnection();
+			// this.closeConnection();
+			try {
+				MySqlConnection.getInstance("entrenador").getConnection().close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+			;
 		}
 		return deleted;
 
@@ -861,8 +1066,10 @@ public class Controller implements IController {
 	@Override
 	public boolean modificarEquipo(String nombreEquipo, int titulos, String nombreEstadio, Blob logo) {
 		boolean modified = false;
-		this.openConnection("admin", "admin");
+		// this.openConnection("admin", "admin");
 		try {
+			connection = MySqlConnection.getInstance("admin").getConnection();
+
 			statement = connection.prepareStatement(MODIFICARequipo);
 			statement.setInt(1, titulos);
 			statement.setString(2, nombreEstadio);
@@ -879,7 +1086,13 @@ public class Controller implements IController {
 		} catch (SQLException e) {
 			return false;
 		} finally {
-			this.closeConnection();
+			// this.closeConnection();
+			try {
+				MySqlConnection.getInstance("admin").getConnection().close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+			;
 		}
 		return modified;
 	}
@@ -895,9 +1108,12 @@ public class Controller implements IController {
 			query = GETJugadorPassword;
 		}
 
-		openConnection(userType, userType);
+		// openConnection(userType, userType);
 
 		try {
+
+			connection = MySqlConnection.getInstance(userType).getConnection();
+
 			statement = connection.prepareStatement(query);
 			statement.setString(1, userName);
 
@@ -909,7 +1125,13 @@ public class Controller implements IController {
 			System.out.println("Error de SQL");
 			e.printStackTrace();
 		} finally {
-			closeConnection();
+			// closeConnection();
+			try {
+				MySqlConnection.getInstance(userType).getConnection().close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+			;
 		}
 		return pass;
 	}
@@ -918,8 +1140,10 @@ public class Controller implements IController {
 	public boolean updateUsrIcon(String user, Blob userIcon, String userType) {
 
 		boolean modified = false;
-		this.openConnection(userType, userType);
+		// this.openConnection(userType, userType);
 		try {
+			connection = MySqlConnection.getInstance(userType).getConnection();
+
 			statement = connection.prepareStatement(MODIFICARuserIcon);
 			statement.setBlob(1, userIcon);
 			statement.setString(2, user);
@@ -935,7 +1159,12 @@ public class Controller implements IController {
 			System.out.println("Error de SQL");
 			e.printStackTrace();
 		} finally {
-			this.closeConnection();
+			// this.closeConnection();
+			try {
+				MySqlConnection.getInstance(userType).getConnection().close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
 		}
 		return modified;
 	}
@@ -959,7 +1188,9 @@ public class Controller implements IController {
 	public boolean verificarFechaUnica(LocalDateTime fecha) {
 		boolean fechaUnica = false;
 		try {
-			this.openConnection("admin", "admin"); // Abre la conexión
+			// this.openConnection("admin", "admin"); // Abre la conexión
+			connection = MySqlConnection.getInstance("admin").getConnection();
+
 			PreparedStatement statement = connection
 					.prepareStatement("SELECT COUNT(*) FROM juegan WHERE fechaInicio = ?");
 			statement.setObject(1, fecha);
@@ -971,15 +1202,22 @@ public class Controller implements IController {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} finally {
-			this.closeConnection(); // Cierra la conexión
+			// this.closeConnection(); // Cierra la conexión
+			try {
+				MySqlConnection.getInstance("admin").getConnection().close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+			;
 		}
 		return fechaUnica;
 	}
 
 	public String getNombreEstadio(Juegan juegan) {
 		String estadio = "";
-		this.openConnection("admin", "admin");
+		// this.openConnection("admin", "admin");
 		try {
+			connection = MySqlConnection.getInstance("admin").getConnection();
 			statement = connection.prepareStatement(nombreEstadio);
 			statement.setString(1, juegan.getNombreEquipoLocal());
 			resultSet = statement.executeQuery();
@@ -989,7 +1227,13 @@ public class Controller implements IController {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-		this.closeConnection();
+		// this.closeConnection();
+		try {
+			MySqlConnection.getInstance("admin").getConnection().close();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		;
 		return estadio;
 
 	}
@@ -998,8 +1242,10 @@ public class Controller implements IController {
 	public ArrayList<Juegan> consultarPartidoEquipo(String equipoName) {
 		ArrayList<Juegan> partidosLista = new ArrayList<>();
 
-		this.openConnection("entrenador", "entrenador");
+		// this.openConnection("entrenador", "entrenador");
 		try {
+			connection = MySqlConnection.getInstance("entrenador").getConnection();
+
 			statement = connection.prepareStatement(CONSULTARequipo);
 			statement.setString(1, equipoName);
 			statement.setString(2, equipoName);
@@ -1018,15 +1264,66 @@ public class Controller implements IController {
 			System.out.println("Error de SQL");
 			e.printStackTrace();
 		} finally {
-			this.closeConnection();
+			// this.closeConnection();
+			try {
+				MySqlConnection.getInstance("entrenador").getConnection().close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+			
 		}
 		return partidosLista;
+	}
+
+	public void closeConnection() {
+		try {
+			if (statement != null)
+				statement.close();
+			if (connection != null)
+				connection.close();
+			System.out.println("Close Connection");
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
+	@Override
+	public void updateAsistencias(String localTeam,String visitTeam,LocalDateTime matchTime) {
+
+		try {
+			connection = MySqlConnection.getInstance("jugador").getConnection();
+
+            callableStatement = connection.prepareCall("{CALL UpdateAsistenciasAfterMatch(?, ?, ?)}");
+            callableStatement.setString(1, localTeam);
+            callableStatement.setString(2, visitTeam);
+            Timestamp timestamp = Timestamp.valueOf(matchTime);
+            callableStatement.setTimestamp(3, timestamp);
+
+            callableStatement.execute();
+
+            System.out.println("Asistencias updated successfully for the match.");
+        
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				MySqlConnection.getInstance("admin").getConnection().close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+	}
+
+	@Override
+	public void consultarEquipo() {
+		// TODO Auto-generated method stub
+
 	}
 
 	@Override
 	public void consultarPartido() {
 		// TODO Auto-generated method stub
-		
+
 	}
+
 
 }

@@ -25,41 +25,178 @@ import java.awt.event.MouseEvent;
 import java.awt.event.ActionEvent;
 import java.awt.SystemColor;
 
+/**
+ * The SearchJugadore class provides a GUI for searching and managing player information.
+ */
 public class SearchJugadore extends JFrame implements ActionListener {
-
+	/**
+	 * Unique identifier for serializing the class.
+	 */
 	private static final long serialVersionUID = 1L;
-	private JPanel contentPane;
-	private JButton btnCrear;
-	private JButton btnDelete;
-	private JButton btnModificar;
-	private Controller controller;
-	private JButton btnLogOut;
-	private JButton btnCambiarCont;
-	private JButton btnCambiarDorsal;
-	private JLabel lblWelcome;
-	private JButton btnConsultarPartidos;
-	private JButton btnConsultarEquipo;
-	private JLabel lblUser;
-	private JLabel lblContrasena;
-	private JLabel lblDorsal;
-	private JLabel lblGoles;
-	private JLabel lblAsistencias;
-	private JTextField textFieldUSer;
-	private JTextField textFieldContrasena;
-	private JComboBox<Integer> textFieldDorsal;
-	private JTextField textFieldGoles;
-	private JTextField textFieldAsist;
-	private JButton btnElimimarJugador;
-	private JTextField txtEquiponame;
-	private String miEquipo;
-	private String userName;
-	private JButton btnBuscarJugador;
-	private JPanel bottomPanel;
-	private JPanel bottomPanelMsg;
-	private JLabel lblJugador;
-	private JLabel lblNoExiste;
-	private String userType;
 
+	/**
+	 * The main content pane of the view.
+	 */
+	private JPanel contentPane;
+
+	/**
+	 * Button for creating a new record.
+	 */
+	private JButton btnCrear;
+
+	/**
+	 * Button for deleting a record.
+	 */
+	private JButton btnDelete;
+
+	/**
+	 * Button for modifying a record.
+	 */
+	private JButton btnModificar;
+
+	/**
+	 * Reference to the controller for handling actions.
+	 */
+	private Controller controller;
+
+	/**
+	 * Button for logging out.
+	 */
+	private JButton btnLogOut;
+
+	/**
+	 * Button for changing password.
+	 */
+	private JButton btnCambiarCont;
+
+	/**
+	 * Button for changing dorsal (jersey number).
+	 */
+	private JButton btnCambiarDorsal;
+
+	/**
+	 * Label for welcoming the user.
+	 */
+	private JLabel lblWelcome;
+
+	/**
+	 * Button for accessing match information.
+	 */
+	private JButton btnConsultarPartidos;
+
+	/**
+	 * Button for accessing team information.
+	 */
+	private JButton btnConsultarEquipo;
+
+	/**
+	 * Label for indicating username.
+	 */
+	private JLabel lblUser;
+
+	/**
+	 * Label for indicating password.
+	 */
+	private JLabel lblContrasena;
+
+	/**
+	 * Label for indicating dorsal (jersey number).
+	 */
+	private JLabel lblDorsal;
+
+	/**
+	 * Label for indicating goals.
+	 */
+	private JLabel lblGoles;
+
+	/**
+	 * Label for indicating assists.
+	 */
+	private JLabel lblAsistencias;
+
+	/**
+	 * Text field for entering username.
+	 */
+	private JTextField textFieldUSer;
+
+	/**
+	 * Text field for entering password.
+	 */
+	private JTextField textFieldContrasena;
+
+	/**
+	 * Combo box for selecting dorsal (jersey number).
+	 */
+	private JComboBox<Integer> textFieldDorsal;
+
+	/**
+	 * Text field for entering goals.
+	 */
+	private JTextField textFieldGoles;
+
+	/**
+	 * Text field for entering assists.
+	 */
+	private JTextField textFieldAsist;
+
+	/**
+	 * Button for deleting a player.
+	 */
+	private JButton btnElimimarJugador;
+
+	/**
+	 * Text field for entering team name.
+	 */
+	private JTextField txtEquiponame;
+
+	/**
+	 * The user's team.
+	 */
+	private String miEquipo;
+
+	/**
+	 * The username of the logged-in user.
+	 */
+	private String userName;
+
+	/**
+	 * Button for searching for a player.
+	 */
+	private JButton btnBuscarJugador;
+
+	/**
+	 * Panel for the bottom section.
+	 */
+	private JPanel bottomPanel;
+
+	/**
+	 * Panel for displaying messages in the bottom section.
+	 */
+	private JPanel bottomPanelMsg;
+
+	/**
+	 * Label indicating player.
+	 */
+	private JLabel lblJugador;
+
+	/**
+	 * Label indicating non-existence.
+	 */
+	private JLabel lblNoExiste;
+
+	/**
+	 * The type of user logged in.
+	 */
+	private String userType;
+	
+	  /**
+     * Constructs a new SearchJugadore frame.
+     *
+     * @param controller the controller to handle logic
+     * @param user the username of the logged-in user
+     * @param team the team of the logged-in user
+     * @param userType the type of the logged-in user
+     */
 	public SearchJugadore(Controller controller, String user, String team,String userType) {
 		this.controller = controller;
 		this.userName = user;
@@ -73,7 +210,8 @@ public class SearchJugadore extends JFrame implements ActionListener {
 		contentPane.setSize(1366, 768);
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
-
+		setLocationRelativeTo(null);
+        // Bottom panel message setup
 		bottomPanelMsg = new JPanel();
 		bottomPanelMsg.setBackground(SystemColor.menu);
 		bottomPanelMsg.setBounds(310, 249, 676, 421);
@@ -98,7 +236,7 @@ public class SearchJugadore extends JFrame implements ActionListener {
 		lblNoExiste.setBounds(183, 226, 295, 72);
 		bottomPanelMsg.add(lblNoExiste);
 		bottomPanelMsg.setVisible(false);
-
+        // Bottom panel setup
 		bottomPanel = new JPanel();
 		bottomPanel.setBounds(310, 253, 674, 417);
 		contentPane.add(bottomPanel);
@@ -157,7 +295,7 @@ public class SearchJugadore extends JFrame implements ActionListener {
 		btnModificarJugador.setFont(new Font("Tahoma", Font.BOLD, 14));
 		bottomPanel.add(btnModificarJugador);
 		bottomPanel.setVisible(false);
-
+        // Top panel buttons
 		btnCrear = new JButton("Añadir Jugadores");
 		btnCrear.setBackground(new Color(240, 240, 240));
 		btnCrear.setFocusable(false);
@@ -179,7 +317,7 @@ public class SearchJugadore extends JFrame implements ActionListener {
 		btnModificar.setBorder(null);
 		contentPane.add(btnModificar);
 		btnModificar.addActionListener(this);
-
+        // Left panel setup
 		JPanel panelLeft = new JPanel();
 		panelLeft.setBackground(new Color(128, 128, 0));
 		panelLeft.setBounds(0, 0, 300, 680);
@@ -372,6 +510,10 @@ public class SearchJugadore extends JFrame implements ActionListener {
 
 	}
 
+	/**
+    Fills the dropdown list with available dorsal numbers for selection.
+    Dorsal numbers range from 1 to 25.
+    */
 	public void fillDorsalBox() {
 		for (int i = 1; i <= 25; i++) {
 			if (!controller.getUsedDorsal(miEquipo).contains(i)) {
@@ -379,7 +521,12 @@ public class SearchJugadore extends JFrame implements ActionListener {
 			}
 		}
 	}
-
+	/**
+    Fills the user data fields with information retrieved from the controller.
+    Retrieves the player information using the provided username,
+    and populates the corresponding text fields with the retrieved data.
+    @throws NullPointerException if the user retrieved from the controller is null.
+    */
 	public void fillUserData() {
 		Jugador usr = (Jugador) controller.getUsuario(textFieldUSer.getText());
 		textFieldUSer.setText(usr.getUser());
@@ -388,7 +535,11 @@ public class SearchJugadore extends JFrame implements ActionListener {
 		textFieldGoles.setText(usr.getGoles() + "");
 		textFieldAsist.setText(usr.getAsistencias() + "");
 	}
-
+	 /**
+     * Handles action events for the buttons in the GUI.
+     *
+     * @param e the ActionEvent
+     */
 	@Override
 	public void actionPerformed(ActionEvent e) {
 

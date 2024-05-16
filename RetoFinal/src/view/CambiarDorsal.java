@@ -33,11 +33,10 @@ public class CambiarDorsal extends JFrame implements ActionListener {
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		contentPane.setSize(1366, 768);
-		contentPane.setBackground(Color.WHITE);
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 		JPanel buttonsPanel = new JPanel(new GridLayout(5, 5, 10, 10));
-		buttonsPanel.setBounds(320, 10, 650, 650); // Ajusta la posición del panel y su tamaño
+		buttonsPanel.setBounds(320, 10, 650, 650);
 		buttonsPanel.setBackground(Color.WHITE);
 
 		for (int i = 1; i <= 25; i++) {

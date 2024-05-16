@@ -1,4 +1,3 @@
-
 package controller;
 
 import java.security.Timestamp;
@@ -81,5 +80,7 @@ public interface IController {
 
 	boolean modificarJugadorConDorsal(String user, int dorsal);
 
-}
 
+	void updateAsistencias(String localTeam, String visitTeam, LocalDateTime matchTime);
+
+}
