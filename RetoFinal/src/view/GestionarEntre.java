@@ -29,7 +29,8 @@ import java.awt.event.ActionEvent;
  * JFrame for managing coaches.
  * 
  * @author 1dami G1
- * @since 2024-05-13
+ * @version 1.0
+ * Date 2024-05-13 
  */
 public class GestionarEntre extends JFrame implements ActionListener {
 	/**
@@ -431,7 +432,9 @@ public class GestionarEntre extends JFrame implements ActionListener {
 					gestionarEntre.setVisible(true);
 					this.dispose();
 				}
-			}
+			}else  {
+	            JOptionPane.showMessageDialog(this, "Error al añadir el entrenador(Ya existe). Por favor, inténtelo de nuevo.", "Error", JOptionPane.ERROR_MESSAGE);
+	        }
 
 		}
 	}

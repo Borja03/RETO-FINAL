@@ -7,11 +7,24 @@ import javax.swing.border.EmptyBorder;
 import controller.Controller;
 import java.awt.*;
 import java.awt.event.*;
-
+/**
+ * The CambiarDorsal class represents the window for changing a player's jersey number (dorsal) in the application.
+ * It provides functionality for users to select a new jersey number from available options and confirm the change.
+ * Users can also navigate to other sections of the application from this window.
+ *
+ * This class extends JFrame and implements ActionListener to handle user interactions with the interface.
+ * It contains buttons for logging out, consulting team information, viewing matches, and changing passwords.
+ * Additionally, it displays a grid of buttons representing available jersey numbers for selection.
+ * @author 1dami G1
+ * @version 1.0
+ * Date 2024-05-13 
+ * 
+ * */
 public class CambiarDorsal extends JFrame implements ActionListener {
 
 	private static final long serialVersionUID = 1L;
 
+<<<<<<< HEAD
 	private Controller controller;
 	private String userName;
 	private String userType;
@@ -21,6 +34,39 @@ public class CambiarDorsal extends JFrame implements ActionListener {
 	private JButton btnCambiarCont;
 	private JButton btnConsultarEquipo;
 
+=======
+
+    /** Controller for managing the application's logic */
+    private Controller controller;
+
+    /** The username of the current user */
+    private String userName;
+
+    /** The type of the current user */
+    private String userType;
+
+    /** The main content pane of the JFrame */
+    private JPanel contentPane;
+
+    /** Button for logging out of the application */
+    private JButton btnLogOut;
+
+    /** Button for consulting matches */
+    private JButton btnConsultarPartidos;
+
+    /** Button for changing the password */
+    private JButton btnCambiarCont;
+
+    /** Button for consulting the team */
+    private JButton btnConsultarEquipo;
+    /*
+	 * Constructs a new CambiarDorsal window for changing the dorsal number.
+	 * 
+	 * @param cont the controller instance to manage the application logic
+	 * @param userC the username of the current user
+	 * @param userType the type of the current user
+	 */
+>>>>>>> 0feb09236e8ddaa1aa4d77aa78f121d58e189e72
 	public CambiarDorsal(Controller cont, String userC, String userType) {
 		this.controller = cont;
 		this.userName = userC;

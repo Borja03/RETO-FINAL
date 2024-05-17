@@ -30,6 +30,9 @@ import javax.swing.border.EtchedBorder;
  * 'Entrenador' (coach) entities. This class extends JFrame and implements
  * ActionListener. It provides functionality to add, delete, and modify
  * entrenador records.
+ * @author 1dami G1
+ * @version 1.0
+ * Date 2024-05-13 
  */
 public class SearchEntrenador extends JFrame implements ActionListener {
 	/**

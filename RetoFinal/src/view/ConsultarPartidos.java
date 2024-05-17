@@ -41,7 +41,8 @@ import utlidades.Util;
  * application.
  * 
  * @author 1dami G1
- * @since 2024-05-13
+ * @version 1.0
+ * Date 2024-05-13 
  */
 public class ConsultarPartidos extends JFrame implements ActionListener {
 	/**
@@ -154,7 +155,7 @@ public class ConsultarPartidos extends JFrame implements ActionListener {
 		ImageIcon logo2;
 		String estadio;
 		ImageIcon defaultLogo = new ImageIcon("src/images/icons/equiposinlogo.png");
-
+		
 		for (int i = 0; i < misPartidos.size(); i++) {
 			Blob logo1Blob = controller.getEquipo(misPartidos.get(i).getNombreEquipoLocal()).getLogo();
 			Blob logo2Blob = controller.getEquipo(misPartidos.get(i).getNombreEquipoVisitante()).getLogo();
@@ -512,6 +513,10 @@ public class ConsultarPartidos extends JFrame implements ActionListener {
 		} else if (e.getSource() == btnConsultarEquipoj) {
 			MenuJugador menuJugador = new MenuJugador(controller, userName, userType);
 			menuJugador.setVisible(true);
+			this.dispose();
+		}if (e.getSource() == btnCambiarContj) {
+			CambiarContra cambiarContra = new CambiarContra(controller, userName, userType);
+			cambiarContra.setVisible(true);
 			this.dispose();
 		}
 	}
