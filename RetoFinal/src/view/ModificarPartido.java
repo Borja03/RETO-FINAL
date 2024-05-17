@@ -35,41 +35,163 @@ import javax.swing.border.MatteBorder;
 import javax.swing.border.TitledBorder;
 /**
  * This class represents the GUI for modifying a match.
+ * @author 1dami G1
+ * @version 1.0
+ * Date 2024-05-13 
  */
 public class ModificarPartido extends JFrame implements ActionListener {
 	/**
 	 * Unique identifier for serializing the class.
 	 */
 	private static final long serialVersionUID = 1L;
+	/**
+	 * The main content pane of the JFrame.
+	 */
 	private JPanel contentPane;
+
+	/**
+	 * Label for displaying the home team.
+	 */
 	private JLabel equipoLocalLabel;
+
+	/**
+	 * Label for displaying the away team.
+	 */
 	private JLabel equipoVisitanteLabel;
+
+	/**
+	 * Text field for entering the stadium name.
+	 */
 	private JTextField estadioField;
+
+	/**
+	 * Calendar for selecting the date of the match.
+	 */
 	private JCalendar datePicker;
+
+	/**
+	 * Spinner for selecting the time of the match.
+	 */
 	private JSpinner timeSpinner;
+
+	/**
+	 * Controller for managing the application's logic.
+	 */
 	private Controller controller;
+
+	/**
+	 * Button for modifying the match.
+	 */
 	private JButton btnModifcarPart;
+
+	/**
+	 * Text field for entering the first team's score.
+	 */
 	private JTextField resultado1;
+
+	/**
+	 * Text field for entering the second team's score.
+	 */
 	private JTextField resultado2;
+
+	/**
+	 * Combo box for selecting a match.
+	 */
 	private JComboBox<String> partidosComboBox;
+
+	/**
+	 * Label for displaying the first team's score.
+	 */
 	private JLabel lblResultado1;
+
+	/**
+	 * Label for the stadium field.
+	 */
 	private JLabel lblNewLabel;
+
+	/**
+	 * Label for the date picker.
+	 */
 	private JLabel lblNewLabel_1;
+
+	/**
+	 * Label for the time spinner.
+	 */
 	private JLabel lblNewLabel_2;
+
+	/**
+	 * Label for additional information.
+	 */
 	private JLabel lblNewLabel_3;
+
+	/**
+	 * Another label for additional information.
+	 */
 	private JLabel lblNewLabel_4;
+
+	/**
+	 * Additional label for various purposes.
+	 */
 	private JLabel label;
+
+	/**
+	 * List of matches.
+	 */
 	private ArrayList<Juegan> partidos;
+
+	/**
+	 * Panel on the left side of the UI.
+	 */
 	private JPanel panelLeft;
+
+	/**
+	 * Flag indicating whether to show components.
+	 */
 	private boolean mostrarComponentes;
+
+	/**
+	 * Button for logging out of the application.
+	 */
 	private JButton btnLogOut;
+
+	/**
+	 * Button for managing the team.
+	 */
 	private JButton btnGesEquipo;
+
+	/**
+	 * Label for displaying a welcome message.
+	 */
 	private JLabel lblWelcome;
+
+	/**
+	 * Button for managing the coach.
+	 */
 	private JButton btnGestionarEntrenador;
+
+	/**
+	 * Button for creating a new match.
+	 */
 	private JButton btnCrearPartido;
+
+	/**
+	 * Button for modifying an existing match.
+	 */
 	private JButton btnModificarPartido;
+
+	/**
+	 * The date and time for the match.
+	 */
 	private LocalDateTime date;
+
+	/**
+	 * Panel at the top of the UI.
+	 */
 	private JPanel topPanel;
+
+	/**
+	 * Panel for modifying match details.
+	 */
 	private JPanel panelModificar;
 	 /**
      * Constructor for ModificarPartido.

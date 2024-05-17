@@ -2,6 +2,9 @@ package utlidades;
 
 /**
  * Custom exception class for login-related errors.
+ * @author 1dami G1
+ * @version 1.0
+ * Date 2024-05-13 
  */
 public class LoginException extends Exception {
 	private static final long serialVersionUID = 1L;

@@ -6,6 +6,9 @@ import java.sql.SQLException;
 
 /**
  * A utility class for managing MySQL database connections.
+ * @author 1dami G1
+ * @version 1.0
+ * Date 2024-05-13 
  */
 public class MySqlConnection {
 

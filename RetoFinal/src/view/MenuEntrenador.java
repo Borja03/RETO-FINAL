@@ -45,7 +45,8 @@ import model.usuarios.Jugador;
  * players, view matches, and change password. This class extends JFrame and
  * implements the ActionListener interface.
  * @author 1dami G1
- * @since 2024-05-13
+ * @version 1.0
+ * Date 2024-05-13 
  */
 public class MenuEntrenador extends JFrame implements ActionListener {
 	/**
@@ -371,6 +372,7 @@ public class MenuEntrenador extends JFrame implements ActionListener {
 		JLabel lblEqLogo = new JLabel();
 
 		nombreEquipo = controller.getMyTeam(userName, userType);
+		ImageIcon defaultLogo = new ImageIcon("src/images/icons/equiposinlogo.png");
 		teamLogo = controller.getEquipo(nombreEquipo).getLogo();
 		if (teamLogo != null) {
 			try {
@@ -385,6 +387,8 @@ public class MenuEntrenador extends JFrame implements ActionListener {
 				System.err.println("Error reading image data from Blob: " + e.getMessage());
 				e.printStackTrace();
 			}
+		}else {
+		    lblEqLogo.setIcon(defaultLogo);
 		}
 
 		lblEqLogo.setBounds(15, 15, 150, 150);
@@ -401,7 +405,6 @@ public class MenuEntrenador extends JFrame implements ActionListener {
 			data[i][1] = obj.getDorsal();
 			data[i][2] = obj.getGoles();
 			data[i][3] = obj.getAsistencias();
-
 		}
 
 		DefaultTableModel model = new DefaultTableModel(data, columnNames);
@@ -452,10 +455,12 @@ public class MenuEntrenador extends JFrame implements ActionListener {
 
 		ImageIcon imgIcon = new ImageIcon(getClass().getResource("/images/icons/add.png"));
 		Image imageUser = imgIcon.getImage().getScaledInstance(50, 50, Image.SCALE_SMOOTH);
-		Entrenador enttrenador = controller.getUsuario2(entrConnected);
-		if (enttrenador.getPicProfile() != null) {
+		
+		Entrenador entrenador = controller.getUsuario2(entrConnected);
+		if (entrenador.getPicProfile() != null) {
+			System.out.println("image is not null");
 			try {
-				byte[] imageData = enttrenador.getPicProfile().getBytes(1, (int) enttrenador.getPicProfile().length());
+				byte[] imageData = entrenador.getPicProfile().getBytes(1, (int) entrenador.getPicProfile().length());
 				if (imageData != null && imageData.length > 0) {
 					ImageIcon icon2 = new ImageIcon(imageData);
 					Image image2 = icon2.getImage().getScaledInstance(150, 150, Image.SCALE_SMOOTH);
@@ -544,45 +549,38 @@ public class MenuEntrenador extends JFrame implements ActionListener {
 	 * Displays a dialog for the user to upload an image.
 	 */
 	private void userUploadImgDialog() {
-		btnUpload = new JButton("Upload Image");
-		btnUpload.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				JFileChooser fileChooser = new JFileChooser();
-				int result = fileChooser.showOpenDialog(null);
+	    JFileChooser fileChooser = new JFileChooser();
+	    int result = fileChooser.showOpenDialog(null);
 
-				if (result == JFileChooser.APPROVE_OPTION) {
-					File selectedFile = fileChooser.getSelectedFile();
-					if (selectedFile != null) {
-						try {
-							Path imagePath = selectedFile.toPath();
-							byte[] imageData = Files.readAllBytes(imagePath);
-							usrBlobIcon = new javax.sql.rowset.serial.SerialBlob(imageData);
-							imageIcon = new ImageIcon(imageData);
-							lblUserPic.setIcon(imageIcon);
+	    if (result == JFileChooser.APPROVE_OPTION) {
+	        File selectedFile = fileChooser.getSelectedFile();
+	        if (selectedFile != null) {
+	            try {
+	                Path imagePath = selectedFile.toPath();
+	                byte[] imageData = Files.readAllBytes(imagePath);
+	                usrBlobIcon = new javax.sql.rowset.serial.SerialBlob(imageData);
+	                imageIcon = new ImageIcon(imageData);
+	                lblUserPic.setIcon(imageIcon);
 
-							if (controller.updateUsrIcon(userName, usrBlobIcon, userType)) {
-								JOptionPane.showMessageDialog(MenuEntrenador.this, "Image uploaded to database!",
-										"Success", JOptionPane.INFORMATION_MESSAGE);
-							} else {
-								JOptionPane.showMessageDialog(MenuEntrenador.this,
-										"Failed to upload image to database!", "Error", JOptionPane.ERROR_MESSAGE);
-							}
-						} catch (IOException ex) {
-							ex.printStackTrace();
-						} catch (SerialException e1) {
-							e1.printStackTrace();
-						} catch (SQLException e1) {
-							e1.printStackTrace();
-						}
-					} else {
-						//
-					}
-				}
-			}
-		});
+	                if (controller.updateUsrIcon(userName, usrBlobIcon, userType)) {
+	                    JOptionPane.showMessageDialog(MenuEntrenador.this, "Image uploaded to database!",
+	                            "Success", JOptionPane.INFORMATION_MESSAGE);
+	                } else {
+	                    JOptionPane.showMessageDialog(MenuEntrenador.this, "Failed to upload image to database!",
+	                            "Error", JOptionPane.ERROR_MESSAGE);
+	                }
+	            } catch (IOException ex) {
+	                ex.printStackTrace();
+	            } catch (SerialException e1) {
+	                e1.printStackTrace();
+	            } catch (SQLException e1) {
+	                e1.printStackTrace();
+	            }
+	        }
+	    } else {
+	        // User canceled the upload, do nothing
+	    }	
 
-		JOptionPane.showMessageDialog(this, btnUpload, "Upload Image", JOptionPane.PLAIN_MESSAGE);
 	}
 
 	/**

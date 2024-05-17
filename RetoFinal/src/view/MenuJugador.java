@@ -50,7 +50,8 @@ import javax.swing.border.SoftBevelBorder;
  * with various functionalities related to their profile and team.
  * 
  * @author 1dami G1
- * @since 2024-05-13
+ * @version 1.0
+ * Date 2024-05-13 
  */
 public class MenuJugador extends JFrame implements ActionListener {
 	/**
@@ -374,21 +375,30 @@ public class MenuJugador extends JFrame implements ActionListener {
 		nombreEquipo = controller.getMyTeam(userName, "jugador");
 		System.out.println(nombreEquipo);
 		teamLogo = controller.getEquipo(nombreEquipo).getLogo();
-		if (teamLogo != null) {
-			try {
-				byte[] imageData = teamLogo.getBytes(1, (int) teamLogo.length());
-				if (imageData != null && imageData.length > 0) {
-					ImageIcon icon = new ImageIcon(imageData);
-					Image image = icon.getImage().getScaledInstance(150, 150, Image.SCALE_SMOOTH);
-					ImageIcon scaledIcon = new ImageIcon(image);
-					lblEqLogo.setIcon(scaledIcon);
-				}
-			} catch (SQLException e) {
-				System.err.println("Error reading image data from Blob: " + e.getMessage());
-				e.printStackTrace();
-			}
-		}
+	
+		ImageIcon defaultLogo = new ImageIcon("src/images/icons/equiposinlogo.png");
 
+		if (teamLogo != null) {
+		    try {
+		        byte[] imageData = teamLogo.getBytes(1, (int) teamLogo.length());
+		        if (imageData != null && imageData.length > 0) {
+		            ImageIcon icon = new ImageIcon(imageData);
+		            Image image = icon.getImage().getScaledInstance(150, 150, Image.SCALE_SMOOTH);
+		            ImageIcon scaledIcon = new ImageIcon(image);
+		            lblEqLogo.setIcon(scaledIcon);
+		        }
+		    } catch (SQLException e) {
+		        System.err.println("Error reading image data from Blob: " + e.getMessage());
+		        e.printStackTrace();
+		    }
+		} else {
+		    lblEqLogo.setIcon(defaultLogo);
+		}
+		
+		
+		
+		
+		
 		lblEqLogo.setBounds(22, 10, 150, 150);
 		panel.add(lblEqLogo);
 		
@@ -410,32 +420,33 @@ public class MenuJugador extends JFrame implements ActionListener {
 		}
 
 		for (Jugador jug : dataList) {
-			if (userName.equals(jug.getUser())) {
-				if (jug.getPicProfile() != null) {
-					try {
-						byte[] imageData = jug.getPicProfile().getBytes(1, (int) jug.getPicProfile().length());
-						if (imageData != null && imageData.length > 0) {
-							ImageIcon icon2 = new ImageIcon(imageData);
-							Image image2 = icon2.getImage().getScaledInstance(150, 150, Image.SCALE_SMOOTH);
-							ImageIcon scaledIcon2 = new ImageIcon(image2);
-							lblUserPic.setIcon(scaledIcon2);
-						} else {
-							// if image is null in data base or empty, show a default image
-							ImageIcon defaultIcon = new ImageIcon("src/images/icons/default.png");
-							lblUserPic.setIcon(defaultIcon);
-						}
-					} catch (SQLException e) {
-						System.err.println("Error reading image data from Blob: " + e.getMessage());
-						e.printStackTrace();
-					}
-				} else {
-					// if image is null in data base or empty, show a default image
-					ImageIcon defaultIcon = new ImageIcon("src/images/icons/default.png");
-					lblUserPic.setIcon(defaultIcon);
-				}
-
-			}
+		    if (userName.equals(jug.getUser())) {
+		        if (jug.getPicProfile() != null) {
+		            try {
+		                byte[] imageData = jug.getPicProfile().getBytes(1, (int) jug.getPicProfile().length());
+		                if (imageData != null && imageData.length > 0) {
+				            ImageIcon icon = new ImageIcon(imageData);
+				            Image image = icon.getImage().getScaledInstance(150, 150, Image.SCALE_SMOOTH);
+				            ImageIcon scaledIcon = new ImageIcon(image);
+		                    lblUserPic.setIcon(scaledIcon);
+		                } else {
+		                    // If image is null or empty in the database, show a default image
+		                    ImageIcon defaultIcon = new ImageIcon("src/images/icons/default.png");
+		                    lblUserPic.setIcon(defaultIcon);
+		                }
+		            } catch (SQLException e) {
+		                System.err.println("Error reading image data from Blob: " + e.getMessage());
+		                e.printStackTrace();
+		            }
+		        } else {
+		            // If image is null in the database, show a default image
+		            ImageIcon defaultIcon = new ImageIcon("src/images/icons/default.png");
+		            lblUserPic.setIcon(defaultIcon);
+		        }
+		    }
 		}
+
+
 		DefaultTableModel model = new DefaultTableModel(data, columnNames);
 
 		scrollPane_1 = new JScrollPane();
@@ -502,46 +513,43 @@ public class MenuJugador extends JFrame implements ActionListener {
 	 * Displays a dialog for the user to upload their profile picture.
 	 */
 	private void userUploadImgDialog() {
-		btnUpload = new JButton("Upload Image");
-		btnUpload.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				JFileChooser fileChooser = new JFileChooser();
-				int result = fileChooser.showOpenDialog(null);
+	
+			    JFileChooser fileChooser = new JFileChooser();
+			    int result = fileChooser.showOpenDialog(null);
 
-				if (result == JFileChooser.APPROVE_OPTION) {
-					File selectedFile = fileChooser.getSelectedFile();
-					if (selectedFile != null) {
-						try {
-							Path imagePath = selectedFile.toPath();
-							byte[] imageData = Files.readAllBytes(imagePath);
-							usrBlobIcon = new javax.sql.rowset.serial.SerialBlob(imageData);
-							imageIcon = new ImageIcon(imageData);
-							lblUserPic.setIcon(imageIcon);
+			    if (result == JFileChooser.APPROVE_OPTION) {
+			        File selectedFile = fileChooser.getSelectedFile();
+			        if (selectedFile != null) {
+			            try {
+			                Path imagePath = selectedFile.toPath();
+			                byte[] imageData = Files.readAllBytes(imagePath);
+			                usrBlobIcon = new javax.sql.rowset.serial.SerialBlob(imageData);
+			                imageIcon = new ImageIcon(imageData);
+			                lblUserPic.setIcon(imageIcon);
 
-							if (controller.updateUsrIcon(userName, usrBlobIcon, userType)) {
-								JOptionPane.showMessageDialog(MenuJugador.this, "Image uploaded to database!",
-										"Success", JOptionPane.INFORMATION_MESSAGE);
-							} else {
-								JOptionPane.showMessageDialog(MenuJugador.this, "Failed to upload image to database!",
-										"Error", JOptionPane.ERROR_MESSAGE);
-							}
-						} catch (IOException ex) {
-							ex.printStackTrace();
-						} catch (SerialException e1) {
-							e1.printStackTrace();
-						} catch (SQLException e1) {
-							e1.printStackTrace();
-						}
-					} else {
-						//
-					}
-				}
-			}
-		});
-
-		JOptionPane.showMessageDialog(this, btnUpload, "Upload Image", JOptionPane.PLAIN_MESSAGE);
-	}
+			                if (controller.updateUsrIcon(userName, usrBlobIcon, userType)) {
+			                    JOptionPane.showMessageDialog(MenuJugador.this, "Image uploaded to database!",
+			                            "Success", JOptionPane.INFORMATION_MESSAGE);
+			                } else {
+			                    JOptionPane.showMessageDialog(MenuJugador.this, "Failed to upload image to database!",
+			                            "Error", JOptionPane.ERROR_MESSAGE);
+			                }
+			            } catch (IOException ex) {
+			                ex.printStackTrace();
+			            } catch (SerialException e1) {
+			                e1.printStackTrace();
+			            } catch (SQLException e1) {
+			                e1.printStackTrace();
+			            }
+			        }
+			    } else {
+			        // User canceled the upload, do nothing
+			    }	
+		
+		
+		
+}
+	
 
 	/**
 	 * Handles the actionPerformed event for various buttons in the GUI.

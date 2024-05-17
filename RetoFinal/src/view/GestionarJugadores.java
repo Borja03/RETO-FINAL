@@ -29,7 +29,8 @@ import java.awt.event.ActionEvent;
  * JFrame for managing players.
  * 
  * @author 1dami G1
- * @since 2024-05-13
+ * @version 1.0
+ * Date 2024-05-13 
  */
 public class GestionarJugadores extends JFrame implements ActionListener {
 	
@@ -501,7 +502,9 @@ public class GestionarJugadores extends JFrame implements ActionListener {
 					GestionarJugadores g1 = new GestionarJugadores(controller, user, userType, myTeam);
 					g1.setVisible(true);
 				}
-			}
+			}else  {
+	            JOptionPane.showMessageDialog(this, "Error al añadir el jugador(Ya existe). Por favor, inténtelo de nuevo.", "Error", JOptionPane.ERROR_MESSAGE);
+	        }
 		}
 
 	}

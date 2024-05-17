@@ -22,8 +22,10 @@ import java.awt.SystemColor;
  * The CambiarContra class represents the password change window of the
  * application.
  * @author 1dami G1
- * @since 2024-05-13
- */
+ * @version 1.0
+ * Date 2024-05-13 
+ * 
+ * */
 public class CambiarContra extends JFrame implements ActionListener {
 	/**
 	 * Unique identifier for serializing the class.
@@ -505,19 +507,16 @@ public class CambiarContra extends JFrame implements ActionListener {
 		btnConsultarPartidos.setBackground(new Color(33, 199, 162));
 		panelLefts.add(btnConsultarPartidos);
 
-		btnConsultarEquipo = new JButton("     Consultar Equipo");
-		btnConsultarEquipo.setForeground(new Color(255, 255, 255));
-		btnConsultarEquipo.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-			}
-		});
-		btnConsultarEquipo.setBounds(0, 271, 250, 49);
-		btnConsultarEquipo.setHorizontalAlignment(SwingConstants.LEFT);
-		btnConsultarEquipo.setFont(new Font("Tahoma", Font.BOLD, 14));
-		btnConsultarEquipo.setFocusable(false);
-		btnConsultarEquipo.setBorder(null);
-		btnConsultarEquipo.setBackground(new Color(33, 199, 162));
-		panelLefts.add(btnConsultarEquipo);
+		btnConsultarEquipoj = new JButton("     Consultar Equipo");
+		btnConsultarEquipoj.setForeground(new Color(255, 255, 255));
+		btnConsultarEquipoj.addActionListener(this);
+		btnConsultarEquipoj.setBounds(0, 271, 250, 49);
+		btnConsultarEquipoj.setHorizontalAlignment(SwingConstants.LEFT);
+		btnConsultarEquipoj.setFont(new Font("Tahoma", Font.BOLD, 14));
+		btnConsultarEquipoj.setFocusable(false);
+		btnConsultarEquipoj.setBorder(null);
+		btnConsultarEquipoj.setBackground(new Color(33, 199, 162));
+		panelLefts.add(btnConsultarEquipoj);
 
 		lblUserPic = new JLabel();
 		lblUserPic.setBounds(50, 33, 150, 150);

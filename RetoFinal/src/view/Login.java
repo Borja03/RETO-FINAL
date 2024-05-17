@@ -40,7 +40,8 @@ import javax.swing.JToggleButton;
  * The Splash class represents the splash screen of the application.
  * 
  * @author 1dami G1
- * @since 2024-05-13
+ * @version 1.0
+ * Date 2024-05-13 
  */
 public class Login extends JFrame implements ActionListener {
 
