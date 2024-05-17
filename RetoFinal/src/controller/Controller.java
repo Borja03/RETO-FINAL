@@ -57,8 +57,12 @@ public class Controller implements IController {
 	final String INSERTjugador = "INSERT INTO jugador (user, dorsal, numeroGoles, numeroAsistencias, nombreEquipo) VALUES (?, ?, ?, ?, ?)";
 	final String INNSERTentrenador = "INSERT INTO entrenador (user, tipoEntrenador, nombreEquipo) VALUES (?, ?, ?)";
 	final String JUGADORDORequipo = "SELECT nombreEquipo FROM jugador where user = ?";
+<<<<<<< HEAD
+	final String JUGADORESequipo = "SELECT jugador.*, usuario.password, usuario.tipo FROM jugador INNER JOIN usuario ON jugador.user = usuario.user WHERE jugador.nombreEquipo = ?";
+=======
 	final String JUGADORESequipo = "SELECT j.user, j.nombreEquipo, j.dorsal, j.numeroGoles, j.numeroAsistencias, u.icon FROM jugador j INNER JOIN usuario u ON j.user = u.user WHERE j.nombreEquipo = ?";
 
+>>>>>>> 0feb09236e8ddaa1aa4d77aa78f121d58e189e72
 	final String MODIFICARentrenadorUsuario = "UPDATE usuario SET password = ? WHERE user = ?";
 	final String MODIFICARentrenador = "UPDATE entrenador SET tipoEntrenador = ? WHERE user = ?";
 	final String MODIFICARjugador = "UPDATE jugador SET dorsal = ?, numeroGoles = ?, numeroAsistencias = ? WHERE user = ?";
@@ -1462,6 +1466,8 @@ public class Controller implements IController {
 			e.printStackTrace();
 		}
 	}
+<<<<<<< HEAD
+=======
     /**
      * Updates the number of assists for players of the teams involved in a match.
      *
@@ -1470,6 +1476,7 @@ public class Controller implements IController {
      * @param matchTime  The time of the match.
      * @throws SQLException If an SQL exception occurs while querying the database.
      */
+>>>>>>> 0feb09236e8ddaa1aa4d77aa78f121d58e189e72
 
 	@Override
 	public void updateAsistencias(String localTeam, String visitTeam, LocalDateTime matchTime) {
@@ -1484,6 +1491,11 @@ public class Controller implements IController {
 			callableStatement.setTimestamp(3, timestamp);
 
 			callableStatement.execute();
+<<<<<<< HEAD
+
+			System.out.println("Asistencias updated successfully for the match.");
+=======
+>>>>>>> 0feb09236e8ddaa1aa4d77aa78f121d58e189e72
 
 		} catch (SQLException e) {
 			e.printStackTrace();
