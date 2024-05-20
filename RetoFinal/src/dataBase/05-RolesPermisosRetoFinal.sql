@@ -14,7 +14,7 @@ GRANT SELECT ON laLiga.equipo TO entrenador_role;
 GRANT SELECT, INSERT, UPDATE, DELETE ON laLiga.juegan TO entrenador_role;
 GRANT SELECT, INSERT, UPDATE, DELETE ON laLiga.jugador TO entrenador_role;
 GRANT SELECT, UPDATE ON laLiga.entrenador TO entrenador_role;
-GRANT SELECT, UPDATE ON laLiga.usuario TO entrenador_role;
+GRANT SELECT, UPDATE ,INSERT ON laLiga.usuario TO entrenador_role;
 
 GRANT SELECT, UPDATE ON laLiga.jugador TO jugador_role;
 GRANT SELECT, UPDATE ON laliga.usuario TO jugador_role;
