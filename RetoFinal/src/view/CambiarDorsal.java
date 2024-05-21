@@ -24,18 +24,6 @@ public class CambiarDorsal extends JFrame implements ActionListener {
 
 	private static final long serialVersionUID = 1L;
 
-<<<<<<< HEAD
-	private Controller controller;
-	private String userName;
-	private String userType;
-	private JPanel contentPane;
-	private JButton btnLogOut;
-	private JButton btnConsultarPartidos;
-	private JButton btnCambiarCont;
-	private JButton btnConsultarEquipo;
-
-=======
-
     /** Controller for managing the application's logic */
     private Controller controller;
 
@@ -66,7 +54,6 @@ public class CambiarDorsal extends JFrame implements ActionListener {
 	 * @param userC the username of the current user
 	 * @param userType the type of the current user
 	 */
->>>>>>> 0feb09236e8ddaa1aa4d77aa78f121d58e189e72
 	public CambiarDorsal(Controller cont, String userC, String userType) {
 		this.controller = cont;
 		this.userName = userC;
